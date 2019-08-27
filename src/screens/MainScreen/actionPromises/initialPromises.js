@@ -1,11 +1,9 @@
-function mockFetch() {
-  return new Promise(resolve => {
-    setTimeout(resolve, 2000);
-  });
-}
+
+import {initialRealmClient} from '../../../store/realmManager';
+
 export default async function initialPromise(setIsInitialApp) {
   try {
-    await mockFetch();
+    await initialRealmClient();
     setIsInitialApp(true);
   }catch(error) {
     throw error;

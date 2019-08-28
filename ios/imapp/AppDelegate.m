@@ -90,4 +90,10 @@
 #endif
 }
 
+#if RCT_DEV
+- (BOOL)bridge:(RCTBridge *)bridge didNotFindModule:(NSString *)imapp {
+  return YES;
+}
+#endif
+
 @end

@@ -1,32 +1,60 @@
-import React, { Fragment, useState, useEffect, useContext } from "react";
-import { StyleSheet, Dimensions, Image } from "react-native";
+import React, { useState, useEffect, useContext } from 'react';
+import { StyleSheet, Dimensions, Image, View } from 'react-native';
 import { ReducerContext } from '../../reducers';
-import {AppRoutes, LoginRoutes} from './Routes';
 import initialPromise from './actionPromises/initialPromises';
-const { width, height } = Dimensions.get("window");
+import {
+  Scene,
+  Router,
+  Actions,
+  ActionConst,
+  Overlay,
+  Tabs,
+  Modal,
+  Drawer,
+  Stack,
+  Lightbox
+} from 'react-native-router-flux';
+import AppScreen from '../AppScreen';
+import LoginScreen from '../LoginScreen';
+import RegisterScreen from '../RegisteScreen';
+
+const { width, height } = Dimensions.get('window');
 
 const MainScreen = props => {
   const [isInitialApp, setIsInitialApp] = useState(false);
-  const [{auth}] = useContext(ReducerContext);
+  const [{ auth }] = useContext(ReducerContext);
 
   useEffect(() => {
     initialPromise(setIsInitialApp);
   }, [setIsInitialApp]);
 
-  if(!isInitialApp) {
+  if (!isInitialApp) {
     return (
-      <Fragment>
-        <Image
-          style={styles.image}
-          source={require("../../assets/images/splash.png")}
-        />
-      </Fragment>
+      <Image
+        style={styles.image}
+        source={require('../../assets/images/splash.png')}
+      />
     );
   }
 
-  return auth.isAuth
-    ? <AppRoutes />
-    : <LoginRoutes />;
+  const stateHandler = (prevState, newState, action) => {
+    console.log('onStateChange: ACTION:', action);
+  };
+
+  return (
+    <Router stateHandler={stateHandler}>
+      <Scene key='root' hideNavBar>
+        <Stack key='login_stack'>
+          <Scene key='login' component={LoginScreen} title='Login' hideNavBar />
+          <Scene key='register' component={RegisterScreen} title='Register' />
+        </Stack>
+        <Stack key='app_stack' tabs>
+          <Scene key='home' component={AppScreen} />
+          <Scene key='test' component={RegisterScreen} title='Test' />
+        </Stack>
+      </Scene>
+    </Router>
+  );
 };
 
 export default MainScreen;
@@ -34,6 +62,6 @@ export default MainScreen;
 const styles = StyleSheet.create({
   image: {
     width,
-    height,
-  },
+    height
+  }
 });

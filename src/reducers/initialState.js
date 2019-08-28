@@ -1,5 +1,5 @@
 export const authState = {
-  isAuth: false,
+  isAuth: true,
   token: ''
 };
 

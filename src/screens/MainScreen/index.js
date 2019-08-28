@@ -5,14 +5,7 @@ import initialPromise from './actionPromises/initialPromises';
 import {
   Scene,
   Router,
-  Actions,
-  ActionConst,
-  Overlay,
-  Tabs,
-  Modal,
-  Drawer,
   Stack,
-  Lightbox
 } from 'react-native-router-flux';
 import AppScreen from '../AppScreen';
 import LoginScreen from '../LoginScreen';

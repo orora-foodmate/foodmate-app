@@ -22,7 +22,8 @@ const InputFill = ({ placeholder, iconName, ...props }) => {
 };
 
 InputFill.propTypes = {
-  placeholder: propTypes.string
+  placeholder: propTypes.string,
+  iconName: propTypes.string
 };
 
 export default withTheme(InputFill);

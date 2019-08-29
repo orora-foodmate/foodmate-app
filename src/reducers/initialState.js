@@ -1,9 +1,8 @@
-import {fromJS} from 'immutable';
-
-export const authState = fromJS({
+export const authState = {
   isAuth: false,
-});
+  token: ''
+};
 
-export const settingState = fromJS({
-  isInitialed: false,
-});
+export default {
+  auth: authState
+};

@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from 'react';
-import { Actions } from 'react-native-router-flux';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { StyleSheet, View } from 'react-native';
-import { Avatar, Input, Button, Text, withTheme } from 'react-native-elements';
-import { ReducerContext } from '../../reducers';
+import React, { useContext, useEffect } from "react";
+import { Actions } from "react-native-router-flux";
+import { StyleSheet, View } from "react-native";
+import { Avatar, Button, Text, withTheme } from "react-native-elements";
+import InputFill from "../../components/InputFill";
+import { ReducerContext } from "../../reducers";
 
 function mockFetch() {
   return new Promise(resolve => {
@@ -12,13 +12,22 @@ function mockFetch() {
 }
 
 const LoginScreen = props => {
-  const {theme} = props;
-  const [{auth}, dispatch] = useContext(ReducerContext);
+  const { theme } = props;
+  const [{ auth }, dispatch] = useContext(ReducerContext);
 
-  const handleLogin = () => dispatch({types: ['LOGIN', 'LOGIN_SUCCESS', 'LOGIN_ERROR'], promise: mockFetch()});
+  const handleLogin = () =>
+    dispatch({
+      types: ["LOGIN", "LOGIN_SUCCESS", "LOGIN_ERROR"],
+      promise: mockFetch()
+    });
+
+  const handleScan = () => {
+    console.log("TCL: handleScan -> handleScan");
+  };
+
   useEffect(() => {
-    if(auth.isAuth) Actions.reset('app_stack', {aaa: 'ccc'})
-  }, [auth.isAuth])
+    if (auth.isAuth) Actions.reset("app_stack", { aaa: "ccc" });
+  }, [auth.isAuth]);
 
   return (
     <View style={styles.container}>
@@ -28,19 +37,18 @@ const LoginScreen = props => {
         titleStyle={{ color: theme.colors.primary }}
         overlayContainerStyle={{ backgroundColor: "white" }}
       />
-      <Input
-        containerStyle={{ marginTop: 80 }}
-        placeholder='请输入识别码'
-        leftIcon={<Icon name='lock' size={24} color='grey' />}
-      />
-      <Button
-        title='登录'
-        titleStyle={{ fontSize: 20 }}
-        onPress={handleLogin}
-      />
-      <Button type='clear' title='扫描二维码登录' onPress={handleLogin} />
+      <View style={styles.content}>
+        <InputFill placeholder='请输入识别码' iconName='lock' />
+        <Button
+          title='登录'
+          buttonStyle={{ marginTop: 24 }}
+          titleStyle={{ fontSize: 20 }}
+          onPress={handleLogin}
+        />
+        <Button type='clear' title='扫描二维码登录' onPress={handleScan} />
+      </View>
       <View style={styles.footer}>
-        <Text style={{ color: theme.colors.primary}}>帮助中心</Text>
+        <Text style={{ color: theme.colors.primary }}>帮助中心</Text>
         <Text style={{ color: theme.colors.grey3 }}>| v0.01</Text>
       </View>
     </View>
@@ -54,6 +62,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#F6F6F6"
   },
+  content: {
+    paddingTop: 80,
+    alignItems: "center"
+  },
   footer: {
     flex: 1,
     flexDirection: "row",
@@ -65,5 +77,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withTheme(LoginScreen)
-
+export default withTheme(LoginScreen);

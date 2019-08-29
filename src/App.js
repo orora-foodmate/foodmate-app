@@ -1,9 +1,8 @@
-import React from 'react';
-import { ThemeProvider } from 'react-native-elements';
-import MainScreen from './screens/MainScreen';
-import reducers, {ReducerContext} from './reducers';
-import thunkReducer from './helpers/thunkHelper';
-
+import React from "react";
+import { ThemeProvider } from "react-native-elements";
+import MainScreen from "./screens/MainScreen";
+import reducers, { ReducerContext } from "./reducers";
+import thunkReducer from "./helpers/thunkHelper";
 
 const theme = {
   colors: {
@@ -36,14 +35,28 @@ const theme = {
   },
   Input: {
     containerStyle: {
-      width: 300,
-      margin: 18,
+      width: 300
+    }
+  },
+  SearchBar: {
+    containerStyle: {
+      padding: 0,
+      backgroundColor: "transparent",
+      borderTopColor: "transparent",
+      borderBottomColor: "transparent"
+    },
+    inputContainerStyle: {
       borderRadius: 25,
       backgroundColor: "white"
     },
-    inputContainerStyle: { borderBottomWidth: 0 },
-    leftIconContainerStyle: { paddingRight: 12 }
-  },
+    searchIcon: {
+      size: 24
+    },
+    leftIconContainerStyle: {
+      paddingLeft: 12,
+      paddingRight: 0
+    }
+  }
 };
 
 const initState = reducers();

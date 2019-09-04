@@ -9,6 +9,8 @@ import {
 } from 'react-native-router-flux';
 import AppScreen from '../AppScreen';
 import LoginScreen from '../LoginScreen';
+import AccountScreen from '../AccountScreen';
+import FriendsScreen from '../FriendsScreen';
 import RegisterScreen from '../RegisteScreen';
 
 const { width, height } = Dimensions.get('window');
@@ -42,8 +44,9 @@ const MainScreen = props => {
           <Scene key='register' component={RegisterScreen} title='Register' />
         </Stack>
         <Stack key='app_stack' tabs>
-          <Scene key='home' component={AppScreen} />
-          <Scene key='test' component={RegisterScreen} title='Test' />
+          <Scene key='home' component={AppScreen} title='聊天' />
+          <Scene key='test' component={FriendsScreen} title='好友' />
+          <Scene key='account' component={AccountScreen} title='我' />
         </Stack>
       </Scene>
     </Router>

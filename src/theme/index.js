@@ -27,6 +27,9 @@ const theme = {
     buttonStyle: { width: 300, padding: 8, margin: 6, borderRadius: 6 },
     titleStyle: { fontSize: 16 }
   },
+  Header: {
+    backgroundColor: "#F6F6F6"
+  },
   Input: {
     containerStyle: {
       width: 300
@@ -35,14 +38,14 @@ const theme = {
   ListItem: {
     subtitleStyle: {
       fontSize: 14,
-      color: "#4C4C4C",
+      color: "#4C4C4C"
     },
     rightTitleStyle: {
       fontSize: 12,
-      color: '#BEBEBE',
+      color: "#BEBEBE"
     },
     rightSubtitleStyle: {
-      color: "#19C616",
+      color: "#19C616"
     }
   },
   SearchBar: {
@@ -62,6 +65,14 @@ const theme = {
     leftIconContainerStyle: {
       paddingLeft: 12,
       paddingRight: 0
+    }
+  },
+  Text: {
+    h4Style: {
+      fontSize: 14,
+      color: "#BEBEBE",
+      paddingTop: 16,
+      paddingLeft: 8
     }
   }
 };

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Actions } from "react-native-router-flux";
 import { StyleSheet, View } from "react-native";
-import { Avatar, Button, Text, withTheme } from "react-native-elements";
+import { Avatar, Button, Text, ThemeContext } from "react-native-elements";
 import InputFill from "../../components/InputFill";
 import { ReducerContext } from "../../reducers";
 
@@ -12,8 +12,8 @@ function mockFetch() {
 }
 
 const LoginScreen = props => {
-  const { theme } = props;
   const [{ auth }, dispatch] = useContext(ReducerContext);
+  const { theme } = useContext(ThemeContext);
 
   const handleLogin = () =>
     dispatch({
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F6F6F6"
+    backgroundColor: '#F6F6F6'
   },
   content: {
     paddingTop: 80,
@@ -77,4 +77,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withTheme(LoginScreen);
+export default LoginScreen;

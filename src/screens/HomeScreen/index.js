@@ -104,7 +104,6 @@ export default HomeScreen;
 const styles = StyleSheet.create({
 
   buttonSection: {
-    // width: '100%',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',

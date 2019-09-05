@@ -1,16 +1,20 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import {ThemeProvider} from 'react-native-elements';
-import store from './store/configureStore';
-import AppNavigation from './navigation/AppNavigation';
+import React from "react";
+import reducers, { ReducerContext } from "./reducers";
+import { ThemeProvider } from "react-native-elements";
+import theme from "./constants/theme";
+import MainScreen from "./screens/MainScreen";
+import thunkReducer from "./helpers/thunkHelper";
 
+const initState = reducers();
 const App = () => {
+  const store = thunkReducer(reducers, initState);
+
   return (
-    <Provider store={store}>
-      <ThemeProvider>
-        <AppNavigation />
+    <ReducerContext.Provider value={store}>
+      <ThemeProvider theme={theme}>
+        <MainScreen />
       </ThemeProvider>
-    </Provider>
+    </ReducerContext.Provider>
   );
 };
 

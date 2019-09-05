@@ -1,26 +1,55 @@
-import React, { Fragment, useEffect } from "react";
-import { StyleSheet, Dimensions, Image } from "react-native";
+import React, { useState, useEffect, useContext } from 'react';
+import { StyleSheet, Dimensions, Image, View } from 'react-native';
+import { ReducerContext } from '../../reducers';
+import initialPromise from './actionPromises/initialPromises';
+import {
+  Scene,
+  Router,
+  Stack,
+} from 'react-native-router-flux';
+import AppScreen from '../AppScreen';
+import LoginScreen from '../LoginScreen';
+import AccountScreen from '../AccountScreen';
+import FriendsScreen from '../FriendsScreen';
+import RegisterScreen from '../RegisteScreen';
 
-const { width, height } = Dimensions.get("window");
+const { width, height } = Dimensions.get('window');
 
 const MainScreen = props => {
-  const { navigation, isInitialed, isAuth, handleInitialApp } = props;
-  useEffect(() => {
-    handleInitialApp();
-  }, [handleInitialApp]);
+  const [isInitialApp, setIsInitialApp] = useState(false);
+  const [{ auth }] = useContext(ReducerContext);
 
   useEffect(() => {
-    if  (isInitialed) {
-      isAuth ? navigation.navigate("Home") : navigation.navigate("Login");
-    }
-  }, [isAuth, isInitialed, navigation]);;
-  return (
-    <Fragment>
+    initialPromise(setIsInitialApp);
+  }, [setIsInitialApp]);
+
+  if (!isInitialApp) {
+    return (
       <Image
         style={styles.image}
-        source={require("../../assets/images/splash.png")}
+        source={require('../../assets/images/splash.png')}
       />
-    </Fragment>
+    );
+  }
+
+  const stateHandler = (prevState, newState, action) => {
+    console.log('onStateChange: ACTION:', action);
+  };
+
+  return (
+    <Router stateHandler={stateHandler}>
+      <Scene key='root' hideNavBar>
+        <Stack key='login_stack'>
+          <Scene key='login' component={LoginScreen} title='Login' hideNavBar />
+          <Scene key='register' component={RegisterScreen} title='Register' />
+        </Stack>
+        <Stack key='app_stack' tabs>
+          <Scene key='home' component={AppScreen} title='聊天' />
+          <Scene key='test' component={FriendsScreen} title='好友' />
+          <Scene key='account' component={AccountScreen} title='我' />
+        </Stack>
+      </Scene>
+    </Router>
   );
 };
 
@@ -29,6 +58,6 @@ export default MainScreen;
 const styles = StyleSheet.create({
   image: {
     width,
-    height,
-  },
+    height
+  }
 });

@@ -1,7 +1,7 @@
 import React from "react";
 import reducers, { ReducerContext } from "./reducers";
 import { ThemeProvider } from "react-native-elements";
-import theme from "./constants/theme";
+import theme from "./theme";
 import MainScreen from "./screens/MainScreen";
 import thunkReducer from "./helpers/thunkHelper";
 

@@ -1,50 +1,55 @@
-import React, { useEffect } from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { StyleSheet, View } from 'react-native';
-import { Avatar, Input, Button } from 'react-native-elements';
+import React, { useEffect } from "react";
+import Icon from "react-native-vector-icons/FontAwesome";
+import { StyleSheet, View } from "react-native";
+import { Avatar, Input, Button, Text } from "react-native-elements";
 
 const LoginScreen = props => {
   const { navigation, isAuth } = props;
   useEffect(() => {
-    if (isAuth) navigation.navigate('Home');
+    if (isAuth) navigation.navigate("Home");
   }, [isAuth]);
 
   const handleLogin = () => props.handleLogin();
 
   return (
     <View style={styles.container}>
-      <Avatar rounded size="large" title="MD" />
-      <Input
-        containerStyle={styles.inputContainer}
-        inputContainerStyle={{ borderBottomWidth: 0 }}
-        placeholder="INPUT WITH CUSTOM ICON"
-        leftIcon={<Icon name="user" size={24} color="black" />}
-      />
+      <Avatar size='xlarge' title='MD' />
+      <View style={styles.inputBox}>
+        <Input
+          placeholder='手機號碼'
+          leftIcon={<Icon name='user' size={24} color='#ebebeb' />}
+        />
+        <Input
+          placeholder='密碼'
+          leftIcon={<Icon name='lock' size={24} color='#ebebeb' />}
+        />
+      </View>
       <Button
-        buttonStyle={{ width: 300, borderRadius: 25 }}
-        title="Login"
+        title='登入'
         onPress={handleLogin}
       />
+      <Button
+        title='註冊'
+        onPress={handleLogin}
+      />
+      <Text style={styles.text}>忘記密碼？</Text>
     </View>
   );
 };
 
 LoginScreen.navigationOptions = {
-  header: null,
+  header: null
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center"
   },
-  inputContainer: {
-    width: 300,
-    borderWidth: 1,
-    borderColor: '#000',
-    borderRadius: 25,
-    margin: 10,
-  },
+  text: {
+    textAlign: "center",
+    color: "#bdbdbd"
+  }
 });
 export default LoginScreen;

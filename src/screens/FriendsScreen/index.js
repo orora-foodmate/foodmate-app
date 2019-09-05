@@ -26,6 +26,7 @@ const FriendsScreen = () => {
           leftAvatar={{ source: { uri: item.avatar_url } }}
           title={item.name}
           subtitle={item.subtitle}
+          bottomDivider
         />
       ))}
       <Text h4>群({list.length})</Text>
@@ -35,6 +36,7 @@ const FriendsScreen = () => {
           leftAvatar={{ source: { uri: item.avatar_url } }}
           title={item.name}
           subtitle={item.subtitle}
+          bottomDivider
         />
       ))}
       <Text h4>好友({list.length})</Text>
@@ -44,6 +46,7 @@ const FriendsScreen = () => {
           leftAvatar={{ source: { uri: item.avatar_url } }}
           title={item.name}
           subtitle={item.subtitle}
+          bottomDivider
         />
       ))}
     </Fragment>

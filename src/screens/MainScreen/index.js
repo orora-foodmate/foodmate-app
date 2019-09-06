@@ -3,13 +3,20 @@ import { StyleSheet, Dimensions, Image, View } from "react-native";
 import initialPromise from "./actionPromises/initialPromises";
 import { ReducerContext } from "../../reducers";
 import { ThemeContext } from "react-native-elements";
-import { Scene, Router, Stack } from "react-native-router-flux";
+import { Scene, Router, Tabs, Stack, Actions } from "react-native-router-flux";
 import AppScreen from "../AppScreen";
+import ChatScreen from "../ChatScreen";
+import BlockScreen from "../BlockScreen";
 import LoginScreen from "../LoginScreen";
+import SearchScreen from "../SearchScreen";
+import MyCodeScreen from "../MyCodeScreen";
 import AccountScreen from "../AccountScreen";
 import FriendsScreen from "../FriendsScreen";
 import RegisterScreen from "../RegisteScreen";
+import EditNameScreen from "../EditNameScreen";
+import AddFriendsScreen from "../AddFriendsScreen";
 import { IconChat, IconFriends, IconAccount } from "../../components/Icons";
+import { more } from "../../assets/icons";
 
 const { width, height } = Dimensions.get("window");
 
@@ -35,45 +42,87 @@ const MainScreen = props => {
     console.log("onStateChange: ACTION:", action);
   };
 
+  const openMenu = () => {
+    Actions.drawerOpen("drawMenu");
+  };
+
   return (
     <Router
-      stateHandler={stateHandler}
+      onStateChange={stateHandler}
       navigationBarStyle={{ backgroundColor: theme.colors.grey1 }}
       sceneStyle={{ backgroundColor: "white" }}
     >
-      <Scene key='root' hideNavBar>
+      <Stack key='root' hideNavBar>
         <Stack key='login_stack'>
           <Scene key='login' component={LoginScreen} title='Login' hideNavBar />
           <Scene key='register' component={RegisterScreen} title='Register' />
         </Stack>
-        <Stack
-          key='app_stack'
-          tabs
+
+        <Tabs
+          key='tabbar'
+          routeName='tabbar'
+          backToInitial
           tabStyle={{ backgroundColor: theme.colors.grey1, paddingTop: 8 }}
           tabBarStyle={{ backgroundColor: theme.colors.grey1 }}
           activeTintColor={theme.colors.primary}
           inactiveTintColor={theme.colors.grey4}
         >
-          <Scene
+          <Stack
             key='home'
             component={AppScreen}
             title='聊天'
             icon={IconChat}
-          />
-          <Scene
-            key='test'
-            component={FriendsScreen}
+            rightButtonImage={more}
+            onRight={openMenu}
+          >
+            <Scene key='home' component={AppScreen} title='聊天' />
+          </Stack>
+          <Stack
+            key='friends'
             title='好友'
             icon={IconFriends}
-          />
+            rightButtonImage={more}
+            onRight={openMenu}
+          >
+            <Scene key='friends' component={FriendsScreen} title='好友' />
+          </Stack>
+          <Stack key='account' title='我' icon={IconAccount}>
+            <Scene
+              key='account'
+              component={AccountScreen}
+              title='我'
+              hideNavBar
+            />
+            <Scene
+              key='editName'
+              component={EditNameScreen}
+              title='修改昵称'
+              back
+            />
+            <Scene
+              key='myCode'
+              component={MyCodeScreen}
+              title='我的二维码'
+              back
+            />
+            <Scene key='block' component={BlockScreen} title='黑名单' back />
+          </Stack>
+        </Tabs>
+
+        <Stack key='detail'>
+          {/* 个人帐号设定 */}
+
+          {/* 聊天大厅功能 */}
+          <Scene key='search' component={SearchScreen} title='搜索' back />
+          <Scene key='chat' component={ChatScreen} title='聊天' back />
           <Scene
-            key='account'
-            component={AccountScreen}
-            title='我'
-            icon={IconAccount}
+            key='addFriends'
+            component={AddFriendsScreen}
+            title='添加好友/群'
+            back
           />
         </Stack>
-      </Scene>
+      </Stack>
     </Router>
   );
 };

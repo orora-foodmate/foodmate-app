@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Actions } from "react-native-router-flux";
 import { StyleSheet, View } from "react-native";
 import { Avatar, Button, Text, ThemeContext } from "react-native-elements";
+import ViewBox from "../../components/ViewBox";
 import InputFill from "../../components/InputFill";
 import { ReducerContext } from "../../reducers";
 
@@ -26,11 +27,11 @@ const LoginScreen = props => {
   };
 
   useEffect(() => {
-    if (auth.isAuth) Actions.reset("app_stack", { aaa: "ccc" });
+    if (auth.isAuth) Actions.reset("tabbar", { aaa: "ccc" });
   }, [auth.isAuth]);
 
   return (
-    <View style={styles.container}>
+    <ViewBox color='grey1' flex>
       <Avatar
         size={144}
         title='IM'
@@ -51,17 +52,11 @@ const LoginScreen = props => {
         <Text style={{ color: theme.colors.primary }}>帮助中心</Text>
         <Text style={{ color: theme.colors.grey3 }}>| v0.01</Text>
       </View>
-    </View>
+    </ViewBox>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: '#F6F6F6'
-  },
   content: {
     paddingTop: 80,
     alignItems: "center"

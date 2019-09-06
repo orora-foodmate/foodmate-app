@@ -6,31 +6,26 @@ const list = [
     name: "Amy Farha",
     avatar_url:
       "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg",
-    subtitle: "Vice President",
-    time: '10:23',
-    event: '＠'
+    subtitle: "Vice President"
   },
   {
     name: "Chris Jackson",
     avatar_url:
       "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg",
-    subtitle: "Vice Chairman",
-    time: '周二',
-    event: '＠'
+    subtitle: "Vice Chairman"
   }
 ];
 
-const AppScreen = () => {
+const BlockScreen = () => {
   return (
     <>
+      <Text h4>列入黑名单者，无法加入群({list.length})</Text>
       {list.map((item, index) => (
         <ListItem
-          key={`HomeList${index}`}
+          key={`BlockList${index}`}
           leftAvatar={{ source: { uri: item.avatar_url } }}
           title={item.name}
           subtitle={item.subtitle}
-          rightTitle={item.time}
-          rightSubtitle={item.event}
           bottomDivider
         />
       ))}
@@ -38,4 +33,4 @@ const AppScreen = () => {
   );
 };
 
-export default AppScreen;
+export default BlockScreen;

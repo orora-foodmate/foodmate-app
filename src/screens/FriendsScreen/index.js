@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Text, Button, ListItem } from "react-native-elements";
 
 const list = [
@@ -18,7 +18,7 @@ const list = [
 
 const FriendsScreen = () => {
   return (
-    <Fragment>
+    <>
       <Text h4>等待加入/审核({list.length})</Text>
       {list.map((item, index) => (
         <ListItem
@@ -49,7 +49,7 @@ const FriendsScreen = () => {
           bottomDivider
         />
       ))}
-    </Fragment>
+    </>
   );
 };
 

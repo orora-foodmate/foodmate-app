@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { Input, Button } from "react-native-elements";
+import { Actions } from "react-native-router-flux";
 import ViewBox from "../../components/ViewBox";
 
 const EditNameScreen = () => {
   const [name, setName] = useState("");
 
-  const handleConfirm = () => {};
+  const handleConfirm = () => {
+    console.log("TCL: EditNameScreen -> name", name);
+    Actions.pop();
+  };
   const handleInput = e => {
     setName(e.target.value);
   };

@@ -97,21 +97,27 @@ const MainScreen = props => {
               key='editName'
               component={EditNameScreen}
               title='修改昵称'
+              hideTabBar
               back
             />
             <Scene
               key='myCode'
               component={MyCodeScreen}
               title='我的二维码'
+              hideTabBar
               back
             />
-            <Scene key='block' component={BlockScreen} title='黑名单' back />
+            <Scene
+              key='block'
+              component={BlockScreen}
+              title='黑名单'
+              hideTabBar
+              back
+            />
           </Stack>
         </Tabs>
 
         <Stack key='detail'>
-          {/* 个人帐号设定 */}
-
           {/* 聊天大厅功能 */}
           <Scene key='search' component={SearchScreen} title='搜索' back />
           <Scene key='chat' component={ChatScreen} title='聊天' back />

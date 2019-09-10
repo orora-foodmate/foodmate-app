@@ -69,14 +69,22 @@ const MainScreen = props => {
         >
           <Stack
             key='home'
-            component={AppScreen}
             title='聊天'
             icon={IconChat}
             rightButtonImage={more}
             onRight={openMenu}
           >
             <Scene key='home' component={AppScreen} title='聊天' />
+            <Scene key='search' component={SearchScreen} title='搜索' back />
+            <Scene key='chat' component={ChatScreen} title='聊天' back />
+            <Scene
+              key='addFriends'
+              component={AddFriendsScreen}
+              title='添加好友/群'
+              back
+            />
           </Stack>
+
           <Stack
             key='friends'
             title='好友'
@@ -86,6 +94,7 @@ const MainScreen = props => {
           >
             <Scene key='friends' component={FriendsScreen} title='好友' />
           </Stack>
+
           <Stack key='account' title='我' icon={IconAccount}>
             <Scene
               key='account'
@@ -116,18 +125,6 @@ const MainScreen = props => {
             />
           </Stack>
         </Tabs>
-
-        <Stack key='detail'>
-          {/* 聊天大厅功能 */}
-          <Scene key='search' component={SearchScreen} title='搜索' back />
-          <Scene key='chat' component={ChatScreen} title='聊天' back />
-          <Scene
-            key='addFriends'
-            component={AddFriendsScreen}
-            title='添加好友/群'
-            back
-          />
-        </Stack>
       </Stack>
     </Router>
   );

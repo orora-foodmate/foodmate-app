@@ -15,7 +15,9 @@ const ListItemChat = ({ data, ...props }) => {
   const getNameContent = () => {
     return (
       <View style={{ flexDirection: "row" }}>
-        <Text>{data.name}</Text>
+        <Text numberOfLines={1} ellipsizeMode='tail' style={{ flexShrink: 1 }}>
+          {data.name}
+        </Text>
         {data.official ? (
           <Icon
             type='material-community'
@@ -72,7 +74,19 @@ const ListItemChat = ({ data, ...props }) => {
   };
 
   const getAvatarTitle = () => {
-    return data.name.split("").shift(1);
+    return data.name.substr(0, 1);
+  };
+
+  const getSubtitle = () => {
+    return data.subtitle?(
+      <Text
+        numberOfLines={1}
+        ellipsizeMode='tail'
+        style={{ color: theme.colors.grey4 }}
+      >
+        {data.subtitle}
+      </Text>
+    ):null;
   };
 
   return (
@@ -83,8 +97,7 @@ const ListItemChat = ({ data, ...props }) => {
         placeholderStyle: { backgroundColor: `hsl(${data.id}, 90%, 70%)` }
       }}
       title={getNameContent()}
-      subtitle={data.subtitle}
-      subtitleStyle={{ flex: 1, overflow: "hidden", marginTop: 4 }}
+      subtitle={getSubtitle()}
       rightContentContainerStyle={{ flex: 0 }}
       rightTitle={data.time}
       rightTitleStyle={{ marginTop: 2 }}

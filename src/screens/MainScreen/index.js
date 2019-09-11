@@ -15,6 +15,7 @@ import FriendsScreen from "../FriendsScreen";
 import RegisterScreen from "../RegisteScreen";
 import EditNameScreen from "../EditNameScreen";
 import AddFriendsScreen from "../AddFriendsScreen";
+import InfoSettingScreen from "../InfoSettingScreen";
 import { IconChat, IconFriends, IconAccount } from "../../components/Icons";
 import { more } from "../../assets/icons";
 
@@ -76,7 +77,13 @@ const MainScreen = props => {
           >
             <Scene key='home' component={AppScreen} title='聊天' />
             <Scene key='search' component={SearchScreen} title='搜索' back />
-            <Scene key='chat' component={ChatScreen} title='聊天' back />
+            <Scene
+              key='chat'
+              component={ChatScreen}
+              title='聊天'
+              hideTabBar
+              back
+            />
             <Scene
               key='addFriends'
               component={AddFriendsScreen}
@@ -93,6 +100,13 @@ const MainScreen = props => {
             onRight={openMenu}
           >
             <Scene key='friends' component={FriendsScreen} title='好友' />
+            <Scene
+              key='infoSetting'
+              component={InfoSettingScreen}
+              title='聊天对象设定'
+              hideTabBar
+              back
+            />
           </Stack>
 
           <Stack key='account' title='我' icon={IconAccount}>

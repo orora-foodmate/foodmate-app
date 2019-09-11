@@ -18,13 +18,14 @@ const theme = {
     grey1: "#F6F6F6",
     grey2: "#E4E4E4",
     grey3: "#BEBEBE",
-    grey4: "#4C4C4C"
+    grey4: "#707070",
+    grey5: "#4C4C4C"
   },
   Avatar: {
     rounded: true
   },
   Button: {
-    buttonStyle: { width: 300, padding: 8, margin: 6, borderRadius: 6 },
+    buttonStyle: { padding: 8, margin: 6, borderRadius: 6 },
     titleStyle: { fontSize: 16 }
   },
   Header: {
@@ -72,7 +73,7 @@ const theme = {
       fontSize: 14,
       color: "#BEBEBE",
       paddingTop: 16,
-      paddingLeft: 8
+      paddingLeft: 14
     }
   }
 };

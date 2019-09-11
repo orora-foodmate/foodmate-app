@@ -42,7 +42,7 @@ const LoginScreen = props => {
         <InputFill placeholder='请输入识别码' iconName='lock' />
         <Button
           title='登录'
-          buttonStyle={{ marginTop: 24 }}
+          buttonStyle={{ width: 300, marginTop: 24 }}
           titleStyle={{ fontSize: 20 }}
           onPress={handleLogin}
         />

@@ -42,8 +42,8 @@ const LoginScreen = props => {
         <InputFill placeholder='请输入识别码' iconName='lock' />
         <Button
           title='登录'
-          buttonStyle={{ width: 300, marginTop: 24 }}
-          titleStyle={{ fontSize: 20 }}
+          buttonStyle={styles.button}
+          titleStyle={styles.buttonTitle}
           onPress={handleLogin}
         />
         <Button type='clear' title='扫描二维码登录' onPress={handleScan} />
@@ -57,6 +57,13 @@ const LoginScreen = props => {
 };
 
 const styles = StyleSheet.create({
+  button: {
+    width: 300,
+    marginTop: 24
+  },
+  buttonTitle: {
+    fontSize: 20
+  },
   content: {
     paddingTop: 80,
     alignItems: "center"

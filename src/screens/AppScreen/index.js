@@ -82,7 +82,7 @@ const list = [
   {
     id: 114168924,
     name: "Amber",
-    avatar_url: "",
+    avatar_url: "http://placekitten.com/50/50",
     subtitle: "😪",
     time: "07/10",
     msg: 0,
@@ -141,13 +141,12 @@ const list = [
   }
 ];
 
+const handleEnterChat = name => () => {
+  Actions.chat({ title: name });
+};
+
 const renderItem = ({ item }) => {
-  const handleEnterChat = name => {
-    Actions.chat({ title: name });
-  };
-  return (
-    <ListItemChat data={item} onPress={() => handleEnterChat(item.name)} />
-  );
+  return <ListItemChat data={item} onPress={handleEnterChat(item.name)} />;
 };
 
 const AppScreen = () => {

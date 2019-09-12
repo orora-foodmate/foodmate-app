@@ -7,7 +7,6 @@ const EditNameScreen = () => {
   const [name, setName] = useState("");
 
   const handleConfirm = () => {
-    console.log("TCL: EditNameScreen -> name", name);
     Actions.pop();
   };
   const handleInput = e => {
@@ -18,7 +17,7 @@ const EditNameScreen = () => {
       <Input label='昵称' onChange={handleInput} />
       <Button
         title='确认'
-        containerStyle={{ paddingTop: 24 }}
+        containerStyle={{ width: 300, paddingTop: 24 }}
         onPress={handleConfirm}
       />
     </ViewBox>

@@ -45,6 +45,14 @@ const ListItemChat = ({ data, ...props }) => {
             containerStyle={{ marginLeft: 4 }}
           />
         ) : null}
+        {data.edit ? (
+          <Icon
+            type='materialicon'
+            name='edit'
+            size={16}
+            containerStyle={{ marginLeft: 4 }}
+          />
+        ) : null}
       </View>
     );
   };

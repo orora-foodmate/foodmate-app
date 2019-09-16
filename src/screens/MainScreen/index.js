@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, Dimensions, Image, View } from "react-native";
-import initialPromise from "./actionPromises/initialPromises";
-import { ReducerContext } from "../../reducers";
 import { ThemeContext } from "react-native-elements";
+import { StyleSheet, Dimensions, Image, View } from "react-native";
 import { Scene, Router, Tabs, Stack, Actions } from "react-native-router-flux";
 import AppScreen from "../AppScreen";
 import ChatScreen from "../ChatScreen";
@@ -16,8 +14,10 @@ import RegisterScreen from "../RegisteScreen";
 import EditNameScreen from "../EditNameScreen";
 import AddFriendsScreen from "../AddFriendsScreen";
 import InfoSettingScreen from "../InfoSettingScreen";
-import { IconChat, IconFriends, IconAccount } from "../../components/Icons";
+import initialPromise from "./actionPromises/initialPromises";
 import { more } from "../../assets/icons";
+import { ReducerContext } from "../../reducers";
+import { IconChat, IconFriends, IconAccount } from "../../components/Icons";
 
 const { width, height } = Dimensions.get("window");
 
@@ -104,6 +104,13 @@ const MainScreen = props => {
               key='infoSetting'
               component={InfoSettingScreen}
               title='聊天对象设定'
+              hideTabBar
+              back
+            />
+            <Scene
+              key='editFriendName'
+              component={EditNameScreen}
+              title='修改昵称'
               hideTabBar
               back
             />

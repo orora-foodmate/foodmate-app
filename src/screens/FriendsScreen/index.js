@@ -24,7 +24,7 @@ const applyList = [
     id: 123329901,
     name: "LaLa",
     subtitle: "2019/08/12",
-    avatar_url: "",
+    avatar_url: "http://placekitten.com/52/52",
     applyType: "APPLY"
   },
   {
@@ -40,7 +40,8 @@ const groupList = [
   {
     id: 166334,
     name: "私聊群(3)",
-    avatar_url: ""
+    avatar_url: "",
+    edit: true
   },
   {
     id: 10041,
@@ -58,58 +59,81 @@ const friendList = [
   {
     id: 178335648,
     name: "Alice",
-    avatar_url: ""
+    avatar_url: "",
+    online: 1,
+    edit: true
   },
   {
     id: 114168924,
     name: "Amber",
-    avatar_url: ""
+    avatar_url: "",
+    online: 0,
+    edit: true
   },
   {
     id: 114161667,
     name: "Ben",
-    avatar_url: ""
+    avatar_url: "",
+    online: 1,
+    edit: true
   },
   {
     id: 112612004,
     name: "Eason",
-    avatar_url: ""
+    avatar_url: "",
+    online: 0,
+    edit: true
   },
   {
     id: 114916674,
     name: "Jacky",
-    avatar_url: ""
+    avatar_url: "",
+    online: 0,
+    edit: true
   },
   {
     id: 114915123,
     name: "Jimmy",
-    avatar_url: ""
+    avatar_url: "",
+    online: 0,
+    edit: true
   },
   {
     id: 123445345,
     name: "Linus",
     avatar_url:
-      "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
+      "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg",
+    online: 0,
+    edit: true
   },
   {
     id: 135748474,
     name: "Mom",
-    avatar_url: ""
+    avatar_url: "",
+    online: 0,
+    edit: true
   },
   {
     id: 131899467,
     name: "Orora",
-    avatar_url: ""
+    avatar_url: "",
+    online: 0,
+    edit: true
   }
 ];
 
 const getApplyType = type => {
   const { theme } = useContext(ThemeContext);
+  const handleApplyConfirm = () => {};
   switch (type) {
     case "ADD_FRIEND":
-      return <ButtonSmall title='加好友' />;
+      return (
+        <ButtonSmall title='加好友' onPress={() => handleApplyConfirm()} />
+      );
     case "ADD_GROUP":
-      return <ButtonSmall title='加群组' />;
+      return (
+        <ButtonSmall title='加群组' onPress={() => handleApplyConfirm()} />
+      );
     case "APPLY":
       return (
         <Text style={{ fontSize: 14, color: theme.colors.grey3 }}>
@@ -123,8 +147,8 @@ const getApplyType = type => {
 };
 
 const FriendsScreen = () => {
-  const handleEnterInfo = name => {
-    Actions.infoSetting({ title: name });
+  const handleEnterInfo = item => {
+    Actions.infoSetting({ title: item.name, item });
   };
   return (
     <ScrollView>
@@ -132,25 +156,25 @@ const FriendsScreen = () => {
       {applyList.map((item, index) => (
         <ListItemChat
           key={`ApplyList${index}`}
-          data={item}
+          data={{ ...item, edit: false }}
           rightElement={getApplyType(item.applyType)}
-          onPress={() => handleEnterInfo(item.name)}
+          onPress={() => handleEnterInfo({ ...item, isContact: false })}
         />
       ))}
       <Text h4>群({groupList.length})</Text>
       {groupList.map((item, index) => (
         <ListItemChat
           key={`GroupList${index}`}
-          data={item}
-          onPress={() => handleEnterInfo(item.name)}
+          data={{ ...item, edit: false }}
+          onPress={() => handleEnterInfo({ ...item, isContact: true })}
         />
       ))}
       <Text h4>好友({friendList.length})</Text>
       {friendList.map((item, index) => (
         <ListItemChat
           key={`FriendList${index}`}
-          data={item}
-          onPress={() => handleEnterInfo(item.name)}
+          data={{ ...item, edit: false }}
+          onPress={() => handleEnterInfo({ ...item, isContact: true })}
         />
       ))}
     </ScrollView>

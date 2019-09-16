@@ -6,7 +6,7 @@ const theme = {
     secondary: "#4BA4EA",
     secondaryLight: "#7BC5FF",
     secondaryDark: "#3C94D9",
-    success: "#7FE910",
+    success: "#03C604",
     warning: "#F69900",
     danger: "#C80A0A",
     divider: "#EFEFEF",

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+
 import { Actions } from "react-native-router-flux";
 import { StyleSheet, View } from "react-native";
 import { Avatar, Button, Text, withTheme } from "react-native-elements";

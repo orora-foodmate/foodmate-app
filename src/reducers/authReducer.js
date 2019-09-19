@@ -4,6 +4,7 @@ import { authState } from './initialState';
 const authReducer = (auth = authState, action) => {
   switch (action.type) {
     case types.LOGIN_SUCCESS:
+      console.log('TCL: authReducer -> action', action)
       return auth.merge({isAuth: true});
     case types.LOGIN:
     case types.LOGIN_ERROR:

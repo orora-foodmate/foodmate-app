@@ -16,8 +16,14 @@ export default (reducer, initialState) => {
     dispatch({ ...rest, type: REQUEST });
 
     return promise
-      .then(result => dispatch({ ...rest, result, type: SUCCESS }))
-      .catch(error => dispatch({ ...rest, error, type: ERROR }));
+      .then(result => {
+      console.log('TCL: result', result)
+        dispatch({ ...rest, result, type: SUCCESS })
+      })
+      .catch(error => {
+      console.log('TCL: error', error)
+        dispatch({ ...rest, error, type: ERROR })
+      });
   };
 
   return [state, thunkDispatch];

@@ -5,20 +5,23 @@ import {
   messageSchema,
   userIdSchema
 } from './schemas';
-import {initialQueueFactory} from '../taskManager';
 
-let realmClient = null;
-
-export const initialRealmClient = async () => {
-  try {
-  const client = Realm.open({
-    schema: [friendSchema, groupSchema, messageSchema, userIdSchema]
-  });
-  await initialQueueFactory();
-  realmClient = client;
-
-  return client;
-  }catch(error) {
-    throw error;
+class realmHelperClass {
+  constructor(options) {
+    this.options = options;
+    this.realm = null;
   }
-};
+
+  initialHelper = () => {
+    return Realm.open(this.options).then(realm => {
+      this.realm = realm;
+      return realm;
+    });
+  };
+}
+
+const realmHelper = new realmHelperClass({
+  schemas: [friendSchema, groupSchema, messageSchema, userIdSchema]
+});
+
+export default realmHelper;

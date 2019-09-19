@@ -14,7 +14,7 @@ import RegisterScreen from "../RegisteScreen";
 import EditNameScreen from "../EditNameScreen";
 import AddFriendsScreen from "../AddFriendsScreen";
 import InfoSettingScreen from "../InfoSettingScreen";
-import initialPromise from "./actionPromises/initialPromises";
+import {initialAppAction} from './actions';
 import { more } from "../../assets/icons";
 import { ReducerContext } from "../../reducers";
 import { IconChat, IconFriends, IconAccount } from "../../components/Icons";
@@ -22,15 +22,14 @@ import { IconChat, IconFriends, IconAccount } from "../../components/Icons";
 const { width, height } = Dimensions.get("window");
 
 const MainScreen = props => {
-  const [isInitialApp, setIsInitialApp] = useState(false);
-  const [{ auth }] = useContext(ReducerContext);
+  const [ {setting}, dispatch] = useContext(ReducerContext);
   const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
-    initialPromise(setIsInitialApp);
-  }, [setIsInitialApp]);
+    dispatch(initialAppAction());
+  }, []);
 
-  if (!isInitialApp) {
+  if (!setting.get('isInitialed')) {
     return (
       <Image
         style={styles.image}

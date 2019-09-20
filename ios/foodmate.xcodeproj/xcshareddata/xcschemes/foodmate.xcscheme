@@ -10,7 +10,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;echo .env &gt; /tmp/envfile&#10;">
+               scriptText = "echo .env &gt; /tmp/envfile&#10;">
             </ActionContent>
          </ExecutionAction>
       </PreActions>
@@ -38,9 +38,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "imapp.app"
-               BlueprintName = "imapp"
-               ReferencedContainer = "container:imapp.xcodeproj">
+               BuildableName = "foodmate.app"
+               BlueprintName = "foodmate"
+               ReferencedContainer = "container:foodmate.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -52,9 +52,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "imappTests.xctest"
-               BlueprintName = "imappTests"
-               ReferencedContainer = "container:imapp.xcodeproj">
+               BuildableName = "foodmateTests.xctest"
+               BlueprintName = "foodmateTests"
+               ReferencedContainer = "container:foodmate.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -70,9 +70,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "imappTests.xctest"
-               BlueprintName = "imappTests"
-               ReferencedContainer = "container:imapp.xcodeproj">
+               BuildableName = "foodmateTests.xctest"
+               BlueprintName = "foodmateTests"
+               ReferencedContainer = "container:foodmate.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -80,9 +80,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "imapp.app"
-            BlueprintName = "imapp"
-            ReferencedContainer = "container:imapp.xcodeproj">
+            BuildableName = "foodmate.app"
+            BlueprintName = "foodmate"
+            ReferencedContainer = "container:foodmate.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -103,9 +103,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "imapp.app"
-            BlueprintName = "imapp"
-            ReferencedContainer = "container:imapp.xcodeproj">
+            BuildableName = "foodmate.app"
+            BlueprintName = "foodmate"
+            ReferencedContainer = "container:foodmate.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -122,9 +122,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "imapp.app"
-            BlueprintName = "imapp"
-            ReferencedContainer = "container:imapp.xcodeproj">
+            BuildableName = "foodmate.app"
+            BlueprintName = "foodmate"
+            ReferencedContainer = "container:foodmate.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

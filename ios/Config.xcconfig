@@ -1,6 +1,6 @@
 //
 //  Config.xcconfig
-//  imapp
+//  foodmate
 //
 //  Created by 林暐秦 on 2019/9/20.
 //  Copyright © 2019 Facebook. All rights reserved.
@@ -9,4 +9,4 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-#include? "tmp.xcconfig"
+ios/tmp.xcconfig

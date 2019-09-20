@@ -1,4 +1,5 @@
 import React from 'react';
+import {Text} from 'react-native';
 import reducers, { ReducerContext } from './reducers';
 import { ThemeProvider } from 'react-native-elements';
 import theme from './theme';

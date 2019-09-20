@@ -6,9 +6,10 @@ import ViewBox from '../../components/ViewBox';
 import InputFill from '../../components/InputFill';
 import { ReducerContext } from '../../reducers';
 import { loginAction } from './actions';
+import {encodeAuthBasicToken} from '../../helpers/authHelpers';
 
 const handleLogin = (dispatch, code) => () => {
-  const payload = { username: code,password: 'a123456789', grant_type: 'password'};
+  const payload = { username: encodeAuthBasicToken(code),password: 'a123456789', grant_type: 'password'};
   loginAction(dispatch, payload);
 };
 

@@ -1,0 +1,18 @@
+### 
+@DEV = http://10.100.10.222:8989/
+@QAT = http://10.100.10.218:3001/v1/
+@PROD = http://52.194.226.89:3001/v1/
+@domain = {{DEV}}
+@jsonContentType = application/json
+@formContentType = application/x-www-form-urlencoded
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTE5MCwiaWF0IjoxNTY1MjU4Mzg4fQ.tMjE8nIG-4Cbj3M4OKa6IgExzZ9sZPAmhDSxYHhqC-I
+
+
+### Login
+POST {{domain}}oauth/token?grant_type=password&username=dGVzdCsxMg==&password=123456
+Content-Type: {{formContentType}}
+Authorization: Basic aW1fY2xpZW50YXBwOjEyMzQ1Ng==
+
+###
+
+

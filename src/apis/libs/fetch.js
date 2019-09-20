@@ -19,8 +19,8 @@ const parseResponse = response => {
 export const fetchBasicToken = (url, customHeaders, payload) => {
   const form = new FormData();
   map(payload, (value, key) => form.append(key, value))
-
   const realUrl = `${url}?${QS.stringify(payload)}`;
+
   return fetch(realUrl, {
     method: 'POST',
     headers: { ...customHeaders,  'Content-Type': 'application/x-www-form-urlencoded'},

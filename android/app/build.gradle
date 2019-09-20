@@ -107,11 +107,6 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-        manifestPlaceholders = [
-                JPUSH_APPKEY: "9a1220a652e5141462bd3252",
-                APP_CHANNEL : "default"
-        ]
-
     }
     splits {
         abi {
@@ -143,11 +138,9 @@ android {
 }
 
 dependencies {
-    implementation project(':react-native-config')
-    implementation project(':realm')
     implementation project(':react-native-vector-icons')
-    implementation project(':jcore-react-native')
-    implementation project(':jpush-react-native')
+    implementation project(':realm')
+    implementation project(':react-native-config')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules

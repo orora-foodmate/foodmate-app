@@ -1,11 +1,13 @@
+import * as types from '../constants/actionTypes';
 import { authState } from './initialState';
 
 const authReducer = (auth = authState, action) => {
   switch (action.type) {
-    case 'LOGIN_SUCCESS':
-      return { ...auth, isAuth: true };
-    case 'LOGIN':
-    case 'LOGIN_ERROR':
+    case types.LOGIN_SUCCESS:
+      console.log('TCL: authReducer -> action', action)
+      return auth.merge({isAuth: true});
+    case types.LOGIN:
+    case types.LOGIN_ERROR:
     default:
       return auth;
   }

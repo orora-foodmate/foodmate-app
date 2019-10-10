@@ -1,33 +1,29 @@
-import React, { useContext, useEffect } from "react";
-import { Actions } from "react-native-router-flux";
-import { StyleSheet, View } from "react-native";
-import { Avatar, Button, Text, ThemeContext } from "react-native-elements";
-import ViewBox from "../../components/ViewBox";
-import InputFill from "../../components/InputFill";
-import { ReducerContext } from "../../reducers";
+import React, { useContext, useEffect, useState } from 'react';
+import { Actions } from 'react-native-router-flux';
+import { StyleSheet, View } from 'react-native';
+import { Avatar, Button, Text, ThemeContext } from 'react-native-elements';
+import ViewBox from '../../components/ViewBox';
+import InputFill from '../../components/InputFill';
+import { ReducerContext } from '../../reducers';
+import { loginAction } from './actions';
+import {encodeAuthBasicToken} from '../../helpers/authHelpers';
 
-function mockFetch() {
-  return new Promise(resolve => {
-    setTimeout(resolve, 2000);
-  });
-}
+const handleLogin = (dispatch, code) => () => {
+  const payload = { username: encodeAuthBasicToken(code),password: 'a123456789', grant_type: 'password'};
+  loginAction(dispatch, payload);
+};
 
 const LoginScreen = props => {
+  const [code, setCode] = useState('');
   const [{ auth }, dispatch] = useContext(ReducerContext);
-  const { theme } = useContext(ThemeContext);
-
-  const handleLogin = () =>
-    dispatch({
-      types: ["LOGIN", "LOGIN_SUCCESS", "LOGIN_ERROR"],
-      promise: mockFetch()
-    });
+  const { theme } = useContext(ThemeContext);  
 
   const handleScan = () => {
-    console.log("TCL: handleScan -> handleScan");
+    console.log('TCL: handleScan -> handleScan');
   };
 
   useEffect(() => {
-    if (auth.isAuth) Actions.reset("tabbar", { aaa: "ccc" });
+    if (auth.isAuth) Actions.reset('tabbar', { aaa: 'ccc' });
   }, [auth.isAuth]);
 
   return (
@@ -36,15 +32,21 @@ const LoginScreen = props => {
         size={144}
         title='IM'
         titleStyle={{ color: theme.colors.primary }}
-        overlayContainerStyle={{ backgroundColor: "white" }}
+        overlayContainerStyle={{ backgroundColor: 'white' }}
       />
       <View style={styles.content}>
-        <InputFill placeholder='请输入识别码' iconName='lock' />
+        <InputFill
+          autoCapitalize='none'
+          placeholder='请输入识别码'
+          iconName='lock'
+          value={code}
+          onChangeText={text => setCode(text)}
+        />
         <Button
           title='登录'
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
-          onPress={handleLogin}
+          onPress={handleLogin(dispatch, code)}
         />
         <Button type='clear' title='扫描二维码登录' onPress={handleScan} />
       </View>
@@ -66,14 +68,14 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingTop: 80,
-    alignItems: "center"
+    alignItems: 'center'
   },
   footer: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
     width: 300,
     bottom: 20
   }

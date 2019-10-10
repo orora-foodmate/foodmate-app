@@ -1,9 +1,10 @@
-import React from "react";
-import reducers, { ReducerContext } from "./reducers";
-import { ThemeProvider } from "react-native-elements";
-import theme from "./theme";
-import MainScreen from "./screens/MainScreen";
-import thunkReducer from "./helpers/thunkHelper";
+import React from 'react';
+import {Text} from 'react-native';
+import reducers, { ReducerContext } from './reducers';
+import { ThemeProvider } from 'react-native-elements';
+import theme from './theme';
+import MainScreen from './screens/MainScreen';
+import thunkReducer from './helpers/thunkHelper';
 
 const initState = reducers();
 const App = () => {

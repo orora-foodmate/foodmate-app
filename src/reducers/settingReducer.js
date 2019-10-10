@@ -1,4 +1,4 @@
-import types from '../constants/actionTypes';
+import * as types from '../constants/actionTypes';
 import { settingState } from './initialState';
 
 export default function reducer(setting = settingState, { type, payload }) {

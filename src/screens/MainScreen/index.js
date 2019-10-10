@@ -34,7 +34,7 @@ const MainScreen = props => {
     return (
       <Image
         style={styles.image}
-        source={require('../../assets/images/splash.png')}
+        // source={require('../../assets/images/splash.png')}
       />
     );
   }

@@ -6,28 +6,21 @@ import ViewBox from '../../components/ViewBox';
 import InputFill from '../../components/InputFill';
 import { ReducerContext } from '../../reducers';
 import { loginAction } from './actions';
-import {encodeAuthBasicToken} from '../../helpers/authHelpers';
+import { encodeAuthBasicToken } from '../../helpers/authHelpers';
 
 const handleLogin = (dispatch, code) => () => {
-  const payload = { username: encodeAuthBasicToken(code),password: 'a123456789', grant_type: 'password'};
+  const payload = {
+    username: encodeAuthBasicToken(code),
+    password: 'a123456789',
+    grant_type: 'password'
+  };
   loginAction(dispatch, payload);
 };
-
-const handleLogin = () =>
-  dispatch({
-    types: ["LOGIN", "LOGIN_SUCCESS", "LOGIN_ERROR"],
-    promise: mockFetch()
-  });
-
-const handleScan = () =>
-  console.log("TCL: handleScan -> handleScan");
 
 const LoginScreen = props => {
   const [code, setCode] = useState('');
   const [{ auth }, dispatch] = useContext(ReducerContext);
   const { theme } = useContext(ThemeContext);
-
-  
 
   useEffect(() => {
     if (auth.isAuth) Actions.reset('tabbar', { aaa: 'ccc' });
@@ -57,15 +50,14 @@ const LoginScreen = props => {
           onPress={handleLogin}
         />
         <Button
-          type="clear"
+          type='clear'
           title='忘記密碼?'
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
           onPress={handleLogin(dispatch, code)}
         />
       </View>
-      <View style={styles.footer}>
-      </View>
+      <View style={styles.footer}></View>
     </ViewBox>
   );
 };

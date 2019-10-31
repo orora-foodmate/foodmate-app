@@ -1,17 +1,23 @@
-import React from 'react';
-import {Text} from 'react-native';
+import React, { useEffect } from 'react';
 import reducers, { ReducerContext } from './reducers';
 import { ThemeProvider } from 'react-native-elements';
 import theme from './theme';
 import MainScreen from './screens/MainScreen';
-import thunkReducer from './helpers/thunkHelper';
+import thunkReducer, { globalDispatcher } from './helpers/thunkHelper';
+import { initialAppAction } from './appActions';
 
 const initState = reducers();
+
 const App = () => {
-  const store = thunkReducer(reducers, initState);
+  const [store, dispatch] = thunkReducer(reducers, initState);
+
+  useEffect(() => {
+    globalDispatcher.setDispatch(dispatch);
+    dispatch(initialAppAction());
+  }, []);
 
   return (
-    <ReducerContext.Provider value={store}>
+    <ReducerContext.Provider value={[store, dispatch]}>
       <ThemeProvider theme={theme}>
         <MainScreen />
       </ThemeProvider>

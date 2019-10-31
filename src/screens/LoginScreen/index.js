@@ -12,19 +12,20 @@ function mockFetch() {
   });
 }
 
+const handleLogin = () =>
+  dispatch({
+    types: ["LOGIN", "LOGIN_SUCCESS", "LOGIN_ERROR"],
+    promise: mockFetch()
+  });
+
+const handleScan = () =>
+  console.log("TCL: handleScan -> handleScan");
+
 const LoginScreen = props => {
   const [{ auth }, dispatch] = useContext(ReducerContext);
   const { theme } = useContext(ThemeContext);
 
-  const handleLogin = () =>
-    dispatch({
-      types: ["LOGIN", "LOGIN_SUCCESS", "LOGIN_ERROR"],
-      promise: mockFetch()
-    });
-
-  const handleScan = () => {
-    console.log("TCL: handleScan -> handleScan");
-  };
+  
 
   useEffect(() => {
     if (auth.isAuth) Actions.reset("tabbar", { aaa: "ccc" });
@@ -34,23 +35,34 @@ const LoginScreen = props => {
     <ViewBox color='grey1' flex>
       <Avatar
         size={144}
-        title='IM'
+        title='F'
         titleStyle={{ color: theme.colors.primary }}
         overlayContainerStyle={{ backgroundColor: "white" }}
       />
       <View style={styles.content}>
-        <InputFill placeholder='请输入识别码' iconName='lock' />
+        <InputFill placeholder='手機號碼' iconName='dotcircle' />
+        <InputFill placeholder='密碼' iconName='lock' />
         <Button
-          title='登录'
+          title='登入'
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
           onPress={handleLogin}
         />
-        <Button type='clear' title='扫描二维码登录' onPress={handleScan} />
+        <Button
+          title='註冊'
+          buttonStyle={styles.button}
+          titleStyle={styles.buttonTitle}
+          onPress={handleLogin}
+        />
+        <Button
+          type="clear"
+          title='忘記密碼?'
+          buttonStyle={styles.button}
+          titleStyle={styles.buttonTitle}
+          onPress={handleLogin}
+        />
       </View>
       <View style={styles.footer}>
-        <Text style={{ color: theme.colors.primary }}>帮助中心</Text>
-        <Text style={{ color: theme.colors.grey3 }}>| v0.01</Text>
       </View>
     </ViewBox>
   );

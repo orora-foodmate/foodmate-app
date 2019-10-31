@@ -12,14 +12,12 @@
     "react-native-elements": "^1.2.0",
     "react-native-queue": "^1.2.1",
     "react-native-router-flux": "^4.0.6",
-    "react-native-vector-icons": "^6.6.0",
-    "realm": "^3.0.0",
-    "socket.io-client": "^2.2.0",
-    "websocket": "^1.0.29"
+    "react-native-vector-icons": "^6.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
-    "@babel/runtime": "^7.5.5",
+    "@babel/plugin-proposal-decorators": "^7.6.0",
+    "@babel/runtime": "^7.6.3",
     "babel-jest": "^24.9.0",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.56.0",

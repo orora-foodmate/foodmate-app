@@ -13,7 +13,7 @@ const InputFill = ({ placeholder, iconName, ...props }) => {
       leftIconContainerStyle={{ paddingRight: 12 }}
       leftIcon={
         iconName ? (
-          <Icon name={iconName} size={24} color={theme.colors.grey3} />
+          <Icon type="font-awesome" name={iconName} size={24} color={theme.colors.grey3} />
         ) : null
       }
       {...props}

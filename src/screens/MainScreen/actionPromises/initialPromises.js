@@ -1,9 +1,7 @@
-
-
 export default async function initialPromise(setIsInitialApp) {
   try {
     setIsInitialApp(true);
-  }catch(error) {
+  } catch (error) {
     throw error;
   }
 }

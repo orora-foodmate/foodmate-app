@@ -14,7 +14,7 @@ const MyCodeScreen = () => {
       <Text>{userDetail.name}</Text>
       <Text h4>ID: {userDetail.id}</Text>
       <Image
-        source={require("../../assets/images/qrcode.png")}
+        // source={require("../../assets/images/qrcode.png")}
         style={{
           width: 300,
           height: 300,

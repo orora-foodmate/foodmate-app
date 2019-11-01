@@ -3,7 +3,6 @@ import { Text, ThemeContext } from "react-native-elements";
 import { ScrollView } from "react-native";
 import { ListItemChat } from "../../components/ListItem";
 import { Actions } from "react-native-router-flux";
-import { ButtonSmall } from "../../components/Button";
 
 const applyList = [
   {
@@ -127,13 +126,7 @@ const getApplyType = type => {
   const handleApplyConfirm = () => {};
   switch (type) {
     case "ADD_FRIEND":
-      return (
-        <ButtonSmall title='加好友' onPress={() => handleApplyConfirm()} />
-      );
     case "ADD_GROUP":
-      return (
-        <ButtonSmall title='加群组' onPress={() => handleApplyConfirm()} />
-      );
     case "APPLY":
       return (
         <Text style={{ fontSize: 14, color: theme.colors.grey3 }}>

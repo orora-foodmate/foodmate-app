@@ -1,21 +1,15 @@
 import React, { useContext } from "react";
 import propTypes from "prop-types";
-import Icon from "react-native-vector-icons/FontAwesome";
 import { Input, ThemeContext } from "react-native-elements";
 
-const InputFill = ({ placeholder, iconName, ...props }) => {
-  const { theme } = useContext(ThemeContext);
+const InputFill = ({ placeholder, leftIcon, ...props }) => {
   return (
     <Input
       placeholder={placeholder}
-      containerStyle={{ borderRadius: 25, backgroundColor: "white" }}
-      inputContainerStyle={{ borderBottomWidth: 0 }}
-      leftIconContainerStyle={{ paddingRight: 12 }}
-      leftIcon={
-        iconName ? (
-          <Icon name={iconName} size={24} color={theme.colors.grey3} />
-        ) : null
-      }
+      containerStyle={{ backgroundColor: "#fff", marginBottom: 15, width: '100%', paddingLeft: 0 }}
+      inputContainerStyle={{ borderBottomWidth: 2, width: '80%', borderColor: "#eee", fontSize: 10 }}
+      leftIcon={leftIcon}
+      leftIconContainerStyle={{ paddingRight: 12, paddingLeft: 0 }}
       {...props}
     />
   );
@@ -23,7 +17,11 @@ const InputFill = ({ placeholder, iconName, ...props }) => {
 
 InputFill.propTypes = {
   placeholder: propTypes.string,
-  iconName: propTypes.string
+  leftIcon: propTypes.element
+};
+
+InputFill.defaultProps = {
+  leftIcon: null
 };
 
 export default InputFill;

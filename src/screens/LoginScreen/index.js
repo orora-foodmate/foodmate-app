@@ -35,7 +35,7 @@ const LoginScreen = props => {
         overlayContainerStyle={{ backgroundColor: 'white' }}
       />
       <View style={styles.content}>
-        <InputFill placeholder='手機號碼' iconName='dotcircle' />
+        <InputFill placeholder='手機號碼' iconName='dot-circle-o' />
         <InputFill placeholder='密碼' iconName='lock' />
         <Button
           title='登入'

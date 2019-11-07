@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useReducer } from 'reinspect';
 
 class globalDispatcherClass {
   constructor() {

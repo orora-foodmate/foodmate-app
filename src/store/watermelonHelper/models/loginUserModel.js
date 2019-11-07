@@ -5,13 +5,22 @@ import { field } from '@nozbe/watermelondb/decorators';
 class loginUserModel extends Model {
   static table = 'loginUser';
 
-  @field('access_token') access_token;
-  @field('refresh_token') refresh_token;
-  @field('user_id') user_id;
-  @field('username') username;
-  @field('is_auth') is_auth;
-  @field('expired') expired;
-  @field('scope') scope;
+  @field('uid') uid;
+  @field('email') email;
+  @field('phone_number') phone_number;
+  @field('display_name') display_name;
+  @field('gender') gender;
+  @field('job_title') job_title;
+  @field('soul_food') soul_food;
+  @field('info') info;
+  @field('photo_url') photo_url;
+  @field('is_notification') is_notification;
+  @field('is_camera') is_camera;
+  @field('is_album') is_album;
+  @field('rate') rate;
+  @field('disabled') disabled;
+  @field('created_at') created_at;
+  @field('updated_at') updated_at;
 
   get rowData () {
     const userId = this.user_id;

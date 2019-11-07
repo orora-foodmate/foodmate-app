@@ -19,3 +19,5 @@ export const initialAppActionTypes = [
   INITIAL_APP_SUCCESS,
   INITIAL_APP_ERROR
 ];
+
+export const loginActionTypes = [LOGIN, LOGIN_SUCCESS, LOGIN_ERROR];

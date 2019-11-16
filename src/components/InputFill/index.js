@@ -6,8 +6,17 @@ const InputFill = ({ placeholder, leftIcon, ...props }) => {
   return (
     <Input
       placeholder={placeholder}
-      containerStyle={{ backgroundColor: "#fff", marginBottom: 15, width: '100%', paddingLeft: 0 }}
-      inputContainerStyle={{ borderBottomWidth: 2, width: '80%', borderColor: "#eee", fontSize: 10 }}
+      containerStyle={{
+        backgroundColor: "#fff",
+        marginBottom: 15,
+        width: "100%"
+      }}
+      inputContainerStyle={{
+        borderBottomWidth: 2,
+        width: "100%",
+        borderColor: "#eee",
+        fontSize: 10
+      }}
       leftIcon={leftIcon}
       leftIconContainerStyle={{ paddingRight: 12, paddingLeft: 0 }}
       {...props}

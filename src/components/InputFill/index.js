@@ -6,19 +6,14 @@ const InputFill = ({ placeholder, leftIcon, ...props }) => {
   return (
     <Input
       placeholder={placeholder}
-      containerStyle={{
-        backgroundColor: "#fff",
-        marginBottom: 15,
-        width: "100%"
-      }}
-      inputContainerStyle={{
-        borderBottomWidth: 2,
-        width: "100%",
-        borderColor: "#eee",
-        fontSize: 10
-      }}
-      leftIcon={leftIcon}
-      leftIconContainerStyle={{ paddingRight: 12, paddingLeft: 0 }}
+      containerStyle={{ borderRadius: 25, backgroundColor: "white" }}
+      inputContainerStyle={{ borderBottomWidth: 0 }}
+      leftIconContainerStyle={{ paddingRight: 12 }}
+      leftIcon={
+        iconName ? (
+          <Icon type="font-awesome" name={iconName} size={24} color={theme.colors.grey3} />
+        ) : null
+      }
       {...props}
     />
   );

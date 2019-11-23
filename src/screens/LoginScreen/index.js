@@ -70,10 +70,23 @@ const LoginScreen = props => {
           }
         />
         <Button
-          title='登录'
+          title='登入'
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
-          onPress={handleLogin(dispatch, code)}
+          onPress={handleLogin(dispatch, phoneNumber, password)}
+        />
+        <Button
+          title='註冊'
+          buttonStyle={styles.button}
+          titleStyle={styles.buttonTitle}
+          onPress={handleLogin}
+        />
+        <Button
+          type='clear'
+          title='忘記密碼?'
+          buttonStyle={styles.button}
+          titleStyle={styles.buttonTitle}
+          onPress={handleLogin(dispatch, phoneNumber, password)}
         />
         <Button
           title='註冊'
@@ -95,6 +108,7 @@ const LoginScreen = props => {
           />
         </View>
       </View>
+      <View style={styles.footer}></View>
     </ViewBox>
   );
 };

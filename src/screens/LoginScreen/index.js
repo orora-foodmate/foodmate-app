@@ -15,6 +15,7 @@ const handleLogin = (dispatch, code) => () => {
     password: "a123456789",
     grant_type: "password"
   };
+  Actions.jump('home');
   loginAction(dispatch, payload);
 };
 
@@ -33,19 +34,22 @@ const LoginScreen = props => {
 
   return (
     <ViewBox flex>
-      <View>
-        <Image source={require("../../assets/images/logo-foodmate.png")} />
+      <View style={styles.logoBox}>
+        <Image
+          style={styles.logo}
+          source={require("../../assets/images/logo-foodmate.png")}
+        />
       </View>
       <View style={styles.content}>
         <InputFill
-          autoCapitalize="none"
-          placeholder="請輸入帳號"
+          autoCapitalize='none'
+          placeholder='請輸入帳號'
           value={code}
           onChangeText={text => setCode(text)}
           style={{ position: "relative", width: "100%" }}
           leftIcon={
             <Image
-              resizeMode="contain"
+              resizeMode='contain'
               style={{ width: 25, height: 25 }}
               source={require("../../assets/icons/input-placeholder-donut.png")}
             />
@@ -53,32 +57,32 @@ const LoginScreen = props => {
         />
         <InputFill
           value={code}
-          autoCapitalize="none"
-          placeholder="請輸入密碼"
+          autoCapitalize='none'
+          placeholder='請輸入密碼'
           onChangeText={text => setCode(text)}
           style={{ position: "relative", width: "100%" }}
           leftIcon={
             <Image
-              resizeMode="contain"
+              resizeMode='contain'
               style={{ width: 25, height: 25 }}
               source={require("../../assets/icons/input-placeholder-lock.png")}
             />
           }
         />
         <Button
-          title="登录"
+          title='登录'
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
           onPress={handleLogin(dispatch, code)}
         />
         <Button
-          title="註冊"
+          title='註冊'
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
         />
         <Button
-          type="clear"
-          title="忘記密碼"
+          type='clear'
+          title='忘記密碼'
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
         />
@@ -86,7 +90,7 @@ const LoginScreen = props => {
       <View style={styles.footer}>
         <View style={styles.donutBox}>
           <Image
-            contentMode="contain"
+            contentMode='contain'
             source={require("../../assets/images/actor-login-donut.png")}
           />
         </View>
@@ -96,6 +100,13 @@ const LoginScreen = props => {
 };
 
 const styles = StyleSheet.create({
+  logoBox: {
+    flex: 1,
+    justifyContent: "center"
+  },
+  logo: {
+    alignItems: "center"
+  },
   button: {
     width: 180,
     marginTop: 18,
@@ -106,14 +117,14 @@ const styles = StyleSheet.create({
   },
   content: {
     width: 250,
-    paddingTop: 80,
+    height: 350,
+    paddingTop: 40,
     position: "relative",
     alignItems: "center"
   },
   footer: {
-    flex: 1,
+    flex: 3,
     flexDirection: "row",
-    justifyContent: "center",
     alignItems: "center"
   },
   donutBox: {

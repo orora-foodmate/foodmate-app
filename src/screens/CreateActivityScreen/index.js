@@ -2,12 +2,12 @@ import React from "react";
 import { Text } from 'react-native';
 import ViewBox from "../../components/ViewBox";
 
-const AccountScreen = props => {
+const CreateActivityScreen = props => {
   return (
     <ViewBox>
-      <Text>AccountScreen</Text>
+      <Text>CreateActivityScreen</Text>
     </ViewBox>
   );
 };
 
-export default AccountScreen;
+export default CreateActivityScreen;

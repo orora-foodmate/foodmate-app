@@ -17,7 +17,7 @@ const Button = props => {
 
   const { title, type, color, onPress, titleStyle, buttonStyle } = props;
 
-  const colorStyle = getColors(color, theme);
+  // const colorStyle = getColors(color, theme);
 
   return (
     <BasicButton

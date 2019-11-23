@@ -1,3 +1,7 @@
 export const INITIAL_APP_SUCCESS = 'INITIAL_APP_SUCCESS';
 export const INITIAL_APP = 'INITIAL_AP';
 export const INITIAL_APP_ERROR = 'INITIAL_APP_ERROR';
+
+export const LOGIN = 'LOGIN'
+export const LOGIN_ERROR = 'LOGIN_ERROR'
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'

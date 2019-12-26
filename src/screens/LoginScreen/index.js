@@ -17,6 +17,7 @@ const handleLogin = (dispatch, phoneNumber, password) => async () => {
   loginAction(dispatch, payload);
 };
 
+
 const LoginScreen = props => {
   const [{ auth }, dispatch] = useContext(ReducerContext);
   const { theme } = useContext(ThemeContext);
@@ -59,7 +60,7 @@ const LoginScreen = props => {
           title='註冊'
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
-          onPress={handleLogin}
+          onPress={() => Actions.register({})}
         />
         <Button
           type='clear'

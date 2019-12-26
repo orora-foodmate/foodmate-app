@@ -60,3 +60,6 @@ ios/tmp.xcconfig
 
 # fastlane
 vendor
+
+# 環境變數
+.env

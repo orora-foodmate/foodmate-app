@@ -20,12 +20,10 @@ class HomeScreen extends React.Component {
   }
 
   sendSocketIOMsg = () => {
-    console.log('sendSocketIOMsg');
     this.socket.emit('sayhi', 'HELLO socket.io'); // emit action named sayhi
   }
 
   sendAndReceiveSocketIOMsg = () => {
-    console.log('sendAndReceiveSocketIOMsg');
     this.socket.emit('getMessage', 'Client send hello'); // emit action named sayhi
   }
 
@@ -33,7 +31,6 @@ class HomeScreen extends React.Component {
     // WebSocket 
     this.ws = new WebSocket('ws://localhost:8080/');
     this.ws.onopen = () => {
-      console.log('ws.onopen')
       // connection opened
       this.ws.send('client send connected msg'); // send a message
     };
@@ -45,19 +42,16 @@ class HomeScreen extends React.Component {
 
     this.ws.onclose = (e) => {
       // connection closed
-      console.log('Client onCloseWebSocket')
       console.log(e.code, e.reason);
     };
 
     this.ws.onerror = (e) => {
-      console.log('Client onErrorWebSocket')
       // an error occurred
       console.log(e.message);
     };
   }
 
   onSendWebSocket = () => {
-    console.log('onSendWebSocket')
     this.ws.send('Hello WebSocket!');
   }
 

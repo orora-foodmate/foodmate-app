@@ -17,9 +17,9 @@ class globalDispatcherClass {
 export const globalDispatcher = new globalDispatcherClass();
 
 
-export default (reducer, initialState) => {
+export default (reducers, initialState) => {
   const [state, dispatch] = useReducer(
-    reducer,
+    reducers,
     initialState,
     undefined,
     'foodmate-store'

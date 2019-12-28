@@ -1,53 +1,73 @@
-import React, { useContext, useEffect } from 'react';
-import { useState } from 'reinspect';
-import { Actions } from 'react-native-router-flux';
-import { StyleSheet, View } from 'react-native';
-import { Avatar, Button, Text, ThemeContext } from 'react-native-elements';
-import ViewBox from '../../components/ViewBox';
-import InputFill from '../../components/InputFill';
-import { ReducerContext } from '../../reducers';
-import { loginAction } from './actions';
-import { encodeAuthBasicToken } from '../../helpers/authHelpers';
+import React, { useContext, useEffect, useState } from "react";
+import { Actions } from "react-native-router-flux";
+import { StyleSheet, View, Image } from "react-native";
+import { Text, ThemeContext } from "react-native-elements";
+import Button from "../../components/Button";
+import ViewBox from "../../components/ViewBox";
+import InputFill from "../../components/InputFill";
+import { loginAction } from "./actions";
+import { ReducerContext } from "../../reducers";
+import { encodeAuthBasicToken } from "../../helpers/authHelpers";
 
-const handleLogin = (dispatch, phoneNumber, password) => async () => {
+const handleLogin = (dispatch, code) => () => {
   const payload = {
-    phoneNumber,
-    password,
+    username: encodeAuthBasicToken(code),
+    password: "a123456789",
+    grant_type: "password"
   };
+  Actions.jump('home');
   loginAction(dispatch, payload);
 };
 
 const LoginScreen = props => {
+  const [code, setCode] = useState("");
   const [{ auth }, dispatch] = useContext(ReducerContext);
   const { theme } = useContext(ThemeContext);
-  const [phoneNumber, setPhoneNumber] = useState('0987654321', 'account');
-  const [password, setPassword] = useState('a12345678', 'password');
+
+  const handleScan = () => {
+    console.log("TCL: handleScan -> handleScan");
+  };
 
   useEffect(() => {
-    if (auth.isAuth) Actions.reset('tabbar', { aaa: 'ccc' });
+    if (auth.isAuth) Actions.reset("tabbar", { aaa: "ccc" });
   }, [auth.isAuth]);
 
   return (
-    <ViewBox color='grey1' flex>
-      <Avatar
-        size={144}
-        title='F'
-        titleStyle={{ color: theme.colors.primary }}
-        overlayContainerStyle={{ backgroundColor: 'white' }}
-      />
+    <ViewBox flex>
+      <View style={styles.logoBox}>
+        <Image
+          style={styles.logo}
+          source={require("../../assets/images/logo-foodmate.png")}
+        />
+      </View>
       <View style={styles.content}>
         <InputFill
-          autoCapitalize="none"
-          placeholder='手機號碼'
-          iconName='dot-circle-o'
-          value={phoneNumber}
-          onChangeText={(text) => setPhoneNumber(text)}
+          autoCapitalize='none'
+          placeholder='請輸入帳號'
+          value={code}
+          onChangeText={text => setCode(text)}
+          style={{ position: "relative", width: "100%" }}
+          leftIcon={
+            <Image
+              resizeMode='contain'
+              style={{ width: 25, height: 25 }}
+              source={require("../../assets/icons/input-placeholder-donut.png")}
+            />
+          }
         />
         <InputFill
-          placeholder='密碼'
-          iconName='lock'
-          value={password}
-          onChangeText={(text) => setPassword(text)}
+          value={code}
+          autoCapitalize='none'
+          placeholder='請輸入密碼'
+          onChangeText={text => setCode(text)}
+          style={{ position: "relative", width: "100%" }}
+          leftIcon={
+            <Image
+              resizeMode='contain'
+              style={{ width: 25, height: 25 }}
+              source={require("../../assets/icons/input-placeholder-lock.png")}
+            />
+          }
         />
         <Button
           title='登入'
@@ -68,6 +88,25 @@ const LoginScreen = props => {
           titleStyle={styles.buttonTitle}
           onPress={handleLogin(dispatch, phoneNumber, password)}
         />
+        <Button
+          title='註冊'
+          buttonStyle={styles.button}
+          titleStyle={styles.buttonTitle}
+        />
+        <Button
+          type='clear'
+          title='忘記密碼'
+          buttonStyle={styles.button}
+          titleStyle={styles.buttonTitle}
+        />
+      </View>
+      <View style={styles.footer}>
+        <View style={styles.donutBox}>
+          <Image
+            contentMode='contain'
+            source={require("../../assets/images/actor-login-donut.png")}
+          />
+        </View>
       </View>
       <View style={styles.footer}></View>
     </ViewBox>
@@ -75,25 +114,37 @@ const LoginScreen = props => {
 };
 
 const styles = StyleSheet.create({
+  logoBox: {
+    flex: 1,
+    justifyContent: "center"
+  },
+  logo: {
+    alignItems: "center"
+  },
   button: {
-    width: 300,
-    marginTop: 24
+    width: 180,
+    marginTop: 18,
+    borderRadius: 50
   },
   buttonTitle: {
-    fontSize: 20
+    fontSize: 16
   },
   content: {
-    paddingTop: 80,
-    alignItems: 'center'
+    width: 250,
+    height: 350,
+    paddingTop: 40,
+    position: "relative",
+    alignItems: "center"
   },
   footer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    width: 300,
-    bottom: 20
+    flex: 3,
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  donutBox: {
+    left: -100,
+    width: 400,
+    bottom: -150
   }
 });
 

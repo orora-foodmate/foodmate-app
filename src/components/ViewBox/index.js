@@ -10,7 +10,7 @@ const ViewBox = ({ color, children, flex, fill, ...props }) => {
       style={{
         flex: flex ? 1 : 0,
         backgroundColor: theme.colors[color],
-        justifyContent: "center",
+        // justifyContent: "top",
         alignItems: fill ? "stretch" : "center",
         paddingTop: 44,
         paddingBottom: 20

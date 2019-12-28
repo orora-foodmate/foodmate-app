@@ -1,10 +1,8 @@
 import React, { useContext } from "react";
 import propTypes from "prop-types";
-import Icon from "react-native-vector-icons/FontAwesome";
 import { Input, ThemeContext } from "react-native-elements";
 
-const InputFill = ({ placeholder, iconName, ...props }) => {
-  const { theme } = useContext(ThemeContext);
+const InputFill = ({ placeholder, leftIcon, ...props }) => {
   return (
     <Input
       placeholder={placeholder}
@@ -23,7 +21,11 @@ const InputFill = ({ placeholder, iconName, ...props }) => {
 
 InputFill.propTypes = {
   placeholder: propTypes.string,
-  iconName: propTypes.string
+  leftIcon: propTypes.element
+};
+
+InputFill.defaultProps = {
+  leftIcon: null
 };
 
 export default InputFill;

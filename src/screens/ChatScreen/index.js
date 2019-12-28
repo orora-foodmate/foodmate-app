@@ -1,11 +1,12 @@
 import React from "react";
-import { Text } from "react-native-elements";
+import { Text } from 'react-native';
+import ViewBox from "../../components/ViewBox";
 
-const ChatScreen = () => {
+const ChatScreen = props => {
   return (
-    <>
+    <ViewBox>
       <Text>ChatScreen</Text>
-    </>
+    </ViewBox>
   );
 };
 

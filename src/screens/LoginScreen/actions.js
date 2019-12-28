@@ -3,7 +3,7 @@ import { loginActionTypes } from '../../constants/actionTypes';
 
 export const loginAction = (dispatch, payload) => {
   dispatch({
-    types: loginActionTypes,
-    promise: getTokenResult(payload)
+    type: 'LOGIN_SUCCESS',
+    payload
   });
 };

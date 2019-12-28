@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   content: {
+    flex: 1.5,
     width: 250,
     height: 350,
     paddingTop: 40,
@@ -124,14 +125,14 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   footer: {
-    flex: 3,
+    flex: 1.5,
     flexDirection: "row",
     alignItems: "center"
   },
   donutBox: {
     left: -100,
     width: 400,
-    bottom: -150
+    bottom: -200
   }
 });
 

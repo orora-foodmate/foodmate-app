@@ -73,7 +73,6 @@ const LoginScreen = props => {
           title='登入'
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
-          onPress={handleLogin(dispatch, phoneNumber, password)}
         />
         <Button
           title='註冊'
@@ -84,18 +83,6 @@ const LoginScreen = props => {
         <Button
           type='clear'
           title='忘記密碼?'
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonTitle}
-          onPress={handleLogin(dispatch, phoneNumber, password)}
-        />
-        <Button
-          title='註冊'
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonTitle}
-        />
-        <Button
-          type='clear'
-          title='忘記密碼'
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
         />

@@ -74,12 +74,16 @@ const LoginScreen = props => {
           title='登入'
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
+          onPress={console.log}
         />
         <Button
           title='註冊'
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
-          onPress={() => Actions.register({})}
+          onPress={() => {
+            console.log("ddd");
+            Actions.register({})
+          }}
         />
         <Button
           type='clear'

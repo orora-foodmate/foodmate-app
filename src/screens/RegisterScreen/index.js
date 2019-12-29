@@ -52,14 +52,14 @@ const RegisterScreen = (props) => {
           title='開始交朋友吧'
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
-          onPress={() => Actions.register({})}
+          onPress={() => Actions.pop({})}
         />
         <Button
           type='clear'
           title='返回'
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
-          onPress={Actions.pop}
+          onPress={() => Actions.pop()}
         />
       </KeyboardAvoidingView>
     </ViewBox>

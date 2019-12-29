@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import propTypes from "prop-types";
-import { Input, ThemeContext } from "react-native-elements";
+import { Input, ThemeContext, Icon } from "react-native-elements";
 
 const InputFill = ({ placeholder, leftIcon, iconName, ...props }) => {
   const {theme} = useContext(ThemeContext);

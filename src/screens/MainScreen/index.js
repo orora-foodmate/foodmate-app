@@ -56,6 +56,7 @@ const MainScreen = props => {
         <Stack key='root' hideNavBar>
           <Scene key='initialScene' component={InitialAppScreen} />
           <Stack key='login_stack'>
+          
             <Scene
               key='login'
               component={LoginScreen}

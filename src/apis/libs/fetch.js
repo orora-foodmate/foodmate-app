@@ -25,7 +25,7 @@ export const fetchBasicToken = (url, customHeaders, payload) => {
 
   return fetch(realUrl, {
     method: 'POST',
-    headers: { ...customHeaders,  'Content-Type': 'application/x-www-form-urlencoded'},
+    headers: { ...customHeaders, 'Content-Type': 'application/x-www-form-urlencoded' },
   }).then(parseResponse)
 };
 
@@ -42,7 +42,7 @@ export const fetchWithToken = async (
 
     const requestBody = {
       method,
-      headers: { Authorization: `bearer ${access_token}`, "Content-Type": "application/json"},
+      headers: { Authorization: `bearer ${access_token}`, "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     };
 
@@ -52,6 +52,37 @@ export const fetchWithToken = async (
 
     if (ok) return { ok, result };
     throw new Error(result.data);
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const fetchWithoutToken = async (
+  url,
+  method = "GET",
+  payload = {},
+  qs = {}
+) => {
+  try {
+    const realUrl = `${url}?${QS.stringify(qs)}`;
+    const requestBody = {
+      method,
+      headers: {
+        ...customHeaders,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify(payload)
+    };
+
+    const res = await fetch(realUrl, requestBody);
+    const { statusCode, ok, result } = await parseResponse(res);
+
+    return {
+      statusCode,
+      ok,
+      result
+    };
+
   } catch (error) {
     throw error;
   }

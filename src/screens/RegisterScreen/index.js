@@ -12,8 +12,9 @@ const handleUpdateState = (dispatch, key) => (value) =>
   dispatch(updateStateAction({key, value}))
 
 const handleCreateUser = (dispatch, state) => () => {
-  dispatch();
+  // dispatch();
 }
+
 const RegisterScreen = (props) => {
   const [state, dispatch] = makeLocalReducer(reducers, initialState, undefined, 'register-screen');
   
@@ -28,6 +29,15 @@ const RegisterScreen = (props) => {
           onChangeText={handleUpdateState(dispatch, 'phone')}
         />
         <InputFill
+          autoCapitalize="none"
+          placeholder='Email'
+          iconName='lock'
+          value={state.email}
+          onChangeText={handleUpdateState(dispatch, 'email')}
+        />
+        <InputFill
+          secureTextEntry={true}
+          type="password"
           placeholder='密碼'
           autoCapitalize="none"
           iconName='lock'
@@ -35,18 +45,14 @@ const RegisterScreen = (props) => {
           onChangeText={handleUpdateState(dispatch, 'password')}
         />
         <InputFill
+          secureTextEntry={true}
+          autoCompleteType="none"
+          autoCapitalize='none'
           placeholder='確認密碼'
           autoCapitalize="none"
           iconName='lock'
           value={state.confirmPassword}
           onChangeText={handleUpdateState(dispatch, 'confirmPassword')}
-        />
-        <InputFill
-          autoCapitalize="none"
-          placeholder='Email'
-          iconName='lock'
-          value={state.email}
-          onChangeText={handleUpdateState(dispatch, 'email')}
         />
         <Button
           title='開始交朋友吧'

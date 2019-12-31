@@ -1,32 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Actions } from "react-native-router-flux";
 import { StyleSheet, View, Image } from "react-native";
-import { Text, ThemeContext } from "react-native-elements";
+import { ThemeContext } from "react-native-elements";
 import Button from "../../components/Button";
 import ViewBox from "../../components/ViewBox";
 import InputFill from "../../components/InputFill";
-import { loginAction } from "./actions";
 import { ReducerContext } from "../../reducers";
-import { encodeAuthBasicToken } from "../../helpers/authHelpers";
 
-const handleLogin = (dispatch, code) => () => {
-  const payload = {
-    username: encodeAuthBasicToken(code),
-    password: "a123456789",
-    grant_type: "password"
-  };
+const handleLogin = () => {
   Actions.jump('home');
-  loginAction(dispatch, payload);
 };
 
 const LoginScreen = props => {
   const [code, setCode] = useState("");
   const [{ auth }, dispatch] = useContext(ReducerContext);
   const { theme } = useContext(ThemeContext);
-
-  const handleScan = () => {
-    console.log("TCL: handleScan -> handleScan");
-  };
 
   useEffect(() => {
     if (auth.isAuth) Actions.reset("tabbar", { aaa: "ccc" });
@@ -73,12 +61,12 @@ const LoginScreen = props => {
           title='登入'
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
+          onPress={handleLogin}
         />
         <Button
           title='註冊'
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
-          onPress={handleLogin}
         />
         <Button
           type='clear'

@@ -85,7 +85,7 @@ const MainScreen = props => {
               />
             </Stack>
             <Stack
-              key='activities_stack'
+              key='home'
               title='活動列表'
               icon={IconChat}
             >

@@ -7,12 +7,11 @@ import ChatScreen from "../ChatScreen";
 import LoginScreen from "../LoginScreen";
 import AccountScreen from "../AccountScreen";
 import RegisterScreen from "../RegisterScreen";
-import InitialAppScreen from '../InitialAppScreen';
+import InitialAppScreen from "../InitialAppScreen";
 import CreateActivityScreen from "../CreateActivityScreen";
-import { more } from "../../assets/icons";
 import { initialAppAction } from "./actions";
 import { ReducerContext } from "../../reducers";
-import { IconChat, IconFriends, IconAccount } from "../../components/Icons";
+import { IconChat, IconFriends, IconAccount, IconCreate, IconDonut, IconActivities } from "../../components/Icons";
 import Dialogbox from "../../components/Dialogbox";
 
 const { width, height } = Dimensions.get("window");
@@ -68,41 +67,42 @@ const MainScreen = props => {
             key='tabs_bar'
             backToInitial
             routeName='tabs_bar'
-            tabStyle={{ backgroundColor: theme.colors.grey1, paddingTop: 8 }}
-            tabBarStyle={{ backgroundColor: theme.colors.grey1 }}
+            activeTintColor='#eee'
+            tabStyle={{ backgroundColor: '#fff', paddingTop: 8 }}
+            tabBarStyle={{ backgroundColor: '#fff' }}
             activeTintColor={theme.colors.primary}
-            inactiveTintColor={theme.colors.grey4}
+            inactiveTintColor='#ddd'
           >
-            <Stack
-              key='create_activity_stack'
-              title='建立活動'
-              icon={IconChat}
-            >
+            <Stack key='create_activity_stack' title='建立活動' icon={IconCreate}>
               <Scene
+                title='建立活動'
                 key='create_activity'
                 component={CreateActivityScreen}
-                title='建立活動'
+                hideNavBar
               />
             </Stack>
-            <Stack
-              key='home'
-              title='活動列表'
-              icon={IconChat}
-            >
-              <Scene key='home' component={HomeScreen} title='活動列表' />
+            <Stack key='activities_stack' title='活動列表' icon={IconActivities}>
+              <Scene
+                key='home'
+                title='活動列表'
+                component={HomeScreen}
+                hideNavBar
+              />
             </Stack>
-            <Stack
-              key='account_stack'
-              title='個人資料'
-              icon={IconFriends}
-            >
-              <Scene key='account' component={AccountScreen} title='個人資料' />
+            <Stack key='account_stack' title='個人資料' icon={IconDonut}>
+              <Scene
+                key='account'
+                title='個人資料'
+                component={AccountScreen}
+                hideNavBar
+              />
             </Stack>
-            <Stack key='chat_stack' title='聊天' icon={IconAccount}>
+            <Stack key='chat_stack' title='聊天' icon={IconChat}>
               <Scene
                 key='chat'
                 component={ChatScreen}
                 title='聊天'
+                hideNavBar
               />
             </Stack>
           </Tabs>

@@ -29,13 +29,13 @@ const MainScreen = props => {
     return (
       <Image
         style={styles.image}
-        // source={require('../../assets/images/splash.png')}
+        source={require('../../assets/images/splash.png')}
       />
     );
   }
 
   const stateHandler = (prevState, newState, action) => {
-    console.log("onStateChange: ACTION:", action);
+    return;
   };
 
   return (
@@ -56,13 +56,13 @@ const MainScreen = props => {
         <Stack key='root' hideNavBar>
           <Scene key='initialScene' component={InitialAppScreen} />
           <Stack key='login_stack'>
-            <Scene key='register' component={RegisterScreen} title='Register' />
             <Scene
               key='login'
               component={LoginScreen}
               title='Login'
               hideNavBar
             />
+            <Scene key='register' component={RegisterScreen} title='Register' />
           </Stack>
           <Tabs
             key='tabs_bar'

@@ -5650,6 +5650,11 @@ react-native-screens@^1.0.0-alpha.11:
   dependencies:
     debounce "^1.2.0"
 
+react-native-simple-toast@0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-simple-toast/-/react-native-simple-toast-0.1.1.tgz#675755e7293438c77e7d1f40989b902fd0c0d943"
+  integrity sha512-6fZrZdPM0EcB3cnOlvzjq5/urfIA0XK4SAwW15UVI4wK7xerpA06kITELYCyOfho0OlpiYW4981R0QEpPaQBRg==
+
 react-native-status-bar-height@^2.2.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/react-native-status-bar-height/-/react-native-status-bar-height-2.4.0.tgz#de8cee4bb733a196167210d2d0bc1fa10acba3e3"

@@ -12,5 +12,5 @@ async function initialPromise() {
 
 export const initialAppAction = () => ({
   types: initialAppActionTypes,
-  promise: initialPromise()
+  promise: initialPromise
 });

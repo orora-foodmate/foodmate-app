@@ -69,7 +69,6 @@ const LoginScreen = props => {
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
           onPress={() => {
-            console.log("ddd");
             Actions.register({})
           }}
         />

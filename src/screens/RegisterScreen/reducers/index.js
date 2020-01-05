@@ -1,10 +1,10 @@
 import * as types from '../actions/actionTypes';
 
 export const initialState = {
-  email: 'horsekit1982@gmail.com',
-  phone: '0987654321',
-  password: 'a12345678',
-  confirmPassword: 'a12345678'
+  email: '',
+  phone_number: '',
+  password: '',
+  re_password: ''
 };
 
 const reducer = (state = initialState, action) => {

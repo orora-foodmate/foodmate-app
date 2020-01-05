@@ -1,6 +1,7 @@
 import QS from 'query-string';
 import isEmpty from 'lodash/isEmpty';
 import map from 'lodash/map';
+import Toast from 'react-native-simple-toast';
 import { getUrl } from '../libs/route';
 import { getErrorResponse } from '../../helpers/responseHelper';
 
@@ -10,6 +11,11 @@ const parseResponse = response => {
 
   return response.text().then(body => {
     const result = isEmpty(body) ? {} : JSON.parse(body);
+    if (!ok) {
+      const {data = {message: 'something is error.'}} = result;
+      Toast.show(data.message);
+      throw new Error(data.message);
+    }
     return {
       statusCode,
       ok,
@@ -63,13 +69,13 @@ export const fetchWithoutToken = async (
   payload = {},
   qs = {}
 ) => {
+  console.log("TCL: url", url)
   try {
     const realUrl = `${url}?${QS.stringify(qs)}`;
     const requestBody = {
       method,
       headers: {
-        ...customHeaders,
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(payload)
     };

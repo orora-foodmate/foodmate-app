@@ -1,4 +1,6 @@
 import { useReducer } from 'reinspect';
+import isFunction from 'lodash/isFunction';
+import isEmpty from 'lodash/isEmpty';
 
 class globalDispatcherClass {
   constructor() {
@@ -8,7 +10,7 @@ class globalDispatcherClass {
   getDispatch() {
     return this._dispatch;
   }
-  
+
   setDispatch(dispatch) {
     this._dispatch = dispatch;
   }
@@ -25,20 +27,17 @@ export default (reducers, initialState) => {
     'foodmate-store'
   );
 
-  const thunkDispatch = action => {
-    const { promise, types, ...rest } = action;
-    if (!promise) return dispatch(action);
-
+  const thunkDispatch = async action => {
+    const { promise, types, payload, ...rest } = action;
+    if (!isFunction(promise)) return dispatch(action);
     const [REQUEST, SUCCESS, ERROR] = types;
-    dispatch({ ...rest, type: REQUEST });
-
-    return promise
-      .then(result => {
-        dispatch({ ...rest, result, type: SUCCESS })
-      })
-      .catch(error => {
-        dispatch({ ...rest, error, type: ERROR })
-      });
+    try {
+      dispatch({ ...rest, payload, type: REQUEST });
+      const result = await promise(payload);
+      dispatch({ ...rest, result, payload, type: SUCCESS })
+    } catch (error) {
+      dispatch({ ...rest, error, type: ERROR })
+    }
   };
 
   return [state, thunkDispatch];
@@ -53,30 +52,33 @@ export const makeLocalReducer = (reducer, initialState, initFunction, id) => {
     id
   );
 
-  const thunkDispatch = action => {
-    const { promise, types, successMessage, errorMessage, ...rest } = action;
+  const thunkDispatch = async action => {
+    const {
+      promise,
+      types,
+      successMessage,
+      errorMessage,
+      payload,
+      ...rest
+    } = action;
     if (!promise) return dispatch(action);
-
     const [REQUEST, SUCCESS, ERROR] = types;
-    const globalDispatch = globalDispatcher.getDispatch();
+    try {
+      const globalDispatch = globalDispatcher.getDispatch();
+      dispatch({ ...rest, type: REQUEST });
 
-    dispatch({ ...rest, type: REQUEST });
-
-    return promise
-      .then(result => {
-        dispatch({ ...rest, result, type: SUCCESS });
-        if (!isEmpty(successMessage)) {
-          globalDispatch({ type: 'OPEN_GLOBAL_DIALOG', message: successMessage });
-        }
-      })
-      .catch(error => {
-        dispatch({ ...rest, error, type: ERROR });
-        if (!isEmpty(errorMessage)) {
-          globalDispatch({ type: 'OPEN_GLOBAL_DIALOG', message: errorMessage });
-        }
-          
-      });
+      const { ok, result } = await promise(payload);
+      
+      dispatch({ ...rest, result, type: SUCCESS });
+      if (!isEmpty(successMessage)) {
+        globalDispatch({ type: 'OPEN_GLOBAL_DIALOG', message: successMessage });
+      }
+    } catch (error) {
+      dispatch({ ...rest, message: error.message, type: ERROR });
+      if (!isEmpty(errorMessage)) {
+        globalDispatch({ type: 'OPEN_GLOBAL_DIALOG', message: errorMessage });
+      }
+    }
   };
-
   return [state, thunkDispatch];
 };

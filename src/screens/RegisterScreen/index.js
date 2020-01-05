@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import pick from 'lodash/pick';
 import { KeyboardAvoidingView, View, StyleSheet } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import ViewBox from '../../components/ViewBox';
@@ -6,13 +7,19 @@ import InputFill from '../../components/InputFill';
 import { Actions } from 'react-native-router-flux';
 import reducers, { initialState } from './reducers';
 import { makeLocalReducer } from '../../helpers/thunkHelper';
-import { updateStateAction } from './actions';
+import { updateStateAction, createUserAction } from './actions';
 
 const handleUpdateState = (dispatch, key) => (value) =>
-  dispatch(updateStateAction({key, value}))
+  dispatch(updateStateAction({ key, value }))
 
 const handleCreateUser = (dispatch, state) => () => {
-  // dispatch();
+  const payload = pick(state, [
+    'email',
+    'phone_number',
+    'password',
+    're_password'
+  ]);
+  dispatch(createUserAction(payload));
 }
 
 const RegisterScreen = (props) => {
@@ -25,8 +32,8 @@ const RegisterScreen = (props) => {
           type="number"
           placeholder='手機號碼'
           iconName='dot-circle-o'
-          value={state.phone}
-          onChangeText={handleUpdateState(dispatch, 'phone')}
+          value={state.phone_number}
+          onChangeText={handleUpdateState(dispatch, 'phone_number')}
         />
         <InputFill
           autoCapitalize="none"
@@ -46,19 +53,19 @@ const RegisterScreen = (props) => {
         />
         <InputFill
           secureTextEntry={true}
-          autoCompleteType="none"
+          autoCompleteType="off"
           autoCapitalize='none'
           placeholder='確認密碼'
           autoCapitalize="none"
           iconName='lock'
-          value={state.confirmPassword}
-          onChangeText={handleUpdateState(dispatch, 'confirmPassword')}
+          value={state.re_password}
+          onChangeText={handleUpdateState(dispatch, 're_password')}
         />
         <Button
           title='開始交朋友吧'
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
-          onPress={() => Actions.pop({})}
+          onPress={handleCreateUser(dispatch, state)}
         />
         <Button
           type='clear'

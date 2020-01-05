@@ -1,4 +1,5 @@
-import * as types from './actionTypes';
+import {UPDATE_STATE, createUserActionTypes} from './actionTypes';
+import { createUserResult } from '../apis';
 
 export const updateStateAction = (payload) => ({
   type: types.UPDATE_STATE,
@@ -6,5 +7,7 @@ export const updateStateAction = (payload) => ({
 });
 
 export const createUserAction = (payload) => ({
-  type: types.CREATE_USER,
+  types: createUserActionTypes,
+  promise: createUserResult,
+  payload,
 })

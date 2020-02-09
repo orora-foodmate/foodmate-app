@@ -6,14 +6,17 @@ import Button from "../../components/Button";
 import ViewBox from "../../components/ViewBox";
 import InputFill from "../../components/InputFill";
 import { ReducerContext } from "../../reducers";
+import { loginAction } from "./actions";
 
-const handleLogin = () => {
-  Actions.jump('home');
+const handleLogin = (dispatch, payload) => () => {
+  dispatch(loginAction(payload))
+  // Actions.jump('home');
 };
 
 
 const LoginScreen = props => {
-  const [code, setCode] = useState("");
+  const [phone, setPhone] = useState("0987654321");
+  const [password, setPassword] = useState("a12345678");
   const [{ auth }, dispatch] = useContext(ReducerContext);
   const { theme } = useContext(ThemeContext);
 
@@ -32,9 +35,9 @@ const LoginScreen = props => {
       <View style={styles.content}>
         <InputFill
           autoCapitalize='none'
-          placeholder='請輸入帳號'
-          value={code}
-          onChangeText={text => setCode(text)}
+          placeholder='請輸入電話'
+          value={phone}
+          onChangeText={text => setPhone(text)}
           style={{ position: "relative", width: "100%" }}
           leftIcon={
             <Image
@@ -45,10 +48,10 @@ const LoginScreen = props => {
           }
         />
         <InputFill
-          value={code}
+          value={password}
           autoCapitalize='none'
           placeholder='請輸入密碼'
-          onChangeText={text => setCode(text)}
+          onChangeText={text => setPassword(text)}
           style={{ position: "relative", width: "100%" }}
           leftIcon={
             <Image
@@ -62,7 +65,7 @@ const LoginScreen = props => {
           title='登入'
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
-          onPress={handleLogin}
+          onPress={handleLogin(dispatch, {phone, password})}
         />
         <Button
           title='註冊'

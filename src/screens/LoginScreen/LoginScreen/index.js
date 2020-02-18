@@ -5,17 +5,24 @@ import { ThemeContext } from "react-native-elements";
 import Button from "../../components/Button";
 import ViewBox from "../../components/ViewBox";
 import InputFill from "../../components/InputFill";
+import { ReducerContext } from "../../reducers";
+import { loginAction } from "./actions";
 
-const handleLogin = (payload) => () => {
+const handleLogin = (dispatch, payload) => () => {
+  dispatch(loginAction(payload))
   // Actions.jump('home');
 };
 
 
 const LoginScreen = props => {
-  const {auth} = props;
   const [phone, setPhone] = useState("0987654321");
   const [password, setPassword] = useState("a12345678");
+  const [{ auth }, dispatch] = useContext(ReducerContext);
   const { theme } = useContext(ThemeContext);
+
+  useEffect(() => {
+    if (auth.isAuth) Actions.reset("tabbar", { aaa: "ccc" });
+  }, [auth.isAuth]);
 
   return (
     <ViewBox flex>
@@ -31,7 +38,7 @@ const LoginScreen = props => {
           placeholder='請輸入電話'
           value={phone}
           onChangeText={text => setPhone(text)}
-          style={styles.input}
+          style={{ position: "relative", width: "100%" }}
           leftIcon={
             <Image
               resizeMode='contain'
@@ -45,7 +52,7 @@ const LoginScreen = props => {
           autoCapitalize='none'
           placeholder='請輸入密碼'
           onChangeText={text => setPassword(text)}
-          style={styles.input}
+          style={{ position: "relative", width: "100%" }}
           leftIcon={
             <Image
               resizeMode='contain'
@@ -58,7 +65,7 @@ const LoginScreen = props => {
           title='登入'
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
-          onPress={handleLogin({phone, password})}
+          onPress={handleLogin(dispatch, {phone, password})}
         />
         <Button
           title='註冊'
@@ -96,7 +103,6 @@ const styles = StyleSheet.create({
   logo: {
     alignItems: "center"
   },
-  input: { position: "relative", width: "100%" },
   button: {
     width: 180,
     marginTop: 18,

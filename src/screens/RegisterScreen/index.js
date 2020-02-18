@@ -1,96 +1,55 @@
-import React, { Fragment } from 'react';
-import pick from 'lodash/pick';
-import { KeyboardAvoidingView, View, StyleSheet } from 'react-native';
-import { Text, Button } from 'react-native-elements';
-import ViewBox from '../../components/ViewBox';
-import InputFill from '../../components/InputFill';
+import React, { useEffect } from 'react';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { StyleSheet, View } from 'react-native';
+import { Avatar, Input, Button } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
-import reducers, { initialState } from './reducers';
-import { makeLocalReducer } from '../../helpers/thunkHelper';
-import { updateStateAction, createUserAction } from './actions';
 
-const handleUpdateState = (dispatch, key) => (value) =>
-  dispatch(updateStateAction({ key, value }))
+const RegisterScreen = props => {
+  const { navigation, isAuth } = props;
 
-const handleCreateUser = (dispatch, state) => () => {
-  const payload = pick(state, [
-    'email',
-    'phone_number',
-    'password',
-    're_password'
-  ]);
-  dispatch(createUserAction(payload));
-}
+  const handleLogin = () => props.handleLogin();
 
-const RegisterScreen = (props) => {
-  const [state, dispatch] = makeLocalReducer(reducers, initialState, undefined, 'register-screen');
-  
   return (
-    <ViewBox color='grey1' flex>
-      <KeyboardAvoidingView style={styles.content} behavior="padding" enabled>
-        <InputFill
-          type="number"
-          placeholder='手機號碼'
-          iconName='dot-circle-o'
-          value={state.phone_number}
-          onChangeText={handleUpdateState(dispatch, 'phone_number')}
-        />
-        <InputFill
-          autoCapitalize="none"
-          placeholder='Email'
-          iconName='lock'
-          value={state.email}
-          onChangeText={handleUpdateState(dispatch, 'email')}
-        />
-        <InputFill
-          secureTextEntry={true}
-          type="password"
-          placeholder='密碼'
-          autoCapitalize="none"
-          iconName='lock'
-          value={state.password}
-          onChangeText={handleUpdateState(dispatch, 'password')}
-        />
-        <InputFill
-          secureTextEntry={true}
-          autoCompleteType="off"
-          autoCapitalize='none'
-          placeholder='確認密碼'
-          autoCapitalize="none"
-          iconName='lock'
-          value={state.re_password}
-          onChangeText={handleUpdateState(dispatch, 're_password')}
-        />
-        <Button
-          title='開始交朋友吧'
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonTitle}
-          onPress={handleCreateUser(dispatch, state)}
-        />
-        <Button
-          type='clear'
-          title='返回'
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonTitle}
-          onPress={() => Actions.pop()}
-        />
-      </KeyboardAvoidingView>
-    </ViewBox>
+    <View style={styles.container}>
+      <Avatar rounded size="large" title="MD" />
+      <Input
+        containerStyle={styles.inputContainer}
+        inputContainerStyle={{ borderBottomWidth: 0 }}
+        placeholder="Phone Number"
+        leftIcon={<Icon name="user" size={24} color="black" />}
+      />
+      <Button
+        buttonStyle={styles.button}
+        title="Register"
+        onPress={handleLogin}
+      />
+      <Button
+        type="clear"
+        buttonStyle={styles.button}
+        title="Cancel"
+        onPress={Actions.pop}
+      />
+    </View>
   );
-}
+};
+
+RegisterScreen.navigationOptions = {
+  header: null,
+};
 
 const styles = StyleSheet.create({
-  button: {
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  inputContainer: {
     width: 300,
-    marginTop: 24
+    borderWidth: 1,
+    borderColor: '#000',
+    borderRadius: 25,
+    margin: 10,
   },
-  buttonTitle: {
-    fontSize: 20
-  },
-  content: {
-    paddingTop: 80,
-    alignItems: 'center'
-  }
+  button: { width: 300, borderRadius: 25, margin: 5 }
 });
-
 export default RegisterScreen;

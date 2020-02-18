@@ -1,16 +1,9 @@
-import {createContext} from 'react';
-import combineReducer from '../helpers/combineReducer';
-import auth from './authReducer';
-import setting from './settingReducer';
-import globalMessage from './globalMessageReducer';
-import initialState from './initialState';
 
-const reducer = combineReducer({
-  auth,
-  setting,
-  globalMessage,
+import { combineReducers } from 'redux';
+import authReducer from './authReducer';
+import settingReducer from './settingReducer';
+
+export default combineReducers({
+  auth: authReducer,
+  setting: settingReducer
 });
-
-export const ReducerContext = createContext(initialState);
-
-export default reducer;

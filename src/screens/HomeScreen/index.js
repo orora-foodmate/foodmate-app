@@ -1,13 +1,10 @@
-import React from "react";
-import { Text } from 'react-native';
-import ViewBox from "../../components/ViewBox";
+import React, {Fragment} from 'react';
+import { Text } from 'react-native-elements';
 
-const HomeScreen = props => {
-  return (
-    <ViewBox>
-      <Text>Home</Text>
-    </ViewBox>
-  );
-};
+const HomeScreen = () => (
+  <Fragment>
+    <Text h1>Home Screen</Text>
+  </Fragment>
+);
 
 export default HomeScreen;

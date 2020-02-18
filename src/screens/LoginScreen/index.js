@@ -1,134 +1,90 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Actions } from "react-native-router-flux";
-import { StyleSheet, View, Image } from "react-native";
-import { ThemeContext } from "react-native-elements";
-import Button from "../../components/Button";
-import ViewBox from "../../components/ViewBox";
-import InputFill from "../../components/InputFill";
-import { ReducerContext } from "../../reducers";
-import { loginAction } from "./actions";
-
-const handleLogin = (dispatch, payload) => () => {
-  dispatch(loginAction(payload))
-  // Actions.jump('home');
-};
-
+import React, { useEffect, useState } from 'react';
+import isNull from 'lodash/isNull';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { StyleSheet, View } from 'react-native';
+import { Avatar, Input, Button } from 'react-native-elements';
+import { Actions } from 'react-native-router-flux';
+import auth from '@react-native-firebase/auth';
+import ConfirmCodeInput from './ConfirmCodeInput';
 
 const LoginScreen = props => {
-  const [phone, setPhone] = useState("0987654321");
-  const [password, setPassword] = useState("a12345678");
-  const [{ auth }, dispatch] = useContext(ReducerContext);
-  const { theme } = useContext(ThemeContext);
+  const { navigation, isAuth, confirmation } = props;
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [code, setCode] = useState('');
+  const confirmationIsNull = isNull(confirmation);
 
   useEffect(() => {
-    if (auth.isAuth) Actions.reset("tabbar", { aaa: "ccc" });
-  }, [auth.isAuth]);
+    if (isAuth) navigation.navigate('Home');
+  }, [isAuth]);
+
+  const handleLogin = () => {
+    if(confirmationIsNull) {
+      const payload = {
+        phoneNumber
+      };
+      props.handleGetConfirmationCode(payload);
+    } else {
+      const loginPayload = {
+        code,
+        confirmation,
+      };
+      props.handleLogin(loginPayload);
+    }
+  }
 
   return (
-    <ViewBox flex>
-      <View style={styles.logoBox}>
-        <Image
-          style={styles.logo}
-          source={require("../../assets/images/logo-foodmate.png")}
-        />
-      </View>
-      <View style={styles.content}>
-        <InputFill
-          autoCapitalize='none'
-          placeholder='請輸入電話'
-          value={phone}
-          onChangeText={text => setPhone(text)}
-          style={{ position: "relative", width: "100%" }}
-          leftIcon={
-            <Image
-              resizeMode='contain'
-              style={{ width: 25, height: 25 }}
-              source={require("../../assets/icons/input-placeholder-donut.png")}
-            />
-          }
-        />
-        <InputFill
-          value={password}
-          autoCapitalize='none'
-          placeholder='請輸入密碼'
-          onChangeText={text => setPassword(text)}
-          style={{ position: "relative", width: "100%" }}
-          leftIcon={
-            <Image
-              resizeMode='contain'
-              style={{ width: 25, height: 25 }}
-              source={require("../../assets/icons/input-placeholder-lock.png")}
-            />
-          }
-        />
-        <Button
-          title='登入'
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonTitle}
-          onPress={handleLogin(dispatch, {phone, password})}
-        />
-        <Button
-          title='註冊'
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonTitle}
-          onPress={() => {
-            Actions.register({})
-          }}
-        />
-        <Button
-          type='clear'
-          title='忘記密碼?'
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonTitle}
-        />
-      </View>
-      <View style={styles.footer}>
-        <View style={styles.donutBox}>
-          <Image
-            contentMode='contain'
-            source={require("../../assets/images/actor-login-donut.png")}
-          />
-        </View>
-      </View>
-      <View style={styles.footer}></View>
-    </ViewBox>
+    <View style={styles.container}>
+      <Avatar rounded size="large" title="MD" />
+      <Input
+        containerStyle={styles.inputContainer}
+        inputContainerStyle={styles.inputContainerStyle}
+        placeholder="Phone Number"
+        leftIcon={<Icon name="user" size={24} color="black" />}
+        onChangeText={text => setPhoneNumber(text)}
+        value={phoneNumber}
+      />
+      <ConfirmCodeInput
+        hide={isNull(confirmation)}
+        containerStyle={styles.inputContainer}
+        inputContainerStyle={styles.inputContainerStyle}
+        placeholder="Verification Code"
+        leftIcon={<Icon name="lock" size={24} color="black" />}
+        onChangeText={text => setCode(text)}
+        value={code}
+      />
+      <Button
+        buttonStyle={styles.button}
+        title="Login"
+        onPress={handleLogin}
+      />
+      <Button
+        type="clear"
+        buttonStyle={styles.button}
+        title="Register"
+        onPress={() => Actions.register()}
+      />
+    </View>
   );
 };
 
-const styles = StyleSheet.create({
-  logoBox: {
-    flex: 1,
-    justifyContent: "center"
-  },
-  logo: {
-    alignItems: "center"
-  },
-  button: {
-    width: 180,
-    marginTop: 18,
-    borderRadius: 50
-  },
-  buttonTitle: {
-    fontSize: 16
-  },
-  content: {
-    flex: 1.5,
-    width: 250,
-    height: 350,
-    paddingTop: 40,
-    position: "relative",
-    alignItems: "center"
-  },
-  footer: {
-    flex: 1.5,
-    flexDirection: "row",
-    alignItems: "center"
-  },
-  donutBox: {
-    left: -100,
-    width: 400,
-    bottom: -200
-  }
-});
+LoginScreen.navigationOptions = {
+  header: null,
+};
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  inputContainerStyle: { borderBottomWidth: 0 },
+  inputContainer: {
+    width: 300,
+    borderWidth: 1,
+    borderColor: '#000',
+    borderRadius: 25,
+    margin: 10,
+  },
+  button: { width: 300, borderRadius: 25, margin: 5 }
+});
 export default LoginScreen;

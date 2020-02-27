@@ -6,14 +6,15 @@ import Button from "../../components/Button";
 import ViewBox from "../../components/ViewBox";
 import InputFill from "../../components/InputFill";
 
-const handleLogin = (payload) => () => {
+const prepareHandleLogin = (payload, handleLogin) => () => {
   // Actions.jump('home');
+  handleLogin(payload);
 };
 
 
 const LoginScreen = props => {
-  const {auth} = props;
-  const [phone, setPhone] = useState("0987654321");
+  const {handleLogin} = props;
+  const [phone_number, setPhoneNumber] = useState("0987654324");
   const [password, setPassword] = useState("a12345678");
   const { theme } = useContext(ThemeContext);
 
@@ -29,8 +30,8 @@ const LoginScreen = props => {
         <InputFill
           autoCapitalize='none'
           placeholder='請輸入電話'
-          value={phone}
-          onChangeText={text => setPhone(text)}
+          value={phone_number}
+          onChangeText={text => setPhoneNumber(text)}
           style={styles.input}
           leftIcon={
             <Image
@@ -58,7 +59,7 @@ const LoginScreen = props => {
           title='登入'
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
-          onPress={handleLogin({phone, password})}
+          onPress={prepareHandleLogin({phone_number, password}, handleLogin)}
         />
         <Button
           title='註冊'

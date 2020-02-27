@@ -1,6 +1,7 @@
-import { put } from 'redux-saga/effects';
+import { put, call } from 'redux-saga/effects';
 import types from '../constants/actionTypes';
 import auth from '@react-native-firebase/auth';
+import { getTokenResult } from '../apis/api';
 
 const okLogin = (confirmation) => ({
   type: types.LOGIN_SUCCESS,
@@ -20,8 +21,8 @@ const firebaseSignInWithPhoneNumber = (phoneNumber) => {
 };
 export function* loginSaga({ payload }) {
   try {
-    const {code, confirmation} = payload;
-    yield confirmation.confirm(code);
+    console.log("TCL: function*loginSaga -> payload", payload)
+    const result = yield call(getTokenResult, payload);
 
     yield put(okLogin());
   } catch (error) {

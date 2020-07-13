@@ -14,7 +14,7 @@ const prepareHandleLogin = (payload, handleLogin) => () => {
 
 const LoginScreen = props => {
   const {handleLogin} = props;
-  const [phone_number, setPhoneNumber] = useState("0987654324");
+  const [phone_number, setPhoneNumber] = useState("0987654321");
   const [password, setPassword] = useState("a12345678");
   const { theme } = useContext(ThemeContext);
 
@@ -42,6 +42,7 @@ const LoginScreen = props => {
           }
         />
         <InputFill
+          secureTextEntry
           value={password}
           autoCapitalize='none'
           placeholder='請輸入密碼'

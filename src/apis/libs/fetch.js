@@ -71,6 +71,7 @@ export const fetchWithoutToken = async (
 ) => {
   try {
     const realUrl = `${url}?${QS.stringify(qs)}`;
+    console.log('%c%s', 'color: #00a3cc', realUrl);
     const requestBody = {
       method,
       headers: {

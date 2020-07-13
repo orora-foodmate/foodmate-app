@@ -23,9 +23,11 @@ export function* loginSaga({ payload }) {
   try {
     console.log("TCL: function*loginSaga -> payload", payload)
     const result = yield call(getTokenResult, payload);
+    console.log('%c%s', 'color: #e50000', result);
 
     yield put(okLogin());
   } catch (error) {
+    console.log('%c%s', 'color: #733d00', error);
     const errorAction = errLogin(error);
     yield put(errorAction);
   }

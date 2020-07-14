@@ -1,7 +1,7 @@
 import { put, call } from 'redux-saga/effects';
 import types from '../constants/actionTypes';
 import { getTokenResult } from '../apis/api';
-
+import { saveLoginUser } from '../helpers/authHelpers';
 const okLogin = (payload) => ({
   type: types.LOGIN_SUCCESS,
   payload,
@@ -20,8 +20,8 @@ export function* loginSaga({ payload }) {
   console.log("function*loginSaga -> payload", payload)
   try {
     const {result} = yield call(getTokenResult, payload);
-    console.log("function*loginSaga -> result", result)
 
+    yield call(saveLoginUser, result.data);
     yield put(okLogin(result.data));
   } catch (error) {
     console.log("function*loginSaga -> error", error)

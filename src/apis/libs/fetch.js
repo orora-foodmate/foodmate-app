@@ -81,7 +81,6 @@ export const fetchWithoutToken = async (
     };
 
     const res = await fetch(realUrl, requestBody);
-    console.log("TCL: res", res)
     const { statusCode, ok, result } = await parseResponse(res);
 
     return {

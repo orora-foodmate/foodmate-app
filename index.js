@@ -33,8 +33,7 @@ console.log("database", database)
 initSQL();
 
 
-import {AppRegistry} from 'react-native';
-import App from './src/App';
-import {name as appName} from './app.json';
+import { Navigation } from "react-native-navigation";
+import { pushSingleScreenApp } from '~/navigation';
 
-AppRegistry.registerComponent(appName, () => App);
+Navigation.events().registerAppLaunchedListener(() => pushSingleScreenApp());

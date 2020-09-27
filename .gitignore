@@ -20,7 +20,6 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
-project.xcworkspace
 
 # Android/IntelliJ
 #
@@ -58,12 +57,3 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
-
-# react-native-config codegen
-ios/tmp.xcconfig
-
-# fastlane
-vendor
-
-# 環境變數
-.env

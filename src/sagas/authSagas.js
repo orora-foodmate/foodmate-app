@@ -24,7 +24,6 @@ export function* loginSaga({ payload }) {
     yield call(saveLoginUser, result.data);
     yield put(okLogin(result.data));
   } catch (error) {
-    console.log("function*loginSaga -> error", error)
     const errorAction = errLogin(error);
     yield put(errorAction);
   }
@@ -46,9 +45,8 @@ const errGet = ({ message, status }) => {
 
 export function* getConfirmCodeSaga({ payload }) {
   try {
-    const confirmation = yield firebaseSignInWithPhoneNumber(payload.phoneNumber);
 
-    yield put(okGet(confirmation));
+    yield put(okGet({}));
   } catch (error) {
     const errorAction = errGet(error);
     yield put(errorAction);

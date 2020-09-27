@@ -25,9 +25,9 @@ addRxPlugin(require('pouchdb-adapter-http'));
 const initSQL = async () => {
   const database = await createRxDatabase({
     name: 'mydatabase',
-    adapter: 'react-native-sqlite' // the name of your adapter
+    adapter: 'react-native-sqlite', // the name of your adapter
+    multiInstance: false
 });
-console.log("database", database)
 };
 
 initSQL();

@@ -1,32 +1,34 @@
 // @flow
 
 import React from 'react';
-import { Navigation } from 'react-native-navigation';
+import {Navigation} from 'react-native-navigation';
+import store from '~/store/configureStore';
+import theme from '~/theme';
+import { ThemeProvider } from 'react-native-elements';
+import { Provider } from 'react-redux';
+import LoginScreen from '~/screens/LoginScreen';
+import HomeScreen from '~/screens/HomeScreen';
+import RegisterScreen from '~/screens/RegisterScreen';
+import {LOGIN_SCREEN, HOME_SCREEN, REGISTER_SCREEN} from './Screens';
 
-import LoginScreen from '../screens/LoginScreen';
-import HomeScreen from '../screens/HomeScreen';
 
-import {
-  LOGIN_SCREEN,
-  HOME_SCREEN,
-} from './Screens';
+function WrappedComponent(Component) {
+  return function inject(props) {
+    const EnhancedComponent = () => (
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <Component {...props} />
+        </ThemeProvider>
+      </Provider>
+    );
 
-// function WrappedComponent(Component) {
-//   return function inject(props) {
-//     const EnhancedComponent = () => (
-//       <Provider>
-//         <Component
-//           {...props}
-//         />
-//       </Provider>
-//     );
-
-//     return <EnhancedComponent />;
-//   };
-// }
+    return <EnhancedComponent />;
+  };
+}
 
 export default function () {
-  Navigation.registerComponent(LOGIN_SCREEN, () => LoginScreen);
+  Navigation.registerComponent(LOGIN_SCREEN, () => WrappedComponent(LoginScreen));
+  Navigation.registerComponent(REGISTER_SCREEN, () => RegisterScreen);
   Navigation.registerComponent(HOME_SCREEN, () => HomeScreen);
   console.info('All screens have been registered...');
 }

@@ -1,4 +1,5 @@
 // @flow
 
-export const LOGIN_SCREEN = 'demo.LoginScreen';
-export const HOME_SCREEN = 'demo.HomeScreen';
+export const LOGIN_SCREEN = 'LoginScreen';
+export const REGISTER_SCREEN = 'RegisterScreen';
+export const HOME_SCREEN = 'HomeScreen';

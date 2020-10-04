@@ -8,33 +8,25 @@ import {
   REGISTER_SCREEN,
 } from './Screens';
 import registerScreens from './registerScreens';
-
 import messaging from '@react-native-firebase/messaging';
 
 async function requestUserPermission() {
   try {
-    const defaultAppMessaging = await messaging();
-    console.log("requestUserPermission -> defaultAppMessaging", defaultAppMessaging)
-    
-    console.log("requestUserPermission -> token", token)
-    const authStatus = await defaultAppMessaging.requestPermission();
-    console.log("requestUserPermission -> authStatus", authStatus)
-    const token = await defaultAppMessaging.getToken();
-      console.log('Authorization authStatus:', authStatus);
-  }catch(error) {
-  console.log("requestUserPermission -> error", error)
-    
-  }
+    const messageinstance = messaging();
+    const authStatus = await messageinstance.requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
   
+    if (enabled) {
+      await messageinstance.registerDeviceForRemoteMessages();
+      const token = await messageinstance.getToken();
+      console.log('token:', token);
+    }
+  } catch(error) {
+  console.log("requestUserPermission -> error", error)
+  }
 }
-
-// var config = {
-//   apiKey: "xxxxxxxxxxxxxxxxxxxxxxxx",
-//   authDomain: 'https://xxxxxxxxx.firebaseapp.com/',
-//   databaseURL: 'https://xxxxxxxxx.firebaseio.com',
-//   messagingSenderId: 'xxxxxxxxxx',
-//   debug: true
-// }
 
 requestUserPermission();
 // Register all screens on launch

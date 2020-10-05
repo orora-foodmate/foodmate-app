@@ -3,15 +3,15 @@ import { Text } from "react-native";
 import Header from "../../components/Header";
 import ViewBox from "../../components/ViewBox";
 
-const HomeScreen = props => {
+const AccountScreen = props => {
   return (
     <React.Fragment>
       <Header />
       <ViewBox>
-        <Text>Home</Text>
+        <Text>AccountScreen</Text>
       </ViewBox>
     </React.Fragment>
   );
 };
 
-export default HomeScreen;
+export default AccountScreen;

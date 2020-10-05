@@ -1,4 +1,3 @@
-import { composeWithDevTools } from 'redux-devtools-extension';
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import rootReducer from '../reducers';
@@ -9,11 +8,19 @@ const configureStore = () => {
 
   const middlewares = [sagaMiddleware];
 
-  const composeEnhancers = __DEV__ ? composeWithDevTools : compose;
+  if (__DEV__) {
+    // eslint-disable-line
+    const createDebugger = require('redux-flipper').default;
+    const createFlipperMiddleware = require('rn-redux-middleware-flipper').default;
 
+    middlewares.push(createDebugger());
+    middlewares.push(createFlipperMiddleware());
+  }
+
+  
   const store = createStore(
     rootReducer,
-    composeEnhancers(applyMiddleware(...middlewares))
+    compose(applyMiddleware(...middlewares))
   );
 
   if (__DEV__) {

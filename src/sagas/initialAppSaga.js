@@ -18,6 +18,7 @@ export function* initialAppSaga() {
   try {
     const isFirstLaunch = call(validateIsFirstLaunch);
     const loginUser = yield call(getLoginUser);
+    console.log("function*initialAppSaga -> loginUser", loginUser)
     const database = yield call(initSQL, isFirstLaunch);
     const resAction = true 
       ? okInitial({ database })

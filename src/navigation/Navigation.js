@@ -87,7 +87,7 @@ export function publicScreens() {
 }
 
 
-export function PrivateScreens() {
+export function privateScreens() {
   Navigation.setRoot({
     root: {
       bottomTabs: {

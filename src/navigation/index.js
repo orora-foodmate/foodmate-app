@@ -1,2 +1,2 @@
 export * from './Screens';
-export { PrivateScreens, publicScreens, switchScreen } from './Navigation';
+export { privateScreens, publicScreens, switchScreen } from './Navigation';

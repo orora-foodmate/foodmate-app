@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect } from "react";
 import { StyleSheet, Dimensions, Image } from "react-native";
+import { privateScreens, publicScreens } from "~/navigation";
 // import HomeScreen from "../HomeScreen";
 // import ChatScreen from "../ChatScreen";
 // import LoginScreen from "../LoginScreen";
@@ -12,16 +13,19 @@ import { StyleSheet, Dimensions, Image } from "react-native";
 const { width, height } = Dimensions.get("window");
 
 const InitialScreen = props => {
-  const { navigation, isInitialed, isAuth, handleInitialApp } = props;
+  const { isInitialed, isAuth, handleInitialApp } = props;
+
+  console.log("isInitialed", isInitialed)
+  
   useEffect(() => {
     handleInitialApp();
   }, []);
 
   useEffect(() => {
-    if  (isInitialed) {
-      isAuth ? navigation.navigate("Home") : navigation.navigate("Login");
+    if(isInitialed) {
+      isAuth ? privateScreens() : publicScreens();
     }
-  }, [isAuth, isInitialed, navigation]);;
+  }, [isAuth, isInitialed]);;
   return (
     <Fragment>
       <Image

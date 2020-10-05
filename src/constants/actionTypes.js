@@ -1,7 +1,7 @@
 import constants from 'flux-constants';
 
 const syncActionTypes = [
-
+  'SET_LOGIN_USER',
 ];
 
 const basicAsyncActionTypes = [

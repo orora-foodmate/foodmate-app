@@ -1,7 +1,7 @@
 import {fromJS} from 'immutable';
 
 export const authState = fromJS({
-  isAuth: true,
+  isAuth: false,
   confirmation: null,
   account: '',
   avatar: '',
@@ -12,4 +12,5 @@ export const authState = fromJS({
 
 export const settingState = fromJS({
   isInitialed: false,
+  database: null,
 });

@@ -32,9 +32,9 @@ static void InitializeFlipper(UIApplication *application) {
     #ifdef FB_SONARKIT_ENABLED
       InitializeFlipper(application);
     #endif
-    if ([FIRApp defaultApp] == nil) {
+//    if ([FIRApp defaultApp] == nil) {
       [FIRApp configure];
-    }
+//    }
   [ReactNativeNavigation bootstrapWithDelegate:self launchOptions:launchOptions];
   return YES;
 }

@@ -12,6 +12,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(getConfirmationCodeAction(payload));
   },
   handleLogin: payload => {
+  console.log('payload', payload)
     dispatch(loginAction(payload));
   }
 });

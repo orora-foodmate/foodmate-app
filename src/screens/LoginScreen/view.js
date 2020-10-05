@@ -14,7 +14,7 @@ const prepareHandleLogin = (payload, handleLogin) => () => {
 
 const LoginScreen = props => {
   const {handleLogin} = props;
-  const [phone_number, setPhoneNumber] = useState("0987654321");
+  const [account, setAccount] = useState("horsekit1982@gmail.com");
   const [password, setPassword] = useState("a12345678");
   const { theme } = useContext(ThemeContext);
 
@@ -30,8 +30,8 @@ const LoginScreen = props => {
         <InputFill
           autoCapitalize='none'
           placeholder='請輸入電話'
-          value={phone_number}
-          onChangeText={text => setPhoneNumber(text)}
+          value={account}
+          onChangeText={text => setAccount(text)}
           style={styles.input}
           leftIcon={
             <Image
@@ -60,7 +60,7 @@ const LoginScreen = props => {
           title='登入'
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
-          onPress={prepareHandleLogin({phone_number, password}, handleLogin)}
+          onPress={prepareHandleLogin({account, password}, handleLogin)}
         />
         <Button
           title='註冊'

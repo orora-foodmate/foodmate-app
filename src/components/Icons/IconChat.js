@@ -1,16 +1,19 @@
-import React, { useContext } from "react";
-import { Icon, ThemeContext } from "react-native-elements";
+import React from 'react';
+import { Image } from 'react-native';
 
-const IconChat = ({ ...props }) => {
-  const { theme } = useContext(ThemeContext);
-  return (
-    <Icon
-      type='ionicon'
-      name='ios-chatboxes'
-      color={props.focused ? theme.colors.primary : theme.colors.grey4}
-      {...props}
-    />
-  );
-};
+const styles = {
+  icon: {
+    width: 30,
+    height: 25
+  }
+}
+
+const IconChat = props => {
+  return props.focused ?
+    <Image style={styles.icon} source={require("../../assets/icons/tab-chat-active.png")} />
+    :
+    <Image style={styles.icon} source={require("../../assets/icons/tab-chat-deactive.png")} />
+  
+}
 
 export default IconChat;

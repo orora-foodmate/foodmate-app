@@ -17,15 +17,12 @@ const errLogin = ({ message, status }) => {
 };
 
 export function* loginSaga({ payload }) {
-  console.log("function*loginSaga -> payload", payload)
   try {
     const { result } = yield call(loginResult, payload);
-    console.log('function*loginSaga -> result', result)
 
     // yield call(saveLoginUser, result.data);
     yield put(okLogin(result.data));
   } catch (error) {
-    console.log('function*loginSaga -> error', error)
     const errorAction = errLogin(error);
     yield put(errorAction);
   }

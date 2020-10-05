@@ -4,7 +4,6 @@ import {settingState} from './initialState';
 export default function reducer(setting = settingState, {type, payload}) {
   switch (type) {
     case types.INITIAL_APP_SUCCESS:
-      console.log("reducer -> payload", payload)
       return setting.merge({isInitialed: true, ...payload});
     case types.INITIAL_APP:
     case types.INITIAL_APP_ERROR:

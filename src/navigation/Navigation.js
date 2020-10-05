@@ -21,10 +21,8 @@ async function requestUserPermission() {
     if (enabled) {
       await messageinstance.registerDeviceForRemoteMessages();
       const token = await messageinstance.getToken();
-      console.log('token:', token);
     }
   } catch(error) {
-  console.log("requestUserPermission -> error", error)
   }
 }
 

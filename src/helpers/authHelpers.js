@@ -35,7 +35,6 @@ export const saveLoginUser = (user) => loginUserCache.set(LOGIN_USER_KEY, JSON.s
 
 export const getLoginUser = async () => {
   const loginUserStr = await loginUserCache.get(LOGIN_USER_KEY);
-  console.log("getLoginUser -> loginUserStr", loginUserStr)
   const isAuth = !isEmpty(loginUserStr);
   if(isEmpty(loginUserStr)) return {...DEFAULT_USER, isAuth};
 

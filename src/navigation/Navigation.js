@@ -5,7 +5,7 @@ import firebase from '@react-native-firebase/app';
 
 import {
   LOGIN_SCREEN,
-  REGISTER_SCREEN,
+  INITIAL_SCREEN,
 } from './Screens';
 import registerScreens from './registerScreens';
 import messaging from '@react-native-firebase/messaging';
@@ -28,11 +28,30 @@ async function requestUserPermission() {
   }
 }
 
-requestUserPermission();
+// requestUserPermission();
 // Register all screens on launch
 registerScreens();
 
-export function pushSingleScreenApp() {
+export function switchScreen() {
+  Navigation.setRoot({
+    root: {
+      stack: {
+        children: [{
+          component: {
+            name: INITIAL_SCREEN,
+            options: {
+              topBar: {
+                visible: false,
+              }
+            }
+          }
+        }]
+      }
+    }
+  });
+}
+
+export function publicScreens() {
   Navigation.setRoot({
     root: {
       stack: {

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import LoginScreen from '~/screens/LoginScreen/view';
+import LoginScreen from './view';
 import { loginAction, getConfirmationCodeAction } from '~/actions/authActions';
 
 const mapStateToProps = ({auth}) => ({
@@ -12,7 +12,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(getConfirmationCodeAction(payload));
   },
   handleLogin: payload => {
-  console.log('payload', payload)
     dispatch(loginAction(payload));
   }
 });

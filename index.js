@@ -34,6 +34,6 @@ initSQL();
 
 
 import { Navigation } from "react-native-navigation";
-import { pushSingleScreenApp } from '~/navigation';
+import { switchScreen } from '~/navigation';
 
-Navigation.events().registerAppLaunchedListener(() => pushSingleScreenApp());
+Navigation.events().registerAppLaunchedListener(() => switchScreen());

@@ -1,21 +1,21 @@
 import React, { Fragment, useEffect } from "react";
 import { StyleSheet, Dimensions, Image } from "react-native";
-import HomeScreen from "../HomeScreen";
-import ChatScreen from "../ChatScreen";
-import LoginScreen from "../LoginScreen";
-import AccountScreen from "../AccountScreen";
-import RegisterScreen from "../RegisterScreen";
-import InitialAppScreen from "../InitialAppScreen";
-import CreateActivityScreen from "../CreateActivityScreen";
-import { IconChat, IconCreate, IconDonut, IconActivities } from "../../components/Icons";
+// import HomeScreen from "../HomeScreen";
+// import ChatScreen from "../ChatScreen";
+// import LoginScreen from "../LoginScreen";
+// import AccountScreen from "../AccountScreen";
+// import RegisterScreen from "../RegisterScreen";
+// import InitialAppScreen from "../InitialAppScreen";
+// import CreateActivityScreen from "../CreateActivityScreen";
+// import { IconChat, IconCreate, IconDonut, IconActivities } from "../../components/Icons";
 
 const { width, height } = Dimensions.get("window");
 
-const MainScreen = props => {
+const InitialScreen = props => {
   const { navigation, isInitialed, isAuth, handleInitialApp } = props;
   useEffect(() => {
     handleInitialApp();
-  }, [handleInitialApp]);
+  }, []);
 
   useEffect(() => {
     if  (isInitialed) {
@@ -93,7 +93,7 @@ const MainScreen = props => {
   );
 };
 
-export default MainScreen;
+export default InitialScreen;
 
 const styles = StyleSheet.create({
   image: {

@@ -12,6 +12,7 @@ const errInitial = () => ({
 });
 
 export function* initialAppSaga() {
+  console.log('function*initialAppSaga -> initialAppSaga', initialAppSaga)
   try {
     const resAction = true ? okInitial(): errInitial();
     yield put(resAction);

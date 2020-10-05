@@ -38,7 +38,7 @@ export function pushSingleScreenApp() {
       stack: {
         children: [{
           component: {
-            name: REGISTER_SCREEN,
+            name: LOGIN_SCREEN,
             options: {
               topBar: {
                 title: {

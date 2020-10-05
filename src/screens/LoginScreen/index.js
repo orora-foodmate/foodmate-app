@@ -79,10 +79,10 @@ const LoginScreen = props => {
       </View>
       <View style={styles.footer}>
         <View style={styles.donutBox}>
-          <Image
+          {/* <Image
             contentMode='contain'
             source={require("../../assets/images/actor-login-donut.png")}
-          />
+          /> */}
         </View>
       </View>
       <View style={styles.footer}></View>

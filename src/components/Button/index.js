@@ -14,9 +14,7 @@ const getButtonStyle = (color, theme) => ({
 
 const Button = props => {
   const { theme } = useContext(ThemeContext);
-
   const { title, type, color, onPress, titleStyle, buttonStyle } = props;
-
   // const colorStyle = getColors(color, theme);
 
   return (

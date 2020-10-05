@@ -1,11 +1,11 @@
 // @flow
 
 import { Navigation } from 'react-native-navigation';
-import firebase from '@react-native-firebase/app';
 
 import {
   LOGIN_SCREEN,
   INITIAL_SCREEN,
+  HOME_SCREEN,
 } from './Screens';
 import registerScreens from './registerScreens';
 import messaging from '@react-native-firebase/messaging';
@@ -77,6 +77,90 @@ export function publicScreens() {
                     color: 'white'
                   }
                 ]
+              }
+            }
+          }
+        }]
+      }
+    }
+  });
+}
+
+
+export function PrivateScreens() {
+  Navigation.setRoot({
+    root: {
+      bottomTabs: {
+        children: [{
+          stack: {
+            children: [{
+              component: {
+                name: HOME_SCREEN,
+                options: {
+                  topBar: {
+                    title: {
+                      text: 'TAB 1'
+                    },
+                    leftButtons: [
+                      {
+                        id: 'nav_user_btn',
+                        icon: require('assets/icons/ic_nav_user.png'),
+                        color: 'white'
+                      }
+                    ],
+                    rightButtons: [
+                      {
+                        id: 'nav_logout_btn',
+                        icon: require('assets/icons/ic_nav_logout.png'),
+                        color: 'white'
+                      }
+                    ]
+                  }
+                }
+              }
+            }],
+            options: {
+              bottomTab: {
+                icon: require('assets/icons/ic_tab_home.png'),
+                testID: 'FIRST_TAB_BAR_BUTTON',
+                text: 'Tab1',
+              }
+            }
+          }
+        },
+        {
+          stack: {
+            children: [{
+              component: {
+                name: HOME_SCREEN,
+                options: {
+                  topBar: {
+                    title: {
+                      text: 'TAB 2'
+                    },
+                    leftButtons: [
+                      {
+                        id: 'nav_user_btn',
+                        icon: require('assets/icons/ic_nav_user.png'),
+                        color: 'white'
+                      }
+                    ],
+                    rightButtons: [
+                      {
+                        id: 'nav_logout_btn',
+                        icon: require('assets/icons/ic_nav_logout.png'),
+                        color: 'white'
+                      }
+                    ]
+                  }
+                }
+              }
+            }],
+            options: {
+              bottomTab: {
+                icon: require('assets/icons/ic_tab_menu.png'),
+                testID: 'SECOND_TAB_BAR_BUTTON',
+                text: 'Tab2',
               }
             }
           }

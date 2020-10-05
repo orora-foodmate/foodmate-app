@@ -1,10 +1,10 @@
 import { put, call } from 'redux-saga/effects';
 import types from '../constants/actionTypes';
-import auth from '@react-native-firebase/auth';
 import { getTokenResult } from '../apis/api';
-
-const okLogin = (confirmation) => ({
+import { saveLoginUser } from '../helpers/authHelpers';
+const okLogin = (payload) => ({
   type: types.LOGIN_SUCCESS,
+  payload,
 });
 
 const errLogin = ({ message, status }) => {
@@ -16,18 +16,14 @@ const errLogin = ({ message, status }) => {
   };
 };
 
-const firebaseSignInWithPhoneNumber = (phoneNumber) => {
-  return auth().signInWithPhoneNumber(phoneNumber);
-};
 export function* loginSaga({ payload }) {
+  console.log("function*loginSaga -> payload", payload)
   try {
-    console.log("TCL: function*loginSaga -> payload", payload)
-    const result = yield call(getTokenResult, payload);
-    console.log('%c%s', 'color: #e50000', result);
+    const {result} = yield call(getTokenResult, payload);
 
-    yield put(okLogin());
+    yield call(saveLoginUser, result.data);
+    yield put(okLogin(result.data));
   } catch (error) {
-    console.log('%c%s', 'color: #733d00', error);
     const errorAction = errLogin(error);
     yield put(errorAction);
   }
@@ -49,9 +45,8 @@ const errGet = ({ message, status }) => {
 
 export function* getConfirmCodeSaga({ payload }) {
   try {
-    const confirmation = yield firebaseSignInWithPhoneNumber(payload.phoneNumber);
 
-    yield put(okGet(confirmation));
+    yield put(okGet({}));
   } catch (error) {
     const errorAction = errGet(error);
     yield put(errorAction);

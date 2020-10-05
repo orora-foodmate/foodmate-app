@@ -71,7 +71,6 @@ export const fetchWithoutToken = async (
 ) => {
   try {
     const realUrl = `${url}?${QS.stringify(qs)}`;
-    console.log('%c%s', 'color: #00a3cc', realUrl);
     const requestBody = {
       method,
       headers: {
@@ -81,7 +80,6 @@ export const fetchWithoutToken = async (
     };
 
     const res = await fetch(realUrl, requestBody);
-    console.log("TCL: res", res)
     const { statusCode, ok, result } = await parseResponse(res);
 
     return {
@@ -91,7 +89,6 @@ export const fetchWithoutToken = async (
     };
 
   } catch (error) {
-    console.log("TCL: error", error)
     throw error;
   }
 };

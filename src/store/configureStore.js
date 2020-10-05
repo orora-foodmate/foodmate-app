@@ -24,7 +24,7 @@ const configureStore = () => {
   
     // Enable Webpack hot module replacement for reducers
     module.hot.accept('../reducers/index', acceptCallback);
-    module.hot.acceptCallback = acceptCallback;
+    module.hot._acceptCallback = acceptCallback;
 
     // module.hot.accept('../reducers', () => {
     //   const nextRootReducer = require('../reducers/index').default;

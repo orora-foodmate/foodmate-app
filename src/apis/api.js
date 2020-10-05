@@ -13,7 +13,6 @@ export const getTokenResult = async (payload) => {
     
     return resp
   }catch(error) {
-    console.log("TCL: getTokenResult -> error", error)
     throw error;
   }
 }

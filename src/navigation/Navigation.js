@@ -7,6 +7,7 @@ import {
   INITIAL_SCREEN,
   HOME_SCREEN,
   SEARCH_SCREEN,
+  FRIEND_SCREEN
 } from './Screens';
 import registerScreens from './registerScreens';
 import messaging from '@react-native-firebase/messaging';
@@ -94,6 +95,7 @@ export function privateScreens() {
           stack: {
             children: [{
               component: {
+                id: HOME_SCREEN,
                 name: HOME_SCREEN,
                 options: {
                   topBar: {
@@ -117,10 +119,21 @@ export function privateScreens() {
           stack: {
             children: [{
               component: {
+                id: FRIEND_SCREEN,
+                name: FRIEND_SCREEN,
+                options: {
+                  topBar: {
+                    title: 'Friend'
+                  }
+                }
+              }
+            }, {
+              component: {
+                id: SEARCH_SCREEN,
                 name: SEARCH_SCREEN,
                 options: {
                   topBar: {
-                    visible: false,
+                    // visible: false,
                   }
                 }
               }
@@ -129,7 +142,7 @@ export function privateScreens() {
               bottomTab: {
                 icon: require('assets/icons/ic_tab_menu.png'),
                 testID: 'SECOND_TAB_BAR_BUTTON',
-                text: 'Tab2',
+                text: 'Friend',
               }
             }
           }

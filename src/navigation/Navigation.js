@@ -6,6 +6,7 @@ import {
   LOGIN_SCREEN,
   INITIAL_SCREEN,
   HOME_SCREEN,
+  SEARCH_SCREEN,
 } from './Screens';
 import registerScreens from './registerScreens';
 import messaging from '@react-native-firebase/messaging';
@@ -99,20 +100,6 @@ export function privateScreens() {
                     title: {
                       text: 'TAB 1'
                     },
-                    leftButtons: [
-                      {
-                        id: 'nav_user_btn',
-                        icon: require('assets/icons/ic_nav_user.png'),
-                        color: 'white'
-                      }
-                    ],
-                    rightButtons: [
-                      {
-                        id: 'nav_logout_btn',
-                        icon: require('assets/icons/ic_nav_logout.png'),
-                        color: 'white'
-                      }
-                    ]
                   }
                 }
               }
@@ -130,26 +117,10 @@ export function privateScreens() {
           stack: {
             children: [{
               component: {
-                name: HOME_SCREEN,
+                name: SEARCH_SCREEN,
                 options: {
                   topBar: {
-                    title: {
-                      text: 'TAB 2'
-                    },
-                    leftButtons: [
-                      {
-                        id: 'nav_user_btn',
-                        icon: require('assets/icons/ic_nav_user.png'),
-                        color: 'white'
-                      }
-                    ],
-                    rightButtons: [
-                      {
-                        id: 'nav_logout_btn',
-                        icon: require('assets/icons/ic_nav_logout.png'),
-                        color: 'white'
-                      }
-                    ]
+                    visible: false,
                   }
                 }
               }

@@ -9,8 +9,9 @@ import { Provider } from 'react-redux';
 import LoginScreen from '~/screens/LoginScreen';
 import HomeScreen from '~/screens/HomeScreen';
 import RegisterScreen from '~/screens/RegisterScreen';
-import { LOGIN_SCREEN, HOME_SCREEN, REGISTER_SCREEN, INITIAL_SCREEN } from './Screens';
+import { LOGIN_SCREEN, HOME_SCREEN, REGISTER_SCREEN, INITIAL_SCREEN, SEARCH_SCREEN } from './Screens';
 import InitialScreen from '~/screens/InitialScreen';
+import SearchScreen from '~/screens/SearchScreen';
 
 function WrappedComponent(Component) {
   return function inject(props) {
@@ -31,5 +32,6 @@ export default function () {
   Navigation.registerComponent(LOGIN_SCREEN, () => WrappedComponent(LoginScreen));
   Navigation.registerComponent(REGISTER_SCREEN, () => RegisterScreen);
   Navigation.registerComponent(HOME_SCREEN, () => WrappedComponent(HomeScreen));
+  Navigation.registerComponent(SEARCH_SCREEN, () => WrappedComponent(SearchScreen));
   console.info('All screens have been registered...');
 }

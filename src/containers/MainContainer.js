@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import MainScreen from '../screens/MainScreen';
+import MainScreen from '../screens/InitialScreen';
 import { initialAppAction } from '../actions/settingActions';
 
 const mapStateToProps = ({auth, setting}) => ({

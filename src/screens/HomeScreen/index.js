@@ -1,13 +1,12 @@
 import { connect } from 'react-redux';
-import HomeScreen from './view';
+import Home from './view';
 
-const mapStateToProps = () => ({
+const mapStateToProps = ({ auth }) => ({
+  isAuth: auth.get('isAuth'),
+
 });
 
 const mapDispatchToProps = dispatch => ({
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HomeScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

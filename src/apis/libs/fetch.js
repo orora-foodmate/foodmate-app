@@ -2,8 +2,6 @@ import QS from 'query-string';
 import isEmpty from 'lodash/isEmpty';
 import map from 'lodash/map';
 import Toast from 'react-native-simple-toast';
-import { getUrl } from '../libs/route';
-import { getErrorResponse } from '../../helpers/responseHelper';
 
 const parseResponse = response => {
   const { status: statusCode, ok: responseOK } = response;
@@ -70,7 +68,10 @@ export const fetchWithoutToken = async (
   qs = {}
 ) => {
   try {
-    const realUrl = `${url}?${QS.stringify(qs)}`;
+    const realUrl = isEmpty(qs)
+      ? url
+      : `${url}?${QS.stringify(qs)}`;
+    console.log('realUrl', realUrl)
     const requestBody = {
       method,
       headers: {

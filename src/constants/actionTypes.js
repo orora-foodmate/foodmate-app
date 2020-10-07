@@ -6,8 +6,8 @@ const syncActionTypes = [
 
 const basicAsyncActionTypes = [
   'LOGIN',
-  'INITIAL_APP',
-  'GET_CONFIRMATION_CODE',
+  'LOGOUT',
+  'INITIAL_APP'
 ];
 
 const asyncActionTypes = basicAsyncActionTypes.reduce((result, actionType) => {

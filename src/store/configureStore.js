@@ -1,46 +1,30 @@
-import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import rootReducer from '../reducers';
-import rootSaga from '../sagas';
+import rootReducer from '~/reducers';
+import rootSaga from '~/sagas';
 
 const configureStore = () => {
   const sagaMiddleware = createSagaMiddleware({});
 
   const middlewares = [sagaMiddleware];
 
-  if (__DEV__) {
-    // eslint-disable-line
-    const createDebugger = require('redux-flipper').default;
-    const createFlipperMiddleware = require('rn-redux-middleware-flipper').default;
+  const composeEnhancers = __DEV__ ? composeWithDevTools : compose;
 
-    middlewares.push(createDebugger());
-    middlewares.push(createFlipperMiddleware());
-  }
-
-  
   const store = createStore(
     rootReducer,
-    compose(applyMiddleware(...middlewares))
+    composeEnhancers(applyMiddleware(...middlewares))
   );
 
   if (__DEV__) {
-    var acceptCallback = () => {
-      const nextRootReducer = combineReducers(require('../reducers/index'));
+    module.hot.accept(() => {
+      const nextRootReducer = require('../reducers/index').default;
       store.replaceReducer(nextRootReducer);
-    }
-  
-    // Enable Webpack hot module replacement for reducers
-    module.hot.accept('../reducers/index', acceptCallback);
-    module.hot._acceptCallback = acceptCallback;
-
-    // module.hot.accept('../reducers', () => {
-    //   const nextRootReducer = require('../reducers/index').default;
-    //   store.replaceReducer(nextRootReducer);
-    // });
+    });
   }
   return {
     ...store,
-    runSaga: sagaMiddleware.run(rootSaga)
+    runSaga: sagaMiddleware.run(rootSaga),
   };
 };
 

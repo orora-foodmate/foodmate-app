@@ -4,38 +4,8 @@ $FirebaseSDKVersion = '6.29.0'
 
 platform :ios, '10.0'
 
-def flipper_pods()
-  flipperkit_version = '0.49.0'
-  pod 'FlipperKit', '~>' + flipperkit_version, :configuration => 'Debug'
-  pod 'FlipperKit/FlipperKitLayoutPlugin', '~>' + flipperkit_version, :configuration => 'Debug'
-  pod 'FlipperKit/SKIOSNetworkPlugin', '~>' + flipperkit_version, :configuration => 'Debug'
-  pod 'FlipperKit/FlipperKitUserDefaultsPlugin', '~>' + flipperkit_version, :configuration => 'Debug'
-  pod 'FlipperKit/FlipperKitReactPlugin', '~>' + flipperkit_version, :configuration => 'Debug'
-end
-
-# Post Install processing for Flipper
-def flipper_post_install(installer)
-  file_name = Dir.glob("*.xcodeproj")[0]
-  app_project = Xcodeproj::Project.open(file_name)
-  app_project.native_targets.each do |target|
-    target.build_configurations.each do |config|
-      cflags = config.build_settings['OTHER_CFLAGS'] || '$(inherited) '
-      unless cflags.include? '-DFB_SONARKIT_ENABLED=1'
-        puts 'Adding -DFB_SONARKIT_ENABLED=1 in OTHER_CFLAGS...'
-        cflags << '-DFB_SONARKIT_ENABLED=1'
-      end
-      config.build_settings['OTHER_CFLAGS'] = cflags
-    end
-    app_project.save
-  end
-  installer.pods_project.save
-end
-
-
 target 'foodmate' do
   config = use_native_modules!
-
-  pod 'Yoga', :path => '../node_modules/react-native/ReactCommon/yoga', :modular_headers => true
 
   use_react_native!(:path => config["reactNativePath"])
 
@@ -50,7 +20,15 @@ target 'foodmate' do
   # you should disable these next few lines.
   use_flipper!
   post_install do |installer|
-    flipper_pods()
     flipper_post_install(installer)
+  end
+end
+
+target 'foodmate-tvOS' do
+  # Pods for foodmate-tvOS
+
+  target 'foodmate-tvOSTests' do
+    inherit! :search_paths
+    # Pods for testing
   end
 end

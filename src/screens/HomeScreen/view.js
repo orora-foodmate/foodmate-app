@@ -1,15 +1,40 @@
-import React from "react";
-import { Text } from "react-native";
-import ViewBox from "../../components/ViewBox";
+import React, { Fragment, useEffect } from 'react';
+import { useNavigation } from 'react-native-navigation-hooks'
+import ConfirmButton from '~/components/Button/ConfirmButton';
+import Text from '~/components/Text';
 
-const HomeScreen = props => {
+const HomeScreen = (props) => {
+  const {
+    setStackRoot,
+    push,
+    // pop,
+    // showOverlay,
+    showModal
+  } = useNavigation();
+
+  useEffect(()=>{
+    //
+  }, []);
+
   return (
-    <React.Fragment>
-      <ViewBox>
-        <Text>Home</Text>
-      </ViewBox>
-    </React.Fragment>
+    <Fragment>
+      <Text h1>Home Screen</Text>
+      <ConfirmButton title='set Other' onPress={()=> setStackRoot('Other')}/>
+      <ConfirmButton title='push' onPress={()=> push('Other')}/>
+      <ConfirmButton title='showModal' onPress={()=> showModal('Other')}/>
+    </Fragment>
   );
+}
+
+HomeScreen.options = {
+  topBar: {
+    title: {
+      text: 'Homett',
+    },
+  },
+  bottomTab: {
+    text: 'Homebt'
+  }
 };
 
 export default HomeScreen;

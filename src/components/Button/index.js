@@ -1,41 +1,47 @@
-import React, { useContext } from "react";
-import { StyleSheet } from "react-native";
-import { Button as BasicButton, ThemeContext } from "react-native-elements";
+import React from 'react';
+import { StyleSheet } from 'react-native';
+import { Button as BaseButton } from 'react-native-elements';
+import propTypes from 'prop-types';
+import colors from '~/theme/color';
 
-const getTextStyle = (color, theme) => ({
-  default: {},
-  primary: {},
-  error: {}
-})
+class Button extends React.PureComponent {
+  static propTypes = {
+    onPress: propTypes.func.isRequired,
+    ...Button.propTypes,
+  };
 
-const getButtonStyle = (color, theme) => ({
-  
-})
+  static defaultProps = {
+    isVisible: true,
+    type: 'solid',
+  };
 
-const Button = props => {
-  const { theme } = useContext(ThemeContext);
-  const { title, type, color, onPress, titleStyle, buttonStyle } = props;
-  // const colorStyle = getColors(color, theme);
-
-  return (
-    <BasicButton
-      type={type}
-      title={title}
-      onPress={onPress}
-      titleStyle={[styles.title, titleStyle]}
-      buttonStyle={[styles.button, buttonStyle]}
-    />
-  );
-};
-
-const styles = StyleSheet.create({
-  title: {
-    textAlign: "center"
-  },
-  button: {
-    width: "80%",
-    borderRadius: 50
+  render() {
+    const { isVisible, onPress, type, ...props } = this.props;
+    if (!isVisible) return null;
+    const styles = getStyles(type);
+    return (
+      <BaseButton
+        {...props}
+        disabledStyle={styles.disabledStyle}
+        disabledTitleStyle={styles.disabledTitleStyle}
+        onPress={onPress}
+        type={type}
+      />
+    );
   }
-});
+}
 
 export default Button;
+
+const getStyles = type => {
+  const disabledColor = colors.greyLighter;
+  return StyleSheet.create({
+    disabledStyle: {
+      backgroundColor: type === 'solid' ? disabledColor : colors.transparent,
+      borderColor: type === 'outline' ? disabledColor : colors.transparent,
+    },
+    disabledTitleStyle: {
+      color: type === 'solid' ? colors.white : disabledColor,
+    },
+  });
+};

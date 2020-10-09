@@ -26,6 +26,7 @@ Screens.forEach((C, key) => {
 });
 
 export const startMain = () => {
+  console.log("startMain -> startMain")
   Navigation.setRoot({
     root: {
       component: {

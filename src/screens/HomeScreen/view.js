@@ -13,7 +13,8 @@ const HomeScreen = (props) => {
   } = useNavigation();
 
   useEffect(()=>{
-    //
+    console.log("HomeScreen -> useEffect")
+    props.handleGetFriends();
   }, []);
 
   return (

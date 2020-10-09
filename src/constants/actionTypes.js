@@ -7,7 +7,8 @@ const syncActionTypes = [
 const basicAsyncActionTypes = [
   'LOGIN',
   'LOGOUT',
-  'INITIAL_APP'
+  'INITIAL_APP',
+  'GET_FRIENDS',
 ];
 
 const asyncActionTypes = basicAsyncActionTypes.reduce((result, actionType) => {

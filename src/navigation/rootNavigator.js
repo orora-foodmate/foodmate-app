@@ -7,11 +7,12 @@ import { stack } from './stack';
 Feather.loadFont();
 
 const rootNavigator = () => {
-  Promise.all([
-    Feather.getImageSource('send', 25),
-    Feather.getImageSource('users', 25),
-    Feather.getImageSource('settings', 25),
-  ]).then(([sendIcon, usersIcon, settingIcon]) => {
+  // console.log("rootNavigator -> rootNavigator")
+  // Promise.all([
+  //   Feather.getImageSource('send', 25),
+  //   Feather.getImageSource('users', 25),
+  //   Feather.getImageSource('settings', 25),
+  // ]).then(([sendIcon, usersIcon, settingIcon]) => {
     Navigation.setDefaultOptions({
       statusBar: {
         backgroundColor: colors.primary,
@@ -49,9 +50,9 @@ const rootNavigator = () => {
                 },
               },
               children: [
-                stack('Message', 'Message', sendIcon),
-                stack('Friend', 'Friend', usersIcon),
-                stack('Setting', 'Setting', settingIcon),
+                stack('Message', 'Message', () => <Feather name='send' size={25} />),
+                stack('Friend', 'Friend', () => <Feather name='users' size={25} />),
+                stack('Setting', 'Setting', () => <Feather name='setting' size={25} />),
               ]
             },
           },
@@ -64,7 +65,7 @@ const rootNavigator = () => {
         },
       }
     });
-  });
+  // });
 };
 
 export default rootNavigator;

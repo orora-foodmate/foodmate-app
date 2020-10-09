@@ -2,7 +2,7 @@ import { put, call } from 'redux-saga/effects';
 import types from '~/constants/actionTypes';
 import { loginResult } from '~/apis/api';
 import { saveLoginUser } from '~/helper/authHelpers';
-import { privateScreens } from '~/navigation';
+
 const okLogin = (payload) => ({
   type: types.LOGIN_SUCCESS,
   payload,
@@ -18,16 +18,12 @@ const errLogin = ({ message, status }) => {
 };
 
 export function* loginSaga({ payload }) {
-  console.log('function*loginSaga -> payload', payload)
-  console.log("function*loginSaga -> loginSaga", loginSaga)
   try {
     const { result } = yield call(loginResult, payload);
-    console.log('function*loginSaga -> result', result)
 
     yield call(saveLoginUser, result.data);
     yield put(okLogin(result.data));
   } catch (error) {
-    console.log("function*loginSaga -> error", error)
     const errorAction = errLogin(error);
     yield put(errorAction);
   }

@@ -1,29 +1,19 @@
 const userSchema = {
-  title: 'login user',
   version: 0,
-  description: 'login user',
+  title: 'human schema no compression',
   type: 'object',
   properties: {
+    name: {
+      type: 'string',
+    },
     account: {
       type: 'string',
-      primary: true,
-      default: '',
     },
     avatar: {
       type: 'string',
-      default: '',
-    },
-    token: {
-      type: 'string',
-      default: '',
-    },
-    id: {
-      type: 'string',
-      default: '',
     },
   },
-  required: [],
-  encrypted: [],
+  indexes: [],
 };
 
 export default userSchema;

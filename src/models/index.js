@@ -3,6 +3,8 @@ import {addRxPlugin, createRxDatabase} from 'rxdb';
 import SQLite from 'react-native-sqlite-2';
 import SQLiteAdapterFactory from 'pouchdb-adapter-react-native-sqlite';
 import userSchema from './userSchema';
+import friendSchema from './friendSchema';
+import roomSchema from './roomSchema';
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -27,9 +29,34 @@ export const initSQL = async () => {
     multiInstance: false,
     ignoreDuplicate: true,
   });
+
+  // await Promise.all([
+  //   database.collection({
+  //     name: 'users',
+  //     schema: userSchema,
+  //   }),
+  //   // database.collection({
+  //   //   name: 'friends',
+  //   //   schema: friendSchema,
+  //   // }),
+  //   // database.collection({
+  //   //   name: 'rooms',
+  //   //   schema: roomSchema,
+  //   // }),
+  // ]);
+
   await database.collection({
-    name: 'user',
+    name: 'users',
     schema: userSchema,
+  });
+  await database.collection({
+    name: 'friends',
+    schema: friendSchema,
+  });
+
+  await database.collection({
+    name: 'rooms',
+    schema: roomSchema,
   });
   return database;
 };

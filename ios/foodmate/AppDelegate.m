@@ -50,7 +50,4 @@ static void InitializeFlipper(UIApplication *application) {
 #endif
 }
 
-- (NSArray<id<RCTBridgeModule>> *)extraModulesForBridge:(RCTBridge *)bridge {
-  return [ReactNativeNavigation extraModulesForBridge:bridge];
-}
 @end

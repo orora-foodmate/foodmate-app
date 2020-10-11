@@ -4,6 +4,10 @@ const friendSchema = {
   description: 'friends',
   type: 'object',
   properties: {
+    _id: {
+      type: 'string',
+      primary: true
+    },
     users: {
       type: 'array',
       items: {

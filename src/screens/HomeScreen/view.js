@@ -1,35 +1,41 @@
-import React, { Fragment, useEffect } from 'react';
-import { useNavigation } from 'react-native-navigation-hooks'
-import ConfirmButton from '~/components/Button/ConfirmButton';
-import Text from '~/components/Text';
+import React, {Fragment, useEffect, useState} from 'react';
+import {ListItem, Avatar} from 'react-native-elements';
 
 const HomeScreen = (props) => {
-  const {
-    setStackRoot,
-    push,
-    // pop,
-    // showOverlay,
-    showModal
-  } = useNavigation();
+  const [friends, setFriends] = useState([]);
+  console.log("HomeScreen -> friends", friends)
 
-  useEffect(()=>{
-    console.log("HomeScreen -> useEffect -> friendQuery", props.friendQuery)
-    const sub = props.friendQuery.$.subscribe(friends => {
-    console.log("HomeScreen -> friends", friends)
-    })
-    props.handleGetFriends();
+  useEffect(() => {
+    console.log('HomeScreen -> useEffect -> friendQuery', props.friendQuery);
+    const sub = props.friendQuery.$.subscribe((f) => {
+      setFriends(f);
+    });
+    setTimeout(() => {
+      props.handleGetFriends();
+    }, 1000);
 
     return () => {
       sub.unsubscribe();
-    }
+    };
   }, []);
 
   return (
     <Fragment>
-      <Text h1>Home Screen</Text>
+      {friends.map((item, index) => {
+        const friend = item.users.find(u => u._id !== props.userId);
+        return (
+          <ListItem key={`friend-${index}`} bottomDivider>
+            <Avatar source={{uri: friend.avatar}} />
+            <ListItem.Content>
+              <ListItem.Title>{friend.name}</ListItem.Title>
+              <ListItem.Subtitle>{friend.account}</ListItem.Subtitle>
+            </ListItem.Content>
+          </ListItem>
+        )
+      })}
     </Fragment>
   );
-}
+};
 
 HomeScreen.options = {
   topBar: {
@@ -38,8 +44,8 @@ HomeScreen.options = {
     },
   },
   bottomTab: {
-    text: 'Homebt'
-  }
+    text: 'Homebt',
+  },
 };
 
 export default HomeScreen;

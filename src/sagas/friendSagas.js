@@ -2,6 +2,7 @@ import {put, call, select} from 'redux-saga/effects';
 import types from '~/constants/actionTypes';
 import {getFriendsResult} from '~/apis/api';
 import isEmpty from 'lodash/isEmpty';
+import pick from 'lodash/pick';
 
 const okGet = (payload) => ({
   type: types.GET_FRIENDS_SUCCESS,
@@ -34,11 +35,12 @@ export function* getFriendsSaga({payload}) {
     };
 
     const {result} = yield call(getFriendsResult, customHeaders, payload);
-    yield database.friends.insert(result.data.friends[0]);
-    // yield call(database.friends.insert, result.data.friends[0]);
+    const items = result.data.friends.map(f => pick(f, ['_id', 'createAt', 'updateAt', 'status', 'creator', 'users']))
+    yield database.friends.bulkInsert(items);
 
     yield put(okGet());
   } catch (error) {
+    console.log("function*getFriendsSaga -> error", error)
     const errorAction = errGet(error);
     yield put(errorAction);
   }

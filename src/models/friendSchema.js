@@ -7,12 +7,39 @@ const friendSchema = {
     users: {
       type: 'array',
       items: {
-        type: 'string',
+        type: 'object',
+        properties: {
+          _id: {
+            type: 'string',
+          },
+          name: {
+            type: 'string',
+          },
+          account: {
+            type: 'string',
+          },
+          avatar: {
+            type: 'string',
+          },
+        }
       },
     },
     creator: {
-      type: 'string',
-      ref: 'users',
+      type: 'object',
+      properties: {
+        _id: {
+          type: 'string',
+        },
+        name: {
+          type: 'string',
+        },
+        account: {
+          type: 'string',
+        },
+        avatar: {
+          type: 'string',
+        },
+      }
     },
     createAt: {
       type: 'string',

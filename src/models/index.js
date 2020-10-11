@@ -23,40 +23,28 @@ addRxPlugin(SQLiteAdapter);
 addRxPlugin(require('pouchdb-adapter-http'));
 
 export const initSQL = async () => {
+  console.log(11);
   const database = await createRxDatabase({
     name: 'foodmate',
     adapter: 'react-native-sqlite', // the name of your adapter
     multiInstance: false,
     ignoreDuplicate: true,
   });
-
-  // await Promise.all([
-  //   database.collection({
-  //     name: 'users',
-  //     schema: userSchema,
-  //   }),
-  //   // database.collection({
-  //   //   name: 'friends',
-  //   //   schema: friendSchema,
-  //   // }),
-  //   // database.collection({
-  //   //   name: 'rooms',
-  //   //   schema: roomSchema,
-  //   // }),
-  // ]);
-
+  console.log(22);
   await database.collection({
     name: 'users',
     schema: userSchema,
   });
+  console.log(44);
   await database.collection({
     name: 'friends',
     schema: friendSchema,
   });
-
+  console.log(55);
   await database.collection({
     name: 'rooms',
     schema: roomSchema,
   });
+  console.log(66);
   return database;
 };

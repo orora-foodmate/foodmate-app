@@ -3,9 +3,9 @@ import {call, put} from 'redux-saga/effects';
 import {initSQL} from '~/models';
 import {getLoginUser, validateIsFirstLaunch} from '~/helper/authHelpers';
 
-const okInitial = () => ({
+const okInitial = (payload) => ({
   type: types.INITIAL_APP_SUCCESS,
-  payload: {},
+  payload,
 });
 
 const errInitial = () => ({
@@ -16,14 +16,14 @@ const errInitial = () => ({
 export function* initialAppSaga() {
   try {
     console.log(1);
-    const isFirstLaunch = call(validateIsFirstLaunch);
+    const isFirstLaunch = yield call(validateIsFirstLaunch);
     console.log(2);
     const loginUser = yield call(getLoginUser);
     console.log(3);
     const database = yield call(initSQL, isFirstLaunch);
-    console.log('function*initialAppSaga -> database', database);
+    console.log(4);
     const resAction = true ? okInitial({database}) : errInitial();
-
+    console.log(5);
     yield put({
       type: types.SET_LOGIN_USER,
       payload: loginUser,

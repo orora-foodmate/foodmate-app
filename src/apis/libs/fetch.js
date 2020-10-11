@@ -22,6 +22,18 @@ const parseResponse = response => {
   });
 };
 
+export const fetchGetWithToken = (url, customHeaders, payload = {}) => {
+  const realUrl = isEmpty(payload) ? url : `${url}?${QS.stringify(payload)}`;
+
+  return fetch(realUrl, {
+    method: 'GET',
+    headers: {
+      ...customHeaders
+    },
+  })
+    .then(parseResponse);
+};
+
 export const fetchBasicToken = (url, customHeaders, payload) => {
   const form = new FormData();
   map(payload, (value, key) => form.append(key, value))

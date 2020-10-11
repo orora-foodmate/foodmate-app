@@ -13,16 +13,20 @@ const HomeScreen = (props) => {
   } = useNavigation();
 
   useEffect(()=>{
-    console.log("HomeScreen -> useEffect")
+    console.log("HomeScreen -> useEffect -> friendQuery", props.friendQuery)
+    const sub = props.friendQuery.$.subscribe(friends => {
+    console.log("HomeScreen -> friends", friends)
+    })
     props.handleGetFriends();
+
+    return () => {
+      sub.unsubscribe();
+    }
   }, []);
 
   return (
     <Fragment>
       <Text h1>Home Screen</Text>
-      <ConfirmButton title='set Other' onPress={()=> setStackRoot('Other')}/>
-      <ConfirmButton title='push' onPress={()=> push('Other')}/>
-      <ConfirmButton title='showModal' onPress={()=> showModal('Other')}/>
     </Fragment>
   );
 }

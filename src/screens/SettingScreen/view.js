@@ -1,20 +1,23 @@
 import React, { Fragment } from 'react';
-import Text from '~/components/Text';
 import ConfirmButton from '~/components/Button/ConfirmButton';
+import { Card } from 'react-native-elements';
 
 const SettingScreen = ({
+  auth,
   handleLogout,
-  ...props
 }) => {
-
   const onPress = () => {
     handleLogout();
   };
 
   return (
     <Fragment>
-      <Text h1>Setting Screen</Text>
-      <ConfirmButton title='Logout' onPress={onPress}/>
+      <Card>
+        <Card.Image source={{uri: auth.get('avatar')}} resizeMode="cover"/>
+        <Card.Divider />
+        <Card.Title>{auth.get('name')}</Card.Title>
+      </Card>
+      <ConfirmButton title='Logout' onPress={onPress} />
     </Fragment>
   );
 };

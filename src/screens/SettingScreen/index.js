@@ -3,6 +3,7 @@ import SettingScreen from './view';
 import { logoutAction } from '~/actions/authActions';
 
 const mapStateToProps = ({ auth }) => ({
+  auth,
 });
 
 const mapDispatchToProps = dispatch => ({

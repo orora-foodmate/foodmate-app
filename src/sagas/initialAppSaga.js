@@ -8,9 +8,9 @@ const okInitial = (payload) => ({
   payload,
 });
 
-const errInitial = () => ({
+const errInitial = ({ message}) => ({
   type: types.INITIAL_APP_ERROR,
-  payload: {},
+  payload: { message },
 });
 
 export function* initialAppSaga() {
@@ -18,6 +18,7 @@ export function* initialAppSaga() {
     const isFirstLaunch = yield call(validateIsFirstLaunch);
     const loginUser = yield call(getLoginUser);
     const database = yield call(initSQL, isFirstLaunch);
+    
     const resAction = true ? okInitial({database}) : errInitial();
     yield put({
       type: types.SET_LOGIN_USER,
@@ -26,6 +27,7 @@ export function* initialAppSaga() {
 
     yield put(resAction);
   } catch (error) {
+    console.log('function*initialAppSaga -> error', error)
     const errorAction = errInitial(error);
     yield put(errorAction);
   }

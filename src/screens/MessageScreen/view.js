@@ -2,12 +2,13 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { ListItem, Avatar } from 'react-native-elements';
 
 const MessageScreen = (props) => {
-  const [friends, setFriends] = useState([]);
+  const [rooms, setRooms] = useState([]);
+
   useEffect(() => {
-    const sub = props.friendQuery.$.subscribe((f) => {
-      setFriends(f);
+    const sub = props.roomQuery.$.subscribe((r) => {
+      setRooms(r);
     });
-    props.handleGetFriends();
+    props.handleGetRooms();
 
     return () => {
       sub.unsubscribe();
@@ -16,14 +17,14 @@ const MessageScreen = (props) => {
 
   return (
     <Fragment>
-      {friends.map((item, index) => {
-        const friend = item.users.find(u => u._id !== props.userId);
+      {rooms.map((item, index) => {
+        const room = item.users.find(u => u._id !== props.userId);
         return (
-          <ListItem key={`friend-${index}`} bottomDivider>
-            <Avatar source={{ uri: friend.avatar }} />
+          <ListItem key={`room-${index}`} bottomDivider>
+            <Avatar source={{ uri: room.avatar }} />
             <ListItem.Content>
-              <ListItem.Title>{friend.name}</ListItem.Title>
-              <ListItem.Subtitle>{friend.account}</ListItem.Subtitle>
+              <ListItem.Title>{room.name}</ListItem.Title>
+              <ListItem.Subtitle>{room.account}</ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>
         )

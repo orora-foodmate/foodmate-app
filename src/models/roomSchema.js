@@ -4,18 +4,46 @@ const roomSchema = {
   description: 'rooms',
   type: 'object',
   properties: {
-    name: {
+    id: {
       type: 'string',
-    },
-    creator: {
-      type: 'string',
-      ref: 'users',
+      primary: true
     },
     users: {
       type: 'array',
       items: {
-        type: 'string',
+        type: 'object',
+        properties: {
+          _id: {
+            type: 'string',
+          },
+          name: {
+            type: 'string',
+          },
+          account: {
+            type: 'string',
+          },
+          avatar: {
+            type: 'string',
+          },
+        }
       },
+    },
+    creator: {
+      type: 'object',
+      properties: {
+        _id: {
+          type: 'string',
+        },
+        name: {
+          type: 'string',
+        },
+        account: {
+          type: 'string',
+        },
+        avatar: {
+          type: 'string',
+        },
+      }
     },
     createAt: {
       type: 'string',
@@ -28,10 +56,11 @@ const roomSchema = {
     status: {
       type: 'number',
     },
-    type: {
-      type: 'number',
-    },
   },
+  indexes: [
+    'updateAt',
+    'createAt',
+  ],
   required: [],
   encrypted: [],
 };

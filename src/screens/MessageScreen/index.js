@@ -1,16 +1,17 @@
 import { connect } from 'react-redux';
 import { getFriendsAction } from '~/actions/friendActions';
-import Home from './view';
+import { getRoomsAction } from '~/actions/roomActions';
+import MessageScreen from './view';
 
 
 const mapStateToProps = ({ auth, setting }) => {
   const database = setting.get('database');
-  const friendQuery = database.friends.find();
+  const roomQuery = database.rooms.find();
   const userId = auth.get('_id');
   return {
     userId,
     isAuth: auth.get('isAuth'),
-    friendQuery,
+    roomQuery,
   };
 };
 
@@ -18,6 +19,9 @@ const mapDispatchToProps = dispatch => ({
   handleGetFriends: payload => {
     dispatch(getFriendsAction(payload));
   },
+  handleGetRooms: payload => {
+    dispatch(getRoomsAction(payload));
+  },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(MessageScreen);

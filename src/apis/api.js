@@ -2,6 +2,9 @@
 import { getUrl } from './libs/route';
 import { fetchWithoutToken, fetchGetWithToken } from './libs/fetch';
 
+export const getRoomsResult = (customHeaders, payload) => 
+  fetchGetWithToken(getUrl('rooms'), customHeaders, payload);
+
 export const getFriendsResult = (customHeaders, payload) =>
 fetchGetWithToken(getUrl('friends'), customHeaders, payload);
 

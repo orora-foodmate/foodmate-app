@@ -1,26 +1,25 @@
 import { put, call, select } from 'redux-saga/effects';
 import types from '~/constants/actionTypes';
-import { getFriendsResult } from '~/apis/api';
+import { getRoomsResult } from '~/apis/api';
 import isEmpty from 'lodash/isEmpty';
 import pick from 'lodash/pick';
 import format from 'date-fns/format';
 import addSeconds from 'date-fns/addSeconds';
 
-const okGet = (payload) => ({
-  type: types.GET_FRIENDS_SUCCESS,
-  payload,
+const okGet = () => ({
+  type: types.GET_ROOMS_SUCCESS,
 });
 
 const errGet = ({ message }) => {
   return {
-    type: types.GET_FRIENDS_ERROR,
+    type: types.GET_ROOMS_ERROR,
     payload: {
       message,
     },
   };
 };
 
-export function* getFriendsSaga({ payload = {} }) {
+export function* getRoomsSaga() {
   try {
     const { auth, setting } = yield select(({ auth, setting }) => ({ auth, setting }));
     const token = auth.get('token');
@@ -35,18 +34,20 @@ export function* getFriendsSaga({ payload = {} }) {
       Authorization: `Bearer ${auth.get('token')}`
     };
 
-    const friend = yield database.friends.findOne().sort('updateAt').exec();
-    const queryObject = isEmpty(friend)
-      ? payload
-      : { ...payload, updateAt: format(addSeconds(new Date(friend.updateAt), 1), 'yyyy-MM-dd HH:mm:ss') }
+    const room = yield database.rooms.findOne().sort('updateAt').exec();
+    const queryObject = isEmpty(room)
+      ? {}
+      : { updateAt: format(addSeconds(new Date(room.updateAt), 1), 'yyyy-MM-dd HH:mm:ss') }
 
-    const { result } = yield call(getFriendsResult, customHeaders, queryObject);
-    const items = result.data.friends.map(f => {
-      const item = pick(f, ['createAt', 'updateAt', 'status', 'creator', 'users'])
-      item.id = f._id;
+    const { result } = yield call(getRoomsResult, customHeaders, queryObject);
+    console.log('function*getRoomsSaga -> result', result)
+
+    const items = result.data.rooms.map(r => {
+      const item = pick(r, ['createAt', 'updateAt', 'status', 'creator', 'users'])
+      item.id = r._id;
       return item;
     });
-    yield database.friends.bulkInsert(items);
+    yield database.rooms.bulkInsert(items);
 
     yield put(okGet());
   } catch (error) {

@@ -3,6 +3,7 @@ import types from '~/constants/actionTypes';
 import {getFriendsResult} from '~/apis/api';
 import isEmpty from 'lodash/isEmpty';
 import pick from 'lodash/pick';
+import format from 'date-fns/format';
 
 const okGet = (payload) => ({
   type: types.GET_FRIENDS_SUCCESS,
@@ -34,9 +35,11 @@ export function* getFriendsSaga({payload}) {
       Authorization: `Bearer ${auth.get('token')}`
     };
 
-    const friends = yield database.friends.findOne().sort('updateAt').exec();
-    console.log('function*getFriendsSaga -> friends', friends)
-    const {result} = yield call(getFriendsResult, customHeaders, payload);
+    const friend = yield database.friends.findOne().sort('updateAt').exec();
+    const queryObject = isEmpty(friend)
+      ? payload
+      : {...payload, updateAt: format(new Date(friend.updateAt), 'yyyy-MM-dd HH:mm:ss')}
+    const {result} = yield call(getFriendsResult, customHeaders, queryObject);
     const items = result.data.friends.map(f => {
       const item = pick(f, ['createAt', 'updateAt', 'status', 'creator', 'users'])
       item.id = f._id;

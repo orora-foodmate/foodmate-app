@@ -57,6 +57,10 @@ const friendSchema = {
       type: 'number',
     },
   },
+  indexes: [
+    'updateAt',
+    'createAt',
+  ],
   required: [],
   encrypted: [],
 };

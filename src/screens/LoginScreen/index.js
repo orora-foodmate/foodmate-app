@@ -4,7 +4,6 @@ import { loginAction } from '~/actions/authActions';
 
 const mapStateToProps = ({ auth }) => ({
   isAuth: auth.get('isAuth'),
-  
 });
 
 const mapDispatchToProps = dispatch => ({

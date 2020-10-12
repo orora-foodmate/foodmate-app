@@ -12,6 +12,14 @@ const messageSchema = {
       type: 'string',
       default: null,
     },
+    image: {
+      type: 'string',
+      default: null,
+    },
+    attachment: {
+      type: 'string',
+      default: null,
+    },
     system: {
       type: 'boolean',
       default: false
@@ -36,7 +44,6 @@ const messageSchema = {
     },
   },
   indexes: [
-    'updateAt',
     'createAt',
   ],
   required: [],

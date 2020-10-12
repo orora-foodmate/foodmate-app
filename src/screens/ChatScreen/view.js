@@ -75,7 +75,7 @@ const ChatScreen = ({addMessage}) => {
   const onSend = useCallback((messages = []) => {
     const [message] = messages;
     const payload = {
-      content: message.text,
+      text: message.text,
       roomId: ROOM_ID,
     };
     addMessage(payload);

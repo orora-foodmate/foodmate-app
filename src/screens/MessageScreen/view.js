@@ -1,18 +1,13 @@
-import React, {Fragment, useEffect, useState} from 'react';
-import {ListItem, Avatar} from 'react-native-elements';
+import React, { Fragment, useEffect, useState } from 'react';
+import { ListItem, Avatar } from 'react-native-elements';
 
-const HomeScreen = (props) => {
+const MessageScreen = (props) => {
   const [friends, setFriends] = useState([]);
-  console.log("HomeScreen -> friends", friends)
-
   useEffect(() => {
-    console.log('HomeScreen -> useEffect -> friendQuery', props.friendQuery);
     const sub = props.friendQuery.$.subscribe((f) => {
       setFriends(f);
     });
-    setTimeout(() => {
-      props.handleGetFriends();
-    }, 1000);
+    props.handleGetFriends();
 
     return () => {
       sub.unsubscribe();
@@ -25,7 +20,7 @@ const HomeScreen = (props) => {
         const friend = item.users.find(u => u._id !== props.userId);
         return (
           <ListItem key={`friend-${index}`} bottomDivider>
-            <Avatar source={{uri: friend.avatar}} />
+            <Avatar source={{ uri: friend.avatar }} />
             <ListItem.Content>
               <ListItem.Title>{friend.name}</ListItem.Title>
               <ListItem.Subtitle>{friend.account}</ListItem.Subtitle>
@@ -37,15 +32,15 @@ const HomeScreen = (props) => {
   );
 };
 
-HomeScreen.options = {
+MessageScreen.options = {
   topBar: {
     title: {
-      text: 'Homett',
+      text: 'Message',
     },
   },
   bottomTab: {
-    text: 'Homebt',
+    text: 'Message',
   },
 };
 
-export default HomeScreen;
+export default MessageScreen;

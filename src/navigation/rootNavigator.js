@@ -6,6 +6,29 @@ import { stack } from './stack';
 
 Feather.loadFont();
 
+Navigation.setDefaultOptions({
+  statusBar: {
+    backgroundColor: colors.primary,
+  },
+  topBar: {
+    title: {
+      color: 'white'
+    },
+    backButton: {
+      color: 'white'
+    },
+    background: {
+      color: colors.primary,
+    }
+  },
+  bottomTab: {
+    fontSize: 14,
+    selectedFontSize: 18,
+    selectedIconColor: colors.primary,
+    selectedTextColor: colors.primary,
+  }
+});
+
 const rootNavigator = () => {
   console.log("rootNavigator -> rootNavigator")
   Promise.all([
@@ -13,37 +36,14 @@ const rootNavigator = () => {
     Feather.getImageSource('users', 25),
     Feather.getImageSource('settings', 25),
   ]).then(([sendIcon, usersIcon, settingIcon]) => {
-    // Navigation.setDefaultOptions({
-    //   statusBar: {
-    //     backgroundColor: colors.primary,
-    //   },
-    //   topBar: {
-    //     title: {
-    //       color: 'white'
-    //     },
-    //     backButton: {
-    //       color: 'white'
-    //     },
-    //     background: {
-    //       color: colors.primary,
-    //     }
-    //   },
-    //   bottomTab: {
-    //     fontSize: 14,
-    //     selectedFontSize: 18,
-    //     selectedIconColor: colors.primary,
-    //     selectedTextColor: colors.primary,
-    //   }
-    // });
-    
     Navigation.setRoot({
       root: {
         sideMenu: {
           center: {
             bottomTabs: {
               children: [
-                stack('Message', 'Message', sendIcon),
-                stack('Friend', 'Friend', usersIcon),
+                stack('Friend', 'Friend', sendIcon ),
+                stack('Message', 'Message', usersIcon),
                 stack('Setting', 'Setting', settingIcon),
               ]
             },

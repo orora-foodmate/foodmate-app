@@ -19,7 +19,6 @@ const errGet = ({message, status}) => {
 };
 
 export function* getFriendsSaga({payload}) {
-  console.log('function*getFriendsSaga -> getFriendsSaga');
   try {
     const {auth, setting} = yield select(({auth, setting}) => ({auth, setting}));
     const token = auth.get('token');
@@ -30,17 +29,24 @@ export function* getFriendsSaga({payload}) {
       return;
     }
     
+
     const customHeaders = {
       Authorization: `Bearer ${auth.get('token')}`
     };
 
+    const friends = yield database.friends.findOne().sort('updateAt').exec();
+    console.log('function*getFriendsSaga -> friends', friends)
     const {result} = yield call(getFriendsResult, customHeaders, payload);
-    const items = result.data.friends.map(f => pick(f, ['_id', 'createAt', 'updateAt', 'status', 'creator', 'users']))
+    const items = result.data.friends.map(f => {
+      const item = pick(f, ['createAt', 'updateAt', 'status', 'creator', 'users'])
+      item.id = f._id;
+      return item;
+    })
     yield database.friends.bulkInsert(items);
 
     yield put(okGet());
   } catch (error) {
-    console.log("function*getFriendsSaga -> error", error)
+    console.log('function*getFriendsSaga -> error', error)
     const errorAction = errGet(error);
     yield put(errorAction);
   }

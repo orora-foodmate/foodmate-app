@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { getFriendsAction } from '~/actions/friendActions';
 import Home from './view';
 
+
 const mapStateToProps = ({ auth, setting }) => {
   const database = setting.get('database');
   const friendQuery = database.friends.find();

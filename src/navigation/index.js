@@ -1,7 +1,7 @@
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import { Navigation } from 'react-native-navigation';
 import MainScreen from '~/screens/MainScreen';
-import OtherScreen from '~/screens/OtherScreen';
+import FriendScreen from '~/screens/FriendScreen';
 import MessageScreen from '~/screens/MessageScreen';
 import SettingScreen from '~/screens/SettingScreen';
 import LoginScreen from '~/screens/LoginScreen';
@@ -13,7 +13,7 @@ const Screens = new Map();
 Screens.set('Main', MainScreen);
 Screens.set('Login', LoginScreen);
 Screens.set('Message', MessageScreen);
-Screens.set('Friend', OtherScreen);
+Screens.set('Friend', FriendScreen);
 Screens.set('Setting', SettingScreen);
 Screens.set('SearchFriend', SearchScreen);
 

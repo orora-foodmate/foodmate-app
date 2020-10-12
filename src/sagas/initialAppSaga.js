@@ -26,7 +26,6 @@ export function* initialAppSaga() {
 
     yield put(resAction);
   } catch (error) {
-    console.log('function*initialAppSaga -> error', error);
     const errorAction = errInitial(error);
     yield put(errorAction);
   }

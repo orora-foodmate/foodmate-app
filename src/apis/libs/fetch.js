@@ -83,7 +83,7 @@ export const fetchWithoutToken = async (
     const realUrl = isEmpty(qs)
       ? url
       : `${url}?${QS.stringify(qs)}`;
-    console.log('realUrl', realUrl)
+
     const requestBody = {
       method,
       headers: {

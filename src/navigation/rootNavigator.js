@@ -30,7 +30,6 @@ Navigation.setDefaultOptions({
 });
 
 const rootNavigator = () => {
-  console.log("rootNavigator -> rootNavigator")
   Promise.all([
     Feather.getImageSource('send', 25),
     Feather.getImageSource('users', 25),
@@ -42,8 +41,8 @@ const rootNavigator = () => {
           center: {
             bottomTabs: {
               children: [
-                stack('Friend', 'Friend', sendIcon ),
-                stack('Message', 'Message', usersIcon),
+                stack('Friend', 'Friend',  usersIcon),
+                stack('Message', 'Message', sendIcon),
                 stack('Setting', 'Setting', settingIcon),
               ]
             },

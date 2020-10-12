@@ -49,7 +49,6 @@ export function* getFriendsSaga({payload}) {
 
     yield put(okGet());
   } catch (error) {
-    console.log('function*getFriendsSaga -> error', error)
     const errorAction = errGet(error);
     yield put(errorAction);
   }

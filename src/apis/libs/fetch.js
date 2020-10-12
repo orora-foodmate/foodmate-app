@@ -45,6 +45,17 @@ export const fetchBasicToken = (url, customHeaders, payload) => {
   }).then(parseResponse)
 };
 
+export const fetchPostWithToken = async (url, customHeaders, payload = {}, qs = {}) => {
+  const realUrl = isEmpty(payload) ? url : `${url}?${QS.stringify(qs)}`;
+  return fetch(realUrl, {
+    method: 'POST',
+    headers: {
+      ...customHeaders
+    },
+    body: JSON.stringify(payload)
+  }).then(parseResponse);
+}
+
 export const fetchWithToken = async (
   url,
   method,

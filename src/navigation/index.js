@@ -5,8 +5,10 @@ import FriendScreen from '~/screens/FriendScreen';
 import MessageScreen from '~/screens/MessageScreen';
 import SettingScreen from '~/screens/SettingScreen';
 import LoginScreen from '~/screens/LoginScreen';
-import App from '~/App';
 import SearchScreen from '~/screens/SearchScreen';
+import ChatScreen from '~/screens/ChatScreen';
+
+import App from '~/App';
 
 const Screens = new Map();
 
@@ -15,6 +17,7 @@ Screens.set('Login', LoginScreen);
 Screens.set('Message', MessageScreen);
 Screens.set('Friend', FriendScreen);
 Screens.set('Setting', SettingScreen);
+Screens.set('Chat', ChatScreen);
 Screens.set('SearchFriend', SearchScreen);
 
 Screens.forEach((C, key) => {

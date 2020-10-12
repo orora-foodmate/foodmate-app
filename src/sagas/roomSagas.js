@@ -40,7 +40,6 @@ export function* getRoomsSaga() {
       : { updateAt: format(addSeconds(new Date(room.updateAt), 1), 'yyyy-MM-dd HH:mm:ss') }
 
     const { result } = yield call(getRoomsResult, customHeaders, queryObject);
-    console.log('function*getRoomsSaga -> result', result)
 
     const items = result.data.rooms.map(r => {
       const item = pick(r, ['createAt', 'updateAt', 'status', 'creator', 'users'])

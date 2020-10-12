@@ -11,12 +11,32 @@ const ChatScreen = ({addMessage}) => {
     setMessages([
       {
         _id: 1,
-        text: 'Hello developer',
+        text: 'This is a quick reply. Do you love Gifted Chat? (radio) KEEP IT',
         createdAt: new Date(),
+        quickReplies: {
+          type: 'radio', // or 'checkbox',
+          keepIt: true,
+          onPressActionButton: (value) => console.log('hello value: ' + value),
+          onPress: (value) => console.log('hello onPress value: ' + value),
+          onChange: (value) => console.log('hello onChange value: ' + value),
+          values: [
+            {
+              title: '😋 Yes',
+              value: 'yes',
+            },
+            {
+              title: '📷 Yes, let me show you with a picture!',
+              value: 'yes_picture',
+            },
+            {
+              title: '😞 Nope. What?',
+              value: 'no',
+            },
+          ],
+        },
         user: {
           _id: 2,
           name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
         },
       },
       {
@@ -69,6 +89,7 @@ const ChatScreen = ({addMessage}) => {
       <GiftedChat
         style={{flex: 1}}
         messages={messages}
+        onQuickReply={value => console.log(`onQuickReply:`, value)}
         onSend={(messages) => onSend(messages)}
         user={{
           _id: 1,

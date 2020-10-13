@@ -32,9 +32,11 @@ export function* addMessageSaga({ payload }) {
     };
     
     const { result } = yield call(addMessageResult, customHeaders, payload);
+    console.log('function*addMessageSaga -> result', result)
 
     yield put(okAdd());
   } catch (error) {
+    console.log('function*addMessageSaga -> error', error)
     const errorAction = errAdd(error);
     yield put(errorAction);
   }

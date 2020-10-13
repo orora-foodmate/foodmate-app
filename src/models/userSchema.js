@@ -3,6 +3,9 @@ const userSchema = {
   title: 'human schema no compression',
   type: 'object',
   properties: {
+    id: {
+      type: 'string',
+    },
     name: {
       type: 'string',
     },

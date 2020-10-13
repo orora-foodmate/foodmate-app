@@ -4,7 +4,7 @@ const messageSchema = {
   description: 'messages',
   type: 'object',
   properties: {
-    _id: {
+    id: {
       type: 'string',
       primary: true
     },

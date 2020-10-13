@@ -13,7 +13,7 @@ const roomSchema = {
       items: {
         type: 'object',
         properties: {
-          _id: {
+          id: {
             type: 'string',
           },
           name: {
@@ -31,7 +31,7 @@ const roomSchema = {
     creator: {
       type: 'object',
       properties: {
-        _id: {
+        id: {
           type: 'string',
         },
         name: {

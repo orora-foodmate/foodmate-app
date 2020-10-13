@@ -2,7 +2,7 @@ import React, {useState, useEffect, useCallback} from 'react';
 import {View, Text} from 'react-native';
 import {GiftedChat} from 'react-native-gifted-chat';
 
-const ROOM_ID = '5f743349d2048d1301677be6';
+const ROOM_ID = '5f8420cccd899f2a59f24fe6';
 
 const ChatScreen = ({addMessage}) => {
   const [messages, setMessages] = useState([]);

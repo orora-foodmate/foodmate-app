@@ -11,7 +11,7 @@ export const getRoomsResult = (customHeaders, payload) =>
 export const getFriendsResult = (customHeaders, payload) =>
   fetchGetWithToken(getUrl('friends'), customHeaders, payload);
 
-export const addMessageResult = (customHeaders, {roomId, ...payload}) =>
+export const addMessageResult = (customHeaders, {roomId, ...payload}) => 
   fetchPostWithToken(getUrl(`messages/${roomId}`), customHeaders, payload);
 
 export const loginResult = async (payload) => {

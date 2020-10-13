@@ -28,7 +28,8 @@ export const fetchGetWithToken = (url, customHeaders, payload = {}) => {
   return fetch(realUrl, {
     method: 'GET',
     headers: {
-      ...customHeaders
+      ...customHeaders,
+      'Content-Type': 'application/json',
     },
   })
     .then(parseResponse);
@@ -50,7 +51,8 @@ export const fetchPostWithToken = async (url, customHeaders, payload = {}, qs = 
   return fetch(realUrl, {
     method: 'POST',
     headers: {
-      ...customHeaders
+      ...customHeaders,
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(payload)
   }).then(parseResponse);
@@ -69,7 +71,7 @@ export const fetchWithToken = async (
 
     const requestBody = {
       method,
-      headers: { Authorization: `bearer ${access_token}`, "Content-Type": "application/json" },
+      headers: { Authorization: `bearer ${access_token}`, "Content-Type": "application/json", 'Content-Type': 'application/json', },
       body: JSON.stringify(payload)
     };
 

@@ -32,7 +32,8 @@ export function* addMessageSaga({ payload }) {
     };
     
     const { result } = yield call(addMessageResult, customHeaders, payload);
-
+    yield database.message.insert(result.data);
+    
     yield put(okAdd());
   } catch (error) {
     const errorAction = errAdd(error);

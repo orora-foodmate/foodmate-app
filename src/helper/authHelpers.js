@@ -17,7 +17,7 @@ export const DEFAULT_USER = {
 const loginUserCache = new Cache({
   namespace: "loginUser",
   policy: {
-      maxEntries: 1
+    maxEntries: 1
   },
   backend: AsyncStorage
 });
@@ -25,20 +25,21 @@ const loginUserCache = new Cache({
 export const validateIsFirstLaunch = async () => {
   const firstLaunchValue = AsyncStorage.getItem(FIRST_LAUNCH_KEY);
   const isFirstLaunch = !Boolean(firstLaunchValue);
-  if(isFirstLaunch) {
+  if (isFirstLaunch) {
     await AsyncStorage.setItem(FIRST_LAUNCH_KEY, '1');
   }
   return isFirstLaunch;
 }
 
 export const saveLoginUser = (user) => loginUserCache.set(LOGIN_USER_KEY, JSON.stringify(user));
+export const removeLoginUser = () => loginUserCache.remove(LOGIN_USER_KEY);
 
 export const getLoginUser = async () => {
   const loginUserStr = await loginUserCache.get(LOGIN_USER_KEY);
   const isAuth = !isEmpty(loginUserStr);
-  if(isEmpty(loginUserStr)) return {...DEFAULT_USER, isAuth};
+  if (isEmpty(loginUserStr)) return { ...DEFAULT_USER, isAuth };
 
-  return {...JSON.parse(loginUserStr), isAuth};
+  return { ...JSON.parse(loginUserStr), isAuth };
 }
 
 export const encodeAuthBasicToken = (code) => Base64.encode(code);

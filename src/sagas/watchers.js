@@ -1,6 +1,6 @@
 import types from '../constants/actionTypes';
 import { take, call, takeLatest, actionChannel } from 'redux-saga/effects';
-import { loginSaga } from './authSagas';
+import { loginSaga, logoutSaga } from './authSagas';
 import { initialAppSaga } from './initialAppSaga';
 import { getFriendsSaga } from './friendSagas';
 import { getRoomsSaga } from './roomSagas';
@@ -12,6 +12,10 @@ export function* watchInitialAppSaga() {
 
 export function* watchLoginSaga() {
   yield takeLatest(types.LOGIN, loginSaga);
+}
+
+export function* watchLogoutSaga() {
+  yield takeLatest(types.LOGOUT, logoutSaga);
 }
 
 export function* watchGetFriendsSaga() {

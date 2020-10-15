@@ -13,7 +13,7 @@ const friendSchema = {
       items: {
         type: 'object',
         properties: {
-          _id: {
+          id: {
             type: 'string',
           },
           name: {
@@ -31,7 +31,7 @@ const friendSchema = {
     creator: {
       type: 'object',
       properties: {
-        _id: {
+        id: {
           type: 'string',
         },
         name: {

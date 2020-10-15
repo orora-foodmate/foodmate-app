@@ -35,17 +35,26 @@ export function* getRoomsSaga() {
     };
 
     const room = yield database.rooms.findOne().sort('updateAt').exec();
+
     const queryObject = isEmpty(room)
       ? {}
       : { updateAt: format(addSeconds(new Date(room.updateAt), 1), 'yyyy-MM-dd HH:mm:ss') }
 
     const { result } = yield call(getRoomsResult, customHeaders, queryObject);
 
+    if(result.data.rooms.length === 0) {
+      return yield put(okGet());
+    }
+
     const items = result.data.rooms.map(r => {
-      const item = pick(r, ['createAt', 'updateAt', 'status', 'creator', 'users'])
-      item.id = r._id;
-      return item;
+      const item = pick(r, ['id', 'status', 'creator', 'users']);
+      return {
+        ...item,
+        createAt: new Date(r.createAt).toISOString(),
+        updateAt: new Date(r.updateAt).toISOString(),
+      };
     });
+
     yield database.rooms.bulkInsert(items);
 
     yield put(okGet());

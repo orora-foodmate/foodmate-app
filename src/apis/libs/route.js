@@ -1,4 +1,3 @@
-import Config from 'react-native-config';
-console.log("TCL: Config.DOMAIN", Config)
+import Config from '~/constants/envConfig';
 
 export const getUrl = (endpoint) => `${Config.DOMAIN}${endpoint}`;

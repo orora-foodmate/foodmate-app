@@ -1,17 +1,17 @@
-import React from "react";
-import { Text } from "react-native";
-import Header from "../../components/Header";
-import ViewBox from "../../components/ViewBox";
+import { connect } from 'react-redux';
+import { addMessageAction } from '~/actions/messageActions';
+import ChatScreen from './view';
 
-const ChatScreen = props => {
-  return (
-    <React.Fragment>
-      <Header />
-      <ViewBox>
-        <Text>ChatScreen</Text>
-      </ViewBox>
-    </React.Fragment>
-  );
-};
+const mapStateToProps = () => ({
+});
 
-export default ChatScreen;
+const mapDispatchToProps = dispatch => ({
+  addMessage: payload => {
+    dispatch(addMessageAction(payload));
+  },
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ChatScreen);

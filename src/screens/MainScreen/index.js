@@ -1,103 +1,16 @@
-import React, { Fragment, useEffect } from "react";
-import { StyleSheet, Dimensions, Image } from "react-native";
-import HomeScreen from "../HomeScreen";
-import ChatScreen from "../ChatScreen";
-import LoginScreen from "../LoginScreen";
-import AccountScreen from "../AccountScreen";
-import RegisterScreen from "../RegisterScreen";
-import InitialAppScreen from "../InitialAppScreen";
-import CreateActivityScreen from "../CreateActivityScreen";
-import { IconChat, IconCreate, IconDonut, IconActivities } from "../../components/Icons";
+import { connect } from 'react-redux';
+import Main from './view';
+import { initialAppAction } from '~/actions/settingActions';
 
-const { width, height } = Dimensions.get("window");
+const mapStateToProps = ({ auth, setting }) => ({
+  isAuth: auth.get('isAuth'),
+  isInitialed: setting.get('isInitialed'),
+});
 
-const MainScreen = props => {
-  const { navigation, isInitialed, isAuth, handleInitialApp } = props;
-  useEffect(() => {
-    handleInitialApp();
-  }, [handleInitialApp]);
-
-  useEffect(() => {
-    if  (isInitialed) {
-      isAuth ? navigation.navigate("Home") : navigation.navigate("Login");
-    }
-  }, [isAuth, isInitialed, navigation]);;
-  return (
-    <Fragment>
-      <Image
-        style={styles.image}
-        source={require("../../assets/images/splash.png")}
-      />
-      {/* <Router
-        onStateChange={stateHandler}
-        navigationBarStyle={{ backgroundColor: theme.colors.grey1 }}
-        sceneStyle={{ backgroundColor: "white" }}
-      >
-        <Stack key='root' hideNavBar>
-          <Scene key='initialScene' component={InitialAppScreen} />
-          <Stack key='login_stack'>
-            <Scene
-              key='login'
-              component={LoginScreen}
-              title='Login'
-              hideNavBar
-            />
-            <Scene key='register' component={RegisterScreen} title='Register' />
-          </Stack>
-          <Tabs
-            key='tabs_bar'
-            backToInitial
-            routeName='tabs_bar'
-            activeTintColor='#eee'
-            tabStyle={{ backgroundColor: '#fff', paddingTop: 8 }}
-            tabBarStyle={{ backgroundColor: '#fff' }}
-            activeTintColor={theme.colors.primary}
-            inactiveTintColor='#ddd'
-          >
-            <Stack key='create_activity_stack' title='建立活動' icon={IconCreate}>
-              <Scene
-                title='建立活動'
-                key='create_activity'
-                component={CreateActivityScreen}
-                hideNavBar
-              />
-            </Stack>
-            <Stack key='activities_stack' title='活動列表' icon={IconActivities}>
-              <Scene
-                key='home'
-                title='活動列表'
-                component={HomeScreen}
-                hideNavBar
-              />
-            </Stack>
-            <Stack key='account_stack' title='個人資料' icon={IconDonut}>
-              <Scene
-                key='account'
-                title='個人資料'
-                component={AccountScreen}
-                hideNavBar
-              />
-            </Stack>
-            <Stack key='chat_stack' title='聊天' icon={IconChat}>
-              <Scene
-                key='chat'
-                component={ChatScreen}
-                title='聊天'
-                hideNavBar
-              />
-            </Stack>
-          </Tabs>
-        </Stack>
-      </Router> */}
-    </Fragment>
-  );
-};
-
-export default MainScreen;
-
-const styles = StyleSheet.create({
-  image: {
-    width,
-    height,
+const mapDispatchToProps = dispatch => ({
+  handleInitialApp: payload => {
+    dispatch(initialAppAction(payload));
   },
 });
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

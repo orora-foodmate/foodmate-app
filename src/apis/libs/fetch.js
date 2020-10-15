@@ -2,8 +2,6 @@ import QS from 'query-string';
 import isEmpty from 'lodash/isEmpty';
 import map from 'lodash/map';
 import Toast from 'react-native-simple-toast';
-import { getUrl } from '../libs/route';
-import { getErrorResponse } from '../../helpers/responseHelper';
 
 const parseResponse = response => {
   const { status: statusCode, ok: responseOK } = response;
@@ -24,6 +22,19 @@ const parseResponse = response => {
   });
 };
 
+export const fetchGetWithToken = (url, customHeaders, payload = {}) => {
+  const realUrl = isEmpty(payload) ? url : `${url}?${QS.stringify(payload)}`;
+
+  return fetch(realUrl, {
+    method: 'GET',
+    headers: {
+      ...customHeaders,
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(parseResponse);
+};
+
 export const fetchBasicToken = (url, customHeaders, payload) => {
   const form = new FormData();
   map(payload, (value, key) => form.append(key, value))
@@ -34,6 +45,18 @@ export const fetchBasicToken = (url, customHeaders, payload) => {
     headers: { ...customHeaders, 'Content-Type': 'application/json' },
   }).then(parseResponse)
 };
+
+export const fetchPostWithToken = async (url, customHeaders, payload = {}, qs = {}) => {
+  const realUrl = isEmpty(payload) ? url : `${url}?${QS.stringify(qs)}`;
+  return fetch(realUrl, {
+    method: 'POST',
+    headers: {
+      ...customHeaders,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload)
+  }).then(parseResponse);
+}
 
 export const fetchWithToken = async (
   url,
@@ -48,7 +71,7 @@ export const fetchWithToken = async (
 
     const requestBody = {
       method,
-      headers: { Authorization: `bearer ${access_token}`, "Content-Type": "application/json" },
+      headers: { Authorization: `bearer ${access_token}`, "Content-Type": "application/json", 'Content-Type': 'application/json', },
       body: JSON.stringify(payload)
     };
 
@@ -70,7 +93,10 @@ export const fetchWithoutToken = async (
   qs = {}
 ) => {
   try {
-    const realUrl = `${url}?${QS.stringify(qs)}`;
+    const realUrl = isEmpty(qs)
+      ? url
+      : `${url}?${QS.stringify(qs)}`;
+
     const requestBody = {
       method,
       headers: {

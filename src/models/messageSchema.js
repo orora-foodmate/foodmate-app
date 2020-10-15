@@ -6,19 +6,19 @@ const messageSchema = {
   properties: {
     id: {
       type: 'string',
-      primary: true
+      primary: true,
     },
     text: {
       type: 'string',
-      default: null,
+      default: '',
     },
     image: {
       type: 'string',
-      default: null,
+      default: '',
     },
     attachment: {
       type: 'string',
-      default: null,
+      default: '',
     },
     system: {
       type: 'boolean',
@@ -44,6 +44,7 @@ const messageSchema = {
     },
   },
   indexes: [
+    'id',
     'createAt',
   ],
   required: [],

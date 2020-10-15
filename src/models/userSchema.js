@@ -16,7 +16,9 @@ const userSchema = {
       type: 'string',
     },
   },
-  indexes: [],
+  indexes: [
+    'id',
+  ],
 };
 
 export default userSchema;

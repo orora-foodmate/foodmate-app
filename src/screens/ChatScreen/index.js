@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { addMessageAction } from '~/actions/messageActions';
+import { addMessageAction, getMessagesAction } from '~/actions/messageActions';
 import ChatScreen from './view';
 
 const mapStateToProps = ({ auth }) => ({
@@ -7,7 +7,10 @@ const mapStateToProps = ({ auth }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addMessage: payload => {
+  handleGetMessages: payload => {
+    dispatch(getMessagesAction(payload));
+  },
+  handleAddMessage: payload => {
     dispatch(addMessageAction(payload));
   },
 });

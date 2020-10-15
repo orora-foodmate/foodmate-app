@@ -5,6 +5,7 @@ import SQLiteAdapterFactory from 'pouchdb-adapter-react-native-sqlite';
 import userSchema from './userSchema';
 import friendSchema from './friendSchema';
 import roomSchema from './roomSchema';
+import messageSchema from './messageSchema';
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -42,5 +43,10 @@ export const initSQL = async () => {
     name: 'rooms',
     schema: roomSchema,
   });
+  await database.collection({
+    name: 'messages',
+    schema: messageSchema,
+  });
+  
   return database;
 };

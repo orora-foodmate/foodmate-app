@@ -1,13 +1,16 @@
 import constants from 'flux-constants';
 
 const syncActionTypes = [
-
+  'SET_LOGIN_USER',
 ];
 
 const basicAsyncActionTypes = [
   'LOGIN',
+  'LOGOUT',
   'INITIAL_APP',
-  'GET_CONFIRMATION_CODE',
+  'GET_FRIENDS',
+  'GET_ROOMS',
+  'ADD_MESSAGE'
 ];
 
 const asyncActionTypes = basicAsyncActionTypes.reduce((result, actionType) => {

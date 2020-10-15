@@ -42,8 +42,9 @@ export function* getFriendsSaga({ payload = {} }) {
 
     const { result } = yield call(getFriendsResult, customHeaders, queryObject);
     const items = result.data.friends.map(f => {
-      const item = pick(f, ['createAt', 'updateAt', 'status', 'creator', 'users'])
-      item.id = f._id;
+      const item = pick(f, ['id', 'status', 'creator', 'users']);
+      item.createAt = new Date(f.createAt).toISOString();
+      item.updateAt = new Date(f.updateAt).toISOString();
       return item;
     });
     yield database.friends.bulkInsert(items);

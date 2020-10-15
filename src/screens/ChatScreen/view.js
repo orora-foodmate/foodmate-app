@@ -1,74 +1,31 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import {GiftedChat} from 'react-native-gifted-chat';
 
-const ChatScreen = ({userId, roomId, handleGetMessages}) => {
+const ChatScreen = ({userId, roomId, messageQuery, handleAddMessage, handleGetMessages}) => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     handleGetMessages({roomId});
-    setMessages([
-      {
-        _id: 1,
-        text: 'This is a quick reply. Do you love Gifted Chat? (radio) KEEP IT',
-        createdAt: new Date(),
-        quickReplies: {
-          type: 'radio', // or 'checkbox',
-          keepIt: true,
-          onPressActionButton: (value) => console.log('hello value: ' + value),
-          onPress: (value) => console.log('hello onPress value: ' + value),
-          onChange: (value) => console.log('hello onChange value: ' + value),
-          values: [
-            {
-              title: '😋 Yes',
-              value: 'yes',
-            },
-            {
-              title: '📷 Yes, let me show you with a picture!',
-              value: 'yes_picture',
-            },
-            {
-              title: '😞 Nope. What?',
-              value: 'no',
-            },
-          ],
-        },
-        user: {
-          _id: 2,
-          name: 'React Native',
-        },
-      },
-      {
-        _id: 2,
-        text: 'Hello developer',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-      {
-        _id: 3,
-        text: 'Hello developer',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-      {
-        _id: 4,
-        text: 'Hello developer',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-    ]);
+    const sub = messageQuery.$.subscribe((msgs) => {
+    
+      const updatedMsgs = msgs.map(msg => {
+        const item = msg.toJSON();
+        return {
+          ...item,
+          _id: msg.id,
+          user: {
+            ...item.user,
+            _id: item.user.id
+          }
+        };
+      })
+      setMessages(updatedMsgs);
+    });
+
+    return () => {
+      sub.unsubscribe();
+    };
   }, []);
 
   const onSend = useCallback((messages = []) => {
@@ -77,7 +34,7 @@ const ChatScreen = ({userId, roomId, handleGetMessages}) => {
       text: message.text,
       roomId,
     };
-    addMessage(payload);
+    handleAddMessage(payload);
   }, []);
 
   return (

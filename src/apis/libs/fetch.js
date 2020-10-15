@@ -24,7 +24,6 @@ const parseResponse = response => {
 
 export const fetchGetWithToken = (url, customHeaders, payload = {}) => {
   const realUrl = isEmpty(payload) ? url : `${url}?${QS.stringify(payload)}`;
-  console.log("fetchGetWithToken -> realUrl", realUrl)
 
   return fetch(realUrl, {
     method: 'GET',

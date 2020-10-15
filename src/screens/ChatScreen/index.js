@@ -2,9 +2,14 @@ import { connect } from 'react-redux';
 import { addMessageAction, getMessagesAction } from '~/actions/messageActions';
 import ChatScreen from './view';
 
-const mapStateToProps = ({ auth }) => ({
-  userId: auth.get('_id'),
-});
+const mapStateToProps = ({ auth, setting }) => {
+  const database = setting.get('database');
+  const messageQuery = database.messages.find({}).sort( {createAt: -1});
+  return {
+    userId: auth.get('_id'),
+    messageQuery,
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   handleGetMessages: payload => {

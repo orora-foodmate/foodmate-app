@@ -96,7 +96,13 @@ export function* addMessageSaga({ payload }) {
     };
     
     const { result } = yield call(addMessageResult, customHeaders, payload);
-    yield database.message.insert(result.data);
+    const newMessage = {
+      ...result.data,
+      createAt: new Date(result.data.createAt).toISOString(),
+    }
+    console.log("function*addMessageSaga -> newMessage", newMessage)
+
+    yield database.messages.insert(newMessage);
     
     yield put(okAdd());
   } catch (error) {

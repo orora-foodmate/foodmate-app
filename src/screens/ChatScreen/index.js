@@ -2,7 +2,8 @@ import { connect } from 'react-redux';
 import { addMessageAction } from '~/actions/messageActions';
 import ChatScreen from './view';
 
-const mapStateToProps = () => ({
+const mapStateToProps = ({ auth }) => ({
+  userId: auth.get('_id'),
 });
 
 const mapDispatchToProps = dispatch => ({

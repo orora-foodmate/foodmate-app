@@ -1,10 +1,8 @@
-import React, {useState, useEffect, useCallback} from 'react';
-import {View, Text} from 'react-native';
-import {GiftedChat} from 'react-native-gifted-chat';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text } from 'react-native';
+import { GiftedChat } from 'react-native-gifted-chat';
 
-const ROOM_ID = '5f8420cccd899f2a59f24fe6';
-
-const ChatScreen = ({addMessage}) => {
+const ChatScreen = ({ userId, roomId, addMessage }) => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
@@ -76,23 +74,20 @@ const ChatScreen = ({addMessage}) => {
     const [message] = messages;
     const payload = {
       text: message.text,
-      roomId: ROOM_ID,
+      roomId,
     };
     addMessage(payload);
-    // setMessages((previousMessages) =>
-    //   GiftedChat.append(previousMessages, messages)
-    // );
   }, []);
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <GiftedChat
-        style={{flex: 1}}
+        style={{ flex: 1 }}
         messages={messages}
         onQuickReply={value => console.log(`onQuickReply:`, value)}
         onSend={(messages) => onSend(messages)}
         user={{
-          _id: 1,
+          _id: userId,
         }}
       />
     </View>

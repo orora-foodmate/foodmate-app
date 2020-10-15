@@ -5,7 +5,6 @@ import Button from '~/components/Button';
 import PasswordInput from '~/components/Inputs/PasswordInput';
 import TextInputField from '~/components/Inputs/TextInputField';
 import colors from '~/theme/color';
-import rootNavigator from '~/navigation/rootNavigator';
 
 const onChange = setter => value => {
   const noSpaceValue = value.trim();
@@ -29,11 +28,11 @@ const LoginScreen = ({
     handleLogin(payload);
   }
 
-  useEffect(() => {
-    if(isAuth) {
-      rootNavigator();
-    }
-  }, [isAuth]);
+  // useEffect(() => {
+  //   if(isAuth) {
+  //     rootNavigator();
+  //   }
+  // }, [isAuth]);
 
   return (
     <View style={styles.container}>

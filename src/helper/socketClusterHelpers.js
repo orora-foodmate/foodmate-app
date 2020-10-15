@@ -53,7 +53,6 @@ class socketClusterHelperClass {
   }
 
   close = () => {
-    console.log('socketClusterHelperClass -> close -> this._socketClient', this._socketClient)
     if (this._socketClient) {
       this._socketClient.closeAllChannelListeners();
       this._socketClient.closeAllChannelOutputs();
@@ -73,7 +72,6 @@ class socketClusterHelperClass {
         this.close();
       }
 
-      console.log('socketClusterHelperClass -> initialClient -> this.authTokenName', this.authTokenName)
       const authEngine = {
         _internalStorage: {
           [this.authTokenName]: token
@@ -109,7 +107,6 @@ class socketClusterHelperClass {
           }
         }
       });
-      console.log('socketClusterHelperClass -> initialClient -> this._socketClient', this._socketClient)
       return this._socketClient;
     } catch (error) {
       console.log('socketClusterHelperClass -> initialClient -> error', error)

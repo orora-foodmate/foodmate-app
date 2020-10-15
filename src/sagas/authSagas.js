@@ -64,8 +64,8 @@ export function* logoutSaga({ payload }) {
       yield database.destroy();
     }
 
-    yield put(okLogout());
     noAuthNavigator();
+    yield put(okLogout());
   } catch (error) {
     const errorAction = errLogout(error);
     yield put(errorAction);

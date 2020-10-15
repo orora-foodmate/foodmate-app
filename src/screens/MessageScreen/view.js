@@ -5,7 +5,7 @@ const MessageScreen = (props) => {
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
-    const sub = props.roomQuery.$.subscribe((r) => {
+    const sub = props.roomQuery.$.subscribe((r, items) => {
       setRooms(r);
     });
     props.handleGetRooms();
@@ -18,13 +18,14 @@ const MessageScreen = (props) => {
   return (
     <Fragment>
       {rooms.map((item, index) => {
-        const room = item.users.find(u => u._id !== props.userId);
+        const user = item.users.find(u => u.id !== props.userId);
+
         return (
           <ListItem key={`room-${index}`} bottomDivider>
-            <Avatar source={{ uri: room.avatar }} />
+            <Avatar source={{ uri: user.avatar }} />
             <ListItem.Content>
-              <ListItem.Title>{room.name}</ListItem.Title>
-              <ListItem.Subtitle>{room.account}</ListItem.Subtitle>
+              <ListItem.Title>{user.name}</ListItem.Title>
+              <ListItem.Subtitle>{user.account}</ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>
         )

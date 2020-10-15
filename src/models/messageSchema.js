@@ -27,7 +27,7 @@ const messageSchema = {
     user: {
       type: 'object',
       properties: {
-        _id: {
+        id: {
           type: 'string',
         },
         name: {

@@ -1,10 +1,11 @@
 import { put, call, select } from 'redux-saga/effects';
 import types from '~/constants/actionTypes';
-import { getFriendsResult } from '~/apis/api';
+import { getFriendsResult, inviteFriendResult } from '~/apis/api';
 import isEmpty from 'lodash/isEmpty';
 import pick from 'lodash/pick';
 import format from 'date-fns/format';
 import addSeconds from 'date-fns/addSeconds';
+
 
 const okGet = (payload) => ({
   type: types.GET_FRIENDS_SUCCESS,
@@ -55,3 +56,45 @@ export function* getFriendsSaga({ payload = {} }) {
     yield put(errorAction);
   }
 }
+
+
+const okInvite = (payload) => ({
+  type: types.INVITE_FRIEND_SUCCESS,
+  payload,
+});
+
+const errInvite = ({ message }) => {
+  return {
+    type: types.INVITE_FRIEND_ERROR,
+    payload: {
+      message,
+    },
+  };
+};
+
+export function* inviteFriendSaga({ payload }) {
+  try {
+    const { auth, setting } = yield select(({ auth, setting }) => ({ auth, setting }));
+    const token = auth.get('token');
+    const database = setting.get('database');
+
+    if (isEmpty(token) || isEmpty(database)) {
+      yield put(okInvite());
+      return;
+    }
+
+    const customHeaders = {
+      Authorization: `Bearer ${auth.get('token')}`
+    };
+    
+    // const { result } = yield call(inviteFriendResult, customHeaders, payload);
+    const data = {"users":["5f898ff8f5a2442d02e38410","5f7432fdd2048d1301677be3"],"status":1,"creator":"5f7432fdd2048d1301677be3","createAt":"2020-10-16 21:11:01.432","updateAt":"2020-10-16 21:11:01.433","id":"5f899be5f5a2442d02e38412"};
+    
+
+    yield put(okInvite());
+  } catch (error) {
+    const errorAction = errInvite(error);
+    yield put(errorAction);
+  }
+}
+

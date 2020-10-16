@@ -14,6 +14,7 @@ const basicAsyncActionTypes = [
   'GET_MESSAGES',
   'ADD_MESSAGE',
   'ADD_MESSAGE_BY_WEBSOCKET',
+  'INVITE_FRIEND'
 ];
 
 const asyncActionTypes = basicAsyncActionTypes.reduce((result, actionType) => {

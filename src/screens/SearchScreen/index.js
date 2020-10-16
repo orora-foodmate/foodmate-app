@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getUserByIdAction } from '~/actions/friendActions';
+import { getUserByIdAction, inviteFriendAction } from '~/actions/friendActions';
 import SearchScreen from './view';
 
 const mapStateToProps = ({ search }) => ({
@@ -9,6 +9,9 @@ const mapStateToProps = ({ search }) => ({
 const mapDispatchToProps = dispatch => ({
   handleGetUserById: payload => {
     dispatch(getUserByIdAction(payload));
+  },
+  handleInviteFriend: payload => {
+    dispatch(inviteFriendAction(payload));
   }
 });
 

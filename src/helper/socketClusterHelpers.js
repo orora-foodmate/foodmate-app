@@ -29,6 +29,29 @@ const DEFAULT_AUTH_ENGINE = {
   }
 };
 
+async function subscribeMessages(socket) {
+  var channel = socket.subscribe('foo');
+
+  let asyncIterator = channel.createConsumer();
+  while (true) {
+    let packet = await asyncIterator.next();
+    if (packet.done) break;
+
+  }
+    // channel.on('subscribe', ( channel_name) => {
+    //   // debug(channelName);
+    //   console.log(channel_name)
+    // });
+
+    // channel.watch((...args) => console.log(args))
+
+  // let channel = socket.subscribe('foo');
+  // for await (let data of channel) {
+  //   console.log('forawait -> data', data)
+  //   // ... Handle channel data.
+  // }
+}
+
 class socketClusterHelperClass {
   constructor(options) {
     const {
@@ -107,14 +130,13 @@ class socketClusterHelperClass {
           }
         }
       });
+      subscribeMessages(this._socketClient)
       return this._socketClient;
     } catch (error) {
       console.log('socketClusterHelperClass -> initialClient -> error', error)
 
     }
-
   }
-
 }
 
 const socketClusterHelper = new socketClusterHelperClass({

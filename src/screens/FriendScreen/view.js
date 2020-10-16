@@ -1,9 +1,21 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { ListItem, Avatar } from 'react-native-elements';
+import { useNavigationButtonPress, useNavigation } from 'react-native-navigation-hooks';
+
+const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
 
 const FriendScreen = props => {
-  // const { setStackRoot } = useNavigation();
+console.log('props', props)
+const { push } = useNavigation()
+
   const [friends, setFriends] = useState([]);
+
+  useNavigationButtonPress((e) => {
+    if(props.componentId === e.componentId && e.buttonId === TOP_BAR_RIGHT_BUTTON_ID) {
+      push('SearchFriend');
+    }
+  })
+
   useEffect(() => {
     const sub = props.friendQuery.$.subscribe((f) => {
       setFriends(f);
@@ -33,4 +45,18 @@ const FriendScreen = props => {
   );
 };
 
+FriendScreen.options = {
+  topBar: {
+    title: {
+      text: 'hhh'
+    },
+    rightButtons: [
+      {
+        id: TOP_BAR_RIGHT_BUTTON_ID,
+        icon: require('assets/icons/search.png'),
+        color: 'white',
+      }
+    ]
+  }
+};
 export default FriendScreen;

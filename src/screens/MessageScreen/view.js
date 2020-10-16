@@ -31,6 +31,8 @@ const MessageScreen = (props) => {
             account={user.account}
             avatar={user.avatar}
             roomId={item.id}
+            userId={props.userId}
+            handleAddMessageByWebsocket={props.handleAddMessageByWebsocket}
           />
         );
       })}

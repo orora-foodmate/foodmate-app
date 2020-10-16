@@ -5,6 +5,7 @@ import { initialAppSaga } from './initialAppSaga';
 import { getFriendsSaga } from './friendSagas';
 import { getRoomsSaga } from './roomSagas';
 import { addMessageSaga, getMessagesSaga } from './messageSagas';
+import { addMessageByWebsocketSaga } from './messageByWebsocketSagas';
 
 export function* watchInitialAppSaga() {
   yield takeLatest(types.INITIAL_APP, initialAppSaga);
@@ -43,5 +44,13 @@ export function* watchAddMessageSaga() {
   while(true) {
     const actionObject = yield take(messageChan);
     yield call(addMessageSaga, actionObject);
+  }
+}
+
+export function* watchAddMessageByWebsocketSaga() {
+  const messageChan = yield actionChannel(types.ADD_MESSAGE_BY_WEBSOCKET);
+  while(true) {
+    const actionObject = yield take(messageChan);
+    yield call(addMessageByWebsocketSaga, actionObject);
   }
 }

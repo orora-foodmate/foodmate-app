@@ -12,6 +12,7 @@ const basicAsyncActionTypes = [
   'GET_ROOMS',
   'GET_MESSAGES',
   'ADD_MESSAGE',
+  'ADD_MESSAGE_BY_WEBSOCKET',
 ];
 
 const asyncActionTypes = basicAsyncActionTypes.reduce((result, actionType) => {

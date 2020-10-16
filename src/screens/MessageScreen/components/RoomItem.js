@@ -1,19 +1,22 @@
 import React, { useEffect } from 'react';
 import { ListItem, Avatar } from 'react-native-elements';
 
-async function asyncIteratorWatcher(channel) {
+async function asyncIteratorWatcher(channel, userId, handleAddMessageByWebsocket) {
   let asyncIterator = channel.createConsumer();
   while (true) {
     let packet = await asyncIterator.next();
     if (packet.done) break;
-    console.log('Packet:', packet.value);
+    const {user} = packet.value;
+    if(user.id !== userId) {
+      handleAddMessageByWebsocket(packet.value);
+    }
   }
 }
 
-const RoomItem = ({ socket, name, account, avatar, roomId, push }) => {
+const RoomItem = ({ socket, userId, name, account, avatar, roomId, push, handleAddMessageByWebsocket }) => {
   useEffect(() => {
     const channel = socket.subscribe(`room.newMessage.${roomId}`);
-    asyncIteratorWatcher(channel);
+    asyncIteratorWatcher(channel, userId, handleAddMessageByWebsocket);
     return () => channel.kill();
   }, []);
 

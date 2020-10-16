@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { addMessageByWebsocketAction } from '~/actions/messageActions';
 import { getRoomsAction } from '~/actions/roomActions';
 import MessageScreen from './view';
 
@@ -19,6 +20,9 @@ const mapStateToProps = ({ auth, setting }) => {
 const mapDispatchToProps = dispatch => ({
   handleGetRooms: payload => {
     dispatch(getRoomsAction(payload));
+  },
+  handleAddMessageByWebsocket: payload => {
+    dispatch(addMessageByWebsocketAction(payload));
   },
 });
 

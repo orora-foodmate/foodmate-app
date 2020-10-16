@@ -8,7 +8,7 @@ export const stack = (name, text, icon) => (
           options: {
             topBar: {
               visible: true,
-              title: { text }
+              // title: { text }
             },
           }
         }

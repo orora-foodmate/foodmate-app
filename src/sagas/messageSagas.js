@@ -100,7 +100,6 @@ export function* addMessageSaga({ payload }) {
       ...result.data,
       createAt: new Date(result.data.createAt).toISOString(),
     }
-    console.log("function*addMessageSaga -> newMessage", newMessage)
 
     yield database.messages.insert(newMessage);
     

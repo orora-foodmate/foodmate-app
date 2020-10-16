@@ -4,7 +4,7 @@ import { loginSaga, logoutSaga } from './authSagas';
 import { initialAppSaga } from './initialAppSaga';
 import { getFriendsSaga } from './friendSagas';
 import { getRoomsSaga } from './roomSagas';
-import { addMessageSaga } from './messageSagas';
+import { addMessageSaga, getMessagesSaga } from './messageSagas';
 
 export function* watchInitialAppSaga() {
   yield takeLatest(types.INITIAL_APP, initialAppSaga);
@@ -16,6 +16,10 @@ export function* watchLoginSaga() {
 
 export function* watchLogoutSaga() {
   yield takeLatest(types.LOGOUT, logoutSaga);
+}
+
+export function* watchGetMessagesSaga() {
+  yield takeLatest(types.GET_MESSAGES, getMessagesSaga);
 }
 
 export function* watchGetFriendsSaga() {

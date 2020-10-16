@@ -10,7 +10,8 @@ const basicAsyncActionTypes = [
   'INITIAL_APP',
   'GET_FRIENDS',
   'GET_ROOMS',
-  'ADD_MESSAGE'
+  'GET_MESSAGES',
+  'ADD_MESSAGE',
 ];
 
 const asyncActionTypes = basicAsyncActionTypes.reduce((result, actionType) => {

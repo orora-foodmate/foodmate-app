@@ -5,6 +5,7 @@ import SQLiteAdapterFactory from 'pouchdb-adapter-react-native-sqlite';
 import userSchema from './userSchema';
 import friendSchema from './friendSchema';
 import roomSchema from './roomSchema';
+import messageSchema from './messageSchema';
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -22,6 +23,36 @@ const SQLiteAdapter = SQLiteAdapterFactory(SQLite);
 addRxPlugin(SQLiteAdapter);
 addRxPlugin(require('pouchdb-adapter-http'));
 
+export const destoryDatabase = async (database) => {
+  return await Promise.all([
+    database.users.remove(),
+    database.friends.remove(),
+    database.rooms.remove(),
+    database.messages.remove(),
+  ]);
+};
+
+export const initialCollections = async (database) => {
+  return await Promise.all([
+    database.collection({
+      name: 'users',
+      schema: userSchema,
+    }),
+    database.collection({
+      name: 'friends',
+      schema: friendSchema,
+    }),
+    database.collection({
+      name: 'rooms',
+      schema: roomSchema,
+    }),
+    database.collection({
+      name: 'messages',
+      schema: messageSchema,
+    }),
+  ]);
+};
+
 export const initSQL = async () => {
   const database = await createRxDatabase({
     name: 'foodmate',
@@ -29,18 +60,8 @@ export const initSQL = async () => {
     multiInstance: false,
     ignoreDuplicate: true,
   });
-  
-  await database.collection({
-    name: 'users',
-    schema: userSchema,
-  });
-  await database.collection({
-    name: 'friends',
-    schema: friendSchema,
-  });
-  await database.collection({
-    name: 'rooms',
-    schema: roomSchema,
-  });
+
+  await initialCollections(database);
+
   return database;
 };

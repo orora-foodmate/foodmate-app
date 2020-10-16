@@ -58,6 +58,7 @@ const roomSchema = {
     },
   },
   indexes: [
+    'id',
     'updateAt',
     'createAt',
   ],

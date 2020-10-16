@@ -6,6 +6,7 @@ import { saveLoginUser, removeLoginUser } from '~/helper/authHelpers';
 import socketClusterHelper from '~/helper/socketClusterHelpers';
 import rootNavigator from '~/navigation/rootNavigator';
 import noAuthNavigator from '~/navigation/noAuthNavigator';
+import { destoryDatabase, initialCollections } from '~/models';
 
 const okLogin = (payload) => ({
   type: types.LOGIN_SUCCESS,
@@ -61,7 +62,8 @@ export function* logoutSaga({ payload }) {
     yield call(removeLoginUser);
 
     if (!isEmpty(database)) {
-      yield database.destroy();
+      yield destoryDatabase(database);
+      yield initialCollections(database);
     }
 
     noAuthNavigator();

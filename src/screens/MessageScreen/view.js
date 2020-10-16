@@ -1,8 +1,12 @@
 import React, { Fragment, useEffect, useState } from 'react';
+import { useNavigation } from 'react-native-navigation-hooks';
 import { ListItem, Avatar } from 'react-native-elements';
 
 const MessageScreen = (props) => {
   const [rooms, setRooms] = useState([]);
+  const {
+    push,
+  } = useNavigation();
 
   useEffect(() => {
     const sub = props.roomQuery.$.subscribe((r, items) => {
@@ -21,7 +25,7 @@ const MessageScreen = (props) => {
         const user = item.users.find(u => u.id !== props.userId);
 
         return (
-          <ListItem key={`room-${index}`} bottomDivider>
+          <ListItem key={`room-${index}`} bottomDivider onPress={() => push("Chat", { roomId: item.id })}>
             <Avatar source={{ uri: user.avatar }} />
             <ListItem.Content>
               <ListItem.Title>{user.name}</ListItem.Title>

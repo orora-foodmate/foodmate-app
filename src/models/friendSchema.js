@@ -58,6 +58,7 @@ const friendSchema = {
     },
   },
   indexes: [
+    'id',
     'updateAt',
     'createAt',
   ],

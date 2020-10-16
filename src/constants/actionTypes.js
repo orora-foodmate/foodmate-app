@@ -8,6 +8,7 @@ const basicAsyncActionTypes = [
   'LOGIN',
   'LOGOUT',
   'INITIAL_APP',
+  'GET_USER_BY_ID',
   'GET_FRIENDS',
   'GET_ROOMS',
   'GET_MESSAGES',

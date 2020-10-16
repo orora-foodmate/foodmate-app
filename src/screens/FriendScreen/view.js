@@ -47,9 +47,6 @@ const { push } = useNavigation()
 
 FriendScreen.options = {
   topBar: {
-    title: {
-      text: 'hhh'
-    },
     rightButtons: [
       {
         id: TOP_BAR_RIGHT_BUTTON_ID,

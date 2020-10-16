@@ -14,3 +14,7 @@ export const settingState = fromJS({
   isInitialed: false,
   database: null,
 });
+
+export const searchState = fromJS({
+  user: {}
+});

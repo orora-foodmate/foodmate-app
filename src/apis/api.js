@@ -23,6 +23,9 @@ export const addMessageResult = (customHeaders, { roomId, ...payload }) =>
 export const inviteFriendResult = (customHeaders, { userId }) =>
   fetchPostWithToken(getUrl(`friends/invite/${userId}`), customHeaders);
 
+export const rejectInviteFriendResult = (customHeaders, { friendId }) =>
+  fetchPostWithToken(getUrl(`friends/reject/${friendId}`), customHeaders);
+
 export const loginResult = async (payload) => {
   try {
     const resp = await fetchWithoutToken(getUrl('login'), 'POST', payload);

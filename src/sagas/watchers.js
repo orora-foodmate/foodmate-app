@@ -2,7 +2,7 @@ import types from '../constants/actionTypes';
 import { take, call, takeLatest, actionChannel } from 'redux-saga/effects';
 import { loginSaga, logoutSaga } from './authSagas';
 import { initialAppSaga } from './initialAppSaga';
-import { getFriendsSaga, inviteFriendSaga } from './friendSagas';
+import { getFriendsSaga, inviteFriendSaga, rejectInviteFriendSaga } from './friendSagas';
 import { getRoomsSaga } from './roomSagas';
 import { addMessageSaga, getMessagesSaga } from './messageSagas';
 import { addMessageByWebsocketSaga } from './messageByWebsocketSagas';
@@ -30,6 +30,10 @@ export function* watchGetUserByIdSaga() {
 
 export function* watchInviteFriendSaga() {
   yield takeLatest(types.INVITE_FRIEND, inviteFriendSaga);
+}
+
+export function* watchRejectInviteFriendSaga() {
+  yield takeLatest(types.REJECT_INVITE_FRIEND, rejectInviteFriendSaga);
 }
 
 export function* watchGetFriendsSaga() {

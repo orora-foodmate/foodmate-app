@@ -1,10 +1,11 @@
 import { put, call, select } from 'redux-saga/effects';
 import types from '~/constants/actionTypes';
-import { getFriendsResult, inviteFriendResult } from '~/apis/api';
+import { getFriendsResult, inviteFriendResult, rejectInviteFriendResult } from '~/apis/api';
 import isEmpty from 'lodash/isEmpty';
 import pick from 'lodash/pick';
 import format from 'date-fns/format';
 import addSeconds from 'date-fns/addSeconds';
+import { rejectInviteFriendAction } from '~/actions/friendActions';
 
 
 const okGet = (payload) => ({
@@ -57,7 +58,6 @@ export function* getFriendsSaga({ payload = {} }) {
   }
 }
 
-
 const okInvite = (payload) => ({
   type: types.INVITE_FRIEND_SUCCESS,
   payload,
@@ -87,8 +87,8 @@ export function* inviteFriendSaga({ payload }) {
       Authorization: `Bearer ${auth.get('token')}`
     };
     
-    // const { result } = yield call(inviteFriendResult, customHeaders, payload);
-    const data = {"users":["5f898ff8f5a2442d02e38410","5f7432fdd2048d1301677be3"],"status":1,"creator":"5f7432fdd2048d1301677be3","createAt":"2020-10-16 21:11:01.432","updateAt":"2020-10-16 21:11:01.433","id":"5f899be5f5a2442d02e38412"};
+    yield call(inviteFriendResult, customHeaders, payload);
+
     
 
     yield put(okInvite());
@@ -98,3 +98,41 @@ export function* inviteFriendSaga({ payload }) {
   }
 }
 
+const okReject = (payload) => ({
+  type: types.REJECT_INVITE_FRIEND_SUCCESS,
+  payload,
+});
+
+const errReject = ({ message }) => {
+  return {
+    type: types.REJECT_INVITE_FRIEND_ERROR,
+    payload: {
+      message,
+    },
+  };
+};
+
+export function* rejectInviteFriendSaga({ payload }) {
+  console.log("function*rejectInviteFriendSaga -> rejectInviteFriendSaga")
+  try {
+    const { auth, setting } = yield select(({ auth, setting }) => ({ auth, setting }));
+    const token = auth.get('token');
+    const database = setting.get('database');
+
+    if (isEmpty(token) || isEmpty(database)) {
+      yield put(okReject());
+      return;
+    }
+
+    const customHeaders = {
+      Authorization: `Bearer ${auth.get('token')}`
+    };
+
+    yield call(rejectInviteFriendResult, customHeaders, payload);
+
+    yield put(okReject());
+  } catch (error) {
+    const errorAction = errReject(error);
+    yield put(errorAction);
+  }
+}

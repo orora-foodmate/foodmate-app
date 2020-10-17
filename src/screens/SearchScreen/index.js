@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getUserByIdAction, inviteFriendAction } from '~/actions/friendActions';
+import { getUserByIdAction, inviteFriendAction, rejectInviteFriendAction } from '~/actions/friendActions';
 import SearchScreen from './view';
 
 const mapStateToProps = ({ search }) => ({
@@ -12,7 +12,10 @@ const mapDispatchToProps = dispatch => ({
   },
   handleInviteFriend: payload => {
     dispatch(inviteFriendAction(payload));
-  }
+  },
+  handleRejectInviteFriend: payload => {
+    dispatch(rejectInviteFriendAction(payload));
+  },
 });
 
 export default connect(

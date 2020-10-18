@@ -19,3 +19,8 @@ export const rejectInviteFriendAction = payload => ({
   type: types.REJECT_INVITE_FRIEND,
   payload,
 });
+
+export const approveInviteFriendAction = payload => ({
+  type: types.APPROVE_INVITE_FRIEND,
+  payload,
+})

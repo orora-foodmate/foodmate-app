@@ -1,5 +1,6 @@
 import {decode, encode} from 'base-64';
 import {addRxPlugin, createRxDatabase} from 'rxdb';
+import isEmpty from 'lodash/isEmpty';
 import SQLite from 'react-native-sqlite-2';
 import SQLiteAdapterFactory from 'pouchdb-adapter-react-native-sqlite';
 import userSchema from './userSchema';
@@ -41,6 +42,23 @@ export const initialCollections = async (database) => {
     database.collection({
       name: 'friends',
       schema: friendSchema,
+      methods: {
+        updateStatus: (status) => {
+          this.status = status;
+          return this.save();
+        }
+      },
+      statics: {
+        updateStatus: async (friend, status) => {
+          const doc = await this.findOne({id});
+          if(isEmpty(doc)) {
+            await this.create({...friend, status});
+          } else {
+            doc.status = status;
+            await doc.save();
+          }
+        }
+      },
     }),
     database.collection({
       name: 'rooms',

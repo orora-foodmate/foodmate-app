@@ -26,6 +26,9 @@ export const inviteFriendResult = (customHeaders, { userId }) =>
 export const rejectInviteFriendResult = (customHeaders, { friendId }) =>
   fetchPostWithToken(getUrl(`friends/reject/${friendId}`), customHeaders);
 
+export const approveInviteFriendResult = (customHeaders, { friendId }) =>
+  fetchPostWithToken(getUrl(`friends/approve/${friendId}`), customHeaders);
+
 export const loginResult = async (payload) => {
   try {
     const resp = await fetchWithoutToken(getUrl('login'), 'POST', payload);

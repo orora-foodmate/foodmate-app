@@ -1,11 +1,10 @@
 import { put, call, select } from 'redux-saga/effects';
 import types from '~/constants/actionTypes';
-import { getFriendsResult, inviteFriendResult, rejectInviteFriendResult } from '~/apis/api';
+import { getFriendsResult, inviteFriendResult, rejectInviteFriendResult, approveInviteFriendResult } from '~/apis/api';
 import isEmpty from 'lodash/isEmpty';
 import pick from 'lodash/pick';
 import format from 'date-fns/format';
 import addSeconds from 'date-fns/addSeconds';
-import { rejectInviteFriendAction } from '~/actions/friendActions';
 
 
 const okGet = (payload) => ({
@@ -89,8 +88,7 @@ export function* inviteFriendSaga({ payload }) {
     
     yield call(inviteFriendResult, customHeaders, payload);
 
-    
-
+  
     yield put(okInvite());
   } catch (error) {
     const errorAction = errInvite(error);
@@ -129,10 +127,54 @@ export function* rejectInviteFriendSaga({ payload }) {
     };
 
     yield call(rejectInviteFriendResult, customHeaders, payload);
+    const friend = yield database.friends.findOne({id: payload.friendId});
+    yield friend.updateStatus(0);
 
     yield put(okReject());
   } catch (error) {
     const errorAction = errReject(error);
+    yield put(errorAction);
+  }
+}
+
+
+const okApprove = (payload) => ({
+  type: types.APPROVE_INVITE_FRIEND_SUCCESS,
+  payload,
+});
+
+const errApprove = ({ message }) => {
+  return {
+    type: types.APPROVE_INVITE_FRIEND_ERROR,
+    payload: {
+      message,
+    },
+  };
+};
+
+export function* approveInviteFriendSaga({ payload }) {
+  try {
+    const { auth, setting } = yield select(({ auth, setting }) => ({ auth, setting }));
+    const token = auth.get('token');
+    const database = setting.get('database');
+
+    if (isEmpty(token) || isEmpty(database)) {
+      yield put(okApprove());
+      return;
+    }
+
+    const customHeaders = {
+      Authorization: `Bearer ${auth.get('token')}`
+    };
+
+    yield call(approveInviteFriendResult, customHeaders, payload);
+
+    const friend = yield database.friends.findOne({id: payload.friendId});
+    yield friend.updateStatus(2);
+    
+    yield put(okApprove());
+  } catch (error) {
+    const errorAction = errApprove(error);
     yield put(errorAction);
   }
 }

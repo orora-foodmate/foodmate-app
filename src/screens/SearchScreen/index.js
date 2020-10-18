@@ -2,7 +2,8 @@ import { connect } from 'react-redux';
 import { getUserByIdAction, inviteFriendAction, rejectInviteFriendAction } from '~/actions/friendActions';
 import SearchScreen from './view';
 
-const mapStateToProps = ({ search }) => ({
+const mapStateToProps = ({ auth, search }) => ({
+  authUserId: auth.get('_id'),
   user: search.get('user'),
 });
 

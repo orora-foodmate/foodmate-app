@@ -11,7 +11,7 @@ const EmptyView = () => (
     <Text>無資料</Text>
   </View>);
 
-const ValidateButton = ({ user, handleInviteFriend, handleRejectInviteFriend }) => {
+const ValidateButton = ({ authUserId, user, handleInviteFriend, handleRejectInviteFriend }) => {
   const status = user.get('status');
   const userId = user.get('id');
   const friendId = user.get('friendId');
@@ -25,8 +25,15 @@ const ValidateButton = ({ user, handleInviteFriend, handleRejectInviteFriend }) 
     );
   }
   if(status === 1) {
-    return userId ===  user.get('friendCreatorId')
-      ? <Text>等待對方審核</Text>
+    console.log("ValidateButton -> user.get('friendCreatorId')", user.get('friendCreatorId'))
+    console.log("ValidateButton -> authUserId", authUserId)
+    return authUserId ===  user.get('friendCreatorId')
+      ? (
+        <Fragment>
+          <Text>等待對方審核</Text>
+          <Button title='拒絕' onPress={() => handleRejectInviteFriend({friendId})}/>
+        </Fragment>
+      )
       : (
         <Fragment>
           <Button title='同意' />
@@ -37,7 +44,7 @@ const ValidateButton = ({ user, handleInviteFriend, handleRejectInviteFriend }) 
   return <Text>已經是好友</Text>
 }
 
-const Content = ({ user, handleInviteFriend, handleRejectInviteFriend }) => {
+const Content = ({ authUserId, user, handleInviteFriend, handleRejectInviteFriend }) => {
   console.log(`Content -> user.get('status')`, user.get('status'))
   return (
     <Card containerStyle={{ borderWidth: 0 }}>
@@ -45,6 +52,7 @@ const Content = ({ user, handleInviteFriend, handleRejectInviteFriend }) => {
       <Card.Title style={{ color: 'black' }}>{user.get('name')}</Card.Title>
       <ValidateButton
         user={user}
+        authUserId={authUserId}
         handleInviteFriend={handleInviteFriend}
         handleRejectInviteFriend={handleRejectInviteFriend}
       />
@@ -53,7 +61,7 @@ const Content = ({ user, handleInviteFriend, handleRejectInviteFriend }) => {
 }
 
 
-const SearchScreen = ({ user, handleGetUserById, handleInviteFriend, handleRejectInviteFriend }) => {
+const SearchScreen = ({ authUserId, user, handleGetUserById, handleInviteFriend, handleRejectInviteFriend }) => {
   const [value, setValue] = useState('5f898ff8f5a2442d02e38410');
 
   return (
@@ -75,6 +83,7 @@ const SearchScreen = ({ user, handleGetUserById, handleInviteFriend, handleRejec
           ? <EmptyView />
           : <Content
               user={user}
+              authUserId={authUserId}
               handleInviteFriend={handleInviteFriend}
               handleRejectInviteFriend={handleRejectInviteFriend}
             />

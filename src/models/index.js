@@ -43,14 +43,14 @@ export const initialCollections = async (database) => {
       name: 'friends',
       schema: friendSchema,
       methods: {
-        updateStatus: (status) => {
+        updateStatus: function (status) {
           this.status = status;
           return this.save();
         }
       },
       statics: {
-        updateStatus: async (friend, status) => {
-          const doc = await this.findOne({id});
+        findAndUpdateStatus: async function (friend, status) {
+          const doc = await this.findOne({id: friend.id});
           if(isEmpty(doc)) {
             await this.create({...friend, status});
           } else {

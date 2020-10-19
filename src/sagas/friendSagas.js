@@ -42,12 +42,14 @@ export function* getFriendsSaga({ payload = {} }) {
       : { ...payload, updateAt: format(addSeconds(new Date(friend.updateAt), 1), 'yyyy-MM-dd HH:mm:ss') }
 
     const { result } = yield call(getFriendsResult, customHeaders, queryObject);
-    const items = result.data.friends.map(f => {
-      const item = pick(f, ['id', 'status', 'creator', 'users']);
-      item.createAt = new Date(f.createAt).toISOString();
-      item.updateAt = new Date(f.updateAt).toISOString();
-      return item;
-    });
+
+    const items = result.data.friends
+      .map(f => ({
+        ...pick(f, ['id', 'avatar', 'creator', 'status', 'account', 'name']),
+        createAt: new Date(f.createAt).toISOString(),
+        updateAt: new Date(f.updateAt).toISOString(),
+      }));
+    console.log('function*getFriendsSaga -> items', items)
     yield database.friends.bulkInsert(items);
 
     yield put(okGet());
@@ -85,10 +87,10 @@ export function* inviteFriendSaga({ payload }) {
     const customHeaders = {
       Authorization: `Bearer ${auth.get('token')}`
     };
-    
+
     yield call(inviteFriendResult, customHeaders, payload);
 
-  
+
     yield put(okInvite());
   } catch (error) {
     const errorAction = errInvite(error);
@@ -127,8 +129,11 @@ export function* rejectInviteFriendSaga({ payload }) {
     };
 
     yield call(rejectInviteFriendResult, customHeaders, payload);
-    const friend = yield database.friends.findOne({id: payload.friendId});
-    yield friend.updateStatus(0);
+    const friend = yield database.friends.findOne({ id: payload.friendId }).exec();
+    console.log('function*rejectInviteFriendSaga -> friend', friend)
+
+    console.log('function*rejectInviteFriendSaga -> database.friends.updateStatus', database.friends.updateStatus)
+    console.log('function*rejectInviteFriendSaga -> friend.scream', friend.scream)
 
     yield put(okReject());
   } catch (error) {
@@ -169,9 +174,9 @@ export function* approveInviteFriendSaga({ payload }) {
 
     yield call(approveInviteFriendResult, customHeaders, payload);
 
-    const friend = yield database.friends.findOne({id: payload.friendId});
+    const friend = yield database.friends.findOne({ id: payload.friendId });
     yield friend.updateStatus(2);
-    
+
     yield put(okApprove());
   } catch (error) {
     const errorAction = errApprove(error);

@@ -6,27 +6,16 @@ const friendSchema = {
   properties: {
     id: {
       type: 'string',
-      primary: true
+      primary: true,
     },
-    users: {
-      type: 'array',
-      items: {
-        type: 'object',
-        properties: {
-          id: {
-            type: 'string',
-          },
-          name: {
-            type: 'string',
-          },
-          account: {
-            type: 'string',
-          },
-          avatar: {
-            type: 'string',
-          },
-        }
-      },
+    avatar: {
+      type: 'string',
+    },
+    name: {
+      type: 'string',
+    },
+    account: {
+      type: 'string',
     },
     creator: {
       type: 'object',
@@ -55,6 +44,7 @@ const friendSchema = {
     },
     status: {
       type: 'number',
+      enums: [0, 1, 2],
     },
   },
   indexes: [

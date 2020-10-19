@@ -13,6 +13,7 @@ const EmptyView = () => (
 
 const ValidateButton = ({ authUserId, user, handleInviteFriend, handleRejectInviteFriend, handleApproveInviteFriend }) => {
   const status = user.get('status');
+  console.log('ValidateButton -> status', status)
   const userId = user.get('id');
   const friendId = user.get('friendId');
 
@@ -60,7 +61,7 @@ const Content = ({ authUserId, user, handleInviteFriend, handleRejectInviteFrien
 
 
 const SearchScreen = ({ authUserId, user, handleGetUserById, handleInviteFriend, handleRejectInviteFriend, handleApproveInviteFriend }) => {
-  const [value, setValue] = useState('5f898ff8f5a2442d02e38410');
+  const [value, setValue] = useState('5f86b4aaac37455b7ecc3a75');
 
   return (
     <View style={{ flex: 1 }}>

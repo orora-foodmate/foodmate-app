@@ -48,11 +48,11 @@ const FriendScreen = (props) => {
 
   useEffect(() => {
     const sub = props.friendQuery.$.subscribe((items) => {
-      const result = items.reduce((rs, item) => {
+      const result = items.reduce((rs, rxItem) => {
+        const item = rxItem.toJSON();
         const index = item.status === 2 ? 1 : 0;
-        const friend = item.users.find((u) => u._id !== props.userId);
-
-        rs[index].data.push(friend);
+        console.log('FriendScreen -> item', item)
+        rs[index].data.push(item);
         return rs;
       }, cloneDeep(DEFAULT_SETION_DATA));
       setSetionData(result);

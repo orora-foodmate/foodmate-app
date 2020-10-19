@@ -1,4 +1,5 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
+import { FlatList } from 'react-native';
 import { useNavigation } from 'react-native-navigation-hooks';
 import { useFriendRooms } from '~/models';
 import RoomItem from './components/RoomItem';
@@ -12,23 +13,25 @@ const MessageScreen = (props) => {
   }, []);
 
   return (
-    <Fragment>
-      {friendRooms.map((item) => {
-        return (
-          <RoomItem
-            key={`room-${item.id}`}
-            push={push}
-            socket={props.socket}
-            name={item.name}
-            account={item.account}
-            avatar={item.avatar}
-            roomId={item.id}
-            userId={props.userId}
-            handleAddMessageByWebsocket={props.handleAddMessageByWebsocket}
-          />
-        );
-      })}
-    </Fragment>
+      <FlatList
+        keyExtractor={item => item.id}
+        data={friendRooms}
+        renderItem={({ item }) => {
+          console.log("MessageScreen -> item", item)
+          return (
+            <RoomItem
+              push={push}
+              socket={props.socket}
+              name={item.name}
+              account={item.account}
+              avatar={item.avatar}
+              roomId={item.room}
+              userId={props.userId}
+              handleAddMessageByWebsocket={props.handleAddMessageByWebsocket}
+            />
+          );
+        }}
+      />
   );
 };
 

@@ -36,7 +36,7 @@ const renderRowItem = ({item}) => {
 const FriendScreen = (props) => {
   const {push} = useNavigation();
   const data = useFriends();
-
+  
   useNavigationButtonPress((e) => {
     if (
       props.componentId === e.componentId &&

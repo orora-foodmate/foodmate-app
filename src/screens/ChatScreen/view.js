@@ -2,30 +2,31 @@ import React, {useState, useEffect, useCallback} from 'react';
 import {View} from 'react-native';
 import {GiftedChat} from 'react-native-gifted-chat';
 
-const ChatScreen = ({userId, roomId, messageQuery, handleAddMessage, handleGetMessages}) => {
+const ChatScreen = ({userId, roomId, handleAddMessage, handleGetMessages}) => {
+  console.log("ChatScreen -> roomId", roomId)
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     handleGetMessages({roomId});
-    const sub = messageQuery.$.subscribe((msgs) => {
+    // const sub = messageQuery.$.subscribe((msgs) => {
     
-      const updatedMsgs = msgs.map(msg => {
-        const item = msg.toJSON();
-        return {
-          ...item,
-          _id: msg.id,
-          user: {
-            ...item.user,
-            _id: item.user.id
-          }
-        };
-      })
-      setMessages(updatedMsgs);
-    });
+    //   const updatedMsgs = msgs.map(msg => {
+    //     const item = msg.toJSON();
+    //     return {
+    //       ...item,
+    //       _id: msg.id,
+    //       user: {
+    //         ...item.user,
+    //         _id: item.user.id
+    //       }
+    //     };
+    //   })
+    //   setMessages(updatedMsgs);
+    // });
 
-    return () => {
-      sub.unsubscribe();
-    };
+    // return () => {
+    //   sub.unsubscribe();
+    // };
   }, []);
 
   const onSend = useCallback((messages = []) => {

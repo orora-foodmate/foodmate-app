@@ -1,18 +1,22 @@
-import { put, call, select } from 'redux-saga/effects';
+import {put, call, select} from 'redux-saga/effects';
 import types from '~/constants/actionTypes';
-import { getFriendsResult, inviteFriendResult, rejectInviteFriendResult, approveInviteFriendResult } from '~/apis/api';
+import {
+  getFriendsResult,
+  inviteFriendResult,
+  rejectInviteFriendResult,
+  approveInviteFriendResult,
+} from '~/apis/api';
 import isEmpty from 'lodash/isEmpty';
 import pick from 'lodash/pick';
 import format from 'date-fns/format';
 import addSeconds from 'date-fns/addSeconds';
-
 
 const okGet = (payload) => ({
   type: types.GET_FRIENDS_SUCCESS,
   payload,
 });
 
-const errGet = ({ message }) => {
+const errGet = ({message}) => {
   return {
     type: types.GET_FRIENDS_ERROR,
     payload: {
@@ -21,9 +25,12 @@ const errGet = ({ message }) => {
   };
 };
 
-export function* getFriendsSaga({ payload = {} }) {
+export function* getFriendsSaga({payload = {}}) {
   try {
-    const { auth, setting } = yield select(({ auth, setting }) => ({ auth, setting }));
+    const {auth, setting} = yield select(({auth, setting}) => ({
+      auth,
+      setting,
+    }));
     const token = auth.get('token');
     const database = setting.get('database');
 
@@ -33,23 +40,38 @@ export function* getFriendsSaga({ payload = {} }) {
     }
 
     const customHeaders = {
-      Authorization: `Bearer ${auth.get('token')}`
+      Authorization: `Bearer ${auth.get('token')}`,
     };
 
     const friend = yield database.friends.findOne().sort('updateAt').exec();
     const queryObject = isEmpty(friend)
       ? payload
-      : { ...payload, updateAt: format(addSeconds(new Date(friend.updateAt), 1), 'yyyy-MM-dd HH:mm:ss') }
+      : {
+          ...payload,
+          updateAt: format(
+            addSeconds(new Date(friend.updateAt), 1),
+            'yyyy-MM-dd HH:mm:ss'
+          ),
+        };
 
-    const { result } = yield call(getFriendsResult, customHeaders, queryObject);
+    const {result} = yield call(getFriendsResult, customHeaders, queryObject);
 
-    const items = result.data.friends
-      .map(f => ({
-        ...pick(f, ['id', 'avatar', 'creator', 'status', 'account', 'name']),
-        createAt: new Date(f.createAt).toISOString(),
-        updateAt: new Date(f.updateAt).toISOString(),
-      }));
-      console.log("function*getFriendsSaga -> result.data.friends", result.data.friends)
+    const items = result.data.friends.map((f) => ({
+      ...pick(f, [
+        'id',
+        'avatar',
+        'creator',
+        'status',
+        'account',
+        'name',
+        'room',
+        'friendId',
+      ]),
+      createAt: new Date(f.createAt).toISOString(),
+      updateAt: new Date(f.updateAt).toISOString(),
+    }));
+
+    console.log('function*getFriendsSaga -> items', items);
     yield database.friends.bulkInsert(items);
 
     yield put(okGet());
@@ -64,7 +86,7 @@ const okInvite = (payload) => ({
   payload,
 });
 
-const errInvite = ({ message }) => {
+const errInvite = ({message}) => {
   return {
     type: types.INVITE_FRIEND_ERROR,
     payload: {
@@ -73,9 +95,12 @@ const errInvite = ({ message }) => {
   };
 };
 
-export function* inviteFriendSaga({ payload }) {
+export function* inviteFriendSaga({payload}) {
   try {
-    const { auth, setting } = yield select(({ auth, setting }) => ({ auth, setting }));
+    const {auth, setting} = yield select(({auth, setting}) => ({
+      auth,
+      setting,
+    }));
     const token = auth.get('token');
     const database = setting.get('database');
 
@@ -85,11 +110,10 @@ export function* inviteFriendSaga({ payload }) {
     }
 
     const customHeaders = {
-      Authorization: `Bearer ${auth.get('token')}`
+      Authorization: `Bearer ${auth.get('token')}`,
     };
 
     yield call(inviteFriendResult, customHeaders, payload);
-
 
     yield put(okInvite());
   } catch (error) {
@@ -103,7 +127,7 @@ const okReject = (payload) => ({
   payload,
 });
 
-const errReject = ({ message }) => {
+const errReject = ({message}) => {
   return {
     type: types.REJECT_INVITE_FRIEND_ERROR,
     payload: {
@@ -112,9 +136,12 @@ const errReject = ({ message }) => {
   };
 };
 
-export function* rejectInviteFriendSaga({ payload }) {
+export function* rejectInviteFriendSaga({payload}) {
   try {
-    const { auth, setting } = yield select(({ auth, setting }) => ({ auth, setting }));
+    const {auth, setting} = yield select(({auth, setting}) => ({
+      auth,
+      setting,
+    }));
     const token = auth.get('token');
     const database = setting.get('database');
 
@@ -124,11 +151,17 @@ export function* rejectInviteFriendSaga({ payload }) {
     }
 
     const customHeaders = {
-      Authorization: `Bearer ${auth.get('token')}`
+      Authorization: `Bearer ${auth.get('token')}`,
     };
 
     yield call(rejectInviteFriendResult, customHeaders, payload);
-    const friend = yield database.friends.findOne({ id: payload.friendId }).exec();
+    const friend = yield database.friends
+      .findOne()
+      .where('friendId')
+      .eq(payload.friendId)
+      .exec();
+
+    yield friend.remove();
 
     yield put(okReject());
   } catch (error) {
@@ -137,13 +170,12 @@ export function* rejectInviteFriendSaga({ payload }) {
   }
 }
 
-
 const okApprove = (payload) => ({
   type: types.APPROVE_INVITE_FRIEND_SUCCESS,
   payload,
 });
 
-const errApprove = ({ message }) => {
+const errApprove = ({message}) => {
   return {
     type: types.APPROVE_INVITE_FRIEND_ERROR,
     payload: {
@@ -152,9 +184,12 @@ const errApprove = ({ message }) => {
   };
 };
 
-export function* approveInviteFriendSaga({ payload }) {
+export function* approveInviteFriendSaga({payload}) {
   try {
-    const { auth, setting } = yield select(({ auth, setting }) => ({ auth, setting }));
+    const {auth, setting} = yield select(({auth, setting}) => ({
+      auth,
+      setting,
+    }));
     const token = auth.get('token');
     const database = setting.get('database');
 
@@ -164,12 +199,12 @@ export function* approveInviteFriendSaga({ payload }) {
     }
 
     const customHeaders = {
-      Authorization: `Bearer ${auth.get('token')}`
+      Authorization: `Bearer ${auth.get('token')}`,
     };
 
     yield call(approveInviteFriendResult, customHeaders, payload);
 
-    const friend = yield database.friends.findOne({ id: payload.friendId });
+    const friend = yield database.friends.findOne({id: payload.friendId});
     yield friend.updateStatus(2);
 
     yield put(okApprove());

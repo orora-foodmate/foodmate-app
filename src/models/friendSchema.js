@@ -20,6 +20,9 @@ const friendSchema = {
     room: {
       type: 'string',
     },
+    friendId: {
+      type: 'string'
+    },
     creator: {
       type: 'object',
       properties: {

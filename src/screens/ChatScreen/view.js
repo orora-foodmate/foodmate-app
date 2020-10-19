@@ -1,10 +1,11 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {View} from 'react-native';
 import {GiftedChat} from 'react-native-gifted-chat';
+import { useMessages } from '~/models';
 
 const ChatScreen = ({userId, roomId, handleAddMessage, handleGetMessages}) => {
   console.log("ChatScreen -> roomId", roomId)
-  const [messages, setMessages] = useState([]);
+  const messages = useMessages();
 
   useEffect(() => {
     handleGetMessages({roomId});

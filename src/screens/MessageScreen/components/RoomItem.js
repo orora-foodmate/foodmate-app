@@ -14,6 +14,7 @@ async function asyncIteratorWatcher(channel, userId, handleAddMessageByWebsocket
 }
 
 const RoomItem = ({ socket, userId, name, account, avatar, roomId, push, handleAddMessageByWebsocket }) => {
+  console.log("RoomItem -> roomId", roomId)
   useEffect(() => {
     const channel = socket.subscribe(`room.newMessage.${roomId}`);
     asyncIteratorWatcher(channel, userId, handleAddMessageByWebsocket);

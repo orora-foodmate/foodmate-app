@@ -44,3 +44,28 @@ export const useFriendRoomsHook = (database) => {
   }, [database]);
   return rooms;
 }
+
+export const useMessagesHook = (database) => {
+  const [messages, setMessages] = useState([]);
+  useMemo(() => {
+    if(database) {
+      const sub = database.messages.find().$.subscribe(items => {
+        const result = items.map(msg => {
+
+          const item = msg.toJSON();
+          return {
+            ...item,
+            _id: msg.id,
+            user: {
+              ...item.user,
+              _id: item.user.id
+            }
+          };
+        })
+        setMessages(result);
+      });
+      return () => sub.unsubscribe();
+    }   
+  }, [database]);
+  return messages;
+}

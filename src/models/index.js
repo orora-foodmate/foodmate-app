@@ -1,6 +1,6 @@
 import { decode, encode } from 'base-64';
 import { addRxPlugin, createRxDatabase } from 'rxdb';
-import { useFriendsHook, useFriendRoomsHook } from './hooks/friendHooks';
+import { useFriendsHook, useFriendRoomsHook, useMessagesHook } from './hooks/friendHooks';
 import isEmpty from 'lodash/isEmpty';
 import SQLite from 'react-native-sqlite-2';
 import SQLiteAdapterFactory from 'pouchdb-adapter-react-native-sqlite';
@@ -89,4 +89,8 @@ export const useFriends = (query, options) => {
 
 export const useFriendRooms = () => {
   return useFriendRoomsHook(foodmateDB);
+}
+
+export const useMessages = () => {
+  return useMessagesHook(foodmateDB);
 }

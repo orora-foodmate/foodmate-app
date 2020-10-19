@@ -13,7 +13,6 @@ const EmptyView = () => (
 
 const ValidateButton = ({ authUserId, user, handleInviteFriend, handleRejectInviteFriend, handleApproveInviteFriend }) => {
   const status = user.get('status');
-  console.log('ValidateButton -> status', status)
   const userId = user.get('id');
   const friendId = user.get('friendId');
 

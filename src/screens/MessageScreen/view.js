@@ -1,35 +1,27 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useNavigation } from 'react-native-navigation-hooks';
+import { useFriendRooms } from '~/models';
 import RoomItem from './components/RoomItem';
 
 const MessageScreen = (props) => {
-  const [rooms, setRooms] = useState([]);
+  const friendRooms = useFriendRooms();
   const { push } = useNavigation();
 
   useEffect(() => {
-    // const sub = props.roomQuery.$.subscribe((r, items) => {
-    //   setRooms(r);
-    // });
     props.handleGetRooms();
-
-    // return () => {
-    //   sub.unsubscribe();
-    // };
   }, []);
 
   return (
     <Fragment>
-      {rooms.map((item) => {
-        const user = item.users.find(u => u.id !== props.userId);
-
+      {friendRooms.map((item) => {
         return (
           <RoomItem
             key={`room-${item.id}`}
             push={push}
             socket={props.socket}
-            name={user.name}
-            account={user.account}
-            avatar={user.avatar}
+            name={item.name}
+            account={item.account}
+            avatar={item.avatar}
             roomId={item.id}
             userId={props.userId}
             handleAddMessageByWebsocket={props.handleAddMessageByWebsocket}

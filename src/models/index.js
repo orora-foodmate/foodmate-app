@@ -1,6 +1,6 @@
 import { decode, encode } from 'base-64';
 import { addRxPlugin, createRxDatabase } from 'rxdb';
-import { useFriendsHook } from './hooks/friendHooks';
+import { useFriendsHook, useFriendRoomsHook } from './hooks/friendHooks';
 import isEmpty from 'lodash/isEmpty';
 import SQLite from 'react-native-sqlite-2';
 import SQLiteAdapterFactory from 'pouchdb-adapter-react-native-sqlite';
@@ -75,15 +75,18 @@ export const initSQL = async () => {
     multiInstance: false,
     ignoreDuplicate: true,
   });
-  console.log("initSQL -> foodmateDB", foodmateDB)
+  
   foodmateDB = database;
-  console.log("initSQL -> foodmateDB", foodmateDB)
+
   await initialCollections(database);
 
   return database;
 };
 
 export const useFriends = (query, options) => {
-  console.log("useFriends -> foodmateDB", foodmateDB)
   return useFriendsHook(foodmateDB, query, options);
+}
+
+export const useFriendRooms = () => {
+  return useFriendRoomsHook(foodmateDB);
 }

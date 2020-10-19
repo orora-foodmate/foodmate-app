@@ -32,7 +32,6 @@ export function* getUserByIdSaga({ payload }) {
       Authorization: `Bearer ${auth.get('token')}`
     };
     const { result } = yield call(getUserByIdResult, customHeaders, payload);
-    console.log('function*getUserByIdSaga -> result', result)
     
     yield put(okGet(result.data));
   } catch (error) {

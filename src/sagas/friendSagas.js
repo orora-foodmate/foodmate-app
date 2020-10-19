@@ -49,8 +49,7 @@ export function* getFriendsSaga({ payload = {} }) {
         createAt: new Date(f.createAt).toISOString(),
         updateAt: new Date(f.updateAt).toISOString(),
       }));
-      
-      console.log("function*getFriendsSaga -> items", items)
+      console.log("function*getFriendsSaga -> result.data.friends", result.data.friends)
     yield database.friends.bulkInsert(items);
 
     yield put(okGet());
@@ -114,7 +113,6 @@ const errReject = ({ message }) => {
 };
 
 export function* rejectInviteFriendSaga({ payload }) {
-  console.log("function*rejectInviteFriendSaga -> rejectInviteFriendSaga")
   try {
     const { auth, setting } = yield select(({ auth, setting }) => ({ auth, setting }));
     const token = auth.get('token');
@@ -131,10 +129,6 @@ export function* rejectInviteFriendSaga({ payload }) {
 
     yield call(rejectInviteFriendResult, customHeaders, payload);
     const friend = yield database.friends.findOne({ id: payload.friendId }).exec();
-    console.log('function*rejectInviteFriendSaga -> friend', friend)
-
-    console.log('function*rejectInviteFriendSaga -> database.friends.updateStatus', database.friends.updateStatus)
-    console.log('function*rejectInviteFriendSaga -> friend.scream', friend.scream)
 
     yield put(okReject());
   } catch (error) {

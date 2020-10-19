@@ -29,6 +29,18 @@ export const useFriendsHook = function (database, query = undefined, options = u
       return () => sub.unsubscribe();
     }   
   }, [database, query, options]);
-  console.log("useFriendsHook -> friends", friends)
   return friends;
 };
+
+export const useFriendRoomsHook = (database) => {
+  const [rooms, setRooms] = useState([]);
+  useMemo(() => {
+    if(database) {
+      const sub = database.friends.find().where('status').eq(2).$.subscribe(items => {
+        setRooms(items);
+      });
+      return () => sub.unsubscribe();
+    }   
+  }, [database]);
+  return rooms;
+}

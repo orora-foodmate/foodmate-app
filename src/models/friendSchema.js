@@ -17,6 +17,9 @@ const friendSchema = {
     account: {
       type: 'string',
     },
+    room: {
+      type: 'string',
+    },
     creator: {
       type: 'object',
       properties: {

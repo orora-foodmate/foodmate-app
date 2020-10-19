@@ -5,7 +5,6 @@ import SQLite from 'react-native-sqlite-2';
 import SQLiteAdapterFactory from 'pouchdb-adapter-react-native-sqlite';
 import userSchema from './userSchema';
 import friendSchema from './friendSchema';
-import roomSchema from './roomSchema';
 import messageSchema from './messageSchema';
 
 if (!global.btoa) {
@@ -59,10 +58,6 @@ export const initialCollections = async (database) => {
           }
         }
       },
-    }),
-    database.collection({
-      name: 'rooms',
-      schema: roomSchema,
     }),
     database.collection({
       name: 'messages',

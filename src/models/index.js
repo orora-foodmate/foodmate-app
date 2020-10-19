@@ -30,7 +30,6 @@ export const destoryDatabase = async (database) => {
   return await Promise.all([
     database.users.remove(),
     database.friends.remove(),
-    database.rooms.remove(),
     database.messages.remove(),
   ]);
 };
@@ -76,10 +75,15 @@ export const initSQL = async () => {
     multiInstance: false,
     ignoreDuplicate: true,
   });
+  console.log("initSQL -> foodmateDB", foodmateDB)
   foodmateDB = database;
+  console.log("initSQL -> foodmateDB", foodmateDB)
   await initialCollections(database);
 
   return database;
 };
 
-export const useFriends = useFriendsHook(foodmateDB);
+export const useFriends = (query, options) => {
+  console.log("useFriends -> foodmateDB", foodmateDB)
+  return useFriendsHook(foodmateDB, query, options);
+}

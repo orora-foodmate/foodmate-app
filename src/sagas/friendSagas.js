@@ -50,6 +50,7 @@ export function* getFriendsSaga({ payload = {} }) {
         updateAt: new Date(f.updateAt).toISOString(),
       }));
       
+      console.log("function*getFriendsSaga -> items", items)
     yield database.friends.bulkInsert(items);
 
     yield put(okGet());

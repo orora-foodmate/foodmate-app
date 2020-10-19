@@ -35,8 +35,8 @@ const renderRowItem = ({item}) => {
 };
 const FriendScreen = (props) => {
   const {push} = useNavigation();
-  const data = useFriends({}, {});
-  const [setionData, setSetionData] = useState(cloneDeep(DEFAULT_SETION_DATA));
+  const data = useFriends();
+  console.log("FriendScreen -> data", data)
 
   useNavigationButtonPress((e) => {
     if (
@@ -48,21 +48,7 @@ const FriendScreen = (props) => {
   });
 
   useEffect(() => {
-    const sub = props.friendQuery.$.subscribe((items) => {
-      const result = items.reduce((rs, rxItem) => {
-        const item = rxItem.toJSON();
-        const index = item.status === 2 ? 1 : 0;
-        console.log('FriendScreen -> item', item)
-        rs[index].data.push(item);
-        return rs;
-      }, cloneDeep(DEFAULT_SETION_DATA));
-      setSetionData(result);
-    });
     props.handleGetFriends();
-
-    return () => {
-      sub.unsubscribe();
-    };
   }, []);
 
   return (

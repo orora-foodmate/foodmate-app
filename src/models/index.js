@@ -1,5 +1,6 @@
-import {decode, encode} from 'base-64';
-import {addRxPlugin, createRxDatabase} from 'rxdb';
+import { decode, encode } from 'base-64';
+import { addRxPlugin, createRxDatabase } from 'rxdb';
+import { useFriendsHook } from './hooks/friendHooks';
 import isEmpty from 'lodash/isEmpty';
 import SQLite from 'react-native-sqlite-2';
 import SQLiteAdapterFactory from 'pouchdb-adapter-react-native-sqlite';
@@ -17,6 +18,8 @@ if (!global.atob) {
 
 // Avoid using node dependent modules
 process.browser = true;
+
+let foodmateDB = null;
 
 const SQLiteAdapter = SQLiteAdapterFactory(SQLite);
 
@@ -49,9 +52,9 @@ export const initialCollections = async (database) => {
       },
       statics: {
         findAndUpdateStatus: async function (friend, status) {
-          const doc = await this.findOne({id: friend.id});
-          if(isEmpty(doc)) {
-            await this.create({...friend, status});
+          const doc = await this.findOne({ id: friend.id });
+          if (isEmpty(doc)) {
+            await this.create({ ...friend, status });
           } else {
             doc.status = status;
             await doc.save();
@@ -73,8 +76,10 @@ export const initSQL = async () => {
     multiInstance: false,
     ignoreDuplicate: true,
   });
-
+  foodmateDB = database;
   await initialCollections(database);
 
   return database;
 };
+
+export const useFriends = useFriendsHook(foodmateDB);

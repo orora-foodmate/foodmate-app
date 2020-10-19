@@ -7,6 +7,7 @@ import {
   useNavigation,
 } from 'react-native-navigation-hooks';
 import { Header } from 'react-native/Libraries/NewAppScreen';
+import { useFriends } from '~/models';
 
 const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
 const DEFAULT_SETION_DATA = [
@@ -34,7 +35,7 @@ const renderRowItem = ({item}) => {
 };
 const FriendScreen = (props) => {
   const {push} = useNavigation();
-
+  const data = useFriends({}, {});
   const [setionData, setSetionData] = useState(cloneDeep(DEFAULT_SETION_DATA));
 
   useNavigationButtonPress((e) => {
@@ -66,7 +67,7 @@ const FriendScreen = (props) => {
 
   return (
     <SectionList
-      sections={setionData}
+      sections={data}
       keyExtractor={(item) => item.id}
       renderItem={renderRowItem}
       renderSectionHeader={({section: {title}}) => (

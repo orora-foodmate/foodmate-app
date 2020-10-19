@@ -7,14 +7,14 @@ const MessageScreen = (props) => {
   const { push } = useNavigation();
 
   useEffect(() => {
-    const sub = props.roomQuery.$.subscribe((r, items) => {
-      setRooms(r);
-    });
+    // const sub = props.roomQuery.$.subscribe((r, items) => {
+    //   setRooms(r);
+    // });
     props.handleGetRooms();
 
-    return () => {
-      sub.unsubscribe();
-    };
+    // return () => {
+    //   sub.unsubscribe();
+    // };
   }, []);
 
   return (

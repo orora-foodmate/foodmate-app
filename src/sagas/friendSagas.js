@@ -204,8 +204,8 @@ export function* approveInviteFriendSaga({payload}) {
 
     yield call(approveInviteFriendResult, customHeaders, payload);
 
-    const friend = yield database.friends.findOne({id: payload.friendId});
-    yield friend.updateStatus(2);
+    const friend = yield database.friends.findOne().where('friendId').eq(payload.friendId);
+    yield friend.update({$set: {status: 2}});
 
     yield put(okApprove());
   } catch (error) {

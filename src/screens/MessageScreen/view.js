@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { FlatList } from 'react-native';
 import { useNavigation } from 'react-native-navigation-hooks';
 import { useFriendRooms } from '~/models';
@@ -17,7 +17,6 @@ const MessageScreen = (props) => {
         keyExtractor={item => item.id}
         data={friendRooms}
         renderItem={({ item }) => {
-          console.log("MessageScreen -> item", item)
           return (
             <RoomItem
               push={push}

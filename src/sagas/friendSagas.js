@@ -10,6 +10,7 @@ import isEmpty from 'lodash/isEmpty';
 import pick from 'lodash/pick';
 import format from 'date-fns/format';
 import addSeconds from 'date-fns/addSeconds';
+import { parseISOString } from '~/helper/dateHelper';
 
 const okGet = (payload) => ({
   type: types.GET_FRIENDS_SUCCESS,
@@ -56,26 +57,35 @@ export function* getFriendsSaga({payload = {}}) {
 
     const {result} = yield call(getFriendsResult, customHeaders, queryObject);
 
-    const items = result.data.friends.map((f) => ({
-      ...pick(f, [
-        'id',
-        'avatar',
-        'creator',
-        'status',
-        'account',
-        'name',
-        'room',
-        'friendId',
-      ]),
-      createAt: new Date(f.createAt).toISOString(),
-      updateAt: new Date(f.updateAt).toISOString(),
-    }));
+    const items = result.data.friends.map((f) => {
+      const createAt = parseISOString(f.createAt);
+      console.log('function*getFriendsSaga -> createAt', createAt)
+      console.log('function*getFriendsSaga -> parseISO(f.createAt)', parseISO(f.createAt))
+      const updateAt = parseISOString(f.updateAt);
+      console.log('function*getFriendsSaga -> updateAt', updateAt)
+      console.log('function*getFriendsSaga -> parseISO(f.updateAt)', parseISO(f.updateAt))
+      return {
+        ...pick(f, [
+          'id',
+          'avatar',
+          'creator',
+          'status',
+          'account',
+          'name',
+          'room',
+          'friendId',
+        ]),
+        createAt,
+        updateAt,
+      }
+    });
 
     console.log('function*getFriendsSaga -> items', items);
     yield database.friends.bulkInsert(items);
 
     yield put(okGet());
   } catch (error) {
+    console.log('function*getFriendsSaga -> error', error)
     const errorAction = errGet(error);
     yield put(errorAction);
   }

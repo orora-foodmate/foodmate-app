@@ -10,7 +10,6 @@ const basicAsyncActionTypes = [
   'INITIAL_APP',
   'GET_USER_BY_ID',
   'GET_FRIENDS',
-  'GET_ROOMS',
   'GET_MESSAGES',
   'ADD_MESSAGE',
   'ADD_MESSAGE_BY_WEBSOCKET',

@@ -5,6 +5,7 @@ import isEmpty from 'lodash/isEmpty';
 import isNull from 'lodash/isNull';
 import addSeconds from 'date-fns/addSeconds';
 import format from 'date-fns/format';
+import { parseISOString } from '~/helper/dateHelper';
 
 
 const okAdd = () => ({
@@ -32,7 +33,7 @@ export function* addMessageByWebsocketSaga({ payload }) {
     
     const newMessage = {
       ...payload,
-      createAt: new Date(payload.createAt).toISOString(),
+      createAt: parseISOString(payload.createAt),
     }
     yield database.messages.insert(newMessage);
     

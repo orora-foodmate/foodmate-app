@@ -8,10 +8,6 @@ const MessageScreen = (props) => {
   const friendRooms = useFriendRooms();
   const { push } = useNavigation();
 
-  useEffect(() => {
-    props.handleGetRooms();
-  }, []);
-
   return (
       <FlatList
         keyExtractor={item => item.id}

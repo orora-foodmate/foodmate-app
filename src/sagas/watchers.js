@@ -3,7 +3,6 @@ import { take, call, takeLatest, actionChannel } from 'redux-saga/effects';
 import { loginSaga, logoutSaga } from './authSagas';
 import { initialAppSaga } from './initialAppSaga';
 import { approveInviteFriendSaga, getFriendsSaga, inviteFriendSaga, rejectInviteFriendSaga } from './friendSagas';
-import { getRoomsSaga } from './roomSagas';
 import { addMessageSaga, getMessagesSaga } from './messageSagas';
 import { addMessageByWebsocketSaga } from './messageByWebsocketSagas';
 import { getUserByIdSaga } from './userSagas';
@@ -45,14 +44,6 @@ export function* watchGetFriendsSaga() {
   while(true) {
     const actionObject = yield take(friendChan);
     yield call(getFriendsSaga, actionObject);
-  }
-}
-
-export function* watchGetRoomsSaga() {
-  const roomChan = yield actionChannel(types.GET_ROOMS);
-  while(true) {
-    const actionObject = yield take(roomChan);
-    yield call(getRoomsSaga, actionObject);
   }
 }
 

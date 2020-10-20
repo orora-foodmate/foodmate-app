@@ -13,6 +13,7 @@ const MessageScreen = (props) => {
         keyExtractor={item => item.id}
         data={friendRooms}
         renderItem={({ item }) => {
+          console.log('MessageScreen -> item', item)
           return (
             <RoomItem
               push={push}

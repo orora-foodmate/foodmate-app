@@ -102,10 +102,12 @@ export function* addMessageSaga({ payload }) {
       createAt: parseISOString(result.data.createAt),
     }
 
+    console.log('function*addMessageSaga -> newMessage', newMessage)
     yield database.messages.insert(newMessage);
     
     yield put(okAdd());
   } catch (error) {
+    console.log('function*addMessageSaga -> error', error)
     const errorAction = errAdd(error);
     yield put(errorAction);
   }

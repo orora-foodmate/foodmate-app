@@ -59,11 +59,7 @@ export function* getFriendsSaga({payload = {}}) {
 
     const items = result.data.friends.map((f) => {
       const createAt = parseISOString(f.createAt);
-      console.log('function*getFriendsSaga -> createAt', createAt)
-      console.log('function*getFriendsSaga -> parseISO(f.createAt)', parseISO(f.createAt))
       const updateAt = parseISOString(f.updateAt);
-      console.log('function*getFriendsSaga -> updateAt', updateAt)
-      console.log('function*getFriendsSaga -> parseISO(f.updateAt)', parseISO(f.updateAt))
       return {
         ...pick(f, [
           'id',

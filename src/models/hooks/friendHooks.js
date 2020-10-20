@@ -49,7 +49,7 @@ export const useMessagesHook = (database) => {
   const [messages, setMessages] = useState([]);
   useMemo(() => {
     if(database) {
-      const sub = database.messages.find().$.subscribe(items => {
+      const sub = database.messages.find().sort( {createAt: -1}).$.subscribe(items => {
         const result = items.map(msg => {
 
           const item = msg.toJSON();

@@ -4,30 +4,10 @@ import {GiftedChat} from 'react-native-gifted-chat';
 import { useMessages } from '~/models';
 
 const ChatScreen = ({userId, roomId, handleAddMessage, handleGetMessages}) => {
-  console.log("ChatScreen -> roomId", roomId)
   const messages = useMessages();
 
   useEffect(() => {
     handleGetMessages({roomId});
-    // const sub = messageQuery.$.subscribe((msgs) => {
-    
-    //   const updatedMsgs = msgs.map(msg => {
-    //     const item = msg.toJSON();
-    //     return {
-    //       ...item,
-    //       _id: msg.id,
-    //       user: {
-    //         ...item.user,
-    //         _id: item.user.id
-    //       }
-    //     };
-    //   })
-    //   setMessages(updatedMsgs);
-    // });
-
-    // return () => {
-    //   sub.unsubscribe();
-    // };
   }, []);
 
   const onSend = useCallback((messages = []) => {

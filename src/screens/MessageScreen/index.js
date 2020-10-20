@@ -5,7 +5,7 @@ import MessageScreen from './view';
 
 const mapStateToProps = ({ auth, setting }) => {
   const userId = auth.get('_id');
-  const socket = setting.get('socket');
+  const socket = auth.get('socket');
   return {
     userId,
     socket,

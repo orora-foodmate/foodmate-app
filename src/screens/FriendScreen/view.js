@@ -1,36 +1,18 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {SectionList} from 'react-native';
-import cloneDeep from 'lodash/cloneDeep';
-import {ListItem, Avatar, Text} from 'react-native-elements';
+import {Text} from 'react-native-elements';
 import {
   useNavigationButtonPress,
   useNavigation,
 } from 'react-native-navigation-hooks';
-import { Header } from 'react-native/Libraries/NewAppScreen';
 import { useFriends } from '~/models';
+import RowItem from './components/RowItem';
 
 const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
-const DEFAULT_SETION_DATA = [
-  {
-    title: '審核中',
-    data: [],
-  },
-  {
-    title: '好友',
-    data: [],
-  },
-];
 
-const renderRowItem = ({item}) => {
-
+const renderRowItem = ({item}, userId, socket) => {
   return (
-    <ListItem bottomDivider>
-      <Avatar source={{uri: item.avatar}} />
-      <ListItem.Content>
-        <ListItem.Title>{item.name}</ListItem.Title>
-        <ListItem.Subtitle>{item.account}</ListItem.Subtitle>
-      </ListItem.Content>
-    </ListItem>
+    <RowItem item={item} userId={userId} socket={socket}/>
   );
 };
 const FriendScreen = (props) => {
@@ -54,7 +36,7 @@ const FriendScreen = (props) => {
     <SectionList
       sections={data}
       keyExtractor={(item) => item.id}
-      renderItem={renderRowItem}
+      renderItem={(itemProps) => renderRowItem(itemProps, props.userId, props.socket)}
       renderSectionHeader={({section: {title}}) => (
         <Text h5>{title}</Text>
       )}

@@ -3,10 +3,12 @@ import { getFriendsAction } from '~/actions/friendActions';
 import FriendScreen from './view';
 
 
-const mapStateToProps = ({ auth, setting }) => {
+const mapStateToProps = ({ auth }) => {
   const userId = auth.get('_id');
+  const socket = auth.get('socket');
   return {
     userId,
+    socket,
     isAuth: auth.get('isAuth'),
   };
 };

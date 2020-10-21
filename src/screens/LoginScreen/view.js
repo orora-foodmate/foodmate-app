@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigation } from 'react-native-navigation-hooks/dist';
 import { Icon } from 'react-native-elements';
 import { StyleSheet, View } from 'react-native';
 import Button from '~/components/Button';
@@ -12,11 +13,12 @@ const onChange = setter => value => {
 };
 
 const LoginScreen = ({
-  isAuth,
   handleLogin,
 }) => {
   const [account, setAccount] = useState('horsekit1982@gmail.com');
   const [password, setPassword] = useState('a12345678');
+
+  const { push } = useNavigation();
 
   const payload = {
     account,
@@ -27,12 +29,6 @@ const LoginScreen = ({
   const onPress = () => {
     handleLogin(payload);
   }
-
-  // useEffect(() => {
-  //   if(isAuth) {
-  //     rootNavigator();
-  //   }
-  // }, [isAuth]);
 
   return (
     <View style={styles.container}>
@@ -52,8 +48,13 @@ const LoginScreen = ({
       />
       <Button
         buttonStyle={{ width: 300, borderRadius: 25 }}
-        title='Login'
+        title='登入'
         onPress={onPress}
+      />
+      <Button
+        buttonStyle={{ width: 300, borderRadius: 25 }}
+        title='註冊'
+        onPress={() => push('Registe')}
       />
     </View>
   );

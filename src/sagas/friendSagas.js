@@ -119,10 +119,17 @@ export function* inviteFriendSaga({payload}) {
       Authorization: `Bearer ${auth.get('token')}`,
     };
 
-    yield call(inviteFriendResult, customHeaders, payload);
-
+    const {result} = yield call(inviteFriendResult, customHeaders, payload);
+    
+    yield database.friends.insert({
+      ...result.data,
+      createAt: parseISOString(result.data.createAt),
+      updateAt: parseISOString(result.data.updateAt),
+    });
+    
     yield put(okInvite());
   } catch (error) {
+    console.log('function*inviteFriendSaga -> error', error)
     const errorAction = errInvite(error);
     yield put(errorAction);
   }
@@ -161,16 +168,19 @@ export function* rejectInviteFriendSaga({payload}) {
     };
 
     yield call(rejectInviteFriendResult, customHeaders, payload);
+    console.log('function*rejectInviteFriendSaga -> payload', payload)
     const friend = yield database.friends
       .findOne()
       .where('friendId')
       .eq(payload.friendId)
       .exec();
 
+      console.log('function*rejectInviteFriendSaga -> friend', friend)
     yield friend.remove();
 
     yield put(okReject());
   } catch (error) {
+    console.log('function*rejectInviteFriendSaga -> error', error)
     const errorAction = errReject(error);
     yield put(errorAction);
   }

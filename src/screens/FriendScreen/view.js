@@ -1,42 +1,27 @@
-import React, {Fragment, useEffect, useState} from 'react';
-import {SectionList} from 'react-native';
-import cloneDeep from 'lodash/cloneDeep';
-import {ListItem, Avatar, Text} from 'react-native-elements';
+import React, { Fragment, useEffect } from 'react';
+import { SectionList } from 'react-native';
+import { Text } from 'react-native-elements';
 import {
   useNavigationButtonPress,
   useNavigation,
 } from 'react-native-navigation-hooks';
-import { Header } from 'react-native/Libraries/NewAppScreen';
 import { useFriends } from '~/models';
+import BasicSubscribe from './components/BasicSubscribe';
+import RowItem from './components/RowIem';
 
 const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
-const DEFAULT_SETION_DATA = [
-  {
-    title: '審核中',
-    data: [],
-  },
-  {
-    title: '好友',
-    data: [],
-  },
-];
 
-const renderRowItem = ({item}) => {
-
+const renderRowItem = ({ item }) => {
   return (
-    <ListItem bottomDivider>
-      <Avatar source={{uri: item.avatar}} />
-      <ListItem.Content>
-        <ListItem.Title>{item.name}</ListItem.Title>
-        <ListItem.Subtitle>{item.account}</ListItem.Subtitle>
-      </ListItem.Content>
-    </ListItem>
+    <RowItem
+      item={item}
+    />
   );
 };
 const FriendScreen = (props) => {
-  const {push} = useNavigation();
+  const { push } = useNavigation();
   const data = useFriends();
-  
+
   useNavigationButtonPress((e) => {
     if (
       props.componentId === e.componentId &&
@@ -51,14 +36,17 @@ const FriendScreen = (props) => {
   }, []);
 
   return (
-    <SectionList
-      sections={data}
-      keyExtractor={(item) => item.id}
-      renderItem={renderRowItem}
-      renderSectionHeader={({section: {title}}) => (
-        <Text h5>{title}</Text>
-      )}
-    />
+    <Fragment>
+      <BasicSubscribe socket={props.socket} userId={props.userId} />
+      <SectionList
+        sections={data}
+        keyExtractor={(item) => item.id}
+        renderItem={renderRowItem}
+        renderSectionHeader={({ section: { title } }) => (
+          <Text h5>{title}</Text>
+        )}
+      />
+    </Fragment>
   );
 };
 
@@ -73,4 +61,5 @@ FriendScreen.options = {
     ],
   },
 };
+
 export default FriendScreen;

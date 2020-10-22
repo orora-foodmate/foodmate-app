@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-async function inviteFriendWatcher(channel, userId, handleInviteFriendByWebsocket) {
+async function inviteFriendWatcher(channel, handleInviteFriendByWebsocket) {
   let asyncIterator = channel.createConsumer();
   while (true) {
     let packet = await asyncIterator.next();
@@ -10,11 +10,28 @@ async function inviteFriendWatcher(channel, userId, handleInviteFriendByWebsocke
   }
 }
 
-const BasicSubscribe = ({socket, userId, handleInviteFriendByWebsocket}) => {
+async function rejectFriendWatcher(channel, handleRejectFriendByWebsocket) {
+  let asyncIterator = channel.createConsumer();
+  while (true) {
+    let packet = await asyncIterator.next();
+    if (packet.done) break;
+    handleRejectFriendByWebsocket(packet.value);
+    console.log('rejectFriendWatcher -> packet.value', packet.value)
+  }
+}
+
+const BasicSubscribe = ({socket, userId, handleInviteFriendByWebsocket, handleRejectFriendByWebsocket}) => {
   useEffect(() => {
-    const channel = socket.subscribe(`friend.inviteFriend.${userId}`);
-    inviteFriendWatcher(channel, userId, handleInviteFriendByWebsocket);
-    return () => channel.kill();
+    const inviteFriendChannel = socket.subscribe(`friend.inviteFriend.${userId}`);
+    inviteFriendWatcher(inviteFriendChannel, handleInviteFriendByWebsocket);
+
+    const rejectFriendChannel = socket.subscribe(`friend.rejectFriend.${userId}`);
+    rejectFriendWatcher(rejectFriendChannel, handleRejectFriendByWebsocket);
+
+    return () => {
+      rejectFriendChannel.kill();
+      inviteFriendChannel.kill();
+    }
   }, []);
   return null;
 };

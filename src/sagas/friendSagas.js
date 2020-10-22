@@ -166,19 +166,16 @@ export function* rejectInviteFriendSaga({payload}) {
     };
 
     yield call(rejectInviteFriendResult, customHeaders, payload);
-    console.log('function*rejectInviteFriendSaga -> payload', payload)
     const friend = yield database.friends
       .findOne()
       .where('friendId')
       .eq(payload.friendId)
       .exec();
 
-      console.log('function*rejectInviteFriendSaga -> friend', friend)
     yield friend.remove();
 
     yield put(okReject());
   } catch (error) {
-    console.log('function*rejectInviteFriendSaga -> error', error)
     const errorAction = errReject(error);
     yield put(errorAction);
   }

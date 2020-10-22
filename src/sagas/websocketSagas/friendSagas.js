@@ -1,25 +1,17 @@
-import {put, call, select} from 'redux-saga/effects';
+import {put, select} from 'redux-saga/effects';
 import types from '~/constants/actionTypes';
-import {
-  getFriendsResult,
-  inviteFriendResult,
-  rejectInviteFriendResult,
-  approveInviteFriendResult,
-} from '~/apis/api';
 import isEmpty from 'lodash/isEmpty';
-import pick from 'lodash/pick';
-import format from 'date-fns/format';
-import addSeconds from 'date-fns/addSeconds';
+import isNull from 'lodash/isNull';
 import { parseISOString } from '~/helper/dateHelper';
 
-const okGet = (payload) => ({
-  type: types.GET_FRIENDS_SUCCESS,
+const okInvite = (payload) => ({
+  type: types.INVITE_FRIEND_BY_WEBSOCKET_SUCCESS,
   payload,
 });
 
-const errGet = ({ message }) => {
+const errInvite = ({ message }) => {
   return {
-    type: types.GET_FRIENDS_ERROR,
+    type: types.INVITE_FRIEND_BY_WEBSOCKET_ERROR,
     payload: {
       message,
     },
@@ -34,19 +26,62 @@ export function* inviteFriendByWebsocketSaga({ payload = {} }) {
     const database = setting.get('database');
 
     if (isEmpty(database)) {
-      yield put(okGet());
+      yield put(okInvite());
       return;
     }
-
+    
     yield database.friends.insert({
       ...payload,
       createAt: parseISOString(payload.createAt),
       updateAt: parseISOString(payload.updateAt),
     });
 
-    yield put(okGet());
+    yield put(okInvite());
   } catch (error) {
-    const errorAction = errGet(error);
+    const errorAction = errInvite(error);
+    yield put(errorAction);
+  }
+}
+
+
+const okReject = (payload) => ({
+  type: types.REJECT_FRIEND_BY_WEBSOCKET_SUCCESS,
+  payload,
+});
+
+const errReject = ({ message }) => {
+  return {
+    type: types.REJECT_FRIEND_BY_WEBSOCKET_ERROR,
+    payload: {
+      message,
+    },
+  };
+};
+
+export function* rejectFriendByWebsocketSaga({ payload = {} }) {
+  try {
+    const { setting } = yield select(({ setting }) => ({
+      setting,
+    }));
+    const database = setting.get('database');
+
+    if (isEmpty(database)) {
+      yield put(okReject());
+      return;
+    }
+    const friend = yield database.friends
+    .findOne()
+    .where('friendId')
+    .eq(payload.friendId)
+    .exec();
+
+    if(!isNull(friend)) {
+      yield friend.remove();
+    }
+
+    yield put(okReject());
+  } catch (error) {
+    const errorAction = errReject(error);
     yield put(errorAction);
   }
 }

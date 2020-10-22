@@ -41,6 +41,7 @@ const FriendScreen = (props) => {
         socket={props.socket}
         userId={props.userId}
         handleInviteFriendByWebsocket={props.handleInviteFriendByWebsocket}
+        handleRejectFriendByWebsocket={props.handleRejectFriendByWebsocket}
       />
       <SectionList
         sections={data}

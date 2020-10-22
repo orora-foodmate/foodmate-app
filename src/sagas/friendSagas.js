@@ -76,12 +76,10 @@ export function* getFriendsSaga({payload = {}}) {
       }
     });
 
-    console.log('function*getFriendsSaga -> items', items);
     yield database.friends.bulkInsert(items);
 
     yield put(okGet());
   } catch (error) {
-    console.log('function*getFriendsSaga -> error', error)
     const errorAction = errGet(error);
     yield put(errorAction);
   }

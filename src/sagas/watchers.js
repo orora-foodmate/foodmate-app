@@ -6,6 +6,7 @@ import { approveInviteFriendSaga, getFriendsSaga, inviteFriendSaga, rejectInvite
 import { addMessageSaga, getMessagesSaga } from './messageSagas';
 import { addMessageByWebsocketSaga } from './messageByWebsocketSagas';
 import { getUserByIdSaga } from './userSagas';
+import { inviteFriendByWebsocketSaga } from './websocketSagas/friendSagas';
 
 export function* watchInitialAppSaga() {
   yield takeLatest(types.INITIAL_APP, initialAppSaga);
@@ -60,5 +61,13 @@ export function* watchAddMessageByWebsocketSaga() {
   while(true) {
     const actionObject = yield take(messageChan);
     yield call(addMessageByWebsocketSaga, actionObject);
+  }
+}
+
+export function* watchInviteFriendByWebsocketSaga() {
+  const inviteFriendChan = yield actionChannel(types.INVITE_FRIEND_BY_WEBSOCKET);
+  while(true) {
+    const actionObject = yield take(inviteFriendChan);
+    yield call(inviteFriendByWebsocketSaga, actionObject);
   }
 }

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getFriendsAction } from '~/actions/friendActions';
+import { getFriendsAction, inviteFriendByWebsocketAction } from '~/actions/friendActions';
 import FriendScreen from './view';
 
 
@@ -15,6 +15,9 @@ const mapStateToProps = ({ auth }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
+  handleInviteFriendByWebsocket: payload => {
+    dispatch(inviteFriendByWebsocketAction(payload));
+  },
   handleGetFriends: payload => {
     dispatch(getFriendsAction(payload));
   },

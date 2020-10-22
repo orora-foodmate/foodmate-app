@@ -37,7 +37,11 @@ const FriendScreen = (props) => {
 
   return (
     <Fragment>
-      <BasicSubscribe socket={props.socket} userId={props.userId} />
+      <BasicSubscribe
+        socket={props.socket}
+        userId={props.userId}
+        handleInviteFriendByWebsocket={props.handleInviteFriendByWebsocket}
+      />
       <SectionList
         sections={data}
         keyExtractor={(item) => item.id}

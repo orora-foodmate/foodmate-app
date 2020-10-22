@@ -64,7 +64,7 @@ const Content = ({ authUserId, user, handleInviteFriend, handleRejectInviteFrien
 
 
 const SearchScreen = ({ authUserId, user, handleGetUserById, handleInviteFriend, handleRejectInviteFriend, handleApproveInviteFriend }) => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState('5f73038aa3858fb19533f113');
 
   return (
     <View style={{ flex: 1 }}>

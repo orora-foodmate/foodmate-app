@@ -1,12 +1,41 @@
 import { put, call, select } from 'redux-saga/effects';
 import isEmpty from 'lodash/isEmpty';
 import types from '~/constants/actionTypes';
-import { loginResult } from '~/apis/api';
+import { loginResult, registeUserResult } from '~/apis/api';
 import { saveLoginUser, removeLoginUser } from '~/helper/authHelpers';
 import socketClusterHelper from '~/helper/socketClusterHelpers';
 import rootNavigator from '~/navigation/rootNavigator';
 import noAuthNavigator from '~/navigation/noAuthNavigator';
 import { destoryDatabase, initialCollections } from '~/models';
+
+const okRegiste = (payload) => ({
+  type: types.REGISTE_USER_SUCCESS,
+  payload,
+});
+
+const errRegiste = ({ message, status }) => {
+  return {
+    type: types.REGISTE_USER_ERROR,
+    payload: {
+      message,
+    }
+  };
+};
+
+export function* registeUserSaga({ payload: {pop, ...payload} }) {
+  try {
+    const {result} = yield call(registeUserResult, payload);
+    pop();
+    alert('註冊完成');
+
+
+    yield put(okRegiste());
+  } catch (error) {
+    console.log("function*registeUserSaga -> error", error)
+    const errorAction = errRegiste(error);
+    yield put(errorAction);
+  }
+}
 
 const okLogin = (payload) => ({
   type: types.LOGIN_SUCCESS,
@@ -37,7 +66,6 @@ export function* loginSaga({ payload }) {
     yield put(errorAction);
   }
 }
-
 
 const okLogout = (payload) => ({
   type: types.LOGOUT_SUCCESS,

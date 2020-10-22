@@ -1,8 +1,55 @@
-import {put, select} from 'redux-saga/effects';
+import { put, select } from 'redux-saga/effects';
 import types from '~/constants/actionTypes';
 import isEmpty from 'lodash/isEmpty';
 import isNull from 'lodash/isNull';
 import { parseISOString } from '~/helper/dateHelper';
+
+
+const okApprove = (payload) => ({
+  type: types.APPROVE_FRIEND_BY_WEBSOCKET_SUCCESS,
+  payload,
+});
+
+const errApprove = ({ message }) => {
+  return {
+    type: types.APPROVE_FRIEND_BY_WEBSOCKET_ERROR,
+    payload: {
+      message,
+    },
+  };
+};
+
+export function* approveFriendByWebsocketSaga({ payload = {} }) {
+  try {
+    console.log('function*approveFriendByWebsocketSaga -> payload', payload)
+    const { setting } = yield select(({ setting }) => ({
+      setting,
+    }));
+    const database = setting.get('database');
+
+    if (isEmpty(database)) {
+      yield put(okApprove());
+      return;
+    }
+    const friend = yield database.friends
+      .findOne()
+      .where('friendId')
+      .eq(payload.friendId)
+      .exec();
+
+    yield friend.atomicUpdate(oldData => {
+      oldData.status = 2;
+      return oldData;
+    });
+
+    yield put(okApprove());
+  } catch (error) {
+    console.log('function*approveFriendByWebsocketSaga -> error', error)
+    const errorAction = errApprove(error);
+    yield put(errorAction);
+  }
+}
+
 
 const okInvite = (payload) => ({
   type: types.INVITE_FRIEND_BY_WEBSOCKET_SUCCESS,
@@ -29,7 +76,7 @@ export function* inviteFriendByWebsocketSaga({ payload = {} }) {
       yield put(okInvite());
       return;
     }
-    
+
     yield database.friends.insert({
       ...payload,
       createAt: parseISOString(payload.createAt),
@@ -70,12 +117,12 @@ export function* rejectFriendByWebsocketSaga({ payload = {} }) {
       return;
     }
     const friend = yield database.friends
-    .findOne()
-    .where('friendId')
-    .eq(payload.friendId)
-    .exec();
+      .findOne()
+      .where('friendId')
+      .eq(payload.friendId)
+      .exec();
 
-    if(!isNull(friend)) {
+    if (!isNull(friend)) {
       yield friend.remove();
     }
 

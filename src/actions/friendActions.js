@@ -20,6 +20,11 @@ export const rejectFriendByWebsocketAction = payload => ({
   payload,
 });
 
+export const approveFriendByWebsocketAction = payload => ({
+  type: types.APPROVE_FRIEND_BY_WEBSOCKET,
+  payload,
+});
+
 export const inviteFriendAction = payload => ({
   type: types.INVITE_FRIEND,
   payload,

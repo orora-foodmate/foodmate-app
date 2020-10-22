@@ -4,8 +4,8 @@ import map from 'lodash/map';
 import Toast from 'react-native-simple-toast';
 
 const parseResponse = response => {
-  const { status: statusCode, ok: responseOK } = response;
-  const ok = responseOK && statusCode >= 200 && statusCode < 300;
+  const { status, ok: responseOK } = response;
+  const ok = responseOK && status >= 200 && status < 300;
 
   return response.text().then(body => {
     const result = isEmpty(body) ? {} : JSON.parse(body);
@@ -15,7 +15,7 @@ const parseResponse = response => {
       throw new Error(data.message);
     }
     return {
-      statusCode,
+      status,
       ok,
       result
     };

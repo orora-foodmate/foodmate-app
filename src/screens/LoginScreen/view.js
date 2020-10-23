@@ -1,12 +1,11 @@
-import React, { Fragment, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigation } from 'react-native-navigation-hooks/dist';
 import { Icon } from 'react-native-elements';
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Button from '~/components/Button';
 import PasswordInput from '~/components/Inputs/PasswordInput';
 import TextInputField from '~/components/Inputs/TextInputField';
 import colors from '~/theme/color';
-import { RNCamera } from 'react-native-camera';
 
 const onChange = setter => value => {
   const noSpaceValue = value.trim();
@@ -28,61 +27,10 @@ const LoginScreen = ({
     grant_type: 'password',
   };
 
-  const takePicture = async () => {
-    if (cameraRef) {
-      try {
-        const options = { quality: 0.5, base64: false };
-        const data = await cameraRef.takePictureAsync(options);
-        console.log(data.uri);
-      } catch(error) {
-      console.log('takePicture -> error', error)
-
-      }      
-    }
-  };
-
   const onPress = () => {
     handleLogin(payload);
   }
 
-  return (
-    <Fragment>
-      <RNCamera
-          ref={ref => {
-            cameraRef = ref;
-          }}
-          style={{
-            flex: 4,
-            justifyContent: 'flex-end',
-    alignItems: 'center',
-
-          }}
-          // type={RNCamera.Constants.Type.back}
-          // flashMode={RNCamera.Constants.FlashMode.on}
-          androidCameraPermissionOptions={{
-            title: 'Permission to use camera',
-            message: 'We need your permission to use your camera',
-            buttonPositive: 'Ok',
-            buttonNegative: 'Cancel',
-          }}
-          androidRecordAudioPermissionOptions={{
-            title: 'Permission to use audio recording',
-            message: 'We need your permission to use your audio',
-            buttonPositive: 'Ok',
-            buttonNegative: 'Cancel',
-          }}
-          onGoogleVisionBarcodesDetected={({ barcodes }) => {
-            console.log(barcodes);
-
-          }}
-        />
-         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
-          <TouchableOpacity onPress={takePicture} style={styles.capture}>
-            <Text style={{ fontSize: 14 }}> SNAP </Text>
-          </TouchableOpacity>
-        </View>
-    </Fragment>
-  );
   return (
     <View style={styles.container}>
       <TextInputField

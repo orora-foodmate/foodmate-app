@@ -1,10 +1,14 @@
 import React, { Fragment, useState } from "react";
 import isEmpty from 'lodash/isEmpty';
-import { View } from "react-native";
-import { SearchBar, Header, Card, Icon } from 'react-native-elements';
+import { View, Modal, TouchableOpacity, StyleSheet } from "react-native";
+import { useNavigationButtonPress } from 'react-native-navigation-hooks';
+import { SearchBar, Card, Icon } from 'react-native-elements';
 import Button from '~/components/Button';
 import Text from '~/components/Text';
+import QRCodeScanner from 'react-native-qrcode-scanner';
+import { RNCamera } from 'react-native-camera';
 
+const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
 
 const EmptyView = () => (
   <View style={{ flex: 1 }}>
@@ -16,30 +20,30 @@ const ValidateButton = ({ authUserId, user, handleInviteFriend, handleRejectInvi
   const userId = user.get('id');
   const friendId = user.get('friendId');
 
-  if(authUserId === userId) {
+  if (authUserId === userId) {
     return <Text>這是你自己</Text>
   }
 
-  if(status === 0) {
+  if (status === 0) {
     return (
       <Button
         title='邀請'
-        onPress={() => handleInviteFriend({userId})}
+        onPress={() => handleInviteFriend({ userId })}
       />
     );
   }
-  if(status === 1) {
-    return authUserId ===  user.get('friendCreatorId')
+  if (status === 1) {
+    return authUserId === user.get('friendCreatorId')
       ? (
         <Fragment>
           <Text>等待對方審核</Text>
-          <Button title='拒絕' onPress={() => handleRejectInviteFriend({friendId})}/>
+          <Button title='拒絕' onPress={() => handleRejectInviteFriend({ friendId })} />
         </Fragment>
       )
       : (
         <Fragment>
-          <Button title='同意' onPress={() => handleApproveInviteFriend({friendId})}/>
-          <Button title='拒絕' onPress={() => handleRejectInviteFriend({friendId})}/>
+          <Button title='同意' onPress={() => handleApproveInviteFriend({ friendId })} />
+          <Button title='拒絕' onPress={() => handleRejectInviteFriend({ friendId })} />
         </Fragment>
       );
   }
@@ -63,11 +67,31 @@ const Content = ({ authUserId, user, handleInviteFriend, handleRejectInviteFrien
 }
 
 
-const SearchScreen = ({ authUserId, user, handleGetUserById, handleInviteFriend, handleRejectInviteFriend, handleApproveInviteFriend }) => {
-  const [value, setValue] = useState('5f73038aa3858fb19533f113');
+const SearchScreen = ({ componentId, authUserId, user, handleGetUserById, handleInviteFriend, handleRejectInviteFriend, handleApproveInviteFriend }) => {
+  const [value, setValue] = useState('');
+  const [showModal, setShowModal] = useState(false);
+
+  useNavigationButtonPress((e) => {
+    if (
+      componentId === e.componentId &&
+      e.buttonId === TOP_BAR_RIGHT_BUTTON_ID
+    ) {
+      setShowModal(true);
+    }
+  });
 
   return (
     <View style={{ flex: 1 }}>
+      <Modal visible={showModal}>
+        <QRCodeScanner
+          onRead={({data}) => {
+            setValue(data);
+            setShowModal(false);
+            handleGetUserById({ userId: data })
+          }}
+          flashMode={RNCamera.Constants.FlashMode.torch}
+        />
+      </Modal>
       <SearchBar
         placeholder="Type Here..."
         onChangeText={(text) => setValue(text)}
@@ -84,15 +108,47 @@ const SearchScreen = ({ authUserId, user, handleGetUserById, handleInviteFriend,
         user.isEmpty()
           ? <EmptyView />
           : <Content
-              user={user}
-              authUserId={authUserId}
-              handleInviteFriend={handleInviteFriend}
-              handleRejectInviteFriend={handleRejectInviteFriend}
-              handleApproveInviteFriend={handleApproveInviteFriend}
-            />
+            user={user}
+            authUserId={authUserId}
+            handleInviteFriend={handleInviteFriend}
+            handleRejectInviteFriend={handleRejectInviteFriend}
+            handleApproveInviteFriend={handleApproveInviteFriend}
+          />
       }
     </View>
   );
 };
+
+SearchScreen.options = {
+  topBar: {
+    rightButtons: [
+      {
+        id: TOP_BAR_RIGHT_BUTTON_ID,
+        icon: require('assets/icons/search.png'),
+        color: 'white',
+      },
+    ],
+  },
+};
+
+const styles = StyleSheet.create({
+  centerText: {
+    flex: 1,
+    fontSize: 18,
+    padding: 32,
+    color: '#777'
+  },
+  textBold: {
+    fontWeight: '500',
+    color: '#000'
+  },
+  buttonText: {
+    fontSize: 21,
+    color: 'rgb(0,122,255)'
+  },
+  buttonTouchable: {
+    padding: 16
+  }
+});
 
 export default SearchScreen;

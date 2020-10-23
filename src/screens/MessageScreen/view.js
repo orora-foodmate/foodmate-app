@@ -1,40 +1,33 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { FlatList } from 'react-native';
 import { useNavigation } from 'react-native-navigation-hooks';
-import { ListItem, Avatar } from 'react-native-elements';
+import { useFriendRooms } from '~/models';
+import RoomItem from './components/RoomItem';
 
 const MessageScreen = (props) => {
-  const [rooms, setRooms] = useState([]);
-  const {
-    push,
-  } = useNavigation();
-
-  useEffect(() => {
-    const sub = props.roomQuery.$.subscribe((r, items) => {
-      setRooms(r);
-    });
-    props.handleGetRooms();
-
-    return () => {
-      sub.unsubscribe();
-    };
-  }, []);
+  const friendRooms = useFriendRooms();
+  const { push } = useNavigation();
 
   return (
-    <Fragment>
-      {rooms.map((item, index) => {
-        const user = item.users.find(u => u.id !== props.userId);
-
-        return (
-          <ListItem key={`room-${index}`} bottomDivider onPress={() => push("Chat", { roomId: item.id })}>
-            <Avatar source={{ uri: user.avatar }} />
-            <ListItem.Content>
-              <ListItem.Title>{user.name}</ListItem.Title>
-              <ListItem.Subtitle>{user.account}</ListItem.Subtitle>
-            </ListItem.Content>
-          </ListItem>
-        )
-      })}
-    </Fragment>
+      <FlatList
+        keyExtractor={item => item.id}
+        data={friendRooms}
+        renderItem={({ item }) => {
+          console.log('MessageScreen -> item', item)
+          return (
+            <RoomItem
+              push={push}
+              socket={props.socket}
+              name={item.name}
+              account={item.account}
+              avatar={item.avatar}
+              roomId={item.room}
+              userId={props.userId}
+              handleAddMessageByWebsocket={props.handleAddMessageByWebsocket}
+            />
+          );
+        }}
+      />
   );
 };
 

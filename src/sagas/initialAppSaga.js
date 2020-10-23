@@ -25,7 +25,7 @@ export function* initialAppSaga() {
       : null;
 
     const resAction = true
-      ? okInitial({ socket, database })
+      ? okInitial({ database })
       : errInitial();
     yield put({
       type: types.SET_LOGIN_USER,

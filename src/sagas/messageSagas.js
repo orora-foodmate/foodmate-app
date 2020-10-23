@@ -5,6 +5,7 @@ import isEmpty from 'lodash/isEmpty';
 import isNull from 'lodash/isNull';
 import addSeconds from 'date-fns/addSeconds';
 import format from 'date-fns/format';
+import { parseISOString } from '~/helper/dateHelper';
 
 const okGet = () => ({
   type: types.GET_MESSAGES_SUCCESS,
@@ -52,7 +53,7 @@ export function* getMessagesSaga({ payload }) {
           text: isNull(message.text)? '': message.text,
           image: isNull(message.image)? '': message.image,
           attachment: isNull(message.attachment)? '': message.attachment,
-          createAt: new Date(message.createAt).toISOString()
+          createAt: parseISOString(message.createAt),
         }
       });
       return [...result, ...items];
@@ -98,14 +99,15 @@ export function* addMessageSaga({ payload }) {
     const { result } = yield call(addMessageResult, customHeaders, payload);
     const newMessage = {
       ...result.data,
-      createAt: new Date(result.data.createAt).toISOString(),
+      createAt: parseISOString(result.data.createAt),
     }
-    console.log("function*addMessageSaga -> newMessage", newMessage)
 
+    console.log('function*addMessageSaga -> newMessage', newMessage)
     yield database.messages.insert(newMessage);
     
     yield put(okAdd());
   } catch (error) {
+    console.log('function*addMessageSaga -> error', error)
     const errorAction = errAdd(error);
     yield put(errorAction);
   }

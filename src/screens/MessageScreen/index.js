@@ -1,22 +1,21 @@
 import { connect } from 'react-redux';
-import { getRoomsAction } from '~/actions/roomActions';
+import { addMessageByWebsocketAction } from '~/actions/messageActions';
 import MessageScreen from './view';
 
 
 const mapStateToProps = ({ auth, setting }) => {
-  const database = setting.get('database');
-  const roomQuery = database.rooms.find();
   const userId = auth.get('_id');
+  const socket = auth.get('socket');
   return {
     userId,
+    socket,
     isAuth: auth.get('isAuth'),
-    roomQuery,
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  handleGetRooms: payload => {
-    dispatch(getRoomsAction(payload));
+  handleAddMessageByWebsocket: payload => {
+    dispatch(addMessageByWebsocketAction(payload));
   },
 });
 

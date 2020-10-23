@@ -16,14 +16,11 @@ const MainScreen = ({
   handleInitialApp,
 }) => {
   useEffect(() => {
-    console.log("MainScreen -> didmount")
     handleInitialApp();
   }, []);
 
   useEffect(()=>{
     if(isInitialed) {
-      console.log('MainScreen => didupdate => isInitialed', isInitialed)
-      console.log('MainScreen => didupdate => isAuth', isAuth)
       isAuth ? rootNavigator() : noAuthNavigator();
     }
   }, [isInitialed]);

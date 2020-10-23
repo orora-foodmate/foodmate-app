@@ -1,36 +1,71 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import { ListItem, Avatar } from 'react-native-elements';
+import React, { Fragment, useEffect } from 'react';
+import { SectionList } from 'react-native';
+import { Text } from 'react-native-elements';
+import {
+  useNavigationButtonPress,
+  useNavigation,
+} from 'react-native-navigation-hooks';
+import { useFriends } from '~/models';
+import BasicSubscribe from './components/BasicSubscribe';
+import RowItem from './components/RowIem';
 
-const FriendScreen = props => {
-  // const { setStackRoot } = useNavigation();
-  const [friends, setFriends] = useState([]);
+const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
+
+const renderRowItem = ({ item }) => {
+  return (
+    <RowItem
+      item={item}
+    />
+  );
+};
+const FriendScreen = (props) => {
+  const { push } = useNavigation();
+  const data = useFriends();
+
+  useNavigationButtonPress((e) => {
+    if (
+      props.componentId === e.componentId &&
+      e.buttonId === TOP_BAR_RIGHT_BUTTON_ID
+    ) {
+      push('SearchFriend');
+    }
+  });
+
   useEffect(() => {
-    const sub = props.friendQuery.$.subscribe((f) => {
-      setFriends(f);
-    });
     props.handleGetFriends();
-
-    return () => {
-      sub.unsubscribe();
-    };
   }, []);
 
   return (
     <Fragment>
-      {friends.map((item, index) => {
-        const friend = item.users.find(u => u._id !== props.userId);
-        return (
-          <ListItem key={`friend-${index}`} bottomDivider>
-            <Avatar source={{ uri: friend.avatar }} />
-            <ListItem.Content>
-              <ListItem.Title>{friend.name}</ListItem.Title>
-              <ListItem.Subtitle>{friend.account}</ListItem.Subtitle>
-            </ListItem.Content>
-          </ListItem>
-        )
-      })}
+      <BasicSubscribe
+        socket={props.socket}
+        userId={props.userId}
+        handleInviteFriendByWebsocket={props.handleInviteFriendByWebsocket}
+        handleRejectFriendByWebsocket={props.handleRejectFriendByWebsocket}
+        handleApproveFriendByWebsocket={props.handleApproveFriendByWebsocket}
+      />
+      <SectionList
+        sections={data}
+        keyExtractor={(item) => item.id}
+        renderItem={renderRowItem}
+        renderSectionHeader={({ section: { title } }) => (
+          <Text h5>{title}</Text>
+        )}
+      />
     </Fragment>
   );
+};
+
+FriendScreen.options = {
+  topBar: {
+    rightButtons: [
+      {
+        id: TOP_BAR_RIGHT_BUTTON_ID,
+        icon: require('assets/icons/search.png'),
+        color: 'white',
+      },
+    ],
+  },
 };
 
 export default FriendScreen;

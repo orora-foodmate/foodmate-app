@@ -7,6 +7,7 @@ import SettingScreen from '~/screens/SettingScreen';
 import LoginScreen from '~/screens/LoginScreen';
 import SearchScreen from '~/screens/SearchScreen';
 import ChatScreen from '~/screens/ChatScreen';
+import RegisterScreen from '~/screens/RegisterScreen';
 
 import App from '~/App';
 
@@ -19,6 +20,7 @@ Screens.set('Friend', FriendScreen);
 Screens.set('Setting', SettingScreen);
 Screens.set('Chat', ChatScreen);
 Screens.set('SearchFriend', SearchScreen);
+Screens.set('Registe', RegisterScreen);
 
 Screens.forEach((C, key) => {
   return Navigation.registerComponent(

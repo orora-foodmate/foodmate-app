@@ -8,10 +8,18 @@ const basicAsyncActionTypes = [
   'LOGIN',
   'LOGOUT',
   'INITIAL_APP',
+  'REGISTE_USER',
+  'GET_USER_BY_ID',
   'GET_FRIENDS',
-  'GET_ROOMS',
   'GET_MESSAGES',
   'ADD_MESSAGE',
+  'ADD_MESSAGE_BY_WEBSOCKET',
+  'INVITE_FRIEND_BY_WEBSOCKET',
+  'REJECT_FRIEND_BY_WEBSOCKET',
+  'APPROVE_FRIEND_BY_WEBSOCKET',
+  'APPROVE_INVITE_FRIEND',
+  'INVITE_FRIEND',
+  'REJECT_INVITE_FRIEND',
 ];
 
 const asyncActionTypes = basicAsyncActionTypes.reduce((result, actionType) => {

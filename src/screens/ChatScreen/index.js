@@ -4,10 +4,11 @@ import ChatScreen from './view';
 
 const mapStateToProps = ({ auth, setting }) => {
   const database = setting.get('database');
-  const messageQuery = database.messages.find({}).sort( {createAt: -1});
+  // const messageQuery = database.messages.find({}).sort( {createAt: -1});
+  // console.log("mapStateToProps -> database", database)
   return {
     userId: auth.get('_id'),
-    messageQuery,
+    // messageQuery,
   };
 };
 

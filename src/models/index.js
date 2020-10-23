@@ -1,10 +1,11 @@
-import {decode, encode} from 'base-64';
-import {addRxPlugin, createRxDatabase} from 'rxdb';
+import { decode, encode } from 'base-64';
+import { addRxPlugin, createRxDatabase } from 'rxdb';
+import { useFriendsHook, useFriendRoomsHook, useMessagesHook } from './hooks/friendHooks';
+import isEmpty from 'lodash/isEmpty';
 import SQLite from 'react-native-sqlite-2';
 import SQLiteAdapterFactory from 'pouchdb-adapter-react-native-sqlite';
 import userSchema from './userSchema';
 import friendSchema from './friendSchema';
-import roomSchema from './roomSchema';
 import messageSchema from './messageSchema';
 
 if (!global.btoa) {
@@ -18,6 +19,8 @@ if (!global.atob) {
 // Avoid using node dependent modules
 process.browser = true;
 
+let foodmateDB = null;
+
 const SQLiteAdapter = SQLiteAdapterFactory(SQLite);
 
 addRxPlugin(SQLiteAdapter);
@@ -27,7 +30,6 @@ export const destoryDatabase = async (database) => {
   return await Promise.all([
     database.users.remove(),
     database.friends.remove(),
-    database.rooms.remove(),
     database.messages.remove(),
   ]);
 };
@@ -41,10 +43,23 @@ export const initialCollections = async (database) => {
     database.collection({
       name: 'friends',
       schema: friendSchema,
-    }),
-    database.collection({
-      name: 'rooms',
-      schema: roomSchema,
+      methods: {
+        updateStatus: function (status) {
+          this.status = status;
+          return this.save();
+        }
+      },
+      statics: {
+        findAndUpdateStatus: async function (friend, status) {
+          const doc = await this.findOne({ id: friend.id });
+          if (isEmpty(doc)) {
+            await this.create({ ...friend, status });
+          } else {
+            doc.status = status;
+            await doc.save();
+          }
+        }
+      },
     }),
     database.collection({
       name: 'messages',
@@ -60,8 +75,22 @@ export const initSQL = async () => {
     multiInstance: false,
     ignoreDuplicate: true,
   });
+  
+  foodmateDB = database;
 
   await initialCollections(database);
 
   return database;
 };
+
+export const useFriends = (query, options) => {
+  return useFriendsHook(foodmateDB, query, options);
+}
+
+export const useFriendRooms = () => {
+  return useFriendRoomsHook(foodmateDB);
+}
+
+export const useMessages = () => {
+  return useMessagesHook(foodmateDB);
+}

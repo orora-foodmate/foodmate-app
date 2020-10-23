@@ -23,12 +23,3 @@ target 'foodmate' do
     flipper_post_install(installer)
   end
 end
-
-target 'foodmate-tvOS' do
-  # Pods for foodmate-tvOS
-
-  target 'foodmate-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-end

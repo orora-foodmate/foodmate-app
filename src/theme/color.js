@@ -5,7 +5,7 @@ const colors = {
   black: '#000000',
   white: '#ffffff',
   default: GREY,
-  primary: '#3f52b5',
+  primary: '#FFD88B',
   secondary: '#272123',
   brown: '#665030',
   background: '#f7f7f9',

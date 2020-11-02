@@ -9,13 +9,13 @@ import noAuthNavigator from '~/navigation/noAuthNavigator';
 import { destoryDatabase, initialCollections } from '~/models';
 
 const okRegiste = (payload) => ({
-  type: types.REGISTE_USER_SUCCESS,
+  type: types.REGISTER_USER_SUCCESS,
   payload,
 });
 
 const errRegiste = ({ message, status }) => {
   return {
-    type: types.REGISTE_USER_ERROR,
+    type: types.REGISTER_USER_ERROR,
     payload: {
       message,
     }

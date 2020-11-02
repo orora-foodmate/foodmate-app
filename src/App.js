@@ -1,6 +1,7 @@
 import React from 'react';
 import {Provider} from 'react-redux';
 import {ThemeProvider} from 'react-native-elements';
+import theme from './theme';
 import {NavigationProvider} from 'react-native-navigation-hooks';
 import store from './store/configureStore';
 

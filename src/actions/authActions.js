@@ -9,7 +9,7 @@ export const logoutAction = () => ({
   type: types.LOGOUT,
 });
 
-export const registeUserAction = (payload) => ({
-  type: types.REGISTE_USER,
+export const registerUserAction = (payload) => ({
+  type: types.REGISTER_USER,
   payload,
 })

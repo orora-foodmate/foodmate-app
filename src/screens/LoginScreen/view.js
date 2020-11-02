@@ -52,9 +52,9 @@ const LoginScreen = ({
         buttonStyle={{ width: 230, borderRadius: 25 }}
       />
       <Button
-        buttonStyle={{ width: 300, borderRadius: 25 }}
+        buttonStyle={{ width: 230, borderRadius: 25 }}
         title='註冊'
-        onPress={() => push('Registe')}
+        onPress={() => push('Register')}
       />
     </View>
   );

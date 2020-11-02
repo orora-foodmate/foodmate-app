@@ -20,7 +20,7 @@ Screens.set('Friend', FriendScreen);
 Screens.set('Setting', SettingScreen);
 Screens.set('Chat', ChatScreen);
 Screens.set('SearchFriend', SearchScreen);
-Screens.set('Registe', RegisterScreen);
+Screens.set('Register', RegisterScreen);
 
 Screens.forEach((C, key) => {
   return Navigation.registerComponent(

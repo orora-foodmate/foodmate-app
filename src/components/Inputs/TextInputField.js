@@ -28,9 +28,9 @@ const TextInputField = ({
       placeholder={placeholder}
       placeholderTextColor={placeholderTextColor || theme.colors.greyLight}
       labelStyle={styles.label}
+      inputStyle={[styles.input, inputStyle]}
       containerStyle={[styles.container, containerStyle]}
       inputContainerStyle={[styles.inputContainer, inputContainerStyle]}
-      inputStyle={[styles.input, inputStyle]}
       leftIconContainerStyle={[
         styles.leftIconContainer,
         leftIconContainerStyle,

@@ -13,7 +13,7 @@ export function* watchInitialAppSaga() {
 }
 
 export function* watchRegisteUserSaga() {
-  yield takeLatest(types.REGISTE_USER, registeUserSaga);
+  yield takeLatest(types.REGISTER_USER, registeUserSaga);
 }
 
 export function* watchLoginSaga() {

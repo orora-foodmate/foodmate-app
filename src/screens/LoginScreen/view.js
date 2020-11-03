@@ -34,7 +34,6 @@ const LoginScreen = ({
   return (
     <View style={styles.container}>
       <TextInputField
-          // label='用户名'
           placeholder='请输入用户名'
           value={account}
           containerStyle={{ width: 300 }}
@@ -48,14 +47,14 @@ const LoginScreen = ({
         leftIcon={<Icon type='feather' name='key' containerStyle={{ width: 24} } color={colors.black} />}
       />
       <Button
-        buttonStyle={{ width: 300, borderRadius: 25 }}
         title='登入'
         onPress={onPress}
+        buttonStyle={{ width: 230, borderRadius: 25 }}
       />
       <Button
-        buttonStyle={{ width: 300, borderRadius: 25 }}
+        buttonStyle={{ width: 230, borderRadius: 25 }}
         title='註冊'
-        onPress={() => push('Registe')}
+        onPress={() => push('Register')}
       />
     </View>
   );

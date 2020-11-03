@@ -59,6 +59,7 @@ const getStyles = (theme, props) => {
       display: 'flex',
       alignItems: 'flex-start',
       flexDirection: 'column',
+      height: 60,
       paddingTop: theme.spacing.small,
       paddingLeft: 0,
       paddingRight: 0,

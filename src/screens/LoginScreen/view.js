@@ -7,8 +7,8 @@ import Button from '~/components/Button';
 import PasswordInput from '~/components/Inputs/PasswordInput';
 import TextInputField from '~/components/Inputs/TextInputField';
 import {inputDonut, inputLock} from '~/assets/icons';
-import logo from '../../assets/images/logo-foodmate.png';
-import bottomLogo from '../../assets/images/actor-login-donut.png';
+import logo from '~/assets/images/logo-foodmate.png';
+import bottomLogo from '~/assets/images/actor-login-donut.png';
 
 const onChange = (setter) => (value) => {
   const noSpaceValue = value.trim();

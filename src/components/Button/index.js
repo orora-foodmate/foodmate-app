@@ -22,10 +22,11 @@ class Button extends React.PureComponent {
     return (
       <BaseButton
         {...props}
+        type={type}
+        onPress={onPress}
         disabledStyle={styles.disabledStyle}
         disabledTitleStyle={styles.disabledTitleStyle}
-        onPress={onPress}
-        type={type}
+        buttonStyle={[styles.buttonStyle, props.buttonStyle]}
       />
     );
   }
@@ -43,5 +44,10 @@ const getStyles = type => {
     disabledTitleStyle: {
       color: type === 'solid' ? colors.white : disabledColor,
     },
+    buttonStyle: {
+      width: 230,
+      height: 36,
+      borderRadius: 25,
+    }
   });
 };

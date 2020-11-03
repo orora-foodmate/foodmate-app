@@ -3,8 +3,11 @@ import propTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import isEmpty from 'lodash/isEmpty';
 import { StyleSheet } from 'react-native';
-import { Input } from 'react-native-elements';
+import { Input, Image } from 'react-native-elements';
+// import InputImage from '~/components/Inputs/InputImage';
 import theme from '~/theme';
+// import {inputDonut} from '~/assets/icons/index';
+import inputDonut from '~/assets/icons/input-placeholder-donut.png';
 
 const TextInputField = ({
   placeholder,
@@ -14,6 +17,7 @@ const TextInputField = ({
   inputStyle,
   leftIconContainerStyle,
   hidden,
+  leftIcon,
   maxLength,
   placeholderTextColor,
   ...props
@@ -28,16 +32,16 @@ const TextInputField = ({
       placeholder={placeholder}
       placeholderTextColor={placeholderTextColor || theme.colors.greyLight}
       labelStyle={styles.label}
+      inputStyle={[styles.input, inputStyle]}
       containerStyle={[styles.container, containerStyle]}
       inputContainerStyle={[styles.inputContainer, inputContainerStyle]}
-      inputStyle={[styles.input, inputStyle]}
       leftIconContainerStyle={[
         styles.leftIconContainer,
         leftIconContainerStyle,
       ]}
       maxLength={maxLength}
       leftIcon={
-        isEmpty(iconName) ? null : (
+        isEmpty(iconName) ? leftIcon : (
           <Icon name={iconName} size={24} color={theme.colors.greyLight} />
         )
       }

@@ -1,25 +1,26 @@
-import React, { useRef, useState } from 'react';
-import { useNavigation } from 'react-native-navigation-hooks/dist';
-import { Icon } from 'react-native-elements';
-import { StyleSheet, View } from 'react-native';
+import React, {useRef, useState} from 'react';
+import {useNavigation} from 'react-native-navigation-hooks/dist';
+import {Icon, Image} from 'react-native-elements';
+import InputImage from '~/components/Inputs/InputImage';
+import {StyleSheet, View} from 'react-native';
 import Button from '~/components/Button';
 import PasswordInput from '~/components/Inputs/PasswordInput';
 import TextInputField from '~/components/Inputs/TextInputField';
-import colors from '~/theme/color';
+import {inputDonut, inputLock} from '~/assets/icons';
+import logo from '../../assets/images/logo-foodmate.png';
+import bottomLogo from '../../assets/images/actor-login-donut.png';
 
-const onChange = setter => value => {
+const onChange = (setter) => (value) => {
   const noSpaceValue = value.trim();
   setter(noSpaceValue);
 };
 
-const LoginScreen = ({
-  handleLogin,
-}) => {
+const LoginScreen = ({handleLogin}) => {
   let cameraRef = useRef(null);
   const [account, setAccount] = useState('horsekit1982@gmail.com');
-  const [password, setPassword] = useState('a12345678');  
+  const [password, setPassword] = useState('a12345678');
 
-  const { push } = useNavigation();
+  const {push} = useNavigation();
 
   const payload = {
     account,
@@ -29,54 +30,80 @@ const LoginScreen = ({
 
   const onPress = () => {
     handleLogin(payload);
-  }
+  };
 
   return (
     <View style={styles.container}>
-      <TextInputField
+      <View style={styles.section}>
+        <Image
+          source={logo}
+          style={{width: 210, height: 50, resizeMode: 'contain'}}
+        />
+      </View>
+      <View style={styles.section}>
+        <TextInputField
           placeholder='请输入用户名'
           value={account}
-          containerStyle={{ width: 300 }}
+          containerStyle={{width: 230}}
+          leftIcon={<InputImage icon={inputDonut} />}
           onChangeText={onChange(setAccount)}
-          leftIcon={<Icon type='feather' name='user' containerStyle={{ width: 24} } color={colors.black} />}
         />
-      <PasswordInput
-        value={password}
-        containerStyle={{ width: 300 }}
-        onChangeText={onChange(setPassword)}
-        leftIcon={<Icon type='feather' name='key' containerStyle={{ width: 24} } color={colors.black} />}
-      />
-      <Button
-        title='登入'
-        onPress={onPress}
-        buttonStyle={{ width: 230, borderRadius: 25 }}
-      />
-      <Button
-        buttonStyle={{ width: 230, borderRadius: 25 }}
-        title='註冊'
-        onPress={() => push('Register')}
-      />
+        <PasswordInput
+          value={password}
+          containerStyle={{width: 230}}
+          onChangeText={onChange(setPassword)}
+          leftIcon={<InputImage icon={inputLock} />}
+        />
+        <Button title='登入' onPress={onPress} />
+        <Button title='註冊' type='outline' onPress={() => push('Register')} />
+        <Button
+          title='忘記密碼'
+          type='clear'
+          onPress={() => push('Register')}
+        />
+      </View>
+      <View style={styles.sectionImage}>
+        <Image source={bottomLogo} style={styles.bottomImage} />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    display: 'flex',
+    height: '100%',
+  },
+  section: {
     flex: 1,
-    justifyContent: 'center',
+    width: '100%',
+    position: 'relative',
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  bottomImage: {
+    width: 450,
+    height: 450,
+    left: -100,
+  },
+  sectionImage: {
+    flex: 1,
+    width: '100%',
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
   },
 });
 
 LoginScreen.options = {
   topBar: {
     title: {
-      text: 'LoginScreen'
-    }
+      text: 'LoginScreen',
+    },
   },
   bottomTab: {
-    text: 'Login'
-  }
+    text: 'Login',
+  },
 };
 
 export default LoginScreen;

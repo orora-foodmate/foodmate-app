@@ -31,9 +31,10 @@ const onChange = (setter) => (value) => {
 
 const submit = async (payload, handleRegisterUser) => {
   try {
-    const isValid = schema.isValid(payload);
+    const submitPayload = { ...payload, name: payload.account };
+    const isValid = schema.isValid(submitPayload);
     if (isValid) {
-      handleRegisterUser(payload);
+      handleRegisterUser(submitPayload);
     }
   } catch (error) {
     console.log('submit -> error', error);

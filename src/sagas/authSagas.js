@@ -8,12 +8,12 @@ import rootNavigator from '~/navigation/rootNavigator';
 import noAuthNavigator from '~/navigation/noAuthNavigator';
 import { destoryDatabase, initialCollections } from '~/models';
 
-const okRegiste = (payload) => ({
+const okRegister = (payload) => ({
   type: types.REGISTER_USER_SUCCESS,
   payload,
 });
 
-const errRegiste = ({ message, status }) => {
+const errRegister = ({ message, status }) => {
   return {
     type: types.REGISTER_USER_ERROR,
     payload: {
@@ -22,17 +22,15 @@ const errRegiste = ({ message, status }) => {
   };
 };
 
-export function* registeUserSaga({ payload: {pop, ...payload} }) {
+export function* registeUserSaga({ payload }) {
+  const { push, ...submitPayload } = payload;
   try {
-    const {result} = yield call(registeUserResult, payload);
-    pop();
-    alert('註冊完成');
+    const {result} = yield call(registeUserResult, submitPayload);
+    push('Nickname');
 
-
-    yield put(okRegiste());
+    yield put(okRegister());
   } catch (error) {
-    console.log("function*registeUserSaga -> error", error)
-    const errorAction = errRegiste(error);
+    const errorAction = errRegister(error);
     yield put(errorAction);
   }
 }

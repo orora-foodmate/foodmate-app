@@ -30,19 +30,20 @@ const onChange = (setter) => (value) => {
 };
 
 const submit = async (payload, handleRegisterUser) => {
-  try {
-    const submitPayload = { ...payload, name: payload.account };
-    const isValid = schema.isValid(submitPayload);
-    if (isValid) {
-      handleRegisterUser(submitPayload);
-    }
-  } catch (error) {
-    console.log('submit -> error', error);
-  }
+  payload.push('Nickname')
+  // try {
+  //   const submitPayload = { ...payload, name: payload.account };
+  //   const isValid = schema.isValid(submitPayload);
+  //   if (isValid) {
+  //     handleRegisterUser(submitPayload);
+  //   }
+  // } catch (error) {
+  //   console.log('submit -> error', error);
+  // }
 };
 
 const RegisterScreen = ({handleRegisterUser}) => {
-  const {pop} = useNavigation();
+  const {pop, push} = useNavigation();
   const [account, setAccount] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -53,7 +54,7 @@ const RegisterScreen = ({handleRegisterUser}) => {
     name,
     password,
     confirmPassword,
-    pop,
+    push,
   };
 
   return (

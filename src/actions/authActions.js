@@ -13,3 +13,8 @@ export const registerUserAction = (payload) => ({
   type: types.REGISTER_USER,
   payload,
 })
+
+export const updateUserAction = payload => ({
+  type: types.INIT_USERNAME,
+  payload
+})

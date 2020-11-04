@@ -1,7 +1,7 @@
 import { put, call, select } from 'redux-saga/effects';
 import isEmpty from 'lodash/isEmpty';
 import types from '~/constants/actionTypes';
-import { loginResult, registeUserResult } from '~/apis/api';
+import { loginResult, registerUserResult } from '~/apis/api';
 import { saveLoginUser, removeLoginUser } from '~/helper/authHelpers';
 import socketClusterHelper from '~/helper/socketClusterHelpers';
 import rootNavigator from '~/navigation/rootNavigator';
@@ -22,13 +22,24 @@ const errRegister = ({ message, status }) => {
   };
 };
 
-export function* registeUserSaga({ payload }) {
-  const { push, ...submitPayload } = payload;
+export function* registerUserSaga({ payload }) {
+  const { pop, ...submitPayload } = payload;
   try {
-    const {result} = yield call(registeUserResult, submitPayload);
-    push('Nickname');
+    const {result} = yield call(registerUserResult, submitPayload);
+
+    // if(isEmpty(result.data._id)) return yield put(errRegister({ message: '註冊失敗'}));
+    pop();
 
     yield put(okRegister());
+
+    // const { account, password } = submitPayload;
+    // const { result:loginResult } = yield call(loginResult, { account, password });
+
+    // const loginUser = loginResult.data;
+    // const socket = socketClusterHelper.initialClient(loginUser.token);
+
+    // yield call(saveLoginUser, loginUser);
+    // yield put(okLogin({ ...loginUser, socket }));
   } catch (error) {
     const errorAction = errRegister(error);
     yield put(errorAction);

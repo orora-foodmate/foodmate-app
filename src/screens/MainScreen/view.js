@@ -41,7 +41,7 @@ export default MainScreen;
 
 Navigation.setDefaultOptions({
   statusBar: {
-    backgroundColor: '#4d089a'
+    // backgroundColor: '#4d089a'
   },
   topBar: {
     title: {

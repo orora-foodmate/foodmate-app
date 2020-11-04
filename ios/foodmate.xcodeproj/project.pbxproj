@@ -43,6 +43,7 @@
 		1A5FBD5F000BB121910B6859 /* libPods-foodmate.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-foodmate.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		212AAEF0799E2D56319EE8F2 /* Pods-foodmate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-foodmate.release.xcconfig"; path = "Target Support Files/Pods-foodmate/Pods-foodmate.release.xcconfig"; sourceTree = "<group>"; };
 		2C72AE0725317B0C007DE1DA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "foodmate/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2CA128FD2552444300340E0E /* foodmate.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = foodmate.entitlements; path = foodmate/foodmate.entitlements; sourceTree = "<group>"; };
 		33DBFF738817BAEEC4AE533E /* Pods-foodmate-foodmateTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-foodmate-foodmateTests.debug.xcconfig"; path = "Target Support Files/Pods-foodmate-foodmateTests/Pods-foodmate-foodmateTests.debug.xcconfig"; sourceTree = "<group>"; };
 		44A91F0814202CC9EEC184CA /* Pods-foodmate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-foodmate.debug.xcconfig"; path = "Target Support Files/Pods-foodmate/Pods-foodmate.debug.xcconfig"; sourceTree = "<group>"; };
 		4DB12F68C4757FE19D70FE45 /* Pods-foodmate-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-foodmate-tvOS.release.xcconfig"; path = "Target Support Files/Pods-foodmate-tvOS/Pods-foodmate-tvOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -96,6 +97,7 @@
 		13B07FAE1A68108700A75B9A /* foodmate */ = {
 			isa = PBXGroup;
 			children = (
+				2CA128FD2552444300340E0E /* foodmate.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				2C72AE0725317B0C007DE1DA /* GoogleService-Info.plist */,
@@ -223,11 +225,13 @@
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = W6K7F9HNX5;
+						ProvisioningStyle = Manual;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = W6K7F9HNX5;
 						LastSwiftMigration = 1120;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -494,6 +498,7 @@
 			baseConfigurationReference = 33DBFF738817BAEEC4AE533E /* Pods-foodmate-foodmateTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = W6K7F9HNX5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -509,6 +514,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/foodmate.app/foodmate";
 			};
 			name = Debug;
@@ -518,7 +525,9 @@
 			baseConfigurationReference = 4FBBF1E5861CD056D4F72DD0 /* Pods-foodmate-foodmateTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = W6K7F9HNX5;
 				INFOPLIST_FILE = foodmateTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -529,6 +538,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/foodmate.app/foodmate";
 			};
 			name = Release;
@@ -539,6 +550,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = foodmate/foodmate.entitlements;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = W6K7F9HNX5;
 				ENABLE_BITCODE = NO;
@@ -551,6 +564,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.foodmate;
 				PRODUCT_NAME = foodmate;
+				PROVISIONING_PROFILE_SPECIFIER = "match Development org.reactjs.native.foodmate";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -563,7 +577,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = foodmate/foodmate.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = W6K7F9HNX5;
 				INFOPLIST_FILE = foodmate/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -571,8 +589,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.foodmate;
 				PRODUCT_NAME = foodmate;
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.reactjs.native.foodmate";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

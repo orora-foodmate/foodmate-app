@@ -42,12 +42,16 @@ Navigation.setDefaultOptions({
   topBar: {
     title: {
       color: 'white',
+      component: {
+        name: 'TopBar',
+        aligment: 'center'
+      },
     },
     backButton: {
       color: 'white',
     },
     background: {
-      color: '#4d089a',
+      // color: '#4d089a',
     },
   },
   bottomTab: {

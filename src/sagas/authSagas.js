@@ -22,9 +22,9 @@ const errRegiste = ({ message, status }) => {
   };
 };
 
-export function* registeUserSaga({ payload: {pop, ...payload} }) {
+export function* registeUserSaga({ payload: { pop, ...payload } }) {
   try {
-    const {result} = yield call(registeUserResult, payload);
+    const { result } = yield call(registeUserResult, payload);
     pop();
     alert('註冊完成');
 
@@ -53,9 +53,10 @@ const errLogin = ({ message, status }) => {
 
 export function* loginSaga({ payload }) {
   try {
-    const { result } = yield call(loginResult, payload);
+    const { auth } = yield select(({ auth }) => ({ auth }));
+    const { result } = yield call(loginResult, { ...payload, regId: auth.get('fcmToken') });
     const loginUser = result.data;
-    
+
     const socket = socketClusterHelper.initialClient(loginUser.token);
 
     yield call(saveLoginUser, loginUser);

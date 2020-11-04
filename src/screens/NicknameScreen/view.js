@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {useNavigation} from 'react-native-navigation-hooks/dist';
 import {View, StyleSheet, ImageBackground, Text} from 'react-native';
 import Button from '~/components/Button';
 import InputImage from '~/components/Inputs/InputImage';
@@ -18,13 +19,14 @@ const onChange = (setter) => (value) => {
 };
 
 const NicknameScreen = ({ userId, handleUpdateUser }) => {
+  const {popToRoot} = useNavigation();
   const [step, setStep] = useState(0);
   const [name, setName] = useState('');
 
   useEffect(() => {
     setTimeout(() => {
       setStep(1);
-    }, 4000)
+    }, 3000)
   }, []);
 
   return (
@@ -41,7 +43,7 @@ const NicknameScreen = ({ userId, handleUpdateUser }) => {
             leftIcon={<InputImage icon={inputDonut} />}
           />
           <View style={styles.buttonZone}>
-            <Button title='填好了！' onPress={() => handleUpdateUser({ id: userId, name })}/>
+            <Button title='填好了！' onPress={() => handleUpdateUser({ id: userId, name, popToRoot })}/>
           </View>
         </View>
         <View style={styles.sectionImage}>

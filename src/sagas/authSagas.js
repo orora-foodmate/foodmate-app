@@ -23,23 +23,22 @@ const errRegister = ({ message, status }) => {
 };
 
 export function* registerUserSaga({ payload }) {
-  const { pop, ...submitPayload } = payload;
+  const { push, ...submitPayload } = payload;
   try {
     const {result} = yield call(registerUserResult, submitPayload);
 
-    // if(isEmpty(result.data._id)) return yield put(errRegister({ message: '註冊失敗'}));
-    pop();
-
+    if(isEmpty(result.data.id)) return yield put(errRegister({ message: '註冊失敗'}));
     yield put(okRegister());
 
-    // const { account, password } = submitPayload;
-    // const { result:loginResult } = yield call(loginResult, { account, password });
+    const { account, password } = submitPayload;
+    const { result:userInfo } = yield call(loginResult, { account, password });
 
-    // const loginUser = loginResult.data;
-    // const socket = socketClusterHelper.initialClient(loginUser.token);
+    const loginUser = userInfo.data;
+    const socket = socketClusterHelper.initialClient(loginUser.token);
 
-    // yield call(saveLoginUser, loginUser);
-    // yield put(okLogin({ ...loginUser, socket }));
+    yield call(saveLoginUser, loginUser);
+    yield put(okLogin({ ...loginUser, socket }));
+    push('Nickname');
   } catch (error) {
     const errorAction = errRegister(error);
     yield put(errorAction);
@@ -95,6 +94,8 @@ export function* logoutSaga({ payload }) {
     const { setting } = yield select(({ auth, setting }) => ({ auth, setting }));
     const database = setting.get('database');
 
+    noAuthNavigator();
+    
     yield call(socketClusterHelper.close);
     yield call(removeLoginUser);
 
@@ -103,7 +104,6 @@ export function* logoutSaga({ payload }) {
       yield initialCollections(database);
     }
 
-    noAuthNavigator();
     yield put(okLogout());
   } catch (error) {
     const errorAction = errLogout(error);

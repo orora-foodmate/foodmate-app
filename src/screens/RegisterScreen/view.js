@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import * as yup from 'yup';
-import {View, Image, StyleSheet, ImageBackground} from 'react-native';
+import {View, Image, StyleSheet} from 'react-native';
 import {useNavigation} from 'react-native-navigation-hooks/dist';
 import Button from '~/components/Button';
 import logo from '~/assets/images/logo_register.png';
@@ -53,7 +53,7 @@ const RegisterScreen = ({handleRegisterUser}) => {
     name,
     password,
     confirmPassword,
-    pop,
+    push,
   };
 
   return (

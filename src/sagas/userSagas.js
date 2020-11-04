@@ -1,6 +1,7 @@
 import { put, select, call } from 'redux-saga/effects';
 import isEmpty from 'lodash/isEmpty';
 import types from '~/constants/actionTypes';
+import rootNavigator from '~/navigation/rootNavigator';
 import { getUserByIdResult, updateUserResult } from '~/apis/api';
 
 const okGet = (payload) => ({
@@ -51,19 +52,18 @@ const errorUpdate = payload => ({
 })
 
 export function* updateUserSaga({ payload }) {
+  const { popToRoot, ...submitPayload } = payload;
   try {
     const { auth } = yield select(({ auth, setting }) => ({ auth, setting }));
-    console.log("TCL: function*updateUserSaga -> auth", auth)
     
     const customHeaders = {
       Authorization: `Bearer ${auth.get('token')}`
     };
-    const { result } = yield call(updateUserResult, customHeaders, payload);
-    console.log("TCL: function*updateUserSaga -> result", result)
-    
+    const { result } = yield call(updateUserResult, customHeaders, submitPayload);
+
     yield put(okUpdate(result.data));
+    rootNavigator();
   }catch(error){
-    console.log("TCL: function*updateUserSaga -> error", error)
     const errorAction = errorUpdate(error);
     yield put(errorAction);
   }

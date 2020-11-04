@@ -41,7 +41,7 @@ const rootNavigator = () => {
           center: {
             bottomTabs: {
               children: [
-                stack('Friend', 'Friend',  usersIcon),
+                stack('Friend', 'Friend', usersIcon),
                 stack('Message', 'Message', sendIcon),
                 stack('Setting', 'Setting', settingIcon),
               ]

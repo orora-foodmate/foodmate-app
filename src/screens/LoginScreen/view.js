@@ -1,8 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {useNavigation} from 'react-native-navigation-hooks/dist';
-import {Icon, Image} from 'react-native-elements';
 import InputImage from '~/components/Inputs/InputImage';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Image} from 'react-native';
 import Button from '~/components/Button';
 import PasswordInput from '~/components/Inputs/PasswordInput';
 import TextInputField from '~/components/Inputs/TextInputField';
@@ -17,7 +16,7 @@ const onChange = (setter) => (value) => {
 
 const LoginScreen = ({handleLogin}) => {
   let cameraRef = useRef(null);
-  const [account, setAccount] = useState('horsekit1982@gmail.com');
+  const [account, setAccount] = useState('edmond@gmail.com');
   const [password, setPassword] = useState('a12345678');
 
   const {push} = useNavigation();

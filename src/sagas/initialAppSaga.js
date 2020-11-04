@@ -42,7 +42,7 @@ export function* initialAppSaga() {
       : errInitial();
     yield put({
       type: types.SET_LOGIN_USER,
-      payload: { ...loginUser, socket },
+      payload: { ...loginUser, socket, fcmToken },
     });
 
     yield put(resAction);

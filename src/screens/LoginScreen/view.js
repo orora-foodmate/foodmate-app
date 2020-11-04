@@ -1,12 +1,12 @@
-import React, {useRef, useState} from 'react';
-import {useNavigation} from 'react-native-navigation-hooks/dist';
-import {Icon, Image} from 'react-native-elements';
+import React, { useState } from 'react';
+import { useNavigation } from 'react-native-navigation-hooks/dist';
+import { Image } from 'react-native-elements';
 import InputImage from '~/components/Inputs/InputImage';
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Button from '~/components/Button';
 import PasswordInput from '~/components/Inputs/PasswordInput';
 import TextInputField from '~/components/Inputs/TextInputField';
-import {inputDonut, inputLock} from '~/assets/icons';
+import { inputDonut, inputLock } from '~/assets/icons';
 import logo from '../../assets/images/logo-foodmate.png';
 import bottomLogo from '../../assets/images/actor-login-donut.png';
 
@@ -15,12 +15,11 @@ const onChange = (setter) => (value) => {
   setter(noSpaceValue);
 };
 
-const LoginScreen = ({handleLogin}) => {
-  let cameraRef = useRef(null);
-  const [account, setAccount] = useState('horsekit1982@gmail.com');
-  const [password, setPassword] = useState('a12345678');
+const LoginScreen = ({ handleLogin }) => {
+  const [account, setAccount] = useState('');
+  const [password, setPassword] = useState('');
 
-  const {push} = useNavigation();
+  const { push } = useNavigation();
 
   const payload = {
     account,
@@ -37,20 +36,20 @@ const LoginScreen = ({handleLogin}) => {
       <View style={styles.section}>
         <Image
           source={logo}
-          style={{width: 210, height: 50, resizeMode: 'contain'}}
+          style={{ width: 210, height: 50, resizeMode: 'contain' }}
         />
       </View>
       <View style={styles.section}>
         <TextInputField
           placeholder='请输入用户名'
           value={account}
-          containerStyle={{width: 230}}
+          containerStyle={{ width: 230 }}
           leftIcon={<InputImage icon={inputDonut} />}
           onChangeText={onChange(setAccount)}
         />
         <PasswordInput
           value={password}
-          containerStyle={{width: 230}}
+          containerStyle={{ width: 230 }}
           onChangeText={onChange(setPassword)}
           leftIcon={<InputImage icon={inputLock} />}
         />

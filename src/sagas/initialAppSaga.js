@@ -3,6 +3,18 @@ import { call, put } from 'redux-saga/effects';
 import { initSQL } from '~/models';
 import { getLoginUser, validateIsFirstLaunch } from '~/helper/authHelpers';
 import socketClusterHelper from '~/helper/socketClusterHelpers';
+import messaging from '@react-native-firebase/messaging';
+
+async function onAppBootstrap(isFirstLaunch) {
+  const messagingInstance = messaging();
+  if(isFirstLaunch) {
+    await messagingInstance.registerDeviceForRemoteMessages();
+  }
+  
+  await messagingInstance.requestPermission();
+  const fcmToken = await messagingInstance.getToken();
+  return fcmToken;
+}
 
 const okInitial = (payload) => ({
   type: types.INITIAL_APP_SUCCESS,
@@ -19,6 +31,7 @@ export function* initialAppSaga() {
     const isFirstLaunch = yield call(validateIsFirstLaunch);
     const loginUser = yield call(getLoginUser);
     const database = yield call(initSQL, isFirstLaunch);
+    const fcmToken = yield call(onAppBootstrap, isFirstLaunch);
 
     const socket = loginUser.isAuth
       ? socketClusterHelper.initialClient(loginUser.token)
@@ -29,7 +42,7 @@ export function* initialAppSaga() {
       : errInitial();
     yield put({
       type: types.SET_LOGIN_USER,
-      payload: { ...loginUser, socket },
+      payload: { ...loginUser, socket, fcmToken },
     });
 
     yield put(resAction);

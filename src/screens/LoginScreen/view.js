@@ -23,7 +23,6 @@ const LoginScreen = ({ handleLogin }) => {
   const payload = {
     account,
     password,
-    grant_type: 'password',
   };
 
   const onPress = () => {

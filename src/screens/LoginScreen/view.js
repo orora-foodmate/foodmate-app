@@ -16,8 +16,8 @@ const onChange = (setter) => (value) => {
 };
 
 const LoginScreen = ({ handleLogin }) => {
-  const [account, setAccount] = useState('horsekit1982@gmail.com');
-  const [password, setPassword] = useState('a12345678');
+  const [account, setAccount] = useState('');
+  const [password, setPassword] = useState('');
 
   const { push } = useNavigation();
 

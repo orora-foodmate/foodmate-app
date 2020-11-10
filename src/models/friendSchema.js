@@ -23,7 +23,7 @@ const friendSchema = {
     friendId: {
       type: 'string'
     },
-    creator: {
+    friendCreator: {
       type: 'object',
       properties: {
         id: {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FlatList } from 'react-native';
 import { useNavigation } from 'react-native-navigation-hooks';
 import { useFriendRooms } from '~/models';
@@ -36,9 +36,6 @@ MessageScreen.options = {
     title: {
       text: 'Message',
     },
-  },
-  bottomTab: {
-    text: 'Message',
   },
 };
 

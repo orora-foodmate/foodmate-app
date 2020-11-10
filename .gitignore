@@ -65,3 +65,4 @@ envConfig.js
 *.ipa
 *.zip
 vendor
+*.hprof

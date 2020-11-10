@@ -3,16 +3,10 @@ import { call, put } from 'redux-saga/effects';
 import { initSQL } from '~/models';
 import { getLoginUser, validateIsFirstLaunch } from '~/helper/authHelpers';
 import socketClusterHelper from '~/helper/socketClusterHelpers';
-import messaging from '@react-native-firebase/messaging';
+import { getFcmToken } from '~/helper/notificationHelper';
 
 async function onAppBootstrap(isFirstLaunch) {
-  const messagingInstance = messaging();
-  if(isFirstLaunch) {
-    await messagingInstance.registerDeviceForRemoteMessages();
-  }
-  
-  await messagingInstance.requestPermission();
-  const fcmToken = await messagingInstance.getToken();
+  const fcmToken = await getFcmToken(isFirstLaunch);
   return fcmToken;
 }
 
@@ -47,6 +41,7 @@ export function* initialAppSaga() {
 
     yield put(resAction);
   } catch (error) {
+    console.log('function*initialAppSaga -> error', error)
     const errorAction = errInitial(error);
     yield put(errorAction);
   }

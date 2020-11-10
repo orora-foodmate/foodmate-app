@@ -6,7 +6,7 @@ const mapStateToProps = ({ auth }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleRegisteUser: payload => {
+  handleRegisterUser: payload => {
     dispatch(registerUserAction(payload));
   }
 });

@@ -8,6 +8,10 @@ import LoginScreen from '~/screens/LoginScreen';
 import SearchScreen from '~/screens/SearchScreen';
 import ChatScreen from '~/screens/ChatScreen';
 import RegisterScreen from '~/screens/RegisterScreen';
+import NicknameScreen from '~/screens/NicknameScreen';
+import CreateActivityScreen from '~/screens/CreateActivityScreen';
+
+import TopBar from '~/components/TopBar';
 
 import App from '~/App';
 
@@ -21,6 +25,11 @@ Screens.set('Setting', SettingScreen);
 Screens.set('Chat', ChatScreen);
 Screens.set('SearchFriend', SearchScreen);
 Screens.set('Register', RegisterScreen);
+Screens.set('Nickname', NicknameScreen);
+Screens.set('Create', CreateActivityScreen);
+
+Navigation.registerComponent('TopBar', () => TopBar);
+
 
 Screens.forEach((C, key) => {
   return Navigation.registerComponent(
@@ -29,6 +38,7 @@ Screens.forEach((C, key) => {
     () => C
   )
 });
+
 
 export const startMain = () => {
   Navigation.setRoot({

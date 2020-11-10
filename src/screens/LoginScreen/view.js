@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigation } from 'react-native-navigation-hooks/dist';
-import { Image } from 'react-native-elements';
 import InputImage from '~/components/Inputs/InputImage';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 import Button from '~/components/Button';
 import PasswordInput from '~/components/Inputs/PasswordInput';
 import TextInputField from '~/components/Inputs/TextInputField';

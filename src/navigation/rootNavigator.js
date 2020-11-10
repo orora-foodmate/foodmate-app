@@ -1,8 +1,8 @@
-
 import Feather from 'react-native-vector-icons/Feather';
-import { Navigation } from 'react-native-navigation';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {Navigation} from 'react-native-navigation';
 import colors from '~/theme/color';
-import { stack } from './stack';
+import {stack} from './stack';
 
 Feather.loadFont();
 
@@ -12,45 +12,62 @@ Navigation.setDefaultOptions({
   },
   topBar: {
     title: {
-      color: 'white'
+      color: 'white',
     },
     backButton: {
-      color: 'white'
+      color: 'white',
     },
     background: {
       color: colors.primary,
-    }
+    },
   },
   bottomTab: {
     fontSize: 14,
     selectedFontSize: 18,
     selectedIconColor: colors.primary,
     selectedTextColor: colors.primary,
-  }
+  },
 });
 
 const rootNavigator = () => {
   Promise.all([
-    Feather.getImageSource('send', 25),
-    Feather.getImageSource('users', 25),
-    Feather.getImageSource('settings', 25),
-  ]).then(([sendIcon, usersIcon, settingIcon]) => {
-    Navigation.setRoot({
-      root: {
-        sideMenu: {
-          center: {
-            bottomTabs: {
-              children: [
-                stack('Friend', 'Friend',  usersIcon),
-                stack('Message', 'Message', sendIcon),
-                stack('Setting', 'Setting', settingIcon),
-              ]
+    MaterialIcons.getImageSource('add-circle', 25, colors.primary),
+    MaterialIcons.getImageSource('add-circle', 25, colors.greyLight),
+    MaterialIcons.getImageSource('forum', 25, colors.primary),
+    MaterialIcons.getImageSource('forum', 25, colors.greyLight),
+    MaterialIcons.getImageSource('person-pin', 25, colors.primary),
+    MaterialIcons.getImageSource('person-pin', 25, colors.greyLight),
+    MaterialIcons.getImageSource('settings', 25, colors.primary),
+    MaterialIcons.getImageSource('settings', 25, colors.greyLight),
+  ]).then(
+    ([
+      createIconActive,
+      createIcon,
+      chatIconActive,
+      chatIcon,
+      usersIconActive,
+      usersIcon,
+      settingIconActive,
+      settingIcon,
+    ]) => {
+      Navigation.setRoot({
+        root: {
+          sideMenu: {
+            center: {
+              bottomTabs: {
+                children: [
+                  stack('Create', '建立活動', createIconActive, createIcon),
+                  stack('Friend', '朋友圈', usersIconActive, usersIcon),
+                  stack('Message', '聊天', chatIconActive, chatIcon),
+                  stack('Setting', '設置', settingIconActive, settingIcon),
+                ],
+              },
             },
           },
         },
-      }
-    });
-  });
+      });
+    }
+  );
 };
 
 export default rootNavigator;

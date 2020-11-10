@@ -1,4 +1,3 @@
-import React from 'react';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import { Navigation } from 'react-native-navigation';
 import MainScreen from '~/screens/MainScreen';
@@ -10,6 +9,7 @@ import SearchScreen from '~/screens/SearchScreen';
 import ChatScreen from '~/screens/ChatScreen';
 import RegisterScreen from '~/screens/RegisterScreen';
 import NicknameScreen from '~/screens/NicknameScreen';
+import CreateActivityScreen from '~/screens/CreateActivityScreen';
 
 import TopBar from '~/components/TopBar';
 
@@ -26,8 +26,10 @@ Screens.set('Chat', ChatScreen);
 Screens.set('SearchFriend', SearchScreen);
 Screens.set('Register', RegisterScreen);
 Screens.set('Nickname', NicknameScreen);
+Screens.set('Create', CreateActivityScreen);
 
 Navigation.registerComponent('TopBar', () => TopBar);
+
 
 Screens.forEach((C, key) => {
   return Navigation.registerComponent(

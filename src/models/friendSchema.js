@@ -8,6 +8,12 @@ const friendSchema = {
       type: 'string',
       primary: true,
     },
+    phone: {
+      type: ['string', 'null'],
+    },
+    gender: {
+      type: ['string', 'null'],
+    },
     avatar: {
       type: 'string',
     },
@@ -28,6 +34,12 @@ const friendSchema = {
       properties: {
         id: {
           type: 'string',
+        },
+        phone: {
+          type: ['string', 'null'],
+        },
+        gender: {
+          type: ['string', 'null'],
         },
         name: {
           type: 'string',

@@ -1,19 +1,19 @@
 import types from '../constants/actionTypes';
 import { take, call, takeLatest, actionChannel } from 'redux-saga/effects';
-import { loginSaga, logoutSaga, registeUserSaga } from './authSagas';
+import { loginSaga, logoutSaga, registerUserSaga } from './authSagas';
 import { initialAppSaga } from './initialAppSaga';
 import { approveInviteFriendSaga, getFriendsSaga, inviteFriendSaga, rejectInviteFriendSaga } from './friendSagas';
 import { addMessageSaga, getMessagesSaga } from './messageSagas';
 import { addMessageByWebsocketSaga } from './messageByWebsocketSagas';
-import { getUserByIdSaga } from './userSagas';
+import { getUserByIdSaga, updateUserSaga } from './userSagas';
 import { approveFriendByWebsocketSaga, inviteFriendByWebsocketSaga, rejectFriendByWebsocketSaga } from './websocketSagas/friendSagas';
 
 export function* watchInitialAppSaga() {
   yield takeLatest(types.INITIAL_APP, initialAppSaga);
 }
 
-export function* watchRegisteUserSaga() {
-  yield takeLatest(types.REGISTER_USER, registeUserSaga);
+export function* watchregisterUserSaga() {
+  yield takeLatest(types.REGISTER_USER, registerUserSaga);
 }
 
 export function* watchLoginSaga() {
@@ -30,6 +30,10 @@ export function* watchGetMessagesSaga() {
 
 export function* watchGetUserByIdSaga() {
   yield takeLatest(types.GET_USER_BY_ID, getUserByIdSaga);
+}
+
+export function* watchUpdateUserSaga() {
+  yield takeLatest(types.INIT_USERNAME, updateUserSaga);
 }
 
 export function* watchInviteFriendSaga() {

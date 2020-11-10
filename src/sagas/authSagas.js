@@ -1,19 +1,19 @@
 import { put, call, select } from 'redux-saga/effects';
 import isEmpty from 'lodash/isEmpty';
 import types from '~/constants/actionTypes';
-import { loginResult, registeUserResult } from '~/apis/api';
+import { loginResult, registerUserResult } from '~/apis/api';
 import { saveLoginUser, removeLoginUser } from '~/helper/authHelpers';
 import socketClusterHelper from '~/helper/socketClusterHelpers';
 import rootNavigator from '~/navigation/rootNavigator';
 import noAuthNavigator from '~/navigation/noAuthNavigator';
 import { destoryDatabase, initialCollections } from '~/models';
 
-const okRegiste = (payload) => ({
+const okRegister = (payload) => ({
   type: types.REGISTER_USER_SUCCESS,
   payload,
 });
 
-const errRegiste = ({ message, status }) => {
+const errRegister = ({ message, status }) => {
   return {
     type: types.REGISTER_USER_ERROR,
     payload: {
@@ -22,17 +22,25 @@ const errRegiste = ({ message, status }) => {
   };
 };
 
-export function* registeUserSaga({ payload: {pop, ...payload} }) {
+export function* registerUserSaga({ payload }) {
+  const { push, ...submitPayload } = payload;
   try {
-    const {result} = yield call(registeUserResult, payload);
-    pop();
-    alert('註冊完成');
+    const {result} = yield call(registerUserResult, submitPayload);
 
+    if(isEmpty(result.data.id)) return yield put(errRegister({ message: '註冊失敗'}));
+    yield put(okRegister());
 
-    yield put(okRegiste());
+    const { account, password } = submitPayload;
+    const { result:userInfo } = yield call(loginResult, { account, password });
+
+    const loginUser = userInfo.data;
+    const socket = socketClusterHelper.initialClient(loginUser.token);
+
+    yield call(saveLoginUser, loginUser);
+    yield put(okLogin({ ...loginUser, socket }));
+    push('Nickname');
   } catch (error) {
-    console.log("function*registeUserSaga -> error", error)
-    const errorAction = errRegiste(error);
+    const errorAction = errRegister(error);
     yield put(errorAction);
   }
 }
@@ -86,6 +94,8 @@ export function* logoutSaga({ payload }) {
     const { setting } = yield select(({ auth, setting }) => ({ auth, setting }));
     const database = setting.get('database');
 
+    noAuthNavigator();
+    
     yield call(socketClusterHelper.close);
     yield call(removeLoginUser);
 
@@ -94,7 +104,6 @@ export function* logoutSaga({ payload }) {
       yield initialCollections(database);
     }
 
-    noAuthNavigator();
     yield put(okLogout());
   } catch (error) {
     const errorAction = errLogout(error);

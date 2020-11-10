@@ -61,9 +61,10 @@ const errLogin = ({ message, status }) => {
 
 export function* loginSaga({ payload }) {
   try {
-    const { result } = yield call(loginResult, payload);
+    const { auth } = yield select(({ auth }) => ({ auth }));
+    const { result } = yield call(loginResult, { ...payload, regId: auth.get('fcmToken') });
     const loginUser = result.data;
-    
+
     const socket = socketClusterHelper.initialClient(loginUser.token);
 
     yield call(saveLoginUser, loginUser);

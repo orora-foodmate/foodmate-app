@@ -3,6 +3,12 @@ import { call, put } from 'redux-saga/effects';
 import { initSQL } from '~/models';
 import { getLoginUser, validateIsFirstLaunch } from '~/helper/authHelpers';
 import socketClusterHelper from '~/helper/socketClusterHelpers';
+import { getFcmToken } from '~/helper/notificationHelper';
+
+async function onAppBootstrap(isFirstLaunch) {
+  const fcmToken = await getFcmToken(isFirstLaunch);
+  return fcmToken;
+}
 
 const okInitial = (payload) => ({
   type: types.INITIAL_APP_SUCCESS,
@@ -19,6 +25,7 @@ export function* initialAppSaga() {
     const isFirstLaunch = yield call(validateIsFirstLaunch);
     const loginUser = yield call(getLoginUser);
     const database = yield call(initSQL, isFirstLaunch);
+    const fcmToken = yield call(onAppBootstrap, isFirstLaunch);
 
     const socket = loginUser.isAuth
       ? socketClusterHelper.initialClient(loginUser.token)
@@ -29,11 +36,12 @@ export function* initialAppSaga() {
       : errInitial();
     yield put({
       type: types.SET_LOGIN_USER,
-      payload: { ...loginUser, socket },
+      payload: { ...loginUser, socket, fcmToken },
     });
 
     yield put(resAction);
   } catch (error) {
+    console.log('function*initialAppSaga -> error', error)
     const errorAction = errInitial(error);
     yield put(errorAction);
   }

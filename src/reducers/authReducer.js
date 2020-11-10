@@ -3,14 +3,17 @@ import {authState} from './initialState';
 
 const loginSuccess = (auth, payload) => auth.merge({...payload, isAuth: true});
 
-const logoutSuccess = () => authState;
+const logoutSuccess = (auth) => {
+  const fcmToken = auth.get('fcmToken');
+  return authState.merge({ fcmToken });
+}  
 
 export default function reducer(auth = authState, {type, payload}) {
   switch (type) {
     case types.SET_LOGIN_USER:
       return auth.merge(payload);
     case types.LOGOUT_SUCCESS:
-      return logoutSuccess();
+      return logoutSuccess(auth);
     case types.LOGIN_SUCCESS:
     case types.INIT_USERNAME_SUCCESS:
       return loginSuccess(auth, payload);

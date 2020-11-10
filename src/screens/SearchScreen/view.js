@@ -18,6 +18,7 @@ const EmptyView = () => (
 const ValidateButton = ({ authUserId, user, handleInviteFriend, handleRejectInviteFriend, handleApproveInviteFriend }) => {
   const status = user.get('status');
   const userId = user.get('id');
+  const creatorId = user.getIn(['friendCreator', 'id']);
   const friendId = user.get('friendId');
 
   if (authUserId === userId) {
@@ -33,7 +34,9 @@ const ValidateButton = ({ authUserId, user, handleInviteFriend, handleRejectInvi
     );
   }
   if (status === 1) {
-    return authUserId === user.get('friendCreatorId')
+    console.log('ValidateButton -> authUserId', authUserId)
+    console.log('ValidateButton -> creatorId', creatorId)
+    return authUserId === creatorId
       ? (
         <Fragment>
           <Text>等待對方審核</Text>
@@ -51,6 +54,7 @@ const ValidateButton = ({ authUserId, user, handleInviteFriend, handleRejectInvi
 }
 
 const Content = ({ authUserId, user, handleInviteFriend, handleRejectInviteFriend, handleApproveInviteFriend }) => {
+  console.log('Content -> user.toJS()', user.toJS())
   return (
     <Card containerStyle={{ borderWidth: 0 }}>
       <Card.Image wrapperStyle={{ borderWidth: 0 }} source={{ uri: user.get('avatar') }} />
@@ -68,7 +72,7 @@ const Content = ({ authUserId, user, handleInviteFriend, handleRejectInviteFrien
 
 
 const SearchScreen = ({ componentId, authUserId, user, handleGetUserById, handleInviteFriend, handleRejectInviteFriend, handleApproveInviteFriend }) => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState('5f73038aa3858fb19533f113');
   const [showModal, setShowModal] = useState(false);
 
   useNavigationButtonPress((e) => {

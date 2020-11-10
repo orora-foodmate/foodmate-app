@@ -1,0 +1,5 @@
+export IOS_SCHEMA=""""
+export IOS_WORK_SPACE=""
+export APPLE_ACCOUNT=""
+export APP_IDENTITY=""
+export IPA_PATH=""

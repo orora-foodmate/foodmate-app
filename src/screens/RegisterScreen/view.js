@@ -49,11 +49,11 @@ const RegisterScreen = ({handleRegisterUser}) => {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const payload = {
-    account,
-    name,
+    account, 
     password,
     confirmPassword,
     push,
+    name: account,
   };
 
   return (
@@ -83,7 +83,7 @@ const RegisterScreen = ({handleRegisterUser}) => {
         />
         <TextInputField
           name='confirmPassword'
-          placeholder='請再次出入密碼'
+          placeholder='請再次輸入密碼'
           value={confirmPassword}
           containerStyle={{width: 230}}
           leftIcon={<InputImage icon={inputLock} />}

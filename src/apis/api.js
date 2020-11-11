@@ -3,6 +3,7 @@ import {
   fetchWithoutToken,
   fetchGetWithToken,
   fetchPostWithToken,
+  fetchPatchWithToken,
 } from './libs/fetch';
 
 export const getRoomsResult = (customHeaders, payload) =>
@@ -31,9 +32,9 @@ export const approveInviteFriendResult = (customHeaders, { friendId }) =>
 
 export const registerUserResult = (payload) =>
   fetchWithoutToken(getUrl('users'), 'POST', payload);
-  
-export const updateUserResult = payload =>
-  fetchWithoutToken(getUrl('users'), 'PATCH', payload);
+
+export const updateUserResult = (customHeaders, payload) =>
+  fetchPatchWithToken(getUrl('users'), customHeaders, payload);
 
 
 export const loginResult = async (payload) => {

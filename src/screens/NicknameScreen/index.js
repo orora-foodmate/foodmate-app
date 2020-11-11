@@ -3,7 +3,7 @@ import NickNameScreen from './view';
 import { updateUserAction } from '~/actions/authActions';
 
 const mapStateToProps = ({ auth }) => ({
-  userId: auth.get('_id')
+  userId: auth.get('id')
 });
 
 const mapDispatchToProps = dispatch => ({

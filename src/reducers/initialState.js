@@ -7,7 +7,7 @@ export const authState = fromJS({
   account: '',
   avatar: '',
   token: '',
-  _id: '',
+  id: '',
   name: '',
 });
 

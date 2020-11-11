@@ -58,6 +58,18 @@ export const fetchPostWithToken = async (url, customHeaders, payload = {}, qs = 
   }).then(parseResponse);
 }
 
+export const fetchPatchWithToken = async (url, customHeaders, payload = {}, qs = {}) => {
+  const realUrl = isEmpty(payload) ? url : `${url}?${QS.stringify(qs)}`;
+  return fetch(realUrl, {
+    method: 'PATCH',
+    headers: {
+      ...customHeaders,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload)
+  }).then(parseResponse);
+}
+
 export const fetchWithToken = async (
   url,
   method,

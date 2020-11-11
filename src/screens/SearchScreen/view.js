@@ -4,6 +4,7 @@ import { View, Modal, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigationButtonPress } from 'react-native-navigation-hooks';
 import { SearchBar, Card, Icon } from 'react-native-elements';
 import Button from '~/components/Button';
+import colors from '~/theme/color';
 import Text from '~/components/Text';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
@@ -129,7 +130,7 @@ SearchScreen.options = {
       {
         id: TOP_BAR_RIGHT_BUTTON_ID,
         icon: require('assets/icons/search.png'),
-        color: 'white',
+        color: colors.grey,
       },
     ],
   },

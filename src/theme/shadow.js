@@ -3,18 +3,18 @@ import color from './color';
 const shadow = {
   black: {
     elevation: 3,
-    shadowRadius: 8,
+    shadowRadius: 3,
+    shadowOpacity: 0.5,
     shadowColor: color.black,
     shadowOffset: {
-      width: 3,
-      height: 3,
+      width: 0,
+      height: 1,
     },
-    shadowOpacity: 0.09,
   },
   grey: {
     elevation: 5,
-    shadowRadius: 8,
-    shadowOpacity: 0.15,
+    shadowRadius: 5,
+    shadowOpacity: 0.3,
     shadowOffset: { width: 1, height: 2 },
     shadowColor: color.secondary,
   },

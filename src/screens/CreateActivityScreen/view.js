@@ -4,6 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import envConfig from '~/constants/envConfig';
 import Button from '~/components/Button';
 import ImagePicker from 'react-native-image-picker';
+import TextInputField from '~/components/Inputs/TextInputField';
 
 const {width} = Dimensions.get('window');
 
@@ -58,8 +59,7 @@ const CreateActivityScreen = props => {
           placeholder='请输入用户名'
           value=''
           containerStyle={{ width: 230 }}
-          leftIcon={<InputImage icon={inputDonut} />}
-          onChangeText={onChange(setAccount)}
+          onChangeText={() => false}
         />
       <Text> CreateActivityScreen </Text>
     </View>

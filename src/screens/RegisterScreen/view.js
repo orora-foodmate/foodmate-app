@@ -45,12 +45,15 @@ const RegisterScreen = ({handleRegisterUser}) => {
   const {pop, push} = useNavigation();
   const [account, setAccount] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const payload = {
     account, 
     password,
+    email,
+    phone,
     confirmPassword,
     push,
     name: account,
@@ -96,6 +99,14 @@ const RegisterScreen = ({handleRegisterUser}) => {
           containerStyle={{width: 230}}
           leftIcon={<InputImage icon={inputLetter} />}
           onChangeText={onChange(setEmail)}
+        />
+        <TextInputField
+          name='phone'
+          value={phone}
+          placeholder='請輸入 電話號碼'
+          containerStyle={{width: 230}}
+          leftIcon={<InputImage icon={inputLetter} />}
+          onChangeText={onChange(setPhone)}
         />
       </View>
       <View style={styles.buttonZone}>

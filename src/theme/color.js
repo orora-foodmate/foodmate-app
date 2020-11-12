@@ -18,7 +18,7 @@ const colors = {
   greyLighter: '#cacaca',
   greyLightest: '#f0f0f0',
   success: '#2ec039',
-  error: '#ff1919',
+  error: '#ffbaba',
   warning: '#faad14',
   transparent: 'transparent',
   disabled: GREY_LIGHT,

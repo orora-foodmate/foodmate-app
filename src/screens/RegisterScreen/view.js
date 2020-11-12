@@ -104,9 +104,11 @@ const RegisterScreen = ({handleRegisterUser}) => {
           onChangeText={onChange(setAccount)}
         />
         <TextInputField
+          secureTextEntry
           name='password'
           placeholder='請輸入密碼(英數組合)'
           value={password}
+          autoCompleteType='off'
           containerStyle={{width: 230}}
           errorMessage={errors.password}
           leftIcon={
@@ -120,9 +122,11 @@ const RegisterScreen = ({handleRegisterUser}) => {
           onChangeText={onChange(setPassword)}
         />
         <TextInputField
+          secureTextEntry
           name='confirmPassword'
           placeholder='請再次輸入密碼'
           value={confirmPassword}
+          autoCompleteType='off'
           containerStyle={{width: 230}}
           errorMessage={errors.confirmPassword}
           leftIcon={

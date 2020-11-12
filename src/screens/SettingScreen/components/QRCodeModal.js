@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    height: 340
   },
   logo: {
     position: 'absolute',

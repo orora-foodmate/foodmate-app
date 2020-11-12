@@ -129,7 +129,7 @@ SearchScreen.options = {
     rightButtons: [
       {
         id: TOP_BAR_RIGHT_BUTTON_ID,
-        icon: require('assets/icons/search.png'),
+        icon: require('assets/icons/scan.png'),
         color: colors.grey,
       },
     ],

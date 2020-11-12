@@ -20,6 +20,7 @@ const colors = {
   success: '#2ec039',
   error: '#ffbaba',
   warning: '#faad14',
+  donut: '#ffc17a',
   transparent: 'transparent',
   disabled: GREY_LIGHT,
 };

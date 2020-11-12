@@ -9,6 +9,7 @@ import SearchScreen from '~/screens/SearchScreen';
 import ChatScreen from '~/screens/ChatScreen';
 import RegisterScreen from '~/screens/RegisterScreen';
 import NicknameScreen from '~/screens/NicknameScreen';
+import EditProfileScreen from '~/screens/EditProfileScreen';
 import CreateActivityScreen from '~/screens/CreateActivityScreen';
 
 import TopBar from '~/components/TopBar';
@@ -26,6 +27,7 @@ Screens.set('Chat', ChatScreen);
 Screens.set('SearchFriend', SearchScreen);
 Screens.set('Register', RegisterScreen);
 Screens.set('Nickname', NicknameScreen);
+Screens.set('EditProfile', EditProfileScreen);
 Screens.set('Create', CreateActivityScreen);
 
 Navigation.registerComponent('TopBar', () => TopBar);

@@ -26,20 +26,17 @@ export function* registerUserSaga({payload}) {
   const {push, confirmPassword, ...submitPayload} = payload;
   try {
     const auth = yield select(({auth}) => auth);
-    const {result} = yield call(registerUserResult, submitPayload);
-    
-    if (isEmpty(result.data.id))
-      return yield put(errRegister({message: '註冊失敗'}));
-    yield put(okRegister());
-
-    const {account, password} = submitPayload;
-    const {result: userInfo} = yield call(loginResult, {
-      account,
-      password,
+    const { result } = yield call(registerUserResult, {
+      ...submitPayload,
       regId: auth.get('fcmToken'),
     });
 
-    const loginUser = userInfo.data;
+    if (isEmpty(result.data.id))
+      return yield put(errRegister({message: '註冊失敗'}));
+
+    yield put(okRegister());
+
+    const loginUser = result.data;
     const socket = socketClusterHelper.initialClient(loginUser.token);
 
     yield call(saveLoginUser, loginUser);

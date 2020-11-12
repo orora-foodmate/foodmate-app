@@ -19,6 +19,9 @@ import profileInactiveTab from './tab-profile-inactive.png';
 import inputDonut from './input-placeholder-donut.png';
 import inputLetter from './input-placeholder-letter.png';
 import inputLock from './input-placeholder-lock.png';
+import inputDonutError from './input-placeholder-donut-error.png';
+import inputLetterError from './input-placeholder-letter-error.png';
+import inputLockError from './input-placeholder-lock-error.png';
 import inputBriefcase from './icon-briefcase.png';
 
 import star from './icon-star-active.png';
@@ -34,6 +37,9 @@ export {
   scan,
   search,
   back,
+  inputLockError,
+  inputDonutError,
+  inputLetterError,
   activitiesTab,
   activitiesInactiveTab,
   chatTab,

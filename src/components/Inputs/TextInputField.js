@@ -1,13 +1,10 @@
 import React from 'react';
+import theme from '~/theme';
 import propTypes from 'prop-types';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import isEmpty from 'lodash/isEmpty';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { StyleSheet } from 'react-native';
 import { Input, Image } from 'react-native-elements';
-// import InputImage from '~/components/Inputs/InputImage';
-import theme from '~/theme';
-// import {inputDonut} from '~/assets/icons/index';
-import inputDonut from '~/assets/icons/input-placeholder-donut.png';
 
 const TextInputField = ({
   placeholder,
@@ -59,13 +56,13 @@ const getStyles = (theme, props) => {
       display: 'flex',
       alignItems: 'flex-start',
       flexDirection: 'column',
-      height: 60,
+      height: props.errorMessage ? 70: 60,
       paddingTop: theme.spacing.small,
       paddingLeft: 0,
       paddingRight: 0,
     },
     inputContainer: {
-      borderBottomWidth: 1,
+      borderBottomWidth: 2,
       borderColor: props.errorMessage
         ? theme.colors.error
         : theme.colors.greyLightest,
@@ -83,7 +80,9 @@ const getStyles = (theme, props) => {
       paddingRight: theme.spacing.small,
     },
     errorStyle: {
-      fontSize: theme.Text.h6Style.fontSize,
+      fontSize: theme.Text.h5Style.fontSize,
+      fontWeight: 'bold',
+      color: theme.colors.error,
     },
     disabledInputStyle: {
       color: theme.colors.disabled,

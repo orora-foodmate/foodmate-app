@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import * as yup from 'yup';
+import isEmpty from 'lodash/isEmpty';
 import {View, Image, StyleSheet} from 'react-native';
 import {useNavigation} from 'react-native-navigation-hooks/dist';
 import Button from '~/components/Button';
@@ -7,21 +8,25 @@ import logo from '~/assets/images/logo_register.png';
 import InputImage from '~/components/Inputs/InputImage';
 import bottomLogo from '~/assets/images/actor-register-donut.png';
 import TextInputField from '~/components/Inputs/TextInputField';
-import {inputDonut, inputLock, inputLetter} from '~/assets/icons';
+import {handleYupSchema, handleYupErrors} from '~/utils/yupHelper';
+import {accountSchema, passwordSchema} from '~/constants/yupSchemas';
+import {
+  inputDonut,
+  inputDonutError,
+  inputLock,
+  inputLockError,
+  inputLetter,
+  inputLetterError,
+} from '~/assets/icons';
 
 const schema = yup.object().shape({
-  name: yup.string().required(),
-  account: yup
-    .string()
-    .required()
-    .matches(/\A[a-zA-Z0-9](\w){7,29}\z/),
-  password: yup
-    .string()
-    .required()
-    .matches(/\A[a-zA-Z0-9](\w){7,29}\z/),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref('password')], 'Passwords must match'),
+  account: accountSchema('請輸入用戶名'),
+  password: passwordSchema,
+  confirmPassword: passwordSchema.oneOf(
+    [yup.ref('password')],
+    '輸入的密碼不一致'
+  ),
+  email: yup.string().email('錯誤的電子信箱格式').required('請輸入電子信箱'),
 });
 
 const onChange = (setter) => (value) => {
@@ -29,32 +34,49 @@ const onChange = (setter) => (value) => {
   setter(noSpaceValue);
 };
 
-const submit = async (payload, handleRegisterUser) => {
+const validateData = async (payload, setErrors) => {
   try {
-    const submitPayload = { ...payload, name: payload.account };
-    const isValid = schema.isValid(submitPayload);
-    if (isValid) {
-      handleRegisterUser(submitPayload);
-    }
+    await handleYupSchema(schema, payload);
+
+    setErrors({});
+    return true;
   } catch (error) {
-    console.log('submit -> error', error);
+    const errors = handleYupErrors(error);
+    setErrors(errors);
+    return false;
   }
+};
+
+const submit = async (payload, setErrors, handleRegisterUser) => {
+  const submitPayload = {...payload, name: payload.account};
+  if (await validateData(submitPayload, setErrors)) {
+    handleRegisterUser(submitPayload);
+  }
+};
+
+
+const handleOnBlur = ( errors, editPayload, setErrors ) => async () => {
+  if (!isEmpty(errors)) await validateData(editPayload, setErrors);
 };
 
 const RegisterScreen = ({handleRegisterUser}) => {
   const {pop, push} = useNavigation();
+  const [errors, setErrors] = useState({});
   const [account, setAccount] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  
   const payload = {
-    account, 
+    email,
+    account,
     password,
     confirmPassword,
     push,
-    name: account,
   };
+
+  const onBlur = handleOnBlur(errors, payload, setErrors);
 
   return (
     <View style={styles.container}>
@@ -67,26 +89,54 @@ const RegisterScreen = ({handleRegisterUser}) => {
       <View style={styles.form}>
         <TextInputField
           name='account'
-          placeholder='请输入用户名'
+          placeholder='请输入用户名(英數組合)'
           value={account}
           containerStyle={{width: 230}}
-          leftIcon={<InputImage icon={inputDonut} />}
+          errorMessage={errors.account}
+          leftIcon={
+            <InputImage
+              icon={inputDonut}
+              errorIcon={inputDonutError}
+              isError={!isEmpty(errors.account)}
+            />
+          }
+          onBlur={onBlur}
           onChangeText={onChange(setAccount)}
         />
         <TextInputField
+          secureTextEntry
           name='password'
-          placeholder='請輸入密碼'
+          placeholder='請輸入密碼(英數組合)'
           value={password}
+          autoCompleteType='off'
           containerStyle={{width: 230}}
-          leftIcon={<InputImage icon={inputLock} />}
+          errorMessage={errors.password}
+          leftIcon={
+            <InputImage
+              icon={inputLock}
+              errorIcon={inputLockError}
+              isError={!isEmpty(errors.password)}
+            />
+          }
+          onBlur={onBlur}
           onChangeText={onChange(setPassword)}
         />
         <TextInputField
+          secureTextEntry
           name='confirmPassword'
           placeholder='請再次輸入密碼'
           value={confirmPassword}
+          autoCompleteType='off'
           containerStyle={{width: 230}}
-          leftIcon={<InputImage icon={inputLock} />}
+          errorMessage={errors.confirmPassword}
+          leftIcon={
+            <InputImage
+              icon={inputLock}
+              errorIcon={inputLockError}
+              isError={!isEmpty(errors.confirmPassword)}
+            />
+          }
+          onBlur={onBlur}
           onChangeText={onChange(setConfirmPassword)}
         />
         <TextInputField
@@ -94,14 +144,22 @@ const RegisterScreen = ({handleRegisterUser}) => {
           value={email}
           placeholder='請輸入 Email'
           containerStyle={{width: 230}}
-          leftIcon={<InputImage icon={inputLetter} />}
+          errorMessage={errors.email}
+          leftIcon={
+            <InputImage
+              icon={inputLetter}
+              errorIcon={inputLetterError}
+              isError={!isEmpty(errors.email)}
+            />
+          }
+          onBlur={onBlur}
           onChangeText={onChange(setEmail)}
         />
       </View>
       <View style={styles.buttonZone}>
         <Button
           title='開始交新朋友吧！'
-          onPress={() => submit(payload, handleRegisterUser)}
+          onPress={() => submit(payload, setErrors, handleRegisterUser)}
         />
         <Button title='返回' type='outline' onPress={pop} />
       </View>

@@ -8,6 +8,7 @@ import {
 import { useFriends } from '~/models';
 import BasicSubscribe from './components/BasicSubscribe';
 import RowItem from './components/RowIem';
+import colors from '~/theme/color';
 
 const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
 
@@ -62,7 +63,7 @@ FriendScreen.options = {
       {
         id: TOP_BAR_RIGHT_BUTTON_ID,
         icon: require('assets/icons/search.png'),
-        color: 'white',
+        color: colors.grey,
       },
     ],
   },

@@ -3,12 +3,11 @@ import {Navigation} from 'react-native-navigation';
 import {
   Image,
   StyleSheet,
-  TouchableOpacity,
   SafeAreaView,
-  ActivityIndicator,
 } from 'react-native';
 import noAuthNavigator from '~/navigation/noAuthNavigator';
 import rootNavigator from '~/navigation/rootNavigator';
+import colors from '~/theme/color';
 import Text from '~/components/Text';
 import Donut from '~/assets/images/actor-dounut.png';
 
@@ -34,9 +33,6 @@ const MainScreen = ({isAuth, isInitialed, handleInitialApp}) => {
 export default MainScreen;
 
 Navigation.setDefaultOptions({
-  statusBar: {
-    // backgroundColor: '#4d089a'
-  },
   icon: {width: 50, height: 50, resizeMode: 'contain', marginBottom: 10},
   typography: {color: '#222', fontWeight: 'bold'},
   topBar: {
@@ -48,10 +44,7 @@ Navigation.setDefaultOptions({
       },
     },
     backButton: {
-      color: 'white',
-    },
-    background: {
-      // color: '#4d089a',
+      color: colors.grey,
     },
   },
   bottomTab: {

@@ -50,15 +50,46 @@ const handleUploadImage = (setUploadedImage) => {
   )
 }
 const CreateActivityScreen = props => {
+  const [type, setType] = useState(1);
+  const [paymentMethod, setPaymentMethod] = useState(1);
+  const [budget, setBudget] = useState('100');
   const [uploadedImage, setUploadedImage] = useState({url: "https://i.imgur.com/oJChFO4.jpg"});
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState('test title');
+  const [userCountMax, setUserCountMax] = useState('10');
+  const [description, setDescription] = useState('test');
+  const [meetingGeoJson, setMeetingGeoJson] = useState({
+    "type": "Point",
+    "coordinates": [
+      121.35355353355406,
+      25.046982934609268
+    ]
+  });
   const [datingAt, setDatingAt] = useState(new Date());
   const [finalReviewAt, setFinalReviewAt] = useState(new Date());
   console.log('uploadedImage', uploadedImage)
 
+  const payload = {
+    logo: uploadedImage.url,
+    publicationPlace: "台北",
+    type,
+    paymentMethod,
+    budget,
+    title,
+    datingAt,
+    finalReviewAt,
+    userCountMax,
+    description,
+    meetingGeoJson
+  };
+
+  const handleCreateEvent = () => {
+    console.log("handleCreateEvent -> handleCreateEvent")
+    props.handleCreateEvent(payload);
+  };
+
   return (
     <View>
-      <Button title='bbb' onPress={() => handleUploadImage(setUploadedImage)} />
+      <Button title='編輯活動照' onPress={() => handleUploadImage(setUploadedImage)} />
       {!isEmpty(uploadedImage) && <Image source={{ uri: uploadedImage.url }} style={{ width, height: 150 }} />}
       <TextInputField
         placeholder='活動名稱'
@@ -70,31 +101,30 @@ const CreateActivityScreen = props => {
       <DatetimeModal title='審核截止日期' onConfirm={(date) => setFinalReviewAt(date)} defaultDate={finalReviewAt} />
       <TextInputField
         placeholder='參與人數'
-        value=''
+        value={userCountMax}
         containerStyle={{ width: 230 }}
-        onChangeText={() => false}
+        onChangeText={(text) => setUserCountMax(text)}
       />
       <TextInputField
-        placeholder='每日預算'
-        value=''
+        placeholder='消費預算'
+        value={budget}
         containerStyle={{ width: 230 }}
-        onChangeText={() => false}
+        onChangeText={(text) => setBudget(text)}
       />
       <RNPickerSelect
         placeholder='活動類型'
-        value={0}
-        onValueChange={(value) => console.log(value)}
+        value={type}
+        onValueChange={(value) => setType(value)}
         items={[
           { label: '休閒', value: 0 },
           { label: '活動', value: 1 },
           { label: '商業', value: 2 },
-
         ]}
       />
       <RNPickerSelect
-        placeholder='活動類型'
-        value={0}
-        onValueChange={(value) => console.log(value)}
+        placeholder='費用分攤'
+        value={paymentMethod}
+        onValueChange={(value) => setPaymentMethod(value)}
         items={[
           { label: '各付各的', value: 0 },
           { label: '平均分攤', value: 1 },
@@ -106,11 +136,11 @@ const CreateActivityScreen = props => {
         multiline
         numberOfLines={4}
         placeholder='簡介'
-        value=''
+        value={description}
         containerStyle={{ width: 230 }}
-        onChangeText={() => false}
+        onChangeText={(text) => setDescription(text)}
       />
-      <Button title='確認' />      
+      <Button title='確認' onPress={handleCreateEvent} />      
     </View>
   )
 }

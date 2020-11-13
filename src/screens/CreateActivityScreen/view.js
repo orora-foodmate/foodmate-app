@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
-import { View, Image, Dimensions, Modal, ScrollView } from 'react-native';
+import { Image, Dimensions, Modal, ScrollView } from 'react-native';
 import isEmpty from 'lodash/isEmpty';
-import pick from 'lodash/pick';
 import envConfig from '~/constants/envConfig';
 import Button from '~/components/Button';
 import ImagePicker from 'react-native-image-picker';
 import TextInputField from '~/components/Inputs/TextInputField';
 import RNPickerSelect from 'react-native-picker-select';
 import DatetimeModal from './components/DatetimeModal';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { Header, Input, Icon, ListItem } from 'react-native-elements';
 import PickPlaceModal from './components/PickPlaceModal';
 
 const { width } = Dimensions.get('window');
@@ -61,7 +58,31 @@ const CreateActivityScreen = props => {
   const [title, setTitle] = useState('test title');
   const [userCountMax, setUserCountMax] = useState('10');
   const [description, setDescription] = useState('test');
-  const [place, setPlace] = useState();
+  const [place, setPlace] = useState({
+    "description": "台灣台北市中山區中山北路三段這一鍋 台北中山北殿",
+    "place_id": "ChIJffB_qUWpQjQR1JJOXUMkqOw",
+    "structured_formatting": {
+      "main_text": "這一鍋 台北中山北殿",
+      "secondary_text": "台灣台北市中山區中山北路三段"
+    },
+    "terms": [{
+      "offset": 14,
+      "value": "這一鍋 台北中山北殿"
+    }, {
+      "offset": 8,
+      "value": "中山北路三段"
+    }, {
+      "offset": 5,
+      "value": "中山區"
+    }, {
+      "offset": 2,
+      "value": "台北市"
+    }, {
+      "offset": 0,
+      "value": "台灣"
+    }],
+    "types": ["restaurant", "food", "point_of_interest", "establishment"]
+  });
   const [datingAt, setDatingAt] = useState(new Date());
   const [finalReviewAt, setFinalReviewAt] = useState(new Date());
 

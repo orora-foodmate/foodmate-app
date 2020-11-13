@@ -4,7 +4,7 @@ import { updateUserAction } from '~/actions/authActions';
 import { createEventAction } from '~/actions/eventActions';
 
 const mapStateToProps = ({ auth }) => ({
-  userId: auth.get('_id')
+  userId: auth.get('id')
 });
 
 const mapDispatchToProps = dispatch => ({

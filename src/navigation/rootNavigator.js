@@ -59,7 +59,7 @@ const rootNavigator = () => {
                   stack('Create', '建立活動', createIconActive, createIcon),
                   stack('Friend', '朋友圈', usersIconActive, usersIcon),
                   stack('Message', '聊天', chatIconActive, chatIcon),
-                  stack('Setting', '設置', settingIconActive, settingIcon),
+                  stack('Profile', '設置', settingIconActive, settingIcon),
                 ],
               },
             },

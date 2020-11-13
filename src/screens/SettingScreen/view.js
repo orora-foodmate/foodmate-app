@@ -1,154 +1,47 @@
-import React, {Fragment, useState} from 'react';
+import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import Button from '~/components/Button';
-import {useNavigation} from 'react-native-navigation-hooks/dist';
-import {useNavigationButtonPress} from 'react-native-navigation-hooks';
-import {Avatar, Button as NativeButton} from 'react-native-elements';
-import colors from '../../theme/color';
-import shadow from '../../theme/shadow';
 import Text from '~/components/Text';
-import QRCodeModal from './components/QRCodeModal';
+import Button from '~/components/Button';
+import colors from '~/theme/color';
+import Subtitle from '~/components/Subtitle';
+import Description from '~/components/Description';
 
-const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
-
-const goto = (push) => (path) => () => {
-  push(path);
-};
-
-const SettingScreen = ({componentId, auth, handleLogout}) => {
-  const {push} = useNavigation();
-  const [showModal, setShowModal] = useState(false);
-  const onGoToPath = goto(push);
-
-  useNavigationButtonPress((e) => {
-    if (
-      componentId === e.componentId &&
-      e.buttonId === TOP_BAR_RIGHT_BUTTON_ID
-    ) {
-      setShowModal(true);
-    }
-  });
-
+const SettingScreen = ({handleLogout}) => {
   return (
-    <Fragment>
-      <QRCodeModal
-        value={auth.get('id')}
-        isVisible={showModal}
-        username={auth.get('name')}
-        onClose={() => setShowModal(false)}
-      />
-      <View style={styles.infoBox}>
-        <Avatar
-          rounded
-          style={styles.avatar}
-          source={{uri: auth.get('avatar')}}
-        />
-        <View>
-          <Text style={styles.nickname}>{auth.get('name')}</Text>
-          <Text h4>初級食伴</Text>
-        </View>
+    <View style={styles.from}>
+      <View style={styles.title}>
+        <Text h2>設定</Text>
       </View>
-      <View style={styles.introZone}>
-        <Text h5>介紹一下自己吧！</Text>
-      </View>
-      <View style={styles.settingsZone}>
-        <NativeButton
-          title='編輯個人資料'
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonTitle}
-          containerStyle={styles.buttonContainer}
-          onPress={onGoToPath('EditProfile')}
-        />
-        <NativeButton
-          title='設定'
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonTitle}
-          containerStyle={styles.buttonContainer}
-        />
-      </View>
-      <View style={styles.qrcodePanel}></View>
+      <Subtitle title='帳號登出' />
       <View style={styles.buttonZone}>
         <Button title='帳號登出' onPress={handleLogout} />
       </View>
-    </Fragment>
+      <Subtitle title='帳號刪除' />
+      <Description content='刪除帳號後我們將不會保留您的任何個人資料，此動作無法回復，刪除前請仔細思考．' />
+      <View style={styles.buttonZone}>
+        <Button title='帳號刪除' buttonStyle={styles.deleteButton} />
+      </View>
+    </View>
   );
 };
 
-SettingScreen.options = {
-  topBar: {
-    rightButtons: [
-      {
-        id: TOP_BAR_RIGHT_BUTTON_ID,
-        icon: require('assets/icons/qrcode.png'),
-        color: colors.grey,
-      },
-    ],
-  },
-};
-
 const styles = StyleSheet.create({
-  infoBox: {
-    paddingTop: 20,
-    paddingLeft: 30,
-    paddingRight: 30,
-    paddingBottom: 20,
+  form: {
     display: 'flex',
-    flexDirection: 'row',
-    borderColor: colors.greyLightest,
-  },
-  buttonContainer: {
-    margin: 5,
     flex: 1,
   },
-  button: {
-    borderWidth: 1.5,
-    height: 30,
-    borderRadius: 5,
-    borderColor: '#ddd',
-    backgroundColor: '#fff',
-  },
-  introZone: {
-    paddingTop: 20,
-    paddingLeft: 30,
-    paddingRight: 30,
-    paddingBottom: 10,
-  },
-  settingsZone: {
-    marginLeft: 20,
-    marginRight: 20,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  avatar: {
-    width: 80,
-    height: 80,
-    borderWidth: 5,
-    marginRight: 15,
-    borderRadius: 80,
-    borderColor: '#fff',
-    backgroundColor: '#fff',
-    ...shadow.black,
-  },
-  buttonTitle: {
-    fontSize: 12,
-    lineHeight: 10,
-    color: colors.grey,
-  },
-  qrcodePanel: {
-    padding: 30,
-    alignItems: 'center',
-  },
   buttonZone: {
-    padding: 30,
+    padding: 20,
     alignItems: 'center',
   },
   title: {
-    paddingLeft: 20,
+    padding: 30,
   },
-  nickname: {
-    fontSize: 36,
-    color: colors.grey,
+  subtitleText: {
+    paddingBottom: 20,
+  },
+  deleteButton: {
+    backgroundColor: colors.error,
   },
 });
 

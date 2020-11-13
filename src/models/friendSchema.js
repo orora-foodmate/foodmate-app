@@ -12,7 +12,7 @@ const friendSchema = {
       type: ['string', 'null'],
     },
     gender: {
-      type: ['string', 'null'],
+      type: ['number', 'null'],
     },
     avatar: {
       type: 'string',
@@ -39,7 +39,7 @@ const friendSchema = {
           type: ['string', 'null'],
         },
         gender: {
-          type: ['string', 'null'],
+          type: ['number', 'null'],
         },
         name: {
           type: 'string',

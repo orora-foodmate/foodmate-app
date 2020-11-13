@@ -7,6 +7,7 @@ import { addMessageSaga, getMessagesSaga } from './messageSagas';
 import { addMessageByWebsocketSaga } from './messageByWebsocketSagas';
 import { getUserByIdSaga, updateUserSaga } from './userSagas';
 import { approveFriendByWebsocketSaga, inviteFriendByWebsocketSaga, rejectFriendByWebsocketSaga } from './websocketSagas/friendSagas';
+import { createEventSaga } from './eventSagas';
 
 export function* watchInitialAppSaga() {
   yield takeLatest(types.INITIAL_APP, initialAppSaga);
@@ -22,6 +23,10 @@ export function* watchLoginSaga() {
 
 export function* watchLogoutSaga() {
   yield takeLatest(types.LOGOUT, logoutSaga);
+}
+
+export function* watchCreateEventSaga() {
+  yield takeLatest(types.CREATE_EVENT, createEventSaga);
 }
 
 export function* watchGetMessagesSaga() {

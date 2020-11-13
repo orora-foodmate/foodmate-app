@@ -101,32 +101,28 @@ const errInvite = ({message}) => {
 
 export function* inviteFriendSaga({payload}) {
   try {
-    console.log(1);
     const {auth, setting} = yield select(({auth, setting}) => ({
       auth,
       setting,
     }));
-    console.log(2);
     const token = auth.get('token');
     const database = setting.get('database');
-    console.log(3);
+
     if (isEmpty(token) || isEmpty(database)) {
       yield put(okInvite());
       return;
     }
-    console.log(4);
+
     const customHeaders = {
       Authorization: `Bearer ${auth.get('token')}`,
     };
-    console.log(5);
     const {result} = yield call(inviteFriendResult, customHeaders, payload);
-    console.log('function*inviteFriendSaga -> result.data', result.data)
+
     const friend = yield database.friends
       .findOne()
       .where('friendId')
       .eq(payload.friendId)
       .exec();
-    console.log('function*inviteFriendSaga -> friend', friend)
       
     yield database.friends.insert({
       ...result.data,
@@ -136,7 +132,6 @@ export function* inviteFriendSaga({payload}) {
     
     yield put(okInvite());
   } catch (error) {
-    console.log('function*inviteFriendSaga -> error', error)
     const errorAction = errInvite(error);
     yield put(errorAction);
   }

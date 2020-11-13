@@ -21,6 +21,9 @@ export const getUserByIdResult = (customHeaders, { userId }) =>
 export const addMessageResult = (customHeaders, { roomId, ...payload }) =>
   fetchPostWithToken(getUrl(`messages/${roomId}`), customHeaders, payload);
 
+export const createEventResult = (customHeaders, payload) => 
+  fetchPostWithToken(getUrl('events'), customHeaders, payload);
+
 export const inviteFriendResult = (customHeaders, { userId }) =>
   fetchPostWithToken(getUrl(`friends/invite/${userId}`), customHeaders);
 

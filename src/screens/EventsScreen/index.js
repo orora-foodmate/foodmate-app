@@ -8,18 +8,6 @@ const mapStateToProps = ({ auth, search }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleGetUserById: payload => {
-    dispatch(getUserByIdAction(payload));
-  },
-  handleInviteFriend: payload => {
-    dispatch(inviteFriendAction(payload));
-  },
-  handleRejectInviteFriend: payload => {
-    dispatch(rejectInviteFriendAction(payload));
-  },
-  handleApproveInviteFriend: payload => {
-    dispatch(approveInviteFriendAction(payload));
-  },
 });
 
 export default connect(

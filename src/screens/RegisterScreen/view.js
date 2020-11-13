@@ -64,6 +64,7 @@ const RegisterScreen = ({handleRegisterUser}) => {
   const [errors, setErrors] = useState({});
   const [account, setAccount] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -72,6 +73,8 @@ const RegisterScreen = ({handleRegisterUser}) => {
     email,
     account,
     password,
+    email,
+    phone,
     confirmPassword,
     push,
   };
@@ -154,6 +157,14 @@ const RegisterScreen = ({handleRegisterUser}) => {
           }
           onBlur={onBlur}
           onChangeText={onChange(setEmail)}
+        />
+        <TextInputField
+          name='phone'
+          value={phone}
+          placeholder='請輸入 電話號碼'
+          containerStyle={{width: 230}}
+          leftIcon={<InputImage icon={inputLetter} />}
+          onChangeText={onChange(setPhone)}
         />
       </View>
       <View style={styles.buttonZone}>

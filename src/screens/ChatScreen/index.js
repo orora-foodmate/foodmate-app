@@ -7,7 +7,7 @@ const mapStateToProps = ({ auth, setting }) => {
   // const messageQuery = database.messages.find({}).sort( {createAt: -1});
   // console.log("mapStateToProps -> database", database)
   return {
-    userId: auth.get('_id'),
+    userId: auth.get('id'),
     // messageQuery,
   };
 };

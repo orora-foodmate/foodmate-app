@@ -12,7 +12,6 @@ const DEFAULT_SETION_DATA = [
   },
 ];
 
-
 export const useFriendsHook = function (database, query = undefined, options = undefined) {
   const [friends, setFriends] = useState([]);
   useMemo(() => {

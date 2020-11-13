@@ -4,7 +4,7 @@ const shadow = {
   black: {
     elevation: 3,
     shadowRadius: 3,
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.25,
     shadowColor: color.black,
     shadowOffset: {
       width: 0,

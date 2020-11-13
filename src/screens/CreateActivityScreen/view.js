@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { View, Image, Dimensions } from 'react-native';
+import { View, Image, Dimensions, Modal, ScrollView } from 'react-native';
 import isEmpty from 'lodash/isEmpty';
+import pick from 'lodash/pick';
 import envConfig from '~/constants/envConfig';
 import Button from '~/components/Button';
 import ImagePicker from 'react-native-image-picker';
 import TextInputField from '~/components/Inputs/TextInputField';
 import RNPickerSelect from 'react-native-picker-select';
 import DatetimeModal from './components/DatetimeModal';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { Header, Input, Icon, ListItem } from 'react-native-elements';
+import PickPlaceModal from './components/PickPlaceModal';
 
 const { width } = Dimensions.get('window');
 
@@ -53,20 +57,13 @@ const CreateActivityScreen = props => {
   const [type, setType] = useState(1);
   const [paymentMethod, setPaymentMethod] = useState(1);
   const [budget, setBudget] = useState('100');
-  const [uploadedImage, setUploadedImage] = useState({url: "https://i.imgur.com/oJChFO4.jpg"});
+  const [uploadedImage, setUploadedImage] = useState({ url: "https://i.imgur.com/oJChFO4.jpg" });
   const [title, setTitle] = useState('test title');
   const [userCountMax, setUserCountMax] = useState('10');
   const [description, setDescription] = useState('test');
-  const [meetingGeoJson, setMeetingGeoJson] = useState({
-    "type": "Point",
-    "coordinates": [
-      121.35355353355406,
-      25.046982934609268
-    ]
-  });
+  const [place, setPlace] = useState();
   const [datingAt, setDatingAt] = useState(new Date());
   const [finalReviewAt, setFinalReviewAt] = useState(new Date());
-  console.log('uploadedImage', uploadedImage)
 
   const payload = {
     logo: uploadedImage.url,
@@ -79,26 +76,25 @@ const CreateActivityScreen = props => {
     finalReviewAt,
     userCountMax,
     description,
-    meetingGeoJson
+    place,
   };
 
   const handleCreateEvent = () => {
-    console.log("handleCreateEvent -> handleCreateEvent")
     props.handleCreateEvent(payload);
   };
 
   return (
-    <View>
+    <ScrollView>
       <Button title='編輯活動照' onPress={() => handleUploadImage(setUploadedImage)} />
       {!isEmpty(uploadedImage) && <Image source={{ uri: uploadedImage.url }} style={{ width, height: 150 }} />}
+      
       <TextInputField
         placeholder='活動名稱'
         value={title}
         containerStyle={{ width: 230 }}
         onChangeText={(text) => setTitle(text)}
-      />      
-      <DatetimeModal title='活動日期' onConfirm={(date) => setDatingAt(date)} defaultDate={datingAt} />
-      <DatetimeModal title='審核截止日期' onConfirm={(date) => setFinalReviewAt(date)} defaultDate={finalReviewAt} />
+      />
+      
       <TextInputField
         placeholder='參與人數'
         value={userCountMax}
@@ -111,8 +107,12 @@ const CreateActivityScreen = props => {
         containerStyle={{ width: 230 }}
         onChangeText={(text) => setBudget(text)}
       />
+
       <RNPickerSelect
-        placeholder='活動類型'
+        placeholder={{
+          label: '活動類型',
+          value: null
+        }}
         value={type}
         onValueChange={(value) => setType(value)}
         items={[
@@ -122,7 +122,10 @@ const CreateActivityScreen = props => {
         ]}
       />
       <RNPickerSelect
-        placeholder='費用分攤'
+        placeholder={{
+          label: '費用分攤',
+          value: null
+        }}
         value={paymentMethod}
         onValueChange={(value) => setPaymentMethod(value)}
         items={[
@@ -140,8 +143,11 @@ const CreateActivityScreen = props => {
         containerStyle={{ width: 230 }}
         onChangeText={(text) => setDescription(text)}
       />
-      <Button title='確認' onPress={handleCreateEvent} />      
-    </View>
+      <PickPlaceModal place={place} onConfirm={data => setPlace(data)} />
+      <DatetimeModal title='活動日期' onConfirm={(date) => setDatingAt(date)} defaultDate={datingAt} />
+      <DatetimeModal title='審核截止日期' onConfirm={(date) => setFinalReviewAt(date)} defaultDate={finalReviewAt} />
+      <Button title='確認' onPress={handleCreateEvent} />
+    </ScrollView>
   )
 }
 

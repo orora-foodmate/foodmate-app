@@ -8,19 +8,40 @@ const eventSchema = {
       type: 'string',
       primary: true,
     },
-    meetingGeoJson: {
+    place: {
       type: 'object',
       properties: {
-        type: {
-          type: 'string',
+        description: {
+          type: 'string'
         },
-        coordinates: {
+        place_id: {
+          type: 'string'
+        },
+        terms: {
           type: 'array',
           items: {
-            type: 'number'
-          },
+            type: 'object',
+            properties: {
+              id: { type: 'string' },
+              offset: { type: 'number' },
+              value: { type: 'string' },
+            }
+          }
         },
-      },
+        types: {
+          type: 'array',
+          items: {
+            type: 'string'
+          }
+        },
+        structured_formatting: {
+          type: 'object',
+          properties: {
+            main_text: {type: 'string'},
+            secondary_text: {type: 'string'},
+          }
+        }
+      }
     },
     creator: {
       type: 'object',

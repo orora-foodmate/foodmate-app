@@ -1,84 +1,48 @@
-import React, { Fragment } from 'react';
-import { View, StyleSheet } from 'react-native';
-import Button from '~/components/Button';
-import { Avatar } from 'react-native-elements';
-import QRCode from 'react-native-qrcode-generator';
-import colors from '../../theme/color';
-import shadow from '../../theme/shadow';
+import React from 'react';
+import {View, StyleSheet} from 'react-native';
 import Text from '~/components/Text';
+import Button from '~/components/Button';
+import colors from '~/theme/color';
+import Subtitle from '~/components/Subtitle';
+import Description from '~/components/Description';
 
-const SettingScreen = ({
-  auth,
-  handleLogout,
-}) => {
-
+const SettingScreen = ({handleLogout}) => {
   return (
-    <Fragment>
-      <View style={styles.infoBox}>
-        <Avatar rounded style={styles.avatar} source={{ uri: auth.get('avatar') }}/>
-        <View>
-          <Text style={styles.nickname}>{auth.get('name')}</Text>
-          <Text h3>初級食伴</Text>
-        </View>
-      </View>
+    <View style={styles.from}>
       <View style={styles.title}>
-        <Text h3>QR Code</Text>
+        <Text h2>設定</Text>
       </View>
-      <View style={styles.qrcodePanel}>
-      <QRCode
-        value={auth.get("_id")}
-        size={200}
-        bgColor='black'
-        fgColor='white' />
-        </View>
-      <View style={styles.title}>
-        <Text h5>帳號登出</Text>
-      </View>
+      <Subtitle title='帳號登出' />
       <View style={styles.buttonZone}>
-        <Button title='登出' onPress={handleLogout} />
+        <Button title='帳號登出' onPress={handleLogout} />
       </View>
-    
-    </Fragment>
+      <Subtitle title='帳號刪除' />
+      <Description content='刪除帳號後我們將不會保留您的任何個人資料，此動作無法回復，刪除前請仔細思考．' />
+      <View style={styles.buttonZone}>
+        <Button title='帳號刪除' buttonStyle={styles.deleteButton} />
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  infoBox: {
-    paddingTop: 20,
-    paddingLeft: 30,
-    paddingRight: 30,
-    paddingBottom: 20,
-    marginBottom: 32,
+  form: {
     display: 'flex',
-    flexDirection: 'row',
-    borderBottomWidth: 2,
-    borderColor: colors.greyLightest,
-  },
-  avatar: {
-    width: 80,
-    height: 80,
-    borderWidth: 5,
-    marginRight: 15,
-    borderRadius: 80,
-    borderColor: '#fff',
-    backgroundColor: '#fff',
-    ...shadow.black
-  },
-  qrcodePanel: {
-    padding: 30,
-    alignItems: 'center',
+    flex: 1,
   },
   buttonZone: {
-    padding: 30,
+    padding: 20,
     alignItems: 'center',
   },
   title: {
-    paddingLeft: 20,
+    padding: 30,
   },
-  nickname: {
-    fontSize: 36,
-    color: colors.grey
+  subtitleText: {
+    paddingBottom: 20,
   },
-})
+  deleteButton: {
+    backgroundColor: colors.error,
+  },
+});
 
 export default SettingScreen;

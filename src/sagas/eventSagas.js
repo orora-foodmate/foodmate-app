@@ -20,7 +20,6 @@ const errCreate = ({message}) => {
 };
 
 export function* createEventSaga({payload = {}}) {
-  console.log("function*createEventSaga -> payload", payload)
   try {
     const {auth, setting} = yield select(({auth, setting}) => ({
       auth,
@@ -33,7 +32,6 @@ export function* createEventSaga({payload = {}}) {
     };
 
     const {result} = yield call(createEventResult, customHeaders, payload);
-    console.log("function*createEventSaga -> result", result)
     
     yield database.events.insert({
       ...result.data,

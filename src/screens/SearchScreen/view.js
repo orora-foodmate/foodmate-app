@@ -35,8 +35,6 @@ const ValidateButton = ({ authUserId, user, handleInviteFriend, handleRejectInvi
     );
   }
   if (status === 1) {
-    console.log('ValidateButton -> authUserId', authUserId)
-    console.log('ValidateButton -> creatorId', creatorId)
     return authUserId === creatorId
       ? (
         <Fragment>
@@ -55,7 +53,6 @@ const ValidateButton = ({ authUserId, user, handleInviteFriend, handleRejectInvi
 }
 
 const Content = ({ authUserId, user, handleInviteFriend, handleRejectInviteFriend, handleApproveInviteFriend }) => {
-  console.log('Content -> user.toJS()', user.toJS())
   return (
     <Card containerStyle={{ borderWidth: 0 }}>
       <Card.Image wrapperStyle={{ borderWidth: 0 }} source={{ uri: user.get('avatar') }} />

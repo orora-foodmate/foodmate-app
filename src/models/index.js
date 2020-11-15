@@ -33,6 +33,7 @@ export const destoryDatabase = async (database) => {
     database.users.remove(),
     database.friends.remove(),
     database.messages.remove(),
+    database.events.remove(),
   ]);
 };
 

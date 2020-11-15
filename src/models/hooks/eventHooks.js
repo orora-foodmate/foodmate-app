@@ -1,14 +1,14 @@
 import React, { useState, useMemo } from 'react';
 
-export const useEventsHook = function (database, query = undefined, options = undefined) {
-  const [friends, setEvents] = useState([]);
+export const useEventsHook = function (database) {
+  const [events, setEvents] = useState([]);
   useMemo(() => {
     if(database) {
-      const sub = database.friends.find(query).$.subscribe(items => {
+      const sub = database.events.find().$.subscribe(items => {
         setEvents(items);
       });
       return () => sub.unsubscribe();
     }   
-  }, [database, query, options]);
-  return friends;
+  }, [database]);
+  return events;
 };

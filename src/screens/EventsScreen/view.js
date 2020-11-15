@@ -7,6 +7,7 @@ import Label from '~/components/Label';
 
 const EventsScreen = () => {
   const events = useEvents();
+  console.log("EventsScreen -> events[0].id", events[0].id)
   return (
     <View style={{flex: 1}}>
       <FlatList

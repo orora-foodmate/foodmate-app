@@ -12,3 +12,16 @@ export const useEventsHook = function (database) {
   }, [database]);
   return events;
 };
+
+export const useEventDetailHook = function (database, id) {
+  const [event, setEvent] = useState([]);
+  useMemo(() => {
+    if(database) {
+      const sub = database.events.findOne().where('id').eq(id).$.subscribe(item => {
+        setEvent(item);
+      });
+      return () => sub.unsubscribe();
+    }   
+  }, [database, id]);
+  return event;
+}

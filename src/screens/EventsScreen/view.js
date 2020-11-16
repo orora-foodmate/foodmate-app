@@ -2,12 +2,29 @@ import React from 'react';
 import {View, FlatList, TouchableOpacity} from 'react-native';
 import {useEvents} from '~/models';
 import {Card, Icon} from 'react-native-elements';
+import {
+  useNavigation,
+  useNavigationButtonPress,
+} from 'react-native-navigation-hooks';
+import colors from '~/theme/color';
 import Text from '~/components/Text';
 import Label from '~/components/Label';
 
-const EventsScreen = () => {
+const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
+
+const EventsScreen = props => {
   const events = useEvents();
-  console.log("EventsScreen -> events[0].id", events[0].id)
+  const { push } = useNavigation();
+
+  useNavigationButtonPress((e) => {
+    if (
+      props.componentId === e.componentId &&
+      e.buttonId === TOP_BAR_RIGHT_BUTTON_ID
+    ) {
+      push('CreateEvent');
+    }
+  });
+
   return (
     <View style={{flex: 1}}>
       <FlatList
@@ -33,9 +50,20 @@ const EventsScreen = () => {
           );
         }}
       />
-      <Text>Event Screen</Text>
     </View>
   );
+};
+
+EventsScreen.options = {
+  topBar: {
+    rightButtons: [
+      {
+        id: TOP_BAR_RIGHT_BUTTON_ID,
+        icon: require('assets/icons/create_event.png'),
+        color: colors.primary,
+      },
+    ],
+  },
 };
 
 export default EventsScreen;

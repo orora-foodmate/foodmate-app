@@ -21,7 +21,6 @@ const errApprove = ({ message }) => {
 
 export function* approveFriendByWebsocketSaga({ payload = {} }) {
   try {
-    console.log('function*approveFriendByWebsocketSaga -> payload', payload)
     const { setting } = yield select(({ setting }) => ({
       setting,
     }));

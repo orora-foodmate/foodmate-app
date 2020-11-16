@@ -13,7 +13,6 @@ async function asyncIteratorWatcher(channel, userId) {
 
 const RowItem = ({ item, userId, socket }) => {
   useEffect(() => {
-    console.log("RowItem -> item.friendId", item.friendId)
     const channel = socket.subscribe(`friend.${item.friendId}`);
     asyncIteratorWatcher(channel, userId);
     return () => channel.kill();

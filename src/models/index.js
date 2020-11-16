@@ -8,7 +8,7 @@ import userSchema from './userSchema';
 import friendSchema from './friendSchema';
 import messageSchema from './messageSchema';
 import eventSchema from './eventSchema';
-import { useEventsHook } from './hooks/eventHooks';
+import { useEventsHook, useEventDetailHook } from './hooks/eventHooks';
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -33,6 +33,7 @@ export const destoryDatabase = async (database) => {
     database.users.remove(),
     database.friends.remove(),
     database.messages.remove(),
+    database.events.remove(),
   ]);
 };
 
@@ -95,6 +96,10 @@ export const useFriends = (query, options) => {
 
 export const useEvents = (query, options) => {
   return useEventsHook(foodmateDB, query, options);
+}
+
+export const useEventDetail = (id) => {
+  return useEventDetailHook(foodmateDB, id);
 }
 
 export const useFriendRooms = () => {

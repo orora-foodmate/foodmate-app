@@ -9,7 +9,6 @@ const mapStateToProps = ({ auth }) => ({
 
 const mapDispatchToProps = dispatch => ({
   handleCreateEvent: payload => {
-  console.log("handleCreateEvent")
     dispatch(createEventAction(payload));
   },
   handleUpdateUser: payload => {

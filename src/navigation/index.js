@@ -12,6 +12,7 @@ import RegisterScreen from '~/screens/RegisterScreen';
 import NicknameScreen from '~/screens/NicknameScreen';
 import EditProfileScreen from '~/screens/EditProfileScreen';
 import EventsScreen from '~/screens/EventsScreen';
+import EventDetailScreen from '~/screens/EventDetailScreen';
 import CreateActivityScreen from '~/screens/CreateActivityScreen';
 
 import TopBar from '~/components/TopBar';
@@ -33,6 +34,7 @@ Screens.set('Nickname', NicknameScreen);
 Screens.set('EditProfile', EditProfileScreen);
 Screens.set('Create', CreateActivityScreen);
 Screens.set('Events', EventsScreen);
+Screens.set('EventDetail', EventDetailScreen);
 Screens.set('CreateActivity', CreateActivityScreen);
 
 Navigation.registerComponent('TopBar', () => TopBar);

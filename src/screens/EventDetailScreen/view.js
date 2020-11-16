@@ -6,12 +6,14 @@ import {useEventDetail} from '~/models';
 import Button from '~/components/Button';
 import Text from '~/components/Text';
 import Label from '~/components/Label';
+import { WebView } from 'react-native-webview';
 
-const id = '5fb1475fa7d7ad262d315c97';
+const id = "5fb291dda7d7ad262d315ca7";
 const EventDetail = () => {
   const event = useEventDetail(id);
   if(isEmpty(event)) return null;
-  console.log('EventDetail -> event.toJSON()', event.toJSON());
+  const uri = encodeURI(`https://www.google.com.tw/maps/place/${event.place.structured_formatting.main_text.replace(' ', '+')}`);
+  console.log('EventDetail -> uri', uri);
   return (
     <View style={{flex: 1}}>
       <Card>
@@ -37,6 +39,9 @@ const EventDetail = () => {
           title='VIEW NOW'
         />
       </Card>
+      <WebView
+        source={{ uri }}
+      />
       <Text>EventDetail</Text>
     </View>
   );

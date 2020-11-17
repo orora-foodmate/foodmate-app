@@ -1,94 +1,65 @@
-import React, { useState } from 'react';
-import { Image, Dimensions, Modal, ScrollView } from 'react-native';
+import React, {useState} from 'react';
+import {View, ScrollView, StyleSheet} from 'react-native';
 import isEmpty from 'lodash/isEmpty';
-import envConfig from '~/constants/envConfig';
 import Button from '~/components/Button';
-import ImagePicker from 'react-native-image-picker';
+import TextArea from '~/components/TextArea';
 import TextInputField from '~/components/Inputs/TextInputField';
-import RNPickerSelect from 'react-native-picker-select';
 import DatetimeModal from './components/DatetimeModal';
+import RNPickerSelect from 'react-native-picker-select';
+import SelectInput from '~/components/Inputs/SelectInput';
+import InputImage from '~/components/Inputs/InputImage';
 import PickPlaceModal from './components/PickPlaceModal';
+import EventPhotoBlock from '~/components/EventPhotoBlock';
+import {PAYMENT_METHOD, EVENT_TYPES} from '~/constants/selectItems';
+import {handleUploadImage} from '~/helper/imageUploadHelper';
+import {DEFAULT_MAP_OBJECT} from './constant';
+import {
+  inputCalendar,
+  inputCalendarError,
+  inputCoin,
+  inputCoinError,
+  inputCredit,
+  inputCreditError,
+  inputDeadline,
+  inputDeadlineError,
+  iconLocate,
+  iconLocateError,
+  iconPerson,
+  iconPersonError,
+  iconTag,
+  iconTagError,
+  iconTicket,
+  iconTicketError,
+} from '~/assets/icons';
 
-const { width } = Dimensions.get('window');
+const onUploadSuccess = (setter) => (link) => {
+  setter({url: link});
+};
 
-const handleUploadImage = (setUploadedImage) => {
-  ImagePicker.launchImageLibrary(
-    {
-      mediaType: 'photo',
-      includeBase64: false,
-      maxHeight: 200,
-      maxWidth: 200,
-    },
-    async (photo) => {
-      let formData = new FormData();
+const onUploadError = (error) => {
+  alert(error.message);
+};
 
-      const uri = Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "");
-      const fileName = uri.split('/').pop();
-      const options = {
-        name: fileName,
-        type: photo.type,
-        uri,
-      };
-      formData.append('image', options); //required
+const onUploadImage = (setUploadedImage) => () => {
+  handleUploadImage(onUploadSuccess(setUploadedImage), onUploadError);
+};
 
-      try {
-        const result = await fetch("https://api.imgur.com/3/upload", {
-          method: "POST",
-          headers: {
-            Authorization: `Client-ID ${envConfig.imgUrClientId}`,
-            'Content-Type': 'application/x-www-form-urlencoded'
-          },
-          mimeType: 'multipart/form-data',
-          body: formData
-        }).then(resp => resp.json());
-        setUploadedImage({
-          url: result.data.link
-        });
-      } catch (error) {
-        setUploadedImage(null);
-      }
-    },
-  )
-}
-const CreateActivityScreen = props => {
-  const [type, setType] = useState(1);
-  const [paymentMethod, setPaymentMethod] = useState(1);
-  const [budget, setBudget] = useState('100');
-  const [uploadedImage, setUploadedImage] = useState({ url: "https://i.imgur.com/oJChFO4.jpg" });
-  const [title, setTitle] = useState('test title');
-  const [userCountMax, setUserCountMax] = useState('10');
-  const [description, setDescription] = useState('test');
-  const [place, setPlace] = useState({
-    "description": "台灣台北市中山區中山北路三段這一鍋 台北中山北殿",
-    "place_id": "ChIJffB_qUWpQjQR1JJOXUMkqOw",
-    "structured_formatting": {
-      "main_text": "這一鍋 台北中山北殿",
-      "secondary_text": "台灣台北市中山區中山北路三段"
-    },
-    "terms": [{
-      "offset": 14,
-      "value": "這一鍋 台北中山北殿"
-    }, {
-      "offset": 8,
-      "value": "中山北路三段"
-    }, {
-      "offset": 5,
-      "value": "中山區"
-    }, {
-      "offset": 2,
-      "value": "台北市"
-    }, {
-      "offset": 0,
-      "value": "台灣"
-    }],
-    "types": ["restaurant", "food", "point_of_interest", "establishment"]
-  });
+const CreateActivityScreen = (props) => {
+  const [type, setType] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState(null);
+  const [budget, setBudget] = useState('');
+  const [uploadedImage, setUploadedImage] = useState({url: ''});
+  const [title, setTitle] = useState('');
+  const [userCountMax, setUserCountMax] = useState('');
+  const [description, setDescription] = useState('');
+  const [place, setPlace] = useState(null);
   const [datingAt, setDatingAt] = useState(new Date());
   const [finalReviewAt, setFinalReviewAt] = useState(new Date());
+  const [errors, setErrors] = useState({});
 
   const payload = {
     logo: uploadedImage.url,
-    publicationPlace: "台北",
+    publicationPlace: '台北',
     type,
     paymentMethod,
     budget,
@@ -105,71 +76,139 @@ const CreateActivityScreen = props => {
   };
 
   return (
-    <ScrollView>
-      <Button title='編輯活動照' onPress={() => handleUploadImage(setUploadedImage)} />
-      {!isEmpty(uploadedImage) && <Image source={{ uri: uploadedImage.url }} style={{ width, height: 150 }} />}
-      
-      <TextInputField
-        placeholder='活動名稱'
-        value={title}
-        containerStyle={{ width: 230 }}
-        onChangeText={(text) => setTitle(text)}
+    <ScrollView contentContainerStyle={styles.scroll}>
+      <EventPhotoBlock
+        uri={uploadedImage.url}
+        onEditClick={onUploadImage(setUploadedImage)}
       />
-      
-      <TextInputField
-        placeholder='參與人數'
-        value={userCountMax}
-        containerStyle={{ width: 230 }}
-        onChangeText={(text) => setUserCountMax(text)}
-      />
-      <TextInputField
-        placeholder='消費預算'
-        value={budget}
-        containerStyle={{ width: 230 }}
-        onChangeText={(text) => setBudget(text)}
-      />
-
-      <RNPickerSelect
-        placeholder={{
-          label: '活動類型',
-          value: null
-        }}
-        value={type}
-        onValueChange={(value) => setType(value)}
-        items={[
-          { label: '休閒', value: 0 },
-          { label: '活動', value: 1 },
-          { label: '商業', value: 2 },
-        ]}
-      />
-      <RNPickerSelect
-        placeholder={{
-          label: '費用分攤',
-          value: null
-        }}
-        value={paymentMethod}
-        onValueChange={(value) => setPaymentMethod(value)}
-        items={[
-          { label: '各付各的', value: 0 },
-          { label: '平均分攤', value: 1 },
-          { label: '主揪請客', value: 2 },
-          { label: '團友請客', value: 3 },
-        ]}
-      />
-      <TextInputField
-        multiline
-        numberOfLines={4}
-        placeholder='簡介'
-        value={description}
-        containerStyle={{ width: 230 }}
-        onChangeText={(text) => setDescription(text)}
-      />
-      <PickPlaceModal place={place} onConfirm={data => setPlace(data)} />
-      <DatetimeModal title='活動日期' onConfirm={(date) => setDatingAt(date)} defaultDate={datingAt} />
-      <DatetimeModal title='審核截止日期' onConfirm={(date) => setFinalReviewAt(date)} defaultDate={finalReviewAt} />
-      <Button title='確認' onPress={handleCreateEvent} />
+      <View style={styles.form}>
+        <TextInputField
+          name='title'
+          placeholder='活動名稱'
+          value={title}
+          containerStyle={{width: 230}}
+          onChangeText={(text) => setTitle(text)}
+          leftIcon={
+            <InputImage
+              icon={iconTicket}
+              errorIcon={iconTicketError}
+              isError={!isEmpty(errors.title)}
+            />
+          }
+        />
+        <DatetimeModal
+          placeholder='活動日期'
+          onConfirm={(date) => setDatingAt(date)}
+          defaultDate={datingAt}
+          leftIcon={
+            <InputImage
+              icon={inputCalendar}
+              errorIcon={inputCalendarError}
+              isError={!isEmpty(errors.datingAt)}
+            />
+          }
+        />
+        <DatetimeModal
+          placeholder='審核截止日期'
+          onConfirm={(date) => setFinalReviewAt(date)}
+          defaultDate={finalReviewAt}
+          leftIcon={
+            <InputImage
+              icon={inputDeadline}
+              errorIcon={inputDeadlineError}
+              isError={!isEmpty(errors.userCountMax)}
+            />
+          }
+        />
+        <TextInputField
+          name='userCountMax'
+          placeholder='參與人數'
+          value={userCountMax}
+          containerStyle={{width: 230}}
+          onChangeText={(text) => setUserCountMax(text)}
+          leftIcon={
+            <InputImage
+              icon={iconPerson}
+              errorIcon={iconPersonError}
+              isError={!isEmpty(errors.userCountMax)}
+            />
+          }
+        />
+        <SelectInput
+          value={type}
+          items={EVENT_TYPES}
+          placeholderText='請選擇活動類型'
+          onValueChange={(value) => setType(value)}
+          leftIcon={
+            <InputImage
+              icon={iconTag}
+              errorIcon={iconTagError}
+              isError={!isEmpty(errors.title)}
+            />
+          }
+        />
+        <TextInputField
+          name='budget'
+          placeholder='消費預算'
+          value={budget}
+          containerStyle={{width: 230}}
+          onChangeText={(text) => setBudget(text)}
+          leftIcon={
+            <InputImage
+              icon={inputCredit}
+              errorIcon={inputCreditError}
+              isError={!isEmpty(errors.budget)}
+            />
+          }
+        />
+        <SelectInput
+          placeholderText='請選擇分攤方式'
+          value={paymentMethod}
+          onValueChange={(value) => setPaymentMethod(value)}
+          items={PAYMENT_METHOD}
+          leftIcon={
+            <InputImage
+              icon={inputCoin}
+              errorIcon={inputCoinError}
+              isError={!isEmpty(errors.paymentMethod)}
+            />
+          }
+        />
+        <PickPlaceModal
+          place={place}
+          onConfirm={(data) => setPlace(data)}
+          leftIcon={
+            <InputImage
+              icon={iconLocate}
+              errorIcon={iconLocateError}
+              isError={!isEmpty(errors.place)}
+            />
+          }
+        />
+        <TextArea
+          title='簡介'
+          numberOfLines={4}
+          placeholder='請輸入簡介'
+          value={description}
+          containerStyle={{width: 230, height: 200}}
+          onChangeText={(text) => setDescription(text)}
+        />
+        <Button title='確認' onPress={handleCreateEvent} />
+      </View>
     </ScrollView>
-  )
-}
+  );
+};
+
+const styles = StyleSheet.create({
+  scroll: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  form: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 230,
+  },
+});
 
 export default CreateActivityScreen;

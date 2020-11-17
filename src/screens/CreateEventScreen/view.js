@@ -8,11 +8,11 @@ import DatetimeModal from './components/DatetimeModal';
 import RNPickerSelect from 'react-native-picker-select';
 import SelectInput from '~/components/Inputs/SelectInput';
 import InputImage from '~/components/Inputs/InputImage';
+import ConfirmDialog from './components/ConfirmDialog';
 import PickPlaceModal from './components/PickPlaceModal';
 import EventPhotoBlock from '~/components/EventPhotoBlock';
-import {PAYMENT_METHOD, EVENT_TYPES} from '~/constants/selectItems';
 import {handleUploadImage} from '~/helper/imageUploadHelper';
-import {DEFAULT_MAP_OBJECT} from './constant';
+import {PAYMENT_METHOD, EVENT_TYPES} from '~/constants/selectItems';
 import {
   inputCalendar,
   inputCalendarError,
@@ -46,6 +46,7 @@ const onUploadImage = (setUploadedImage) => () => {
 
 const CreateActivityScreen = (props) => {
   const [type, setType] = useState(null);
+  const [dialogVisible, setDialogVisible] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState(null);
   const [budget, setBudget] = useState('');
   const [uploadedImage, setUploadedImage] = useState({url: ''});
@@ -80,6 +81,12 @@ const CreateActivityScreen = (props) => {
       <EventPhotoBlock
         uri={uploadedImage.url}
         onEditClick={onUploadImage(setUploadedImage)}
+      />
+      <ConfirmDialog
+        payload={payload}
+        visible={dialogVisible}
+        onClose={() => setDialogVisible(false)}
+        handleCreateEvent={handleCreateEvent}
       />
       <View style={styles.form}>
         <TextInputField
@@ -193,7 +200,7 @@ const CreateActivityScreen = (props) => {
           containerStyle={{width: 230, height: 200}}
           onChangeText={(text) => setDescription(text)}
         />
-        <Button title='確認' onPress={handleCreateEvent} />
+        <Button title='確認' onPress={() => setDialogVisible(true)} />
       </View>
     </ScrollView>
   );

@@ -56,7 +56,7 @@ const rootNavigator = () => {
             center: {
               bottomTabs: {
                 children: [
-                  stack('EventDetail', '活動列表', createIconActive, createIcon),
+                  stack('Events', '活動列表', createIconActive, createIcon),
                   stack('Friend', '朋友圈', usersIconActive, usersIcon),
                   stack('Message', '聊天', chatIconActive, chatIcon),
                   stack('Profile', '設置', settingIconActive, settingIcon),

@@ -130,3 +130,19 @@ export const fetchWithoutToken = async (
     throw error;
   }
 };
+
+export const fetchWithFormData = async (url, customHeaders, formData) => {
+  try {
+    return fetch(url, {
+      method: 'POST',
+      headers: {
+        ...customHeaders,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      mimeType: 'multipart/form-data',
+      body: formData
+    }).then((resp) => resp.json());
+  }catch(error) {
+    throw error;
+  }
+}

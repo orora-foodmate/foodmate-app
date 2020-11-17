@@ -8,7 +8,7 @@ import logo from '~/assets/images/logo_register.png';
 import InputImage from '~/components/Inputs/InputImage';
 import bottomLogo from '~/assets/images/actor-register-donut.png';
 import TextInputField from '~/components/Inputs/TextInputField';
-import {handleYupSchema, handleYupErrors} from '~/utils/yupHelper';
+import {handleYupSchema, handleYupErrors} from '~/helper/yupHelper';
 import {accountSchema, passwordSchema} from '~/constants/yupSchemas';
 import {
   inputDonut,

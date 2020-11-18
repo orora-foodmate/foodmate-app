@@ -7,15 +7,14 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useEvents} from '~/models';
-import {Card, Icon, Image} from 'react-native-elements';
+import {format} from '~/utils/timeUtil';
+import {Icon, Image} from 'react-native-elements';
 import {
   useNavigation,
   useNavigationButtonPress,
 } from 'react-native-navigation-hooks';
 import colors from '~/theme/color';
-import format from 'date-fns/format';
 import Text from '~/components/Text';
-import Label from '~/components/Label';
 
 const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
 
@@ -38,7 +37,7 @@ const EventCard = ({event, push}) => {
                 style={styles.dotIcon}
                 color={colors.primary}
               />
-              {format(new Date(event.datingAt), 'yyyy-MM-dd HH:mm')}
+              {format(event.datingAt, 'yyyy-MM-dd EEEE')}
             </Text>
           </View>
           <View>
@@ -71,7 +70,7 @@ const EventsScreen = (props) => {
         data={events}
         contentContainerStyle={styles.list}
         renderItem={({item}) => {
-          return <EventCard event={item} push={push}/>;
+          return <EventCard event={item} push={push} />;
         }}
       />
     </View>
@@ -115,8 +114,8 @@ const styles = StyleSheet.create({
   datetimeText: {
     fontSize: 14,
     fontWeight: '500',
-    letterSpacing: 0
-  }
+    letterSpacing: 0,
+  },
 });
 
 EventsScreen.options = {

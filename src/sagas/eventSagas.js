@@ -1,5 +1,6 @@
 import {put, call, select} from 'redux-saga/effects';
 import types from '~/constants/actionTypes';
+import isFunction from 'lodash/isFunction';
 import {
   createEventResult,
 } from '~/apis/api';
@@ -21,6 +22,8 @@ const errCreate = ({message}) => {
 
 export function* createEventSaga({payload = {}}) {
   try {
+    const { push, onSuccess, ...createdPayload } = payload;
+
     const {auth, setting} = yield select(({auth, setting}) => ({
       auth,
       setting,
@@ -31,7 +34,7 @@ export function* createEventSaga({payload = {}}) {
       Authorization: `Bearer ${auth.get('token')}`,
     };
 
-    const {result} = yield call(createEventResult, customHeaders, payload);
+    const {result} = yield call(createEventResult, customHeaders, createdPayload);
     
     yield database.events.insert({
       ...result.data,
@@ -41,6 +44,8 @@ export function* createEventSaga({payload = {}}) {
       datingAt: parseISOString(result.data.datingAt),
     });
     yield put(okCreate());
+    if(isFunction(onSuccess)) onSuccess();
+    push('EventDetail', {passProps: {eventId: result.data.id}});
   } catch (error) {
     const errorAction = errCreate(error);
     yield put(errorAction);

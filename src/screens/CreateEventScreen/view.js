@@ -11,9 +11,10 @@ import InputImage from '~/components/Inputs/InputImage';
 import ConfirmDialog from './components/ConfirmDialog';
 import PickPlaceModal from './components/PickPlaceModal';
 import EventPhotoBlock from '~/components/EventPhotoBlock';
-import { DEFAULT_MAP_OBJECT } from './constant';
+import {DEFAULT_MAP_OBJECT} from './constant';
 import {handleUploadImage} from '~/helper/imageUploadHelper';
 import {PAYMENT_METHOD, EVENT_TYPES} from '~/constants/selectItems';
+import {useNavigation} from 'react-native-navigation-hooks';
 import {
   iconTag,
   inputCoin,
@@ -59,6 +60,8 @@ const CreateActivityScreen = (props) => {
   const [finalReviewAt, setFinalReviewAt] = useState(new Date());
   const [errors, setErrors] = useState({});
 
+  const {push} = useNavigation();
+
   const payload = {
     logo: uploadedImage.url,
     publicationPlace: '台北',
@@ -74,7 +77,11 @@ const CreateActivityScreen = (props) => {
   };
 
   const handleCreateEvent = () => {
-    props.handleCreateEvent(payload);
+    props.handleCreateEvent({
+      ...payload,
+      push,
+      onSuccess: () => setDialogVisible(false),
+    });
   };
 
   return (

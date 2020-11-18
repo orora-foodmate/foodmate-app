@@ -32,7 +32,7 @@ const EventsScreen = props => {
         data={events}
         renderItem={({item}) => {
           return (
-            <TouchableOpacity onPress={() => alert('hello')}>
+            <TouchableOpacity onPress={() => push('EventDetail', { passProps: { eventId: item.id }})}>
               <Card>
                 <Card.Image source={{uri: item.logo}} />
                 <Card.Divider />

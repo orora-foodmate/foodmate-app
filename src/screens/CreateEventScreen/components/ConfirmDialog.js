@@ -16,7 +16,7 @@ const LabelText = ({label, content}) => {
 const getMainText = (place) => {
   if (isEmpty(place)) return '';
 
-  return payload.place.structured_formatting.main_text;
+  return place.structured_formatting.main_text;
 };
 
 const ConfirmDialog = ({visible, payload, handleCreateEvent, onClose}) => {

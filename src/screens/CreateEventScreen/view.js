@@ -11,25 +11,26 @@ import InputImage from '~/components/Inputs/InputImage';
 import ConfirmDialog from './components/ConfirmDialog';
 import PickPlaceModal from './components/PickPlaceModal';
 import EventPhotoBlock from '~/components/EventPhotoBlock';
+import { DEFAULT_MAP_OBJECT } from './constant';
 import {handleUploadImage} from '~/helper/imageUploadHelper';
 import {PAYMENT_METHOD, EVENT_TYPES} from '~/constants/selectItems';
 import {
-  inputCalendar,
-  inputCalendarError,
-  inputCoin,
-  inputCoinError,
-  inputCredit,
-  inputCreditError,
-  inputDeadline,
-  inputDeadlineError,
-  iconLocate,
-  iconLocateError,
-  iconPerson,
-  iconPersonError,
   iconTag,
-  iconTagError,
+  inputCoin,
+  iconLocate,
   iconTicket,
+  iconPerson,
+  inputCredit,
+  inputCalendar,
+  inputDeadline,
+  iconTagError,
+  inputCoinError,
+  iconPersonError,
+  iconLocateError,
   iconTicketError,
+  inputCreditError,
+  inputDeadlineError,
+  inputCalendarError,
 } from '~/assets/icons';
 
 const onUploadSuccess = (setter) => (link) => {
@@ -53,7 +54,7 @@ const CreateActivityScreen = (props) => {
   const [title, setTitle] = useState('');
   const [userCountMax, setUserCountMax] = useState('');
   const [description, setDescription] = useState('');
-  const [place, setPlace] = useState(null);
+  const [place, setPlace] = useState(DEFAULT_MAP_OBJECT);
   const [datingAt, setDatingAt] = useState(new Date());
   const [finalReviewAt, setFinalReviewAt] = useState(new Date());
   const [errors, setErrors] = useState({});

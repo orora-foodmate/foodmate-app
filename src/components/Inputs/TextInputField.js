@@ -56,10 +56,10 @@ const getStyles = (theme, props) => {
       display: 'flex',
       alignItems: 'flex-start',
       flexDirection: 'column',
-      height: props.errorMessage ? 70: 60,
-      paddingTop: theme.spacing.small,
+      height: props.errorMessage ? 70: 50,
       paddingLeft: 0,
       paddingRight: 0,
+      // backgroundColor: '#000'
     },
     inputContainer: {
       borderBottomWidth: 2,

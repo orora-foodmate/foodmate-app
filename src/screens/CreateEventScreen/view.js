@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import * as yup from 'yup';
 import {View, ScrollView, StyleSheet} from 'react-native';
 import isEmpty from 'lodash/isEmpty';
 import Button from '~/components/Button';
@@ -15,6 +16,7 @@ import {DEFAULT_MAP_OBJECT} from './constant';
 import {handleUploadImage} from '~/helper/imageUploadHelper';
 import {PAYMENT_METHOD, EVENT_TYPES} from '~/constants/selectItems';
 import {useNavigation} from 'react-native-navigation-hooks';
+import {handleYupSchema, handleYupErrors} from '~/helper/yupHelper';
 import {
   iconTag,
   inputCoin,
@@ -33,6 +35,25 @@ import {
   inputDeadlineError,
   inputCalendarError,
 } from '~/assets/icons';
+import {
+  urlSchema,
+  nameSchema,
+  enumSchema,
+  dateSchema,
+} from '~/constants/yupSchemas';
+
+const schema = yup.object().shape({
+  logo: urlSchema('錯誤的圖片連結', '請上傳活動照片'),
+  type: enumSchema([0, 1, 2], '錯誤的活動類型', '請選擇活動類型'),
+  paymentMethod: enumSchema([0, 1, 2, 3], '錯誤的分攤方式', '請選擇分攤方式'),
+  budget: yup.number().typeError('請輸入數字金額').required('請輸入預算'),
+  title: nameSchema('請輸入活動名稱'),
+  datingAt: dateSchema('請輸入活動日期'),
+  finalReviewAt: dateSchema('請輸入審核截止日期'),
+  userCountMax: yup.number().typeError('請輸入數字').required('請輸入參與人數'),
+  description: yup.string().required('請輸入簡介'),
+  place: yup.object().required('請選擇活動地點'),
+});
 
 const onUploadSuccess = (setter) => (link) => {
   setter({url: link});
@@ -42,8 +63,34 @@ const onUploadError = (error) => {
   alert(error.message);
 };
 
+const validateData = async (payload, setErrors) => {
+console.log("TCL: payload", payload)
+  try {
+    await handleYupSchema(schema, payload);
+
+    setErrors({});
+    return true;
+  } catch (error) {
+    console.log("TCL: error", error)
+    const errors = handleYupErrors(error);
+    console.log("TCL: errors", errors)
+    setErrors(errors);
+    return false;
+  }
+};
+
 const onUploadImage = (setUploadedImage) => () => {
   handleUploadImage(onUploadSuccess(setUploadedImage), onUploadError);
+};
+
+const submit =  (payload, setErrors, setDialogVisible) => async () => {
+  if (await validateData(payload, setErrors)) {
+    setDialogVisible(true);
+  }
+};
+
+const handleOnBlur = ( errors, editPayload, setErrors ) => async () => {
+  if (!isEmpty(errors)) await validateData(editPayload, setErrors);
 };
 
 const CreateActivityScreen = (props) => {
@@ -76,13 +123,21 @@ const CreateActivityScreen = (props) => {
     place,
   };
 
+  const onSubmit = submit(
+    payload,
+    setErrors,
+    setDialogVisible
+  );
+
   const handleCreateEvent = () => {
-    props.handleCreateEvent({
+    handleCreateEvent({
       ...payload,
       push,
       onSuccess: () => setDialogVisible(false),
-    });
-  };
+    })
+  }
+
+  const onBlur = handleOnBlur(errors, payload, setErrors);
 
   return (
     <ScrollView contentContainerStyle={styles.scroll}>
@@ -103,6 +158,8 @@ const CreateActivityScreen = (props) => {
           value={title}
           containerStyle={{width: 230}}
           onChangeText={(text) => setTitle(text)}
+          errorMessage={errors.title}
+          onBlur={onBlur}
           leftIcon={
             <InputImage
               icon={iconTicket}
@@ -115,6 +172,8 @@ const CreateActivityScreen = (props) => {
           placeholder='活動日期'
           onConfirm={(date) => setDatingAt(date)}
           defaultDate={datingAt}
+          errorMessage={errors.datingAt}
+          onBlur={onBlur}
           leftIcon={
             <InputImage
               icon={inputCalendar}
@@ -127,11 +186,13 @@ const CreateActivityScreen = (props) => {
           placeholder='審核截止日期'
           onConfirm={(date) => setFinalReviewAt(date)}
           defaultDate={finalReviewAt}
+          errorMessage={errors.finalReviewAt}
+          onBlur={onBlur}
           leftIcon={
             <InputImage
               icon={inputDeadline}
               errorIcon={inputDeadlineError}
-              isError={!isEmpty(errors.userCountMax)}
+              isError={!isEmpty(errors.finalReviewAt)}
             />
           }
         />
@@ -139,8 +200,10 @@ const CreateActivityScreen = (props) => {
           name='userCountMax'
           placeholder='參與人數'
           value={userCountMax}
+          errorMessage={errors.userCountMax}
           containerStyle={{width: 230}}
           onChangeText={(text) => setUserCountMax(text)}
+          onBlur={onBlur}
           leftIcon={
             <InputImage
               icon={iconPerson}
@@ -153,7 +216,9 @@ const CreateActivityScreen = (props) => {
           value={type}
           items={EVENT_TYPES}
           placeholderText='請選擇活動類型'
+          errorMessage={errors.type}
           onValueChange={(value) => setType(value)}
+          onBlur={onBlur}
           leftIcon={
             <InputImage
               icon={iconTag}
@@ -166,7 +231,9 @@ const CreateActivityScreen = (props) => {
           name='budget'
           placeholder='消費預算'
           value={budget}
+          errorMessage={errors.budget}
           containerStyle={{width: 230}}
+          onBlur={onBlur}
           onChangeText={(text) => setBudget(text)}
           leftIcon={
             <InputImage
@@ -179,8 +246,10 @@ const CreateActivityScreen = (props) => {
         <SelectInput
           placeholderText='請選擇分攤方式'
           value={paymentMethod}
+          errorMessage={errors.paymentMethod}
           onValueChange={(value) => setPaymentMethod(value)}
           items={PAYMENT_METHOD}
+          onBlur={onBlur}
           leftIcon={
             <InputImage
               icon={inputCoin}
@@ -191,7 +260,9 @@ const CreateActivityScreen = (props) => {
         />
         <PickPlaceModal
           place={place}
+          errorMessage={errors.place}
           onConfirm={(data) => setPlace(data)}
+          onBlur={onBlur}
           leftIcon={
             <InputImage
               icon={iconLocate}
@@ -205,10 +276,12 @@ const CreateActivityScreen = (props) => {
           numberOfLines={4}
           placeholder='請輸入簡介'
           value={description}
-          containerStyle={{width: 230, height: 200}}
+          onBlur={onBlur}
+          errorMessage={errors.description}
+          containerStyle={styles.textarea}
           onChangeText={(text) => setDescription(text)}
         />
-        <Button title='確認' onPress={() => setDialogVisible(true)} />
+        <Button title='確認' onPress={onSubmit} />
       </View>
     </ScrollView>
   );
@@ -223,6 +296,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: 230,
+  },
+  textarea: {
+    width: 230,
+    height: 200,
   },
 });
 

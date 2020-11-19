@@ -17,7 +17,7 @@ const SelectedImage = ({uri, height, width}) => {
   return <Image source={{uri}} style={[styles.image, {height, width}]} />;
 };
 
-const EventPhoto = ({uri, onEditClick, btnText}) => {
+const EventPhoto = ({uri, onEditClick, hideButton, btnText}) => {
   const [height, setHeight] = useState(200);
   const [width, setWidth] = useState(screenWidth);
 
@@ -37,13 +37,15 @@ const EventPhoto = ({uri, onEditClick, btnText}) => {
   return (
     <View style={styles.imageContainer}>
       <SelectedImage uri={uri} height={height} width={width} />
-      <Button
-        title={btnText}
-        onPress={onEditClick}
-        buttonStyle={styles.button}
-        titleStyle={styles.buttonTitle}
-        containerStyle={styles.buttonContainer}
-      />
+      {!hideButton && (
+        <Button
+          title={btnText}
+          onPress={onEditClick}
+          buttonStyle={styles.button}
+          titleStyle={styles.buttonTitle}
+          containerStyle={styles.buttonContainer}
+        />
+      )}
     </View>
   );
 };
@@ -51,12 +53,14 @@ const EventPhoto = ({uri, onEditClick, btnText}) => {
 EventPhoto.propTypes = {
   uri: propTypes.string,
   btnText: propTypes.string,
+  hideButton: propTypes.bool,
   onEditClick: propTypes.func,
 };
 
 EventPhoto.defaultProps = {
   uri: '',
   btnText: '編輯活動照',
+  hideButton: false,
   onEditClick: () => false,
 };
 

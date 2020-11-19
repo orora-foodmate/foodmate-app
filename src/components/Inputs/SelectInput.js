@@ -5,6 +5,7 @@ import isEmpty from 'lodash/isEmpty';
 import RNPickerSelect from 'react-native-picker-select';
 import {View, StyleSheet} from 'react-native';
 import colors from '~/theme/color';
+import ErrorMessage from './ErrorMessage';
 
 const LeftIcon = ({leftIcon}) => {
   if (isEmpty(leftIcon)) return <Fragment />;
@@ -21,9 +22,14 @@ const SelectInput = ({
   placeholderText,
   ...props
 }) => {
+  const isError = !isEmpty(errorMessage);
+  const [errorStyle, errorFormStyle] = isError
+    ? [styles.errorStyle, { height: 70 }]
+    : [{}, { height: 50 }];
+
   return (
-    <Fragment>
-      <View style={[styles.container, containerStyle]}>
+    <View style={[styles.formBox, errorFormStyle]}>
+      <View style={[styles.container, containerStyle, errorStyle]}>
         <LeftIcon leftIcon={leftIcon} />
         <RNPickerSelect
           placeholder={{
@@ -39,7 +45,8 @@ const SelectInput = ({
           {...props}
         />
       </View>
-    </Fragment>
+      <ErrorMessage errorMessage={errorMessage}/>
+    </View>
   );
 };
 
@@ -66,16 +73,28 @@ SelectInput.defaultProps = {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 15,
-    paddingBottom: 8,
-    paddingLeft: 0,
+  formBox: {
     width: '100%',
     display: 'flex',
+    position: 'relative',
+    alignItems: 'center',
+  },
+  container: {
+    padding: 15,
+    paddingLeft: 0,
+    paddingTop: 0,
+    paddingBottom: 8,
     borderBottomWidth: 2,
+    paddingTop: 10,
+    width: '100%',
+    display: 'flex',
     alignItems: 'center',
     flexDirection: 'row',
     borderColor: colors.greyLightest,
+  },
+  errorStyle: {
+    paddingTop: 6,
+    borderColor: colors.error,
   },
   icon: {
     paddingRight: 10,

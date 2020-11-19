@@ -1,6 +1,7 @@
 import React, {useState, Fragment, useEffect} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {Button as BaseButton} from 'react-native-elements';
+import isDate from 'lodash/isDate';
 import DatePicker from 'react-native-date-picker';
 import Text from '~/components/Text';
 import Modal from 'react-native-modal';
@@ -19,6 +20,7 @@ const LeftIcon = ({leftIcon}) => {
 const DateText = ({date, placeholder}) => {
   if (isNull(date))
     return <Text style={styles.placeholder}>{placeholder}</Text>;
+
   return (
     <Text style={styles.dateText}>{format(date, 'yyyy-MM-dd HH:mm')}</Text>
   );
@@ -56,8 +58,8 @@ const DatetimeModal = ({
   const [date, setDate] = useState(null);
 
   useEffect(() => {
-    if (!isEmpty(defaultDate)) {
-      setDate(parseISO(defaultStr));
+    if (isDate(defaultDate)) {
+      setDate(defaultDate);
     }
   }, []);
 
@@ -136,7 +138,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     display: 'flex',
     flexDirection: 'row',
-    height: 62,
+    height: 54,
     width: '100%',
     borderBottomWidth: 2,
     alignItems: 'center',

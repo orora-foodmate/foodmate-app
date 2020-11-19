@@ -39,6 +39,8 @@ import iconTicket from './icon_input_ticket.png';
 import iconTicketError from './icon_input_ticket_error.png';
 import inputDeadline from './icon_input_deadline.png';
 import inputDeadlineError from './icon_input_deadline_error.png';
+import iconParticipantActive from './icon-participant-active.png';
+import iconParticipantInactive from './icon-participant-inactive.png';
 
 import star from './icon-star-active.png';
 import starInactive from './icon-star-inactive.png';
@@ -52,6 +54,8 @@ export {
   scan,
   search,
   back,
+  iconParticipantActive,
+  iconParticipantInactive,
   inputDeadline,
   inputDeadlineError,
   inputLockError,

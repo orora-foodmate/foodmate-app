@@ -23,8 +23,9 @@ const SelectInput = ({
   ...props
 }) => {
   const isError = !isEmpty(errorMessage);
-  const errorStyle = isError ? styles.errorStyle : {};
-  const errorFormStyle = isError ? { height: 70 } : { height: 50 };
+  const [errorStyle, errorFormStyle] = isError
+    ? [styles.errorStyle, { height: 70 }]
+    : [{}, { height: 50 }];
 
   return (
     <View style={[styles.formBox, errorFormStyle]}>

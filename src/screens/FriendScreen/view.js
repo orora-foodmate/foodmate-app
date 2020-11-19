@@ -1,26 +1,31 @@
-import React, { Fragment, useEffect } from 'react';
-import { SectionList } from 'react-native';
-import { Text } from 'react-native-elements';
+import React, {Fragment, useEffect} from 'react';
+import {View, SectionList, StyleSheet} from 'react-native';
+import {Text} from 'react-native-elements';
 import {
   useNavigationButtonPress,
   useNavigation,
 } from 'react-native-navigation-hooks';
-import { useFriends } from '~/models';
+import {useFriends} from '~/models';
 import BasicSubscribe from './components/BasicSubscribe';
 import RowItem from './components/RowIem';
 import colors from '~/theme/color';
 
 const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
 
-const renderRowItem = ({ item }) => {
+const renderRowItem = ({item}) => {
+  return <RowItem item={item} />;
+};
+
+const SectionTitle = ({title}) => {
   return (
-    <RowItem
-      item={item}
-    />
+    <View style={styles.sectionTitle}>
+      <Text style={styles.sectionText}>{title}</Text>
+    </View>
   );
 };
+
 const FriendScreen = (props) => {
-  const { push } = useNavigation();
+  const {push} = useNavigation();
   const data = useFriends();
 
   useNavigationButtonPress((e) => {
@@ -35,6 +40,7 @@ const FriendScreen = (props) => {
   useEffect(() => {
     props.handleGetFriends();
   }, []);
+  console.log('TCL: FriendScreen -> data', data);
 
   return (
     <Fragment>
@@ -49,13 +55,24 @@ const FriendScreen = (props) => {
         sections={data}
         keyExtractor={(item) => item.id}
         renderItem={renderRowItem}
-        renderSectionHeader={({ section: { title } }) => (
-          <Text h5>{title}</Text>
+        renderSectionHeader={({section: {title}}) => (
+          <SectionTitle title={title} />
         )}
       />
     </Fragment>
   );
 };
+
+const styles = StyleSheet.create({
+  sectionTitle: {
+    padding: 15,
+    borderColor: colors.greyLightest,
+    borderBottomWidth: 1,
+  },
+  sectionText: {
+    color: colors.grey
+  }
+});
 
 FriendScreen.options = {
   topBar: {

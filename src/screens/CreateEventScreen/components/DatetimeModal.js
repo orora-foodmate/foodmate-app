@@ -61,7 +61,7 @@ const DatetimeModal = ({
     if (isDate(defaultDate)) {
       setDate(defaultDate);
     }
-  }, [defaultDate]);
+  }, []);
 
   return (
     <View style={styles.container}>

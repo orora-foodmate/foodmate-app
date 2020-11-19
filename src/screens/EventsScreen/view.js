@@ -68,6 +68,7 @@ const EventsScreen = (props) => {
       <FlatList
         keyExtractor={(item) => item.id}
         data={events}
+        numColumns={2}
         contentContainerStyle={styles.list}
         renderItem={({item}) => {
           return <EventCard event={item} push={push} />;
@@ -84,12 +85,11 @@ const styles = StyleSheet.create({
   },
   list: {
     justifyContent: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: 'column',
     margin: 5,
   },
   cardContainer: {
-    width: width / 2 - 10,
+    width: width / 2 - 5,
   },
   card: {
     margin: 5,

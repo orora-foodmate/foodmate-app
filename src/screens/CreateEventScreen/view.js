@@ -130,7 +130,7 @@ const CreateActivityScreen = (props) => {
   );
 
   const handleCreateEvent = () => {
-    handleCreateEvent({
+    props.handleCreateEvent({
       ...payload,
       push,
       onSuccess: () => setDialogVisible(false),

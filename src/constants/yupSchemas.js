@@ -14,3 +14,15 @@ export const passwordSchema = yup
     '請設置8至20碼英數組合'
   )
   .required('密码不可为空');
+
+export const nameSchema = (requiredMessage) =>
+  yup.string('不是正确的文字格式').required(requiredMessage);
+
+export const dateSchema = (requiredMessage) =>
+  yup.date().typeError('錯誤的時間格式').required(requiredMessage);
+
+export const enumSchema = (types, typeMessage, requiredMessage) =>
+  yup.number().typeError(requiredMessage).oneOf(types, typeMessage).required(requiredMessage);
+
+export const urlSchema = (typeMessage, requiredMessage) =>
+  yup.string().url().typeError(typeMessage).required(requiredMessage);

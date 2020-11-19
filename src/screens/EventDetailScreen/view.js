@@ -1,50 +1,187 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import isEmpty from 'lodash/isEmpty';
-import {View} from 'react-native';
-import {Card, Icon} from 'react-native-elements';
-import {useEventDetail} from '~/models';
-import Button from '~/components/Button';
+import format from 'date-fns/format';
+import {View, StyleSheet, ScrollView} from 'react-native';
+import { Icon, Image} from 'react-native-elements';
+import colors from '~/theme/color';
 import Text from '~/components/Text';
-import Label from '~/components/Label';
-import { WebView } from 'react-native-webview';
+import Tags from '~/components/Tags';
+import Button from '~/components/Button';
+import introIcon from '~/assets/icons/icon_intro.png';
+import locationIcon from '~/assets/icons/icon_location_primary.png';
+import EventPhotoBlock from '~/components/EventPhotoBlock';
+import {useEventDetail} from '~/models';
+import WebView from 'react-native-webview';
+import { EVENT_STATUS } from '~/constants/common';
+import {iconParticipantActive} from '~/assets/icons';
 
-const id = "5fb291dda7d7ad262d315ca7";
-const EventDetail = () => {
-  const event = useEventDetail(id);
-  if(isEmpty(event)) return null;
-  const uri = encodeURI(`https://www.google.com.tw/maps/place/${event.place.structured_formatting.main_text.replace(' ', '+')}`);
-  console.log('EventDetail -> uri', uri);
+const EventDetail = (props) => {
+  if (isEmpty(props.passProps)) return <Fragment />;
+
+  const {eventId} = props.passProps;
+  const event = useEventDetail(eventId);
+
+  if (isEmpty(event)) return <Fragment />;
+
   return (
-    <View style={{flex: 1}}>
-      <Card>
-        <Card.Image source={{uri: event.logo}} />
-        <Card.Divider />
-        <Card.Title>{event.title}</Card.Title>
-        <Label text='tag' />
-        <Text h4>
-          <Icon size={16} type='font-awesome' name='circle' />
-          {event.datingAt}
+    <ScrollView contentContainerStyle={styles.scroll}>
+      <EventPhotoBlock hideButton uri={event.logo} />
+      <View style={styles.baseInfoContainer}>
+        <Text h1 style={styles.title}>
+          {event.title}
         </Text>
-        <Text h4>{`主辦人: ${event.creator.name}`}</Text>
+        <View>
+          <Button
+            title={`${event.users.length}/${event.userCountMax}`}
+            buttonStyle={styles.buttonTagStyle}
+            titleStyle={styles.buttonTagTitleStyle}
+            icon={
+              <Image
+                source={iconParticipantActive}
+                style={styles.buttonImage}
+              />
+            }
+          />
+        </View>
+      </View>
+      <View>
+        <Tags />
+      </View>
+      <View style={styles.datetimeInfo}>
+        <View>
+          <Text>
+            <Icon
+              size={16}
+              type='font-awesome'
+              name='circle'
+              color={colors.primary}
+              style={styles.dot}
+            />
+            {format(new Date(event.datingAt), 'yyyy-MM-dd HH:mm')}
+          </Text>
+          <Text h5>{`主辦人: ${event.creator.name}`}</Text>
+        </View>
+        <View>
+          <Button
+            title={EVENT_STATUS[event.status]}
+            buttonStyle={styles.buttonStyle}
+            titleStyle={styles.buttonTitleStyle}
+          />
+        </View>
+      </View>
+      <View style={styles.subtitle}>
+        <Image source={introIcon} style={styles.introIcon} />
         <Text h3>簡介</Text>
-        <Text h4>{event.description}</Text>
-        <Button
-          icon={<Icon name='code' color='#ffffff' />}
-          buttonStyle={{
-            borderRadius: 0,
-            marginLeft: 0,
-            marginRight: 0,
-            marginBottom: 0,
+      </View>
+      <View style={styles.description}>
+        <Text style={styles.descriptionText}>{event.description}</Text>
+      </View>
+      <View style={styles.subtitle}>
+        <Image source={locationIcon} style={styles.introIcon} />
+        <Text h3>地點</Text>
+      </View>
+      <View style={styles.place}>
+        <Text h4 style={styles.mainPlace}>
+          {event.place.structured_formatting.main_text}
+        </Text>
+        <Text h6 style={styles.subPlace}>
+          {event.place.structured_formatting.secondary_text}
+        </Text>
+      </View>
+      <View style={styles.map}>
+        <WebView
+          style={{width: '100%', height: 600}}
+          source={{
+            uri: `https://www.google.com/maps/search/?api=1&query=taiwan&query_place_id=${event.place.place_id}&map_action=map`,
           }}
-          title='VIEW NOW'
         />
-      </Card>
-      <WebView
-        source={{ uri }}
-      />
-      <Text>EventDetail</Text>
-    </View>
+      </View>
+    </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  scroll: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  baseInfoContainer: {
+    padding: 10,
+    paddingLeft: 20,
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  title: {
+    textAlign: 'left',
+  },
+  dot: {
+    marginRight: 8,
+  },
+  datetimeInfo: {
+    width: '100%',
+    paddingLeft: 20,
+    paddingRight: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  introIcon: {
+    width: 28,
+    height: 28,
+    marginRight: 10,
+    resizeMode: 'contain',
+  },
+  subtitle: {
+    width: '100%',
+    padding: 20,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  description: {
+    width: '100%',
+    paddingLeft: 24,
+    paddingRight: 24,
+  },
+  descriptionText: {
+    fontSize: 18,
+  },
+  place: {
+    paddingLeft: 20,
+    width: '100%',
+    justifyContent: 'flex-start',
+    marginBottom: 10,
+  },
+  map: {
+    width: '100%',
+    height: 600,
+  },
+  buttonImage: {
+    width: 16,
+    height: 16,
+    marginRight: 5,
+  },
+  buttonTagStyle: {
+    width: 100,
+    height: 30,
+    borderRadius: 5,
+  },
+  buttonTagTitleStyle: {
+    lineHeight: 14,
+    fontSize: 14,
+    color: colors.grey,
+  },
+  buttonStyle: {
+    width: 120,
+    borderRadius: 5,
+  },
+  buttonTitleStyle: {
+    lineHeight: 18,
+    color: colors.grey,
+  },
+});
 
 export default EventDetail;

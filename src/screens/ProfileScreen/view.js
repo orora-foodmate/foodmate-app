@@ -6,7 +6,6 @@ import {Avatar, Button as NativeButton} from 'react-native-elements';
 import colors from '../../theme/color';
 import shadow from '../../theme/shadow';
 import Text from '~/components/Text';
-import Subtitle from '~/components/Subtitle';
 import QRCodeModal from './components/QRCodeModal';
 
 const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
@@ -49,7 +48,7 @@ const ProfileScreen = ({componentId, auth}) => {
         </View>
       </View>
       <View style={styles.introZone}>
-        <Text h5>介紹一下自己吧！</Text>
+        <Text h5>{auth.get('description')}</Text>
       </View>
       <View style={styles.settingsZone}>
         <NativeButton

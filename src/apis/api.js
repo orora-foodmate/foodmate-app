@@ -4,7 +4,6 @@ import {
   fetchGetWithToken,
   fetchPostWithToken,
   fetchPatchWithToken,
-  fetchWithToken,
   fetchWithFormData,
 } from './libs/fetch';
 

@@ -3,6 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 
 const FIRST_LAUNCH_KEY = '@$FIRST_LAUNCH';
 const LOGIN_USER_KEY = '@$LOGIN_USER';
+const WSDISCONNECT_KEY = '@$WSDISCONNECT_KEY';
 
 export const DEFAULT_USER = {
   account: '',
@@ -29,4 +30,18 @@ export const getLoginUser = async () => {
 }
 
 export const saveLoginUser = (user) => AsyncStorage.setItem(LOGIN_USER_KEY, JSON.stringify(user));
+
+export const getWSDisconnectTime = async () => {
+  const WSDisconnectTime = await AsyncStorage.getItem(WSDISCONNECT_KEY);
+  console.log("WSDisconnectTime", WSDisconnectTime)
+  if(isEmpty(WSDisconnectTime)) return null;
+
+  return WSDisconnectTime;
+}
+
+export const saveWSDisconnectTime = async () => {
+  const dateString = new Date().toISOString();
+  console.log("saveWSDisconnectTime -> dateString", dateString)
+  await AsyncStorage.setItem(WSDISCONNECT_KEY, dateString)
+};
 

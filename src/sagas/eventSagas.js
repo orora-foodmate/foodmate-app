@@ -4,7 +4,7 @@ import isFunction from 'lodash/isFunction';
 import {
   createEventResult,
 } from '~/apis/api';
-import { parseISOString } from '~/helper/dateHelper';
+import { parseEventItem } from '~/utils/utils';
 
 const okCreate = (payload) => ({
   type: types.CREATE_EVENT_SUCCESS,
@@ -36,13 +36,7 @@ export function* createEventSaga({payload = {}}) {
 
     const {result} = yield call(createEventResult, customHeaders, createdPayload);
     
-    yield database.events.insert({
-      ...result.data,
-      createAt: parseISOString(result.data.createAt),
-      updateAt: parseISOString(result.data.updateAt),
-      finalReviewAt: parseISOString(result.data.finalReviewAt),
-      datingAt: parseISOString(result.data.datingAt),
-    });
+    yield database.events.insert(parseEventItem(result.data));
     yield put(okCreate());
     if(isFunction(onSuccess)) onSuccess();
     push('EventDetail', {passProps: {eventId: result.data.id}});

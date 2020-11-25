@@ -12,8 +12,8 @@ import locationIcon from '~/assets/icons/icon_location_primary.png';
 import EventPhotoBlock from '~/components/EventPhotoBlock';
 import {useEventDetail} from '~/models';
 import WebView from 'react-native-webview';
-import { EVENT_STATUS } from '~/constants/common';
 import {iconParticipantActive} from '~/assets/icons';
+import EventButton from './components/EventButton';
 
 const EventDetail = (props) => {
   if (isEmpty(props.passProps)) return <Fragment />;
@@ -62,8 +62,9 @@ const EventDetail = (props) => {
           <Text h5>{`主辦人: ${event.creator.name}`}</Text>
         </View>
         <View>
-          <Button
-            title={EVENT_STATUS[event.status]}
+          <EventButton
+            event={event}
+            authUserId={props.authUserId}
             buttonStyle={styles.buttonStyle}
             titleStyle={styles.buttonTitleStyle}
           />

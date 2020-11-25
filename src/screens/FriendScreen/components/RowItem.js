@@ -6,7 +6,6 @@ async function asyncIteratorWatcher(channel, userId) {
   while (true) {
     let packet = await asyncIterator.next();
     if (packet.done) break;
-    console.log("asyncIteratorWatcher -> packet.value", packet.value)
     
   }
 }

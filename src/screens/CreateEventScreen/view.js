@@ -6,7 +6,6 @@ import Button from '~/components/Button';
 import TextArea from '~/components/TextArea';
 import TextInputField from '~/components/Inputs/TextInputField';
 import DatetimeModal from './components/DatetimeModal';
-import RNPickerSelect from 'react-native-picker-select';
 import SelectInput from '~/components/Inputs/SelectInput';
 import InputImage from '~/components/Inputs/InputImage';
 import ConfirmDialog from './components/ConfirmDialog';
@@ -80,13 +79,13 @@ const onUploadImage = (setUploadedImage) => () => {
   handleUploadImage(onUploadSuccess(setUploadedImage), onUploadError);
 };
 
-const submit =  (payload, setErrors, setDialogVisible) => async () => {
+const submit = (payload, setErrors, setDialogVisible) => async () => {
   if (await validateData(payload, setErrors)) {
     setDialogVisible(true);
   }
 };
 
-const handleOnBlur = ( errors, editPayload, setErrors ) => async () => {
+const handleOnBlur = (errors, editPayload, setErrors) => async () => {
   if (!isEmpty(errors)) await validateData(editPayload, setErrors);
 };
 
@@ -120,19 +119,15 @@ const CreateActivityScreen = (props) => {
     place,
   };
 
-  const onSubmit = submit(
-    payload,
-    setErrors,
-    setDialogVisible
-  );
+  const onSubmit = submit(payload, setErrors, setDialogVisible);
 
   const handleCreateEvent = () => {
     props.handleCreateEvent({
       ...payload,
       push,
       onSuccess: () => setDialogVisible(false),
-    })
-  }
+    });
+  };
 
   const onBlur = handleOnBlur(errors, payload, setErrors);
 

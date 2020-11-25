@@ -2,7 +2,7 @@ import socketClusterClient from 'socketcluster-client';
 import isNull from 'lodash/isNull';
 import Config from '~/constants/envConfig';
 import {getWSDisconnectTime, saveWSDisconnectTime} from './localStorageHelper';
-import {parseFriendItems} from '~/utils/utils';
+import {parseEventItems, parseFriendItems} from '~/utils/utils';
 
 const DEFAULT_AUTO_RECONNECT_OPTIONS = {
   initialDelay: 10000, //milliseconds
@@ -163,7 +163,8 @@ class socketClusterHelperClass {
         const {friends, events} = await this._socketClient.invoke(
           'syncData',
           query
-        );
+          );
+
         if (friends.length !== 0) {
           const friendItems = parseFriendItems(friends);
           await database.friends.bulkInsert(friendItems);
@@ -171,7 +172,7 @@ class socketClusterHelperClass {
 
         if (events.length !== 0) {
           const eventItems = parseEventItems(events);
-          database.events.bulkInsert(eventItems);
+          await database.events.bulkInsert(eventItems);
         }
       });
 

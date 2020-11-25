@@ -23,7 +23,6 @@ async function approveFriendWatcher(channel, handleApproveFriendByWebsocket) {
   while (true) {
     let packet = await asyncIterator.next();
     if (packet.done) break;
-    console.log('approveFriendWatcher -> packet.value', packet.value)
     handleApproveFriendByWebsocket(packet.value);
   }
 }

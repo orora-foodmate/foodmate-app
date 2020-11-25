@@ -40,7 +40,6 @@ const FriendScreen = (props) => {
   useEffect(() => {
     props.handleGetFriends();
   }, []);
-  console.log('TCL: FriendScreen -> data', data);
 
   return (
     <Fragment>

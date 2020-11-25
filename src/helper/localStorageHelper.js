@@ -33,7 +33,6 @@ export const saveLoginUser = (user) => AsyncStorage.setItem(LOGIN_USER_KEY, JSON
 
 export const getWSDisconnectTime = async () => {
   const WSDisconnectTime = await AsyncStorage.getItem(WSDISCONNECT_KEY);
-  console.log("WSDisconnectTime", WSDisconnectTime)
   if(isEmpty(WSDisconnectTime)) return null;
 
   return WSDisconnectTime;
@@ -41,7 +40,6 @@ export const getWSDisconnectTime = async () => {
 
 export const saveWSDisconnectTime = async () => {
   const dateString = new Date().toISOString();
-  console.log("saveWSDisconnectTime -> dateString", dateString)
   await AsyncStorage.setItem(WSDISCONNECT_KEY, dateString)
 };
 

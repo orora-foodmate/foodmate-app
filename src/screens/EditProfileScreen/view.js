@@ -1,27 +1,70 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import * as yup from 'yup';
 import {View, StyleSheet} from 'react-native';
 import isEmpty from 'lodash/isEmpty';
 import cloneDeep from 'lodash/cloneDeep';
 import shadow from '../../theme/shadow';
 import colors from '../../theme/color';
 import Button from '~/components/Button';
+import TextArea from '~/components/TextArea';
 import InputImage from '~/components/Inputs/InputImage';
 import ScrollContainer from '~/components/ScrollContainer';
 import TextInputField from '~/components/Inputs/TextInputField';
 import {Avatar, Button as NativeButton} from 'react-native-elements';
 import {inputDonut, inputDonutError} from '~/assets/icons';
+import {nameSchema} from '~/constants/yupSchemas';
+import {handleYupSchema, handleYupErrors} from '~/helper/yupHelper';
 
 const DEFAULT_PAYLOAD = {};
 
-const handleOnChange = (setter) => ({target: {name, value}}) => {
-  setter({[name]: value});
+const schema = yup.object().shape({
+  name: nameSchema('請輸入暱稱'),
+  description: yup.string().required('請輸入自我介紹'),
+});
+
+const handleOnChange = (setter) => (name) => (value) => {
+  setter((payload) => ({...payload, [name]: value}));
 };
 
-const EditProfileScreen = ({auth}) => {
+const validateData = async (payload, setErrors) => {
+  try {
+    await handleYupSchema(schema, payload);
+    setErrors({});
+    return true;
+  } catch (error) {
+    const errors = handleYupErrors(error);
+    setErrors(errors);
+    return false;
+  }
+};
+
+const handleOnBlur = (errors, payload, setErrors) => async () => {
+  if (!isEmpty(errors)) await validateData(payload, setErrors);
+};
+
+const submit = (payload, setErrors, handleUpdateProfile) => async () => {
+  if (await validateData(payload, setErrors)) {
+    handleUpdateProfile(payload);
+  }
+};
+
+const EditProfileScreen = ({auth, handleUpdateProfile, passProps}) => {
   const [errors, setErrors] = useState({});
   const [payload, setPayload] = useState(cloneDeep(DEFAULT_PAYLOAD));
 
+  useEffect(() => {
+    if (!isEmpty(passProps)) {
+      console.log("TCL ~ file: view.js ~ line 61 ~ useEffect ~ passProps", passProps)
+      const {username, description} = passProps;
+      setPayload(cloneDeep({ name: username, description}));
+    }
+  }, [passProps]);
+
   const onChange = handleOnChange(setPayload);
+
+  const onSubmit = submit(payload, setErrors, handleUpdateProfile);
+
+  const onBlur = handleOnBlur(errors, payload, setErrors);
 
   return (
     <ScrollContainer containerStyle={styles.container}>
@@ -31,7 +74,7 @@ const EditProfileScreen = ({auth}) => {
           style={styles.avatar}
           source={{uri: auth.get('avatar')}}
         />
-         <NativeButton
+        <NativeButton
           title='編輯大頭照'
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
@@ -39,20 +82,33 @@ const EditProfileScreen = ({auth}) => {
         />
         <TextInputField
           name='name'
-          placeholder='请输入暱稱'
-          errorMessage={errors.account}
-          onChangeText={onChange}
+          placeholder='請輸入暱稱'
+          errorMessage={errors.name}
+          onBlur={onBlur}
+          value={payload.name}
+          onChangeText={onChange('name')}
           leftIcon={
             <InputImage
               icon={inputDonut}
               errorIcon={inputDonutError}
-              isError={!isEmpty(errors.account)}
+              isError={!isEmpty(errors.name)}
             />
           }
         />
+        <TextArea
+          title='自我介紹'
+          numberOfLines={4}
+          name='description'
+          placeholder='請輸入自我介紹'
+          value={payload.description}
+          onBlur={onBlur}
+          errorMessage={errors.description}
+          containerStyle={styles.textarea}
+          onChangeText={onChange('description')}
+        />
       </View>
       <View style={styles.buttonZone}>
-        <Button title='儲存' />
+        <Button title='儲存' onPress={onSubmit} />
         <Button title='返回' type='outline' />
       </View>
     </ScrollContainer>
@@ -67,7 +123,7 @@ const styles = StyleSheet.create({
   },
   form: {
     display: 'flex',
-    width: 300,
+    width: 230,
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 20,
@@ -75,7 +131,7 @@ const styles = StyleSheet.create({
   buttonZone: {
     paddingTop: 20,
     alignItems: 'center',
-  },  
+  },
   avatar: {
     width: 100,
     height: 100,
@@ -101,6 +157,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: '#ddd',
     backgroundColor: '#fff',
+  },
+  textarea: {
+    width: 230,
+    height: 200,
   },
 });
 

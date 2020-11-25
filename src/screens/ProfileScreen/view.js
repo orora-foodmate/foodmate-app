@@ -10,8 +10,8 @@ import QRCodeModal from './components/QRCodeModal';
 
 const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
 
-const goto = (push) => (path) => () => {
-  push(path);
+const goto = (push) => (path, params={}) => () => {
+  push(path, { passProps: params});
 };
 
 const ProfileScreen = ({componentId, auth}) => {
@@ -56,7 +56,7 @@ const ProfileScreen = ({componentId, auth}) => {
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
           containerStyle={styles.buttonContainer}
-          onPress={onGoToPath('EditProfile')}
+          onPress={onGoToPath('EditProfile', { username: auth.get('name'), description: auth.get('description') })}
         />
         <NativeButton
           title='設定'

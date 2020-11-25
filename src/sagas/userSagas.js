@@ -52,7 +52,7 @@ const errorUpdate = payload => ({
 })
 
 export function* updateUserSaga({ payload }) {
-  const { popToRoot, ...submitPayload } = payload;
+  const { ...submitPayload } = payload;
   try {
     const { auth } = yield select(({ auth, setting }) => ({ auth, setting }));
     

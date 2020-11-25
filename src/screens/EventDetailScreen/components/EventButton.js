@@ -2,9 +2,8 @@ import React from 'react';
 import Button from '~/components/Button';
 import { EVENT_STATUS } from '~/constants/common';
 
-const EventButton = ({event, authUserId, ...props}) => {
-console.log("EventButton -> authUserId", authUserId)
-console.log("EventButton -> event.toJSON()", event.toJSON())
+const EventButton = ({event, authUserId, handleJoinEvent, ...props}) => {
+
   if(authUserId === event.creator.id) {
     return (<Button
       title='主揪'
@@ -27,7 +26,9 @@ console.log("EventButton -> event.toJSON()", event.toJSON())
     <Button
       title='想參加'
       {...props}
-      onPress={() => alert('想參加')}
+      onPress={() => {
+        handleJoinEvent({eventId: event.id});
+      }}
     />
   );
 };

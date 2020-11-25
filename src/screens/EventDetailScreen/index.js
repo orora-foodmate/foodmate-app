@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { joinEventAction } from '~/actions/eventActions';
 import EventDetail from './view';
 
 const mapStateToProps = ({ auth, search }) => ({
@@ -6,6 +7,9 @@ const mapStateToProps = ({ auth, search }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  handleJoinEvent: payload => {
+    dispatch(joinEventAction(payload));
+  },
 });
 
 export default connect(

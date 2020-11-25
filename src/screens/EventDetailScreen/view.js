@@ -67,6 +67,7 @@ const EventDetail = (props) => {
             authUserId={props.authUserId}
             buttonStyle={styles.buttonStyle}
             titleStyle={styles.buttonTitleStyle}
+            handleJoinEvent={props.handleJoinEvent}
           />
         </View>
       </View>

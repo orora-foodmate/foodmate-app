@@ -6,9 +6,9 @@ import {
   useNavigation,
 } from 'react-native-navigation-hooks';
 import {useFriends} from '~/models';
-import BasicSubscribe from './components/BasicSubscribe';
-import RowItem from './components/RowIem';
 import colors from '~/theme/color';
+import RowItem from './components/RowItem';
+import BasicSubscribe from './components/BasicSubscribe';
 
 const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
 
@@ -40,7 +40,6 @@ const FriendScreen = (props) => {
   useEffect(() => {
     props.handleGetFriends();
   }, []);
-  console.log('TCL: FriendScreen -> data', data);
 
   return (
     <Fragment>

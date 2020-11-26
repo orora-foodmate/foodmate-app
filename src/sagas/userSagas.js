@@ -52,14 +52,13 @@ const errorUpdate = payload => ({
 })
 
 export function* updateUserSaga({ payload }) {
-  const { ...submitPayload } = payload;
   try {
     const { auth } = yield select(({ auth, setting }) => ({ auth, setting }));
     
     const customHeaders = {
       Authorization: `Bearer ${auth.get('token')}`
     };
-    const { result } = yield call(updateUserResult, customHeaders, submitPayload);
+    const { result } = yield call(updateUserResult, customHeaders, payload);
 
     yield put(okUpdate(result.data));
     rootNavigator();

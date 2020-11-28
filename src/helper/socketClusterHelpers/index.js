@@ -3,6 +3,7 @@ import isNull from 'lodash/isNull';
 import Config from '~/constants/envConfig';
 import { parseEventItems, parseFriendItems } from '~/utils/utils';
 import { inviteFriendAction, rejectFriendByWebsocketAction, approveFriendByWebsocketAction } from './actions/friendActions';
+import { createEventByWebsocketAction } from './actions/eventActions';
 
 const DEFAULT_AUTO_RECONNECT_OPTIONS = {
   initialDelay: 10000, //milliseconds
@@ -84,12 +85,14 @@ class socketClusterHelperClass {
     this.subscribe(`friend.approveFriend.${userId}`, (payload) => this._emit(approveFriendByWebsocketAction(payload)));
     this.subscribe(`friend.inviteFriend.${userId}`, (payload) => this._emit(inviteFriendAction(payload)));
     this.subscribe(`friend.rejectFriend.${userId}`, (payload) => this._emit(rejectFriendByWebsocketAction(payload)));
+    this.subscribe(`event.created`, (payload) => this._emit(createEventByWebsocketAction(payload)));
   }
 
   basicUnsubscribe = (userId) => {
-    [`friend.approveFriend.${userId}`, `friend.inviteFriend.${userId}`, `friend.rejectFriend.${userId}`].map(key => {
+    ['event.created', `friend.approveFriend.${userId}`, `friend.inviteFriend.${userId}`, `friend.rejectFriend.${userId}`].map(key => {
       const channel = this._subscribes[key];
-      channel.kll();
+      console.log('🚀 ~ file: index.js ~ line 97 ~ socketClusterHelperClass ~ channel', channel)
+      if(channel) channel.kll();
       this._subscribes[key] = undefined;
     })
   }

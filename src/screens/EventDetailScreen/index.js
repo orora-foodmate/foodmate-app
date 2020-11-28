@@ -1,13 +1,18 @@
 import { connect } from 'react-redux';
-import SearchScreen from './view';
+import { joinEventAction } from '~/actions/eventActions';
+import EventDetail from './view';
 
 const mapStateToProps = ({ auth, search }) => ({
+  authUserId: auth.get('id')
 });
 
 const mapDispatchToProps = dispatch => ({
+  handleJoinEvent: payload => {
+    dispatch(joinEventAction(payload));
+  },
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SearchScreen);
+)(EventDetail);

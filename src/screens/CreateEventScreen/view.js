@@ -85,7 +85,7 @@ const submit = (payload, setErrors, setDialogVisible) => async () => {
   }
 };
 
-const handleOnBlur = ( errors, editPayload, setErrors ) => async () => {
+const handleOnBlur = (errors, editPayload, setErrors) => async () => {
   if (!isEmpty(errors)) await validateData(editPayload, setErrors);
 };
 
@@ -119,19 +119,15 @@ const CreateActivityScreen = (props) => {
     place,
   };
 
-  const onSubmit = submit(
-    payload,
-    setErrors,
-    setDialogVisible
-  );
+  const onSubmit = submit(payload, setErrors, setDialogVisible);
 
   const handleCreateEvent = () => {
     props.handleCreateEvent({
       ...payload,
       push,
       onSuccess: () => setDialogVisible(false),
-    })
-  }
+    });
+  };
 
   const onBlur = handleOnBlur(errors, payload, setErrors);
 

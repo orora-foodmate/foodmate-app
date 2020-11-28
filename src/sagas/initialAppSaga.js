@@ -28,7 +28,7 @@ export function* initialAppSaga() {
     const fcmToken = yield call(onAppBootstrap, isFirstLaunch);
 
     const socket = loginUser.isAuth
-      ? socketClusterHelper.initialClient(loginUser.token)
+      ? socketClusterHelper.initialClient(loginUser.token, database)
       : null;
 
     const resAction = true

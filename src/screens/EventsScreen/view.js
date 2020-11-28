@@ -15,6 +15,7 @@ import {
 } from 'react-native-navigation-hooks';
 import colors from '~/theme/color';
 import Text from '~/components/Text';
+import socketClusterHelper from '~/helper/socketClusterHelpers';
 
 const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
 
@@ -56,6 +57,10 @@ const EventsScreen = (props) => {
 
   useEffect(() => {
     props.handleRegisterWebsocket();
+    socketClusterHelper.basicSubscribe(props.userId);
+    return () => {
+      socketClusterHelper.basicUnsubscribe(props.userId);
+    }
   }, []);
   
   useNavigationButtonPress((e) => {

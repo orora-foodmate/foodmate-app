@@ -1,7 +1,8 @@
 import socketClusterClient from 'socketcluster-client';
 import isNull from 'lodash/isNull';
 import Config from '~/constants/envConfig';
-import {parseEventItems, parseFriendItems} from '~/utils/utils';
+import { parseEventItems, parseFriendItems } from '~/utils/utils';
+import { inviteFriendAction, rejectFriendByWebsocketAction, approveFriendByWebsocketAction } from './actions/friendActions';
 
 const DEFAULT_AUTO_RECONNECT_OPTIONS = {
   initialDelay: 10000, //milliseconds
@@ -54,6 +55,7 @@ class socketClusterHelperClass {
 
     this._socketClient = null;
     this._emit = null;
+    this._subscribes = {};
     this.hostname = hostname;
     this.port = port;
     this.authTokenName = authTokenName;
@@ -68,7 +70,38 @@ class socketClusterHelperClass {
     };
   }
 
-  setEmit = (emit = null) => this._emit = emit;
+  setEmit = (emit = null) => {
+    this._emit = emit;
+  }
+
+  subscribe = (channelName, actionFunction) => {
+    const channel = this._socketClient.subscribe(channelName);
+    this._subscribes[channelName] = channel;
+    this.subscribeWatcher(channel, actionFunction);
+  };
+
+  basicSubscribe = (userId) => {
+    this.subscribe(`friend.approveFriend.${userId}`, (payload) => this._emit(approveFriendByWebsocketAction(payload)));
+    this.subscribe(`friend.inviteFriend.${userId}`, (payload) => this._emit(inviteFriendAction(payload)));
+    this.subscribe(`friend.rejectFriend.${userId}`, (payload) => this._emit(rejectFriendByWebsocketAction(payload)));
+  }
+
+  basicUnsubscribe = (userId) => {
+    [`friend.approveFriend.${userId}`, `friend.inviteFriend.${userId}`, `friend.rejectFriend.${userId}`].map(key => {
+      const channel = this._subscribes[key];
+      channel.kll();
+      this._subscribes[key] = undefined;
+    })
+  }
+
+  subscribeWatcher = async (channel, actionFunction) => {
+    let asyncIterator = channel.createConsumer();
+    while (true) {
+      let packet = await asyncIterator.next();
+      if (packet.done) break;
+      actionFunction(packet.value);
+    }
+  }
 
   close = () => {
     if (this._socketClient) {
@@ -129,22 +162,22 @@ class socketClusterHelperClass {
       const getSyncDateQuery = async (database) => {
         const [maxCreataAtEvent = null] = await database.events
           .find()
-          .sort({createAt: -1})
+          .sort({ createAt: -1 })
           .limit(1)
           .exec();
         const [maxUpdateAtEvent = null] = await database.events
           .find()
-          .sort({updateAt: -1})
+          .sort({ updateAt: -1 })
           .limit(1)
           .exec();
         const [maxCreateAtFriend = null] = await database.friends
           .find()
-          .sort({createAt: -1})
+          .sort({ createAt: -1 })
           .limit(1)
           .exec();
         const [maxUpdateAtFriend = null] = await database.friends
           .find()
-          .sort({updateAt: -1})
+          .sort({ updateAt: -1 })
           .limit(1)
           .exec();
 
@@ -162,10 +195,10 @@ class socketClusterHelperClass {
 
       lissenEvent(this._socketClient, 'connect', async () => {
         const query = await getSyncDateQuery(database);
-        const {friends, events} = await this._socketClient.invoke(
+        const { friends, events } = await this._socketClient.invoke(
           'syncData',
           query
-          );
+        );
 
         if (friends.length !== 0) {
           const friendItems = parseFriendItems(friends);

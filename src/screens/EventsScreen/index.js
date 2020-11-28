@@ -2,7 +2,8 @@ import { connect } from 'react-redux';
 import { registerWebsocketAction } from '~/actions/settingActions';
 import EventsScreen from './view';
 
-const mapStateToProps = ({ auth, search }) => ({
+const mapStateToProps = ({ auth }) => ({
+  userId: auth.get('id'),
 });
 
 const mapDispatchToProps = dispatch => ({

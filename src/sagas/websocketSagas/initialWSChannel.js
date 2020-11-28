@@ -1,7 +1,8 @@
+
 import { eventChannel } from 'redux-saga';
 import socketClusterHelper from '~/helper/socketClusterHelpers';
 
-function createWebsocketChannel() {
+export function createWebsocketChannel() {
   return eventChannel((emit) => {
     socketClusterHelper.setEmit(emit);
     return () => {
@@ -11,7 +12,10 @@ function createWebsocketChannel() {
   });
 }
 
-export default function* initWebsocketChannel() {
-  const wsUnsubscribe = createWebsocketChannel();
-  yield put({ type: types.REGISTER_WEBSOCKET_SUCCESS, payload: { wsUnsubscribe } });
+
+export function* forwardMessageSaga({ type, ...payload }) {
+  yield put({
+    type,
+    payload,
+  });
 }

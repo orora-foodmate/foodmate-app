@@ -1,7 +1,6 @@
 import socketClusterClient from 'socketcluster-client';
 import isNull from 'lodash/isNull';
 import Config from '~/constants/envConfig';
-import {getWSDisconnectTime, saveWSDisconnectTime} from './localStorageHelper';
 import {parseEventItems, parseFriendItems} from '~/utils/utils';
 
 const DEFAULT_AUTO_RECONNECT_OPTIONS = {
@@ -54,6 +53,7 @@ class socketClusterHelperClass {
     } = options;
 
     this._socketClient = null;
+    this._emit = null;
     this.hostname = hostname;
     this.port = port;
     this.authTokenName = authTokenName;
@@ -67,6 +67,8 @@ class socketClusterHelperClass {
       ...authEngine,
     };
   }
+
+  setEmit = (emit = null) => this._emit = emit;
 
   close = () => {
     if (this._socketClient) {

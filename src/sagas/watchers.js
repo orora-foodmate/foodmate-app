@@ -8,13 +8,18 @@ import { addMessageByWebsocketSaga } from './messageByWebsocketSagas';
 import { getUserByIdSaga, updateUserSaga } from './userSagas';
 import { approveFriendByWebsocketSaga, inviteFriendByWebsocketSaga, rejectFriendByWebsocketSaga } from './websocketSagas/friendSagas';
 import { createEventSaga, joinEventSaga } from './eventSagas';
+import initWebsocketChannel from './websocketSagas/initialWSChannel';
 
 export function* watchInitialAppSaga() {
   yield takeLatest(types.INITIAL_APP, initialAppSaga);
 }
 
-export function* watchregisterUserSaga() {
+export function* watchRegisterUserSaga() {
   yield takeLatest(types.REGISTER_USER, registerUserSaga);
+}
+
+export function* watchRegisterWebsocketSaga() {
+  yield takeLatest(types.REGISTER_WEBSOCKET, initWebsocketChannel);
 }
 
 export function* watchLoginSaga() {

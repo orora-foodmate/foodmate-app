@@ -14,6 +14,7 @@ export const authState = fromJS({
 export const settingState = fromJS({
   isInitialed: false,
   database: null,
+  wsUnsubscribe: null,
 });
 
 export const searchState = fromJS({

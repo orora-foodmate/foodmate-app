@@ -59,6 +59,7 @@ SelectInput.propTypes = {
       label: propTypes.string,
       value: propTypes.oneOfType([
         propTypes.string,
+        propTypes.array,
         propTypes.number,
         propTypes.oneOf([null]),
       ]),

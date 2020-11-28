@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   FlatList,
@@ -54,6 +54,10 @@ const EventsScreen = (props) => {
   const events = useEvents();
   const {push} = useNavigation();
 
+  useEffect(() => {
+    props.handleRegisterWebsocket();
+  }, []);
+  
   useNavigationButtonPress((e) => {
     if (
       props.componentId === e.componentId &&

@@ -57,12 +57,11 @@ SelectInput.propTypes = {
   items: propTypes.arrayOf(
     propTypes.shape({
       label: propTypes.string,
-      value: propTypes.oneOfType([
-        propTypes.string,
-        propTypes.array,
-        propTypes.number,
-        propTypes.oneOf([null]),
-      ]),
+      // value: propTypes.oneOfType([
+      //   propTypes.string,
+      //   propTypes.number,
+      //   propTypes.oneOf([null]),
+      // ]),
     })
   ),
 };

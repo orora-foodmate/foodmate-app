@@ -85,14 +85,17 @@ class socketClusterHelperClass {
     this.subscribe(`friend.approveFriend.${userId}`, (payload) => this._emit(approveFriendByWebsocketAction(payload)));
     this.subscribe(`friend.inviteFriend.${userId}`, (payload) => this._emit(inviteFriendAction(payload)));
     this.subscribe(`friend.rejectFriend.${userId}`, (payload) => this._emit(rejectFriendByWebsocketAction(payload)));
-    this.subscribe(`event.created`, (payload) => this._emit(createEventByWebsocketAction(payload)));
+    this.subscribe(`event.created`, (payload) => {
+    console.log("socketClusterHelperClass -> payload", payload)
+      this._emit(createEventByWebsocketAction(payload));
+    });
   }
 
   basicUnsubscribe = (userId) => {
     ['event.created', `friend.approveFriend.${userId}`, `friend.inviteFriend.${userId}`, `friend.rejectFriend.${userId}`].map(key => {
       const channel = this._subscribes[key];
       console.log('🚀 ~ file: index.js ~ line 97 ~ socketClusterHelperClass ~ channel', channel)
-      if(channel) channel.kll();
+      if(channel) channel.kill();
       this._subscribes[key] = undefined;
     })
   }

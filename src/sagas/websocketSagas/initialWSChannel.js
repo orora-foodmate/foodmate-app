@@ -1,5 +1,6 @@
 
 import { eventChannel } from 'redux-saga';
+import { put } from 'redux-saga/effects';
 import socketClusterHelper from '~/helper/socketClusterHelpers';
 
 export function createWebsocketChannel() {

@@ -18,15 +18,6 @@ export function* watchRegisterUserSaga() {
   yield takeLatest(types.REGISTER_USER, registerUserSaga);
 }
 
-export function* watchRegisterWebsocketSaga() {
-  const channel = yield call(createWebsocketChannel);
-
-  while (true) {
-    const actionObj = yield take(channel);
-    yield fork(forwardMessageSaga, actionObj);
-  }
-}
-
 export function* watchLoginSaga() {
   yield takeLatest(types.LOGIN, loginSaga);
 }
@@ -66,6 +57,17 @@ export function* watchRejectInviteFriendSaga() {
 export function* watchApproveInviteFriendSaga() {
   yield takeLatest(types.APPROVE_INVITE_FRIEND, approveInviteFriendSaga);
 }
+
+
+export function* watchRegisterWebsocketSaga() {
+  const channel = yield call(createWebsocketChannel);
+
+  while (true) {
+    const actionObj = yield take(channel);
+    yield call(forwardMessageSaga, actionObj);
+  }
+}
+
 
 export function* watchGetFriendsSaga() {
   const friendChan = yield actionChannel(types.GET_FRIENDS);

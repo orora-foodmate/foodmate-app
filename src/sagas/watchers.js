@@ -9,6 +9,7 @@ import { getUserByIdSaga, updateUserSaga } from './userSagas';
 import { approveFriendByWebsocketSaga, inviteFriendByWebsocketSaga, rejectFriendByWebsocketSaga } from './websocketSagas/friendSagas';
 import { createEventSaga, joinEventSaga } from './eventSagas';
 import { createWebsocketChannel, forwardMessageSaga } from './websocketSagas/initialWSChannel';
+import { createEventByWebsocketSaga } from './websocketSagas/eventSagas';
 
 export function* watchInitialAppSaga() {
   yield takeLatest(types.INITIAL_APP, initialAppSaga);
@@ -82,6 +83,14 @@ export function* watchAddMessageSaga() {
   while (true) {
     const actionObject = yield take(messageChan);
     yield call(addMessageSaga, actionObject);
+  }
+}
+
+export function* watchCreateEventByWebsocketSaga() {
+  const messageChan = yield actionChannel(types.CREATE_EVENT_BY_WEBSOCKET);
+  while (true) {
+    const actionObject = yield take(messageChan);
+    yield call(createEventByWebsocketSaga, actionObject);
   }
 }
 

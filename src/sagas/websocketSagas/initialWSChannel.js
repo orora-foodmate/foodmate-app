@@ -14,7 +14,7 @@ export function createWebsocketChannel() {
 }
 
 
-export function* forwardMessageSaga({ type, ...payload }) {
+export function* forwardMessageSaga({ type, payload }) {
   yield put({
     type,
     payload,

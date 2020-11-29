@@ -22,6 +22,7 @@ const SelectInput = ({
   placeholderText,
   ...props
 }) => {
+  console.log("value", value)
   const isError = !isEmpty(errorMessage);
   const [errorStyle, errorFormStyle] = isError
     ? [styles.errorStyle, { height: 70 }]

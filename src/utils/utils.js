@@ -1,5 +1,5 @@
 import pick from 'lodash/pick';
-import { parseISOString } from '~/helper/dateHelper';
+import {parseISOString} from '~/helper/dateHelper';
 
 export const parseEventItem = (event) => {
   return {
@@ -29,7 +29,7 @@ export const parseFriendItem = (friend) => {
     ]),
     createAt,
     updateAt,
-  }
+  };
 };
 
 export const parseFriendItems = (friends) => friends.map(parseFriendItem);

@@ -204,7 +204,8 @@ class socketClusterHelperClass {
         const { friends, events } = await this._socketClient.invoke(
           'syncData',
           query
-        );
+          );
+          console.log("socketClusterHelperClass -> initialClient -> events", events)
 
         if (friends.length !== 0) {
           const friendItems = parseFriendItems(friends);

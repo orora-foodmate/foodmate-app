@@ -8,7 +8,6 @@ import {
 import {useFriends} from '~/models';
 import colors from '~/theme/color';
 import RowItem from './components/RowItem';
-import BasicSubscribe from './components/BasicSubscribe';
 
 const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
 
@@ -43,13 +42,6 @@ const FriendScreen = (props) => {
 
   return (
     <Fragment>
-      <BasicSubscribe
-        socket={props.socket}
-        userId={props.userId}
-        handleInviteFriendByWebsocket={props.handleInviteFriendByWebsocket}
-        handleRejectFriendByWebsocket={props.handleRejectFriendByWebsocket}
-        handleApproveFriendByWebsocket={props.handleApproveFriendByWebsocket}
-      />
       <SectionList
         sections={data}
         keyExtractor={(item) => item.id}

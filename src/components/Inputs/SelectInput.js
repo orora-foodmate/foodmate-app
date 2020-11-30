@@ -22,6 +22,7 @@ const SelectInput = ({
   placeholderText,
   ...props
 }) => {
+  console.log("value", value)
   const isError = !isEmpty(errorMessage);
   const [errorStyle, errorFormStyle] = isError
     ? [styles.errorStyle, { height: 70 }]
@@ -57,11 +58,11 @@ SelectInput.propTypes = {
   items: propTypes.arrayOf(
     propTypes.shape({
       label: propTypes.string,
-      value: propTypes.oneOfType([
-        propTypes.string,
-        propTypes.number,
-        propTypes.oneOf([null]),
-      ]),
+      // value: propTypes.oneOfType([
+      //   propTypes.string,
+      //   propTypes.number,
+      //   propTypes.oneOf([null]),
+      // ]),
     })
   ),
 };

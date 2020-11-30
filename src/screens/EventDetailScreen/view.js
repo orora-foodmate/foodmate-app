@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import isEmpty from 'lodash/isEmpty';
 import format from 'date-fns/format';
 import {View, StyleSheet, ScrollView} from 'react-native';
-import {Card, Icon, Image} from 'react-native-elements';
+import { Icon, Image} from 'react-native-elements';
 import colors from '~/theme/color';
 import Text from '~/components/Text';
 import Tags from '~/components/Tags';
@@ -11,10 +11,9 @@ import introIcon from '~/assets/icons/icon_intro.png';
 import locationIcon from '~/assets/icons/icon_location_primary.png';
 import EventPhotoBlock from '~/components/EventPhotoBlock';
 import {useEventDetail} from '~/models';
-import {useNavigation} from 'react-native-navigation-hooks';
 import WebView from 'react-native-webview';
-import { EVENT_STATUS } from '~/constants/common';
-import {iconParticipantActive, iconParticipantInactive} from '~/assets/icons';
+import {iconParticipantActive} from '~/assets/icons';
+import EventButton from './components/EventButton';
 
 const EventDetail = (props) => {
   if (isEmpty(props.passProps)) return <Fragment />;
@@ -63,10 +62,12 @@ const EventDetail = (props) => {
           <Text h5>{`主辦人: ${event.creator.name}`}</Text>
         </View>
         <View>
-          <Button
-            title={EVENT_STATUS[event.status]}
+          <EventButton
+            event={event}
+            authUserId={props.authUserId}
             buttonStyle={styles.buttonStyle}
             titleStyle={styles.buttonTitleStyle}
+            handleJoinEvent={props.handleJoinEvent}
           />
         </View>
       </View>

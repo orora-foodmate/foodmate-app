@@ -4,7 +4,6 @@ import isEmpty from 'lodash/isEmpty';
 import isNull from 'lodash/isNull';
 import { parseISOString } from '~/helper/dateHelper';
 
-
 const okApprove = (payload) => ({
   type: types.APPROVE_FRIEND_BY_WEBSOCKET_SUCCESS,
   payload,
@@ -43,7 +42,6 @@ export function* approveFriendByWebsocketSaga({ payload = {} }) {
 
     yield put(okApprove());
   } catch (error) {
-    console.log('function*approveFriendByWebsocketSaga -> error', error)
     const errorAction = errApprove(error);
     yield put(errorAction);
   }

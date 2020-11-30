@@ -7,10 +7,9 @@ import {
   approveInviteFriendResult,
 } from '~/apis/api';
 import isEmpty from 'lodash/isEmpty';
-import pick from 'lodash/pick';
 import format from 'date-fns/format';
 import addSeconds from 'date-fns/addSeconds';
-import { parseISOString } from '~/helper/dateHelper';
+import { parseFriendItems, parseFriendItem } from '~/utils/utils';
 
 const okGet = (payload) => ({
   type: types.GET_FRIENDS_SUCCESS,
@@ -57,24 +56,7 @@ export function* getFriendsSaga({payload = {}}) {
 
     const {result} = yield call(getFriendsResult, customHeaders, queryObject);
 
-    const items = result.data.friends.map((f) => {
-      const createAt = parseISOString(f.createAt);
-      const updateAt = parseISOString(f.updateAt);
-      return {
-        ...pick(f, [
-          'id',
-          'avatar',
-          'creator',
-          'status',
-          'account',
-          'name',
-          'room',
-          'friendId',
-        ]),
-        createAt,
-        updateAt,
-      }
-    });
+    const items = parseFriendItems(result.data.friends);
 
     yield database.friends.bulkInsert(items);
 
@@ -124,11 +106,7 @@ export function* inviteFriendSaga({payload}) {
       .eq(payload.friendId)
       .exec();
       
-    yield database.friends.insert({
-      ...result.data,
-      createAt: parseISOString(result.data.createAt),
-      updateAt: parseISOString(result.data.updateAt),
-    });
+    yield database.friends.insert(parseFriendItem(result.data));
     
     yield put(okInvite());
   } catch (error) {

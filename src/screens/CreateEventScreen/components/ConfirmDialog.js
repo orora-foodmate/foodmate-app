@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import {StyleSheet, View} from 'react-native';
 import {Overlay, Image, Text} from 'react-native-elements';
+import propTypes from 'prop-types';
 import Button from '~/components/Button';
 import colors from '~/theme/color';
 import format from 'date-fns/format';
@@ -20,8 +21,9 @@ const getMainText = (place) => {
 };
 
 const ConfirmDialog = ({visible, payload, handleCreateEvent, onClose}) => {
+  if(!visible) return <Fragment />
   return (
-    <Overlay visible={visible} overlayStyle={styles.overlay} onClose={onClose}>
+    <Overlay isVisible={visible} overlayStyle={styles.overlay} onClose={onClose}>
       <Image source={confirmImage} style={styles.headerImg} />
       <Text h3 style={styles.text}>
         確認活動資訊
@@ -72,5 +74,16 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
+
+ConfirmDialog.propTypes = {
+  visible: propTypes.bool.isRequired,
+  payload: propTypes.object,
+  handleCreateEvent: propTypes.func.isRequired,
+  onClose: propTypes.func.isRequired
+};
+
+ConfirmDialog.defaultProps = {
+  payload: {}
+};
 
 export default ConfirmDialog;

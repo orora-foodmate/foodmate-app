@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   FlatList,
@@ -15,6 +15,7 @@ import {
 } from 'react-native-navigation-hooks';
 import colors from '~/theme/color';
 import Text from '~/components/Text';
+import socketClusterHelper from '~/helper/socketClusterHelpers';
 
 const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
 
@@ -54,6 +55,14 @@ const EventsScreen = (props) => {
   const events = useEvents();
   const {push} = useNavigation();
 
+  useEffect(() => {
+    props.handleRegisterWebsocket();
+    socketClusterHelper.basicSubscribe(props.userId);
+    return () => {
+      socketClusterHelper.basicUnsubscribe(props.userId);
+    }
+  }, []);
+  
   useNavigationButtonPress((e) => {
     if (
       props.componentId === e.componentId &&

@@ -77,9 +77,12 @@ export function* joinEventSaga({payload = {}}) {
 
     const {result} = yield call(joinEventResult, customHeaders, payload);
     
-    const event = yield database.events.findOne().where('id').eq(payload.eventId);
-    event.users = result.data.users;
-    yield event.save();
+    const eventQuery = yield database.events.findOne().where('id').eq(payload.eventId);
+    yield eventQuery.update({
+      $set: {
+        users: result.data.event.users
+      }
+    });
 
     yield put(okJoin());
   } catch (error) {

@@ -1,8 +1,8 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export const useEventsHook = function (database) {
   const [events, setEvents] = useState([]);
-  useMemo(() => {
+  useEffect(() => {
     if(database) {
       const sub = database.events.find().$.subscribe(items => {
         setEvents(items);
@@ -14,10 +14,12 @@ export const useEventsHook = function (database) {
 };
 
 export const useEventDetailHook = function (database, id) {
-  const [event, setEvent] = useState([]);
-  useMemo(() => {
+  const [event, setEvent] = useState({});
+  useEffect(() => {
     if(database) {
       const sub = database.events.findOne().where('id').eq(id).$.subscribe(item => {
+      console.log("useEventDetailHook -> item", item)
+      console.log("useEventDetailHook -> setEvent", setEvent)
         setEvent(item);
       });
       return () => sub.unsubscribe();

@@ -85,7 +85,10 @@ class socketClusterHelperClass {
     this.subscribe(`friend.approveFriend.${userId}`, (payload) => this._emit(approveFriendByWebsocketAction(payload)));
     this.subscribe(`friend.inviteFriend.${userId}`, (payload) => this._emit(inviteFriendAction(payload)));
     this.subscribe(`friend.rejectFriend.${userId}`, (payload) => this._emit(rejectFriendByWebsocketAction(payload)));
-    this.subscribe(`event.created`, (payload) => this._emit(createEventByWebsocketAction(payload)));
+    this.subscribe(`event.created`, (payload) => {
+    console.log("socketClusterHelperClass -> payload", payload)
+      this._emit(createEventByWebsocketAction(payload));
+    });
   }
 
   basicUnsubscribe = (userId) => {
@@ -200,7 +203,8 @@ class socketClusterHelperClass {
         const { friends, events } = await this._socketClient.invoke(
           'syncData',
           query
-        );
+          );
+          console.log("socketClusterHelperClass -> initialClient -> events", events)
 
         if (friends.length !== 0) {
           const friendItems = parseFriendItems(friends);

@@ -1,5 +1,6 @@
 
 import { eventChannel } from 'redux-saga';
+import { put } from 'redux-saga/effects';
 import socketClusterHelper from '~/helper/socketClusterHelpers';
 
 export function createWebsocketChannel() {
@@ -13,7 +14,7 @@ export function createWebsocketChannel() {
 }
 
 
-export function* forwardMessageSaga({ type, ...payload }) {
+export function* forwardMessageSaga({ type, payload }) {
   yield put({
     type,
     payload,

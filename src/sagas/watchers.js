@@ -9,6 +9,7 @@ import { getUserByIdSaga, updateUserSaga } from './userSagas';
 import { approveFriendByWebsocketSaga, inviteFriendByWebsocketSaga, rejectFriendByWebsocketSaga } from './websocketSagas/friendSagas';
 import { createEventSaga, joinEventSaga } from './eventSagas';
 import { createWebsocketChannel, forwardMessageSaga } from './websocketSagas/initialWSChannel';
+import { createEventByWebsocketSaga } from './websocketSagas/eventSagas';
 
 export function* watchInitialAppSaga() {
   yield takeLatest(types.INITIAL_APP, initialAppSaga);
@@ -16,15 +17,6 @@ export function* watchInitialAppSaga() {
 
 export function* watchRegisterUserSaga() {
   yield takeLatest(types.REGISTER_USER, registerUserSaga);
-}
-
-export function* watchRegisterWebsocketSaga() {
-  const channel = yield call(createWebsocketChannel);
-
-  while (true) {
-    const actionObj = yield take(channel);
-    yield fork(forwardMessageSaga, actionObj);
-  }
 }
 
 export function* watchLoginSaga() {
@@ -67,6 +59,17 @@ export function* watchApproveInviteFriendSaga() {
   yield takeLatest(types.APPROVE_INVITE_FRIEND, approveInviteFriendSaga);
 }
 
+
+export function* watchRegisterWebsocketSaga() {
+  const channel = yield call(createWebsocketChannel);
+
+  while (true) {
+    const actionObj = yield take(channel);
+    yield call(forwardMessageSaga, actionObj);
+  }
+}
+
+
 export function* watchGetFriendsSaga() {
   const friendChan = yield actionChannel(types.GET_FRIENDS);
   while (true) {
@@ -80,6 +83,14 @@ export function* watchAddMessageSaga() {
   while (true) {
     const actionObject = yield take(messageChan);
     yield call(addMessageSaga, actionObject);
+  }
+}
+
+export function* watchCreateEventByWebsocketSaga() {
+  const messageChan = yield actionChannel(types.CREATE_EVENT_BY_WEBSOCKET);
+  while (true) {
+    const actionObject = yield take(messageChan);
+    yield call(createEventByWebsocketSaga, actionObject);
   }
 }
 

@@ -90,14 +90,14 @@ const handleOnBlur = (errors, editPayload, setErrors) => async () => {
 };
 
 const CreateActivityScreen = (props) => {
-  const [type, setType] = useState(null);
   const [dialogVisible, setDialogVisible] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState(null);
-  const [budget, setBudget] = useState('');
-  const [uploadedImage, setUploadedImage] = useState({url: ''});
-  const [title, setTitle] = useState('');
-  const [userCountMax, setUserCountMax] = useState('');
-  const [description, setDescription] = useState('');
+  const [type, setType] = useState(0);
+  const [paymentMethod, setPaymentMethod] = useState(0);
+  const [budget, setBudget] = useState('100');
+  const [uploadedImage, setUploadedImage] = useState({url: 'https://dyl80ryjxr1ke.cloudfront.net/external_assets/hero_examples/hair_beach_v1785392215/original.jpeg'});
+  const [title, setTitle] = useState('test111');
+  const [userCountMax, setUserCountMax] = useState('2');
+  const [description, setDescription] = useState('test211');
   const [place, setPlace] = useState(DEFAULT_MAP_OBJECT);
   const [datingAt, setDatingAt] = useState(new Date());
   const [finalReviewAt, setFinalReviewAt] = useState(new Date());

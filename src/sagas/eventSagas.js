@@ -63,7 +63,6 @@ const errJoin = ({message}) => {
 };
 
 export function* joinEventSaga({payload = {}}) {
-  console.log("function*joinEventSaga -> payload", payload)
   try {
     const {auth, setting} = yield select(({auth, setting}) => ({
       auth,

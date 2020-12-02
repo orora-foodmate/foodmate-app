@@ -15,8 +15,8 @@ export default function reducer(search = searchState, {type, payload}) {
       return search.update('user', (user) => user.merge(payload));
     case types.CLEAR_SEARCH_FRIEND_RESULT:
     case types.GET_USER_BY_ACCOUNT_SUCCESS:
-      const result = isEmpty(payload) ? {} : payload;
-      return search.update('user', () => fromJS(result));
+      if(isEmpty(payload)) return search;
+      return search.update('user', () => fromJS(payload));
     case types.APPROVE_INVITE_FRIEND:
     case types.APPROVE_INVITE_FRIEND_ERROR:
     case types.GET_USER_BY_ID:

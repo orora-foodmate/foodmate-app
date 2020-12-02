@@ -22,7 +22,7 @@ const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
 
 const EmptyView = () => (
   <View style={{flex: 1}}>
-    <Text style={styles.emptyContent}>查無使用者資料，請再試一次。</Text>
+    <Text style={styles.emptyContent}>查無使用者資料，請再重新搜尋。</Text>
   </View>
 );
 

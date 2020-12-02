@@ -1,4 +1,6 @@
+import isEmpty from 'lodash/isEmpty';
 import types from '../constants/actionTypes';
+import {fromJS} from 'immutable';
 import {searchState} from './initialState';
 
 export default function reducer(search = searchState, {type, payload}) {
@@ -11,6 +13,10 @@ export default function reducer(search = searchState, {type, payload}) {
       return search.update('user', (user) => user.merge({status: 1}));
     case types.GET_USER_BY_ID_SUCCESS:
       return search.update('user', (user) => user.merge(payload));
+    case types.CLEAR_SEARCH_FRIEND_RESULT:
+    case types.GET_USER_BY_ACCOUNT_SUCCESS:
+      if(isEmpty(payload)) return search;
+      return search.update('user', () => fromJS(payload));
     case types.APPROVE_INVITE_FRIEND:
     case types.APPROVE_INVITE_FRIEND_ERROR:
     case types.GET_USER_BY_ID:

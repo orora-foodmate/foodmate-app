@@ -5,6 +5,11 @@ export const getUserByIdAction = payload => ({
   payload,
 });
 
+export const getUserByAccountAction = payload => ({
+  type: types.GET_USER_BY_ACCOUNT,
+  payload,
+})
+
 export const getFriendsAction = payload => ({
   type: types.GET_FRIENDS,
   payload,
@@ -23,4 +28,8 @@ export const rejectInviteFriendAction = payload => ({
 export const approveInviteFriendAction = payload => ({
   type: types.APPROVE_INVITE_FRIEND,
   payload,
+});
+
+export const clearFriendSearchResultAction = () => ({
+  type: types.CLEAR_SEARCH_FRIEND_RESULT,
 })

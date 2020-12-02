@@ -2,7 +2,7 @@ import { put, select, call } from 'redux-saga/effects';
 import isEmpty from 'lodash/isEmpty';
 import types from '~/constants/actionTypes';
 import rootNavigator from '~/navigation/rootNavigator';
-import { getUserByIdResult, updateUserResult } from '~/apis/api';
+import { getUserByIdResult, updateUserResult, getUserByAccountResult } from '~/apis/api';
 
 const okGet = (payload) => ({
   type: types.GET_USER_BY_ID_SUCCESS,
@@ -37,6 +37,41 @@ export function* getUserByIdSaga({ payload }) {
     yield put(okGet(result.data));
   } catch (error) {
     const errorAction = errGet(error);
+    yield put(errorAction);
+  }
+}
+
+const okGetAccount = payload => ({
+  type: types.GET_USER_BY_ACCOUNT_SUCCESS,
+  payload,
+});
+
+const errGetAccount = ({ message }) => ({
+  type: types.GET_USER_BY_ACCOUNT_ERROR,
+  payload: {
+    message,
+  }
+})
+
+export function* getUserByAccountSaga({ payload }) {
+  try {
+    const { auth, setting } = yield select(({ auth, setting }) => ({ auth, setting }));
+    const token = auth.get('token');
+    const database = setting.get('database');
+
+    if (isEmpty(token) || isEmpty(database)) {
+      yield put(okGet());
+      return;
+    }
+
+    const customHeaders = {
+      Authorization: `Bearer ${auth.get('token')}`
+    };
+    const { result } = yield call(getUserByAccountResult, customHeaders, payload);
+    
+    yield put(okGetAccount(result.data));
+  }catch(error) {
+    const errorAction = errGetAccount(error);
     yield put(errorAction);
   }
 }

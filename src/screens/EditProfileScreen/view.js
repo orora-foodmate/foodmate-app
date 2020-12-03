@@ -54,7 +54,6 @@ const EditProfileScreen = ({auth, handleUpdateProfile, passProps}) => {
 
   useEffect(() => {
     if (!isEmpty(passProps)) {
-      console.log("TCL ~ file: view.js ~ line 61 ~ useEffect ~ passProps", passProps)
       const {username, description} = passProps;
       setPayload(cloneDeep({ name: username, description}));
     }

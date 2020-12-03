@@ -4,7 +4,6 @@ import {fromJS} from 'immutable';
 import {searchState} from './initialState';
 
 export default function reducer(search = searchState, {type, payload}) {
-  console.log("TCL ~ file: searchReducer.js ~ line 19 ~ reducer ~ payload", payload)
   switch (type) {
     case types.APPROVE_INVITE_FRIEND_SUCCESS:
       return search.update('user', (user) => user.merge({status: 2}));

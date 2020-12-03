@@ -2,6 +2,8 @@ import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import { Navigation } from 'react-native-navigation';
 import MainScreen from '~/screens/MainScreen';
 import FriendScreen from '~/screens/FriendScreen';
+import FriendDetailScreen from '~/screens/FriendDetailScreen';
+import FriendSettingScreen from '~/screens/FriendSettingScreen';
 import MessageScreen from '~/screens/MessageScreen';
 import SettingScreen from '~/screens/SettingScreen';
 import ProfileScreen from '~/screens/ProfileScreen';
@@ -35,6 +37,9 @@ Screens.set('EditProfile', EditProfileScreen);
 Screens.set('Events', EventsScreen);
 Screens.set('EventDetail', EventDetailScreen);
 Screens.set('CreateEvent', CreateEventScreen);
+Screens.set('FriendDetail', FriendDetailScreen);
+Screens.set('FriendSetting', FriendSettingScreen);
+
 
 Navigation.registerComponent('TopBar', () => TopBar);
 

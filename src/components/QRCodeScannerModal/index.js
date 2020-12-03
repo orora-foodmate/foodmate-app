@@ -11,8 +11,10 @@ const QRCodeScannerModal = ({ visible, onRead, onClose }) => {
       <QRCodeScanner
         onRead={onRead}
         flashMode={RNCamera.Constants.FlashMode.torch}
+        bottomContent={
+          <Button title='關閉掃描' onPress={onClose}/>
+        }
       />
-      <Button title='关闭' onPress={onClose}/>
     </Modal>
   );
 };

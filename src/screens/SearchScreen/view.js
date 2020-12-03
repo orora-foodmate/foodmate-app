@@ -22,7 +22,7 @@ const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
 
 const EmptyView = () => (
   <View style={{flex: 1}}>
-    <Text style={styles.emptyContent}>查無使用者資料，請再試一次。</Text>
+    <Text style={styles.emptyContent}>查無使用者資料，請重新搜尋。</Text>
   </View>
 );
 
@@ -45,12 +45,13 @@ const ValidateButton = ({
   if (status === 0) {
     return <Button title='邀請' onPress={() => handleInviteFriend({userId})} />;
   }
+
   if (status === 1) {
     return authUserId === creatorId ? (
       <Fragment>
-        <Text>等待對方審核</Text>
+        <Text>等待對方同意</Text>
         <Button
-          title='拒絕'
+          title='取消邀請'
           onPress={() => handleRejectInviteFriend({friendId})}
         />
       </Fragment>

@@ -126,6 +126,8 @@ PODS:
   - OpenSSL-Universal (1.0.2.19):
     - OpenSSL-Universal/Static (= 1.0.2.19)
   - OpenSSL-Universal/Static (1.0.2.19)
+  - Permission-Camera (2.2.2):
+    - RNPermissions
   - PromisesObjC (1.2.10)
   - Protobuf (3.13.0)
   - RCTRequired (0.63.3)
@@ -433,6 +435,7 @@ DEPENDENCIES:
   - FlipperKit/SKIOSNetworkPlugin (~> 0.54.0)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - Permission-Camera (from `../node_modules/react-native-permissions/ios/Camera.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
   - React (from `../node_modules/react-native/`)
@@ -511,6 +514,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/Folly.podspec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  Permission-Camera:
+    :path: "../node_modules/react-native-permissions/ios/Camera.podspec"
   RCTRequired:
     :path: "../node_modules/react-native/Libraries/RCTRequired"
   RCTTypeSafety:
@@ -612,6 +617,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: 7f2f5a07f888cdb145101d6042bc4422f57e70b3
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   OpenSSL-Universal: 8b48cc0d10c1b2923617dfe5c178aa9ed2689355
+  Permission-Camera: 5d2aaf95592660b6dcb5e8d1d90ed5d0156cad02
   PromisesObjC: b14b1c6b68e306650688599de8a45e49fae81151
   Protobuf: 3dac39b34a08151c6d949560efe3f86134a3f748
   RCTRequired: 48884c74035a0b5b76dbb7a998bd93bcfc5f2047
@@ -654,6 +660,6 @@ SPEC CHECKSUMS:
   Yoga: 7d13633d129fd179e01b8953d38d47be90db185a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 0ac6ecc98d869f941ac9e1d0bb58422a795813b4
+PODFILE CHECKSUM: 34166fdf7dab340c8149cdfb3eb767fed9171150
 
 COCOAPODS: 1.9.3

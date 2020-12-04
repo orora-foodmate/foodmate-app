@@ -2,11 +2,15 @@ import React from 'react';
 import Button from '~/components/Button';
 import { EVENT_STATUS } from '~/constants/common';
 
-const EventButton = ({event, authUserId, handleJoinEvent, ...props}) => {
+const getEventUserIds = event => {
+  return event.users.map((user) => user.info.id);
+}
+
+const EventButton = ({event, authUserId, onJoinClick, ...props}) => {
 
   if(authUserId === event.creator.id) {
     return (<Button
-      title='主揪'
+      title='主辦人'
       {...props}
       disabled
       onPress={() => false}
@@ -22,13 +26,20 @@ const EventButton = ({event, authUserId, handleJoinEvent, ...props}) => {
     />);
   }
 
+  if(getEventUserIds(event).includes(authUserId)) {
+    return (<Button
+      title='活動即將進行'
+      {...props}
+      disabled
+      onPress={() => false}
+    />);
+  }
+
   return (
     <Button
-      title='想參加'
+      title='我要參加'
       {...props}
-      onPress={() => {
-        handleJoinEvent({eventId: event.id});
-      }}
+      onPress={onJoinClick}
     />
   );
 };

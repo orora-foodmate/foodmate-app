@@ -1,6 +1,11 @@
-import { decode, encode } from 'base-64';
-import { addRxPlugin, createRxDatabase } from 'rxdb';
-import { useFriendsHook, useFriendRoomsHook, useMessagesHook } from './hooks/friendHooks';
+import {decode, encode} from 'base-64';
+import {addRxPlugin, createRxDatabase} from 'rxdb';
+import {
+  useFriendsHook,
+  useMessagesHook,
+  useFriendRoomsHook,
+  useFriendDetailHook,
+} from './hooks/friendHooks';
 import isEmpty from 'lodash/isEmpty';
 import SQLite from 'react-native-sqlite-2';
 import SQLiteAdapterFactory from 'pouchdb-adapter-react-native-sqlite';
@@ -8,7 +13,7 @@ import userSchema from './userSchema';
 import friendSchema from './friendSchema';
 import messageSchema from './messageSchema';
 import eventSchema from './eventSchema';
-import { useEventsHook, useEventDetailHook } from './hooks/eventHooks';
+import {useEventsHook, useEventDetailHook} from './hooks/eventHooks';
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -54,18 +59,18 @@ export const initialCollections = async (database) => {
         updateStatus: function (status) {
           this.status = status;
           return this.save();
-        }
+        },
       },
       statics: {
         findAndUpdateStatus: async function (friend, status) {
-          const doc = await this.findOne({ id: friend.id });
+          const doc = await this.findOne({id: friend.id});
           if (isEmpty(doc)) {
-            await this.create({ ...friend, status });
+            await this.create({...friend, status});
           } else {
             doc.status = status;
             await doc.save();
           }
-        }
+        },
       },
     }),
     database.collection({
@@ -82,7 +87,7 @@ export const initSQL = async () => {
     multiInstance: false,
     ignoreDuplicate: true,
   });
-  
+
   foodmateDB = database;
 
   await initialCollections(database);
@@ -92,20 +97,24 @@ export const initSQL = async () => {
 
 export const useFriends = (query, options) => {
   return useFriendsHook(foodmateDB, query, options);
-}
+};
+
+export const useFriendDetail = (id) => {
+  return useFriendDetailHook(foodmateDB, id);
+};
 
 export const useEvents = (query, options) => {
   return useEventsHook(foodmateDB, query, options);
-}
+};
 
 export const useEventDetail = (id) => {
   return useEventDetailHook(foodmateDB, id);
-}
+};
 
 export const useFriendRooms = () => {
   return useFriendRoomsHook(foodmateDB);
-}
+};
 
 export const useMessages = () => {
   return useMessagesHook(foodmateDB);
-}
+};

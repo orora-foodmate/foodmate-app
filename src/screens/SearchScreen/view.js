@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import isEmpty from 'lodash/isEmpty';
 import {
   View,
@@ -81,7 +81,7 @@ const Content = ({
   handleApproveInviteFriend,
 }) => {
   if (hide) return <EmptyView />;
-  console.log(user.get('avatar'));
+
   return (
     <View style={styles.resultMask}>
       <Avatar rounded size='xlarge' source={{uri: user.get('avatar')}} />
@@ -106,6 +106,7 @@ const SearchScreen = ({
   componentId,
   authUserId,
   user,
+  friendAccount,
   handleGetUserByAccount,
   handleInviteFriend,
   handleRejectInviteFriend,
@@ -123,6 +124,12 @@ const SearchScreen = ({
       setShowModal(true);
     }
   });
+
+  useEffect(() => {
+    if(!isEmpty(friendAccount)) {
+      handleGetUserByAccount({account: friendAccount});
+    }
+  }, [friendAccount])
 
   return (
     <View style={{flex: 1}}>

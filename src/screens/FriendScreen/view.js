@@ -11,8 +11,8 @@ import RowItem from './components/RowItem';
 
 const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
 
-const renderRowItem = ({item}) => {
-  return <RowItem item={item} />;
+const renderRowItem = (push) => ({item}) => {
+  return <RowItem item={item} push={push} />;
 };
 
 const SectionTitle = ({title}) => {
@@ -45,7 +45,7 @@ const FriendScreen = (props) => {
       <SectionList
         sections={data}
         keyExtractor={(item) => item.id}
-        renderItem={renderRowItem}
+        renderItem={renderRowItem(push)}
         renderSectionHeader={({section: {title}}) => (
           <SectionTitle title={title} />
         )}

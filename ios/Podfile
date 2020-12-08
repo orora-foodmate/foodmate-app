@@ -1,5 +1,8 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+permissions_path = '../node_modules/react-native-permissions/ios'
+pod 'Permission-Camera', :path => "../node_modules/react-native-permissions/ios/Camera.podspec"
+
 $FirebaseSDKVersion = '6.29.0'
 
 platform :ios, '10.0'

@@ -31,7 +31,7 @@ const ProfileScreen = ({componentId, auth}) => {
   return (
     <Fragment>
       <QRCodeModal
-        value={auth.get('id')}
+        value={auth.get('account')}
         isVisible={showModal}
         username={auth.get('name')}
         onClose={() => setShowModal(false)}

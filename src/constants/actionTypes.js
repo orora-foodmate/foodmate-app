@@ -2,6 +2,7 @@ import constants from 'flux-constants';
 
 const syncActionTypes = [
   'SET_LOGIN_USER',
+  'CLEAR_SEARCH_FRIEND_RESULT',
 ];
 
 const basicAsyncActionTypes = [
@@ -11,6 +12,7 @@ const basicAsyncActionTypes = [
   'REGISTER_WEBSOCKET',
   'REGISTER_USER',
   'GET_USER_BY_ID',
+  'GET_USER_BY_ACCOUNT',
   'GET_FRIENDS',
   'GET_MESSAGES',
   'ADD_MESSAGE',

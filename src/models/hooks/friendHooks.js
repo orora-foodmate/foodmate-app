@@ -31,6 +31,19 @@ export const useFriendsHook = function (database, query = undefined, options = u
   return friends;
 };
 
+export const useFriendDetailHook = (database, id) => {
+  const [ friend, setFriend ] = useState({});
+  useEffect(() => {
+    if(database) {
+      const sub = database.friends.findOne().where('id').eq(id).$.subscribe(item => {
+        setFriend(item);
+        });
+        return () => sub.unsubscribe();
+    }
+  }, [database, id]);
+  return friend;
+}
+
 export const useFriendRoomsHook = (database) => {
   const [rooms, setRooms] = useState([]);
   useMemo(() => {

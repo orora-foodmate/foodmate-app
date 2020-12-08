@@ -1,28 +1,34 @@
-import { connect } from 'react-redux';
-import { approveInviteFriendAction, getUserByIdAction, inviteFriendAction, rejectInviteFriendAction } from '~/actions/friendActions';
+import {connect} from 'react-redux';
+import {
+  inviteFriendAction,
+  getUserByAccountAction,
+  rejectInviteFriendAction,
+  approveInviteFriendAction,
+  clearFriendSearchResultAction,
+} from '~/actions/friendActions';
 import SearchScreen from './view';
 
-const mapStateToProps = ({ auth, search }) => ({
+const mapStateToProps = ({auth, search}) => ({
   authUserId: auth.get('id'),
   user: search.get('user'),
 });
 
-const mapDispatchToProps = dispatch => ({
-  handleGetUserById: payload => {
-    dispatch(getUserByIdAction(payload));
+const mapDispatchToProps = (dispatch) => ({
+  handleGetUserByAccount: (payload) => {
+    dispatch(getUserByAccountAction(payload));
   },
-  handleInviteFriend: payload => {
+  handleInviteFriend: (payload) => {
     dispatch(inviteFriendAction(payload));
   },
-  handleRejectInviteFriend: payload => {
+  handleRejectInviteFriend: (payload) => {
     dispatch(rejectInviteFriendAction(payload));
   },
-  handleApproveInviteFriend: payload => {
+  handleApproveInviteFriend: (payload) => {
     dispatch(approveInviteFriendAction(payload));
   },
+  handleClearSearchResult: () => {
+    dispatch(clearFriendSearchResultAction());
+  }
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SearchScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchScreen);

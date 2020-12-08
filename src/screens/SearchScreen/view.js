@@ -8,23 +8,27 @@ import {
   Dimensions,
 } from 'react-native';
 import {useNavigationButtonPress} from 'react-native-navigation-hooks';
-import {Card, Avatar} from 'react-native-elements';
+import {Avatar} from 'react-native-elements';
 import colors from '~/theme/color';
 import Text from '~/components/Text';
 import Button from '~/components/Button';
 import SearchBar from '~/components/SearchBar';
-import QRCodeScanner from 'react-native-qrcode-scanner';
 import QRCodeScannerModal from '~/components/QRCodeScannerModal';
 
 const {width} = Dimensions.get('window');
 
 const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
 
-const EmptyView = () => (
-  <View style={{flex: 1}}>
-    <Text style={styles.emptyContent}>查無使用者資料，請重新搜尋。</Text>
-  </View>
-);
+const EmptyView = ({hasSearch}) => {
+  const content = hasSearch
+    ? '查無使用者資料，請重新搜尋。'
+    : '';
+  return (
+    <View style={{flex: 1}}>
+      <Text style={styles.emptyContent}>{content}</Text>
+    </View>
+  );
+};
 
 const ValidateButton = ({
   authUserId,
@@ -76,11 +80,12 @@ const Content = ({
   authUserId,
   user,
   onClose,
+  hasSearch,
   handleInviteFriend,
   handleRejectInviteFriend,
   handleApproveInviteFriend,
 }) => {
-  if (hide) return <EmptyView />;
+  if (hide) return <EmptyView hasSearch={hasSearch} />;
 
   return (
     <View style={styles.resultMask}>
@@ -106,6 +111,7 @@ const SearchScreen = ({
   componentId,
   authUserId,
   user,
+  hasSearch,
   friendAccount,
   handleGetUserByAccount,
   handleInviteFriend,
@@ -126,10 +132,10 @@ const SearchScreen = ({
   });
 
   useEffect(() => {
-    if(!isEmpty(friendAccount)) {
+    if (!isEmpty(friendAccount)) {
       handleGetUserByAccount({account: friendAccount});
     }
-  }, [friendAccount])
+  }, [friendAccount]);
 
   return (
     <View style={{flex: 1}}>
@@ -153,6 +159,7 @@ const SearchScreen = ({
       <Content
         user={user}
         hide={user.isEmpty()}
+        hasSearch={hasSearch}
         authUserId={authUserId}
         onClose={handleClearSearchResult}
         handleInviteFriend={handleInviteFriend}
@@ -211,7 +218,7 @@ const styles = StyleSheet.create({
     color: 'rgb(0,122,255)',
   },
   emptyContent: {
-    textAlign: 'center'
+    textAlign: 'center',
   },
   buttonTouchable: {
     padding: 16,

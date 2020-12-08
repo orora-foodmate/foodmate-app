@@ -89,16 +89,20 @@ const handleOnBlur = (errors, editPayload, setErrors) => async () => {
   if (!isEmpty(errors)) await validateData(editPayload, setErrors);
 };
 
+const handleConfirmPlace = (setPlace) => (place) => {
+  setPlace(place);
+};
+
 const CreateActivityScreen = (props) => {
   const [dialogVisible, setDialogVisible] = useState(false);
-  const [type, setType] = useState(0);
-  const [paymentMethod, setPaymentMethod] = useState(0);
-  const [budget, setBudget] = useState('100');
-  const [uploadedImage, setUploadedImage] = useState({url: 'https://dyl80ryjxr1ke.cloudfront.net/external_assets/hero_examples/hair_beach_v1785392215/original.jpeg'});
-  const [title, setTitle] = useState('test111');
-  const [userCountMax, setUserCountMax] = useState('2');
-  const [description, setDescription] = useState('test211');
-  const [place, setPlace] = useState(DEFAULT_MAP_OBJECT);
+  const [type, setType] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState(null);
+  const [budget, setBudget] = useState('');
+  const [uploadedImage, setUploadedImage] = useState({url: ''});
+  const [title, setTitle] = useState('');
+  const [userCountMax, setUserCountMax] = useState('');
+  const [description, setDescription] = useState('');
+  const [place, setPlace] = useState({});
   const [datingAt, setDatingAt] = useState(new Date());
   const [finalReviewAt, setFinalReviewAt] = useState(new Date());
   const [errors, setErrors] = useState({});
@@ -131,8 +135,12 @@ const CreateActivityScreen = (props) => {
 
   const onBlur = handleOnBlur(errors, payload, setErrors);
 
+  const confirmPlace = handleConfirmPlace(setPlace);
+
   return (
-    <ScrollView contentContainerStyle={styles.scroll}>
+    <ScrollView
+      contentContainerStyle={styles.scroll}
+      keyboardShouldPersistTaps='always'>
       <EventPhotoBlock
         uri={uploadedImage.url}
         onEditClick={onUploadImage(setUploadedImage)}
@@ -253,7 +261,7 @@ const CreateActivityScreen = (props) => {
         <PickPlaceModal
           place={place}
           errorMessage={errors.place}
-          onConfirm={(data) => setPlace(data)}
+          onConfirm={confirmPlace}
           onBlur={onBlur}
           leftIcon={
             <InputImage

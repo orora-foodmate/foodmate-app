@@ -11,6 +11,7 @@ import SearchScreen from './view';
 const mapStateToProps = ({auth, search}) => ({
   authUserId: auth.get('id'),
   user: search.get('user'),
+  hasSearch: search.get('hasSearch'),
 });
 
 const mapDispatchToProps = (dispatch) => ({

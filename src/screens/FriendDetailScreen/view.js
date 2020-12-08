@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import {Avatar} from 'react-native-elements';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 import isEmpty from 'lodash/isEmpty';
 import {useFriendDetail} from '~/models';
 import Button from '~/components/Button';
@@ -8,12 +8,22 @@ import colors from '../../theme/color';
 import shadow from '../../theme/shadow';
 import Text from '~/components/Text';
 import {useNavigation} from 'react-native-navigation-hooks';
+import image from '~/assets/images/actor-ghost-donut.png';
+
+const EmptyFriendContent = (props) => {
+  return (
+    <View style={styles.emptyContainer}>
+      <Image source={image} style={styles.emptyActor} />
+      <Text>找不到這名成員</Text>
+    </View>
+  );
+};
 
 const FriendDetailScreen = ({friendId}) => {
   const {push} = useNavigation();
   const friend = useFriendDetail(friendId);
 
-  if (isEmpty(friend)) return <Fragment />;
+  if (isEmpty(friend)) return <EmptyFriendContent />;
 
   return (
     <View style={styles.container}>
@@ -83,6 +93,13 @@ const styles = StyleSheet.create({
     fontSize: 36,
     color: colors.grey,
   },
+  emptyContainer: {
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  emptyActor: {width: 50, height: 50, margin: 10},
 });
 
 export default FriendDetailScreen;

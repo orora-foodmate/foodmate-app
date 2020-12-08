@@ -17,6 +17,7 @@ import EditProfileScreen from '~/screens/EditProfileScreen';
 import EventsScreen from '~/screens/EventsScreen';
 import EventDetailScreen from '~/screens/EventDetailScreen';
 import CreateEventScreen from '~/screens/CreateEventScreen';
+import EventMemberScreen from '~/screens/EventMemberScreen';
 
 import TopBar from '~/components/TopBar';
 
@@ -37,9 +38,11 @@ Screens.set('Nickname', NicknameScreen);
 Screens.set('EditProfile', EditProfileScreen);
 Screens.set('Events', EventsScreen);
 Screens.set('JoinEvent', JoinEventScreen);
+Screens.set('EventMember', EventMemberScreen);
 Screens.set('EventDetail', EventDetailScreen);
 Screens.set('CreateEvent', CreateEventScreen);
 Screens.set('FriendDetail', FriendDetailScreen);
+Screens.set('FriendSetting', FriendSettingScreen);
 Screens.set('FriendSetting', FriendSettingScreen);
 
 

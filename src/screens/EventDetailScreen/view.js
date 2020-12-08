@@ -17,6 +17,11 @@ import EventButton from './components/EventButton';
 import JoinDialog from './components/JoinDialog';
 import {useNavigation} from 'react-native-navigation-hooks';
 
+const handleGoMembers = (push, eventName, eventId) => () => {
+  push('EventMember', { title: `${eventName} 成員`,
+   eventId });
+}
+
 const EventDetail = (props) => {
 
   const [visible, setVisible] = useState(false);
@@ -29,10 +34,12 @@ const EventDetail = (props) => {
 
   if (isEmpty(event)) return <Fragment />;
 
+  const onMemberDetailClick = handleGoMembers(push, event.title, eventId);
+
   return (
     <Fragment>
       <JoinDialog visible={visible} push={push} event={event} setVisible={setVisible}/>
-      <ScrollView contentContainerStyle={styles.scroll}>
+      <ScrollView contentContainerStyle={styles.scroll} >
         <EventPhotoBlock hideButton uri={event.logo} />
         <View style={styles.baseInfoContainer}>
           <Text h1 style={styles.title}>
@@ -43,6 +50,7 @@ const EventDetail = (props) => {
               title={`${event.users.length}/${event.userCountMax}`}
               buttonStyle={styles.buttonTagStyle}
               titleStyle={styles.buttonTagTitleStyle}
+              onPress={onMemberDetailClick}
               icon={
                 <Image
                   source={iconParticipantActive}

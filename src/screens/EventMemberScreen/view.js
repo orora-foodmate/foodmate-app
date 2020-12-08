@@ -15,8 +15,8 @@ const SectionTitle = ({title}) => {
   );
 };
 
-const renderRowItem = (onOpen) => ({item}) => {
-  return <RowItem item={item} onPress={onOpen(item.id)} />;
+const renderRowItem = (onOpen, authUserId) => ({item}) => {
+  return <RowItem item={item} authUserId={authUserId} onPress={onOpen(item.id)} />;
 };
 
 const getSectionData = (data = []) => {
@@ -42,7 +42,7 @@ const handleCloseModal = setVisible => () => {
   setVisible(false);
 }
 
-const EventMemberScreen = ({eventId}) => {
+const EventMemberScreen = ({authUserId, eventId}) => {
   const [visible, setVisible] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
 
@@ -64,7 +64,7 @@ const EventMemberScreen = ({eventId}) => {
       <SectionList
         sections={data}
         keyExtractor={(item) => item.id}
-        renderItem={renderRowItem(onOpen)}
+        renderItem={renderRowItem(onOpen, authUserId)}
         renderSectionHeader={({section: {title}}) => (
           <SectionTitle title={title} />
         )}

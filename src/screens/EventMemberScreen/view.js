@@ -42,24 +42,31 @@ const handleCloseModal = setVisible => () => {
   setVisible(false);
 }
 
-const EventMemberScreen = ({authUserId, eventId}) => {
+const EventMemberScreen = ({eventId, handleValidEventMember, authUserId }) => {
   const [visible, setVisible] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
 
   if (isEmpty(eventId)) return <Fragment />;
+
   const {push} = useNavigation();
   const event = useEventDetail(eventId);
-  const data = getSectionData(event.users);
+  if (isEmpty(event)) return <Fragment />;
 
+  const data = getSectionData(event.users);
   const onClose = handleCloseModal(setVisible);
   const onOpen = handleOpenModal(setVisible, setSelectedId)
+  const isAdmin = authUserId === event.creator.id;
+
   return (
     <Fragment>
       <MemberModal
+        eventId={event.id}
         onClose={onClose}
         visible={visible}
+        isAdmin={isAdmin}
         users={event.users}
         selectedId={selectedId}
+        handleValidEventMember={handleValidEventMember}
       />
       <SectionList
         sections={data}

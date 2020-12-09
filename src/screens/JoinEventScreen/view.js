@@ -1,5 +1,6 @@
 import React, {Fragment, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
+import isEmpty from 'lodash/isEmpty';
 import {Image} from 'react-native-elements';
 import {useNavigation} from 'react-native-navigation-hooks';
 import Text from '~/components/Text';
@@ -23,12 +24,12 @@ const JoinEventScreen = ({eventId, handleJoinEvent}) => {
   const [payload, setPayload] = useState({});
   const [visible, setVisible] = useState(false);
   const {pop} = useNavigation();
-
   const event = useEventDetail(eventId);
 
   const onChange = handleOnChange(setPayload);
   const onSubmit = handleSubmit({payload, event, setVisible, handleJoinEvent});
 
+  if(isEmpty(event)) return <Fragment />;
 
   return (
     <Fragment>

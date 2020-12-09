@@ -18,8 +18,6 @@ export const useEventDetailHook = function (database, id) {
   useEffect(() => {
     if(database) {
       const sub = database.events.findOne().where('id').eq(id).$.subscribe(item => {
-      console.log("useEventDetailHook -> item", item)
-      console.log("useEventDetailHook -> setEvent", setEvent)
         setEvent(item);
       });
       return () => sub.unsubscribe();

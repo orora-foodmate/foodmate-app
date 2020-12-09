@@ -9,3 +9,8 @@ export const joinEventAction = payload => ({
   type: types.JOIN_EVENT,
   payload,
 });
+
+export const validEventMemberAction = payload => ({
+  type: types.VALID_MEMBER,
+  payload
+})

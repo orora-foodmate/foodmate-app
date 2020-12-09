@@ -23,7 +23,6 @@ const handleGoMembers = (push, eventName, eventId) => () => {
 }
 
 const EventDetail = (props) => {
-
   const [visible, setVisible] = useState(false);
   const { push } = useNavigation();
 

@@ -7,7 +7,7 @@ const RowItem = ({item, onPress}) => (
     <TouchableOpacity
       style={{flex: 1, flexDirection: 'row'}}
       onPress={onPress}>
-      <Avatar source={{uri: item.info.avatar}} />
+      <Avatar rounded source={{uri: item.info.avatar}} />
       <ListItem.Content style={{marginLeft: 10}}>
         <ListItem.Title>{item.info.name}</ListItem.Title>
         <ListItem.Subtitle>{item.info.account}</ListItem.Subtitle>

@@ -1,47 +1,34 @@
 import React from 'react';
+import isEmpty from 'lodash/isEmpty';
 import Button from '~/components/Button';
-import { EVENT_STATUS } from '~/constants/common';
+import {EVENT_STATUS} from '~/constants/common';
 
-const getEventUserIds = event => {
-  return event.users.map((user) => user.info.id);
-}
+const getEventUserIds = (event, authUserId) => {
+  return event.users.find((user) => user.info.id === authUserId);
+};
+
+const DisabledButton = ({title, ...props}) => {
+  return <Button {...props} title={title} disabled onPress={() => false} />;
+};
 
 const EventButton = ({event, authUserId, onJoinClick, ...props}) => {
-
-  if(authUserId === event.creator.id) {
-    return (<Button
-      title='主辦人'
-      {...props}
-      disabled
-      onPress={() => false}
-    />);
+  if (authUserId === event.creator.id) {
+    return <DisabledButton {...props} title='主辦人' />;
   }
 
-  if(event.status === 1) {
-    return (<Button
-      title='已滿團'
-      {...props}
-      disabled
-      onPress={() => false}
-    />);
+  if (event.status === 1) {
+    return <DisabledButton {...props} title='已滿團' />;
   }
 
-  if(getEventUserIds(event).includes(authUserId)) {
-    return (<Button
-      title='活動即將進行'
-      {...props}
-      disabled
-      onPress={() => false}
-    />);
+  const user = getEventUserIds(event, authUserId);
+
+  if (!isEmpty(user)) {
+    user.info.status !== 1
+     ? <DisabledButton {...props} title='等待審核' />
+     : <DisabledButton {...props} title='活動即將進行'/>;
   }
 
-  return (
-    <Button
-      title='我要參加'
-      {...props}
-      onPress={onJoinClick}
-    />
-  );
+  return <Button title='我要參加' {...props} onPress={onJoinClick} />;
 };
 
 export default EventButton;

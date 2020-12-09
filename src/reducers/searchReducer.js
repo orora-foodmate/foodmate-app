@@ -10,7 +10,7 @@ export default function reducer(search = searchState, {type, payload}) {
     case types.REJECT_INVITE_FRIEND_SUCCESS:
       return search.update('user', (user) => user.merge({status: 0}));
     case types.INVITE_FRIEND_SUCCESS:
-      return search.update('user', (user) => user.merge({status: 1}));
+      return search.update('user', (user) => user.merge(fromJS(payload)));
     case types.GET_USER_BY_ID_SUCCESS:
       return search.update('user', (user) => user.merge(payload));
     case types.CLEAR_SEARCH_FRIEND_RESULT:

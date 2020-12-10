@@ -24,5 +24,12 @@ target 'foodmate' do
   use_flipper!
   post_install do |installer|
     flipper_post_install(installer)
+    ################### ADD THE FOLLOWING #########################
+    installer.pods_project.targets.each do |target|
+      if target.name == "React-Core.common-AccessibilityResources"
+        target.remove_from_project
+      end
+    end
+    ###############################################################
   end
 end

@@ -5,9 +5,6 @@ import {NavigationProvider} from 'react-native-navigation-hooks';
 import theme from '~/theme';
 import store from '~/store/configureStore';
 import ScrollContainer from '~/components/ScrollContainer';
-import Config from 'react-native-config';
-console.log("🚀 ~ file: App.js ~ line 9 ~ Config", Config)
-
 
 const App = (Component) => (props) => {
   return (

@@ -1,15 +1,35 @@
 import types from '../constants/actionTypes';
-import { take, call, takeLatest, actionChannel } from 'redux-saga/effects';
-import { loginSaga, logoutSaga, registerUserSaga } from './authSagas';
-import { initialAppSaga } from './initialAppSaga';
-import { approveInviteFriendSaga, getFriendsSaga, inviteFriendSaga, rejectInviteFriendSaga } from './friendSagas';
-import { addMessageSaga, getMessagesSaga } from './messageSagas';
-import { addMessageByWebsocketSaga } from './messageByWebsocketSagas';
-import { getUserByIdSaga, updateUserSaga, getUserByAccountSaga } from './userSagas';
-import { approveFriendByWebsocketSaga, inviteFriendByWebsocketSaga, rejectFriendByWebsocketSaga } from './websocketSagas/friendSagas';
-import { createEventSaga, joinEventSaga } from './eventSagas';
-import { createWebsocketChannel, forwardMessageSaga } from './websocketSagas/initialWSChannel';
-import { createEventByWebsocketSaga } from './websocketSagas/eventSagas';
+import {take, call, takeLatest, actionChannel} from 'redux-saga/effects';
+import {loginSaga, logoutSaga, registerUserSaga} from './authSagas';
+import {initialAppSaga} from './initialAppSaga';
+import {
+  approveInviteFriendSaga,
+  getFriendsSaga,
+  inviteFriendSaga,
+  rejectInviteFriendSaga,
+} from './friendSagas';
+import {addMessageSaga, getMessagesSaga} from './messageSagas';
+import {addMessageByWebsocketSaga} from './messageByWebsocketSagas';
+import {
+  getUserByIdSaga,
+  updateUserSaga,
+  getUserByAccountSaga,
+} from './userSagas';
+import {
+  approveFriendByWebsocketSaga,
+  inviteFriendByWebsocketSaga,
+  rejectFriendByWebsocketSaga,
+} from './websocketSagas/friendSagas';
+import {
+  joinEventSaga,
+  createEventSaga,
+  validEventMemberSaga,
+} from './eventSagas';
+import {
+  forwardMessageSaga,
+  createWebsocketChannel,
+} from './websocketSagas/initialWSChannel';
+import {createEventByWebsocketSaga} from './websocketSagas/eventSagas';
 
 export function* watchInitialAppSaga() {
   yield takeLatest(types.INITIAL_APP, initialAppSaga);
@@ -63,6 +83,10 @@ export function* watchGetUserByAccountSaga() {
   yield takeLatest(types.GET_USER_BY_ACCOUNT, getUserByAccountSaga);
 }
 
+export function* watchValidEventMemberSaga() {
+  yield takeLatest(types.VALID_MEMBER, validEventMemberSaga);
+}
+
 export function* watchRegisterWebsocketSaga() {
   const channel = yield call(createWebsocketChannel);
 
@@ -71,7 +95,6 @@ export function* watchRegisterWebsocketSaga() {
     yield call(forwardMessageSaga, actionObj);
   }
 }
-
 
 export function* watchGetFriendsSaga() {
   const friendChan = yield actionChannel(types.GET_FRIENDS);
@@ -106,7 +129,9 @@ export function* watchAddMessageByWebsocketSaga() {
 }
 
 export function* watchInviteFriendByWebsocketSaga() {
-  const inviteFriendChan = yield actionChannel(types.INVITE_FRIEND_BY_WEBSOCKET);
+  const inviteFriendChan = yield actionChannel(
+    types.INVITE_FRIEND_BY_WEBSOCKET
+  );
   while (true) {
     const actionObject = yield take(inviteFriendChan);
     yield call(inviteFriendByWebsocketSaga, actionObject);
@@ -114,7 +139,9 @@ export function* watchInviteFriendByWebsocketSaga() {
 }
 
 export function* watchRejectFriendByWebsocketSaga() {
-  const rejectFriendChan = yield actionChannel(types.REJECT_FRIEND_BY_WEBSOCKET);
+  const rejectFriendChan = yield actionChannel(
+    types.REJECT_FRIEND_BY_WEBSOCKET
+  );
   while (true) {
     const actionObject = yield take(rejectFriendChan);
     yield call(rejectFriendByWebsocketSaga, actionObject);
@@ -122,7 +149,9 @@ export function* watchRejectFriendByWebsocketSaga() {
 }
 
 export function* watchApproveFriendByWebsocketSaga() {
-  const approveFriendChan = yield actionChannel(types.APPROVE_FRIEND_BY_WEBSOCKET);
+  const approveFriendChan = yield actionChannel(
+    types.APPROVE_FRIEND_BY_WEBSOCKET
+  );
   while (true) {
     const actionObject = yield take(approveFriendChan);
     yield call(approveFriendByWebsocketSaga, actionObject);

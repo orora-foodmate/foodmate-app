@@ -18,5 +18,6 @@ export const settingState = fromJS({
 });
 
 export const searchState = fromJS({
-  user: {}
+  user: {},
+  hasSearch: false
 });

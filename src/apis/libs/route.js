@@ -1,3 +1,3 @@
-import Config from '~/constants/envConfig';
+import Config from 'react-native-config';
 
 export const getUrl = (endpoint) => `${Config.DOMAIN}${endpoint}`;

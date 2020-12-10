@@ -108,7 +108,7 @@ export function* inviteFriendSaga({payload}) {
       
     yield database.friends.insert(parseFriendItem(result.data));
     
-    yield put(okInvite());
+    yield put(okInvite(result.data));
   } catch (error) {
     const errorAction = errInvite(error);
     yield put(errorAction);

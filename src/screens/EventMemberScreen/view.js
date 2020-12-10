@@ -15,8 +15,8 @@ const SectionTitle = ({title}) => {
   );
 };
 
-const renderRowItem = (onOpen) => ({item}) => {
-  return <RowItem item={item} onPress={onOpen(item.id)} />;
+const renderRowItem = (onOpen, authUserId) => ({item}) => {
+  return <RowItem item={item} authUserId={authUserId} onPress={onOpen(item.id)} />;
 };
 
 const getSectionData = (data = []) => {
@@ -71,7 +71,7 @@ const EventMemberScreen = ({eventId, handleValidEventMember, authUserId }) => {
       <SectionList
         sections={data}
         keyExtractor={(item) => item.id}
-        renderItem={renderRowItem(onOpen)}
+        renderItem={renderRowItem(onOpen, authUserId)}
         renderSectionHeader={({section: {title}}) => (
           <SectionTitle title={title} />
         )}

@@ -1,8 +1,7 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
 import {ListItem, Avatar} from 'react-native-elements';
 
-const RowItem = ({item, onPress}) => (
+const RowItem = ({authUserId, item, onPress}) => (
   <ListItem bottomDivider>
     <TouchableOpacity
       style={{flex: 1, flexDirection: 'row'}}

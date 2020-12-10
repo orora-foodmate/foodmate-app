@@ -1,6 +1,6 @@
 import socketClusterClient from 'socketcluster-client';
 import isNull from 'lodash/isNull';
-import Config from '~/constants/envConfig';
+import Config from 'react-native-config';
 import { parseEventItems, parseFriendItems } from '~/utils/utils';
 import { inviteFriendAction, rejectFriendByWebsocketAction, approveFriendByWebsocketAction } from './actions/friendActions';
 import { createEventByWebsocketAction } from './actions/eventActions';
@@ -94,8 +94,7 @@ class socketClusterHelperClass {
   basicUnsubscribe = (userId) => {
     ['event.created', `friend.approveFriend.${userId}`, `friend.inviteFriend.${userId}`, `friend.rejectFriend.${userId}`].map(key => {
       const channel = this._subscribes[key];
-      console.log('🚀 ~ file: index.js ~ line 97 ~ socketClusterHelperClass ~ channel', channel)
-      if(channel) channel.kill();
+      if(channel) channel.kll();
       this._subscribes[key] = undefined;
     })
   }
@@ -137,8 +136,8 @@ class socketClusterHelperClass {
 
       this._socketClient = socketClusterClient.create({
         secure: false,
-        hostname: Config.hostname,
-        port: Config.port,
+        hostname: Config.HOST_NAME,
+        port: Config.PORT,
         authTokenName: this.authTokenName,
         autoReconnectOptions: {
           initialDelay: 10000, //milliseconds

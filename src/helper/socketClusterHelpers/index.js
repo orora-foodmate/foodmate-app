@@ -94,7 +94,7 @@ class socketClusterHelperClass {
   basicUnsubscribe = (userId) => {
     ['event.created', `friend.approveFriend.${userId}`, `friend.inviteFriend.${userId}`, `friend.rejectFriend.${userId}`].map(key => {
       const channel = this._subscribes[key];
-      if(channel) channel.kll();
+      if(channel) channel.kill();
       this._subscribes[key] = undefined;
     })
   }

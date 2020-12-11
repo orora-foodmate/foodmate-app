@@ -28,6 +28,7 @@ const basicAsyncActionTypes = [
   'REJECT_INVITE_FRIEND',
   'INIT_USERNAME',
   'VALID_MEMBER',
+  'GET_MEMBER_DETAIL',
 ];
 
 const asyncActionTypes = basicAsyncActionTypes.reduce((result, actionType) => {

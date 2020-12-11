@@ -21,3 +21,7 @@ export const searchState = fromJS({
   user: {},
   hasSearch: false
 });
+
+export const memberState = fromJS({
+  user: {}
+})

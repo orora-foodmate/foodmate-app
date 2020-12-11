@@ -11,8 +11,9 @@ import {
 import {addMessageSaga, getMessagesSaga} from './messageSagas';
 import {addMessageByWebsocketSaga} from './messageByWebsocketSagas';
 import {
-  getUserByIdSaga,
   updateUserSaga,
+  getUserByIdSaga,
+  getMemberDetailSaga,
   getUserByAccountSaga,
 } from './userSagas';
 import {
@@ -85,6 +86,10 @@ export function* watchGetUserByAccountSaga() {
 
 export function* watchValidEventMemberSaga() {
   yield takeLatest(types.VALID_MEMBER, validEventMemberSaga);
+}
+
+export function* watchGetMemberDetailSaga() {
+  yield takeLatest(types.GET_MEMBER_DETAIL, getMemberDetailSaga);
 }
 
 export function* watchRegisterWebsocketSaga() {

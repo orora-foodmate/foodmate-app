@@ -41,6 +41,39 @@ export function* getUserByIdSaga({ payload }) {
   }
 }
 
+const okGetMemberDetail = payload => ({
+  type: types.GET_MEMBER_DETAIL_SUCCESS,
+  payload,
+});
+
+const errGetMemberDetail = ({ message }) => ({
+  type: types.GET_MEMBER_DETAIL_ERROR,
+  payload: { message },
+})
+
+export function* getMemberDetailSaga({ payload }) {
+  try {
+    const { auth, setting } = yield select(({ auth, setting }) => ({ auth, setting }));
+    const token = auth.get('token');
+    const database = setting.get('database');
+
+    if (isEmpty(token) || isEmpty(database)) {
+      yield put(okGetMemberDetail());
+      return;
+    }
+
+    const customHeaders = {
+      Authorization: `Bearer ${auth.get('token')}`
+    };
+    const { result } = yield call(getUserByIdResult, customHeaders, payload);
+    
+    yield put(okGetMemberDetail(result.data));
+  } catch (error) {
+    const errorAction = errGetMemberDetail(error);
+    yield put(errorAction);
+  }
+}
+
 const okGetAccount = payload => ({
   type: types.GET_USER_BY_ACCOUNT_SUCCESS,
   payload,

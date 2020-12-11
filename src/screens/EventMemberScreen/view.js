@@ -60,6 +60,7 @@ const EventMemberScreen = ({eventId, handleValidEventMember, authUserId }) => {
   return (
     <Fragment>
       <MemberModal
+        push={push}
         eventId={event.id}
         onClose={onClose}
         visible={visible}

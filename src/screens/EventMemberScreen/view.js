@@ -42,7 +42,7 @@ const handleCloseModal = setVisible => () => {
   setVisible(false);
 }
 
-const EventMemberScreen = ({eventId, handleValidEventMember, authUserId }) => {
+const EventMemberScreen = ({ authUserId, eventId, handleValidEventMember,handleRejectEventMember }) => {
   const [visible, setVisible] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
 
@@ -67,6 +67,7 @@ const EventMemberScreen = ({eventId, handleValidEventMember, authUserId }) => {
         users={event.users}
         selectedId={selectedId}
         handleValidEventMember={handleValidEventMember}
+        handleRejectEventMember={handleRejectEventMember}
       />
       <SectionList
         sections={data}

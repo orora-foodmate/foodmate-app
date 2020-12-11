@@ -28,9 +28,12 @@ export const createEventResult = (customHeaders, payload) =>
 export const joinEventResult = (customHeaders, {eventId}) =>
   fetchPostWithToken(getUrl(`events/${eventId}`), customHeaders);
 
+export const rejectMemberByAdminResult = (customHeaders, { eventId, userId }) =>
+  fetchPostWithToken(getUrl(`events/${eventId}/reject/${userId}`), customHeaders);
+
 export const validEventMemberResult = (customHeaders, { eventId, userId }) =>
   fetchPostWithToken(getUrl(`events/${eventId}/validate/${userId}`), customHeaders);
-
+  
 export const inviteFriendResult = (customHeaders, {userId}) =>
   fetchPostWithToken(getUrl(`friends/invite/${userId}`), customHeaders);
 

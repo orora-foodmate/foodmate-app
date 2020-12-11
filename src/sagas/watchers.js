@@ -24,6 +24,7 @@ import {
   joinEventSaga,
   createEventSaga,
   validEventMemberSaga,
+  rejectMemberByAdminSaga,
 } from './eventSagas';
 import {
   forwardMessageSaga,
@@ -53,6 +54,10 @@ export function* watchCreateEventSaga() {
 
 export function* watchJoinEventSaga() {
   yield takeLatest(types.JOIN_EVENT, joinEventSaga);
+}
+
+export function* watchRejectMemberByAdminSaga() {
+  yield takeLatest(types.REJECT_MEMBER_BY_ADMIN, rejectMemberByAdminSaga);
 }
 
 export function* watchGetMessagesSaga() {

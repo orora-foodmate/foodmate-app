@@ -94,7 +94,7 @@ class socketClusterHelperClass {
   basicUnsubscribe = (userId) => {
     ['event.created', `friend.approveFriend.${userId}`, `friend.inviteFriend.${userId}`, `friend.rejectFriend.${userId}`].map(key => {
       const channel = this._subscribes[key];
-      if(channel) channel.kll();
+      if(channel) channel.kill();
       this._subscribes[key] = undefined;
     })
   }
@@ -204,7 +204,6 @@ class socketClusterHelperClass {
           'syncData',
           query
           );
-          console.log("socketClusterHelperClass -> initialClient -> events", events)
 
         if (friends.length !== 0) {
           const friendItems = parseFriendItems(friends);
@@ -225,8 +224,8 @@ class socketClusterHelperClass {
 }
 
 const socketClusterHelper = new socketClusterHelperClass({
-  hostname: Config.hostname,
-  port: Config.port,
+  hostname: Config.HOST_NAME,
+  port: Config.PORT,
 });
 
 export default socketClusterHelper;

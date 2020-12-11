@@ -49,7 +49,7 @@ export const updateUserResult = (customHeaders, payload) =>
 export const getUserByAccountResult = (customHeaders, { account }) =>
   fetchGetWithToken(getUrl(`users/searchAccount/${account}`), customHeaders);
 
-export const uploadImgurResult = (customHeaders, formData) =>
+export const uploadImgUrlResult = (customHeaders, formData) =>
   fetchWithFormData('https://api.imgur.com/3/upload', customHeaders, formData);
 
 export const loginResult = async (payload) => {

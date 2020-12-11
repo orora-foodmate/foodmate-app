@@ -1,7 +1,7 @@
 import ImagePicker from 'react-native-image-picker';
 import {Platform} from 'react-native';
 import Config from 'react-native-config';
-import {uploadImgurResult} from '~/apis/api';
+import {uploadImgUrlResult} from '~/apis/api';
 
 const DEFAULT_OPTIONS = {
   mediaType: 'photo',
@@ -38,7 +38,7 @@ export const handleUploadImage = (
     const formData = getImageByPlatform(photo);
 
     try {
-      const Authorization = `Client-ID ${Config.IMGURL_CLIENT_ID}`;
+      const Authorization = `Client-ID ${Config.IMG_URL_CLIENT_ID}`;
       const result = await uploadImgurResult({ Authorization },formData);
 
       onSuccess(result.data.link);

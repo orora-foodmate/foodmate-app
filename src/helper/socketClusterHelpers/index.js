@@ -204,7 +204,6 @@ class socketClusterHelperClass {
           'syncData',
           query
           );
-          console.log("socketClusterHelperClass -> initialClient -> events", events)
 
         if (friends.length !== 0) {
           const friendItems = parseFriendItems(friends);
@@ -225,8 +224,8 @@ class socketClusterHelperClass {
 }
 
 const socketClusterHelper = new socketClusterHelperClass({
-  hostname: Config.hostname,
-  port: Config.port,
+  hostname: Config.HOST_NAME,
+  port: Config.PORT,
 });
 
 export default socketClusterHelper;

@@ -39,7 +39,7 @@ export const handleUploadImage = (
 
     try {
       const Authorization = `Client-ID ${Config.IMG_URL_CLIENT_ID}`;
-      const result = await uploadImgurResult({ Authorization },formData);
+      const result = await uploadImgUrlResult({ Authorization },formData);
 
       onSuccess(result.data.link);
     } catch (error) {

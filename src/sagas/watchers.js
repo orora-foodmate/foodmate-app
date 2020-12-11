@@ -29,7 +29,7 @@ import {
   forwardMessageSaga,
   createWebsocketChannel,
 } from './websocketSagas/initialWSChannel';
-import {createEventByWebsocketSaga} from './websocketSagas/eventSagas';
+import {createEventByWebsocketSaga, updateEventByWebsocketSaga} from './websocketSagas/eventSagas';
 
 export function* watchInitialAppSaga() {
   yield takeLatest(types.INITIAL_APP, initialAppSaga);
@@ -117,6 +117,14 @@ export function* watchCreateEventByWebsocketSaga() {
   while (true) {
     const actionObject = yield take(messageChan);
     yield call(createEventByWebsocketSaga, actionObject);
+  }
+}
+
+export function* watchUpdateEventByWebsocketSaga() {
+  const messageChan = yield actionChannel(types.UPDATE_EVENT_BY_WEBSOCKET);
+  while (true) {
+    const actionObject = yield take(messageChan);
+    yield call(updateEventByWebsocketSaga, actionObject);
   }
 }
 

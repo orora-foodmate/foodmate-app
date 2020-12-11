@@ -1,6 +1,6 @@
 import socketClusterClient from 'socketcluster-client';
 import isNull from 'lodash/isNull';
-import Config from '~/constants/envConfig';
+import Config from 'react-native-config';
 import { parseEventItems, parseFriendItems } from '~/utils/utils';
 import { inviteFriendAction, rejectFriendByWebsocketAction, approveFriendByWebsocketAction } from './actions/friendActions';
 import { createEventByWebsocketAction } from './actions/eventActions';
@@ -136,8 +136,8 @@ class socketClusterHelperClass {
 
       this._socketClient = socketClusterClient.create({
         secure: false,
-        hostname: Config.hostname,
-        port: Config.port,
+        hostname: Config.HOST_NAME,
+        port: Config.PORT,
         authTokenName: this.authTokenName,
         autoReconnectOptions: {
           initialDelay: 10000, //milliseconds

@@ -4,7 +4,7 @@ import isNull from 'lodash/isNull';
 import isEmpty from 'lodash/isEmpty';
 import pick from 'lodash/pick';
 import colors from '~/theme/color';
-import envConfig from '~/constants/envConfig';
+import Config from 'react-native-config';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import {Header, Input, Icon, ListItem, Button} from 'react-native-elements';
 
@@ -109,7 +109,7 @@ const PickPlaceModal = ({
           }}
           onFail={onFail}
           query={{
-            key: envConfig.googleMapApiKey,
+            key: Config.GOOGLE_MAPS_API_KEY,
             language: 'zh-TW', // language of the results
           }}
           onPress={(data) => {

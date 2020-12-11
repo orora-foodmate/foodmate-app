@@ -8,7 +8,6 @@ import ScrollContainer from '~/components/ScrollContainer';
 
 const App = (Component) => (props) => {
   return (
-    <ScrollContainer>
       <Provider store={store}>
         <NavigationProvider value={{componentId: props.componentId}}>
           <ThemeProvider theme={theme}>
@@ -16,7 +15,6 @@ const App = (Component) => (props) => {
           </ThemeProvider>
         </NavigationProvider>
       </Provider>
-    </ScrollContainer>
   );
 };
 

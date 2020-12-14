@@ -1,7 +1,7 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import isEmpty from 'lodash/isEmpty';
-import {StyleSheet, View} from 'react-native';
-import {Overlay, Avatar, Image} from 'react-native-elements';
+import { StyleSheet, View } from 'react-native';
+import { Overlay, Avatar, Image } from 'react-native-elements';
 import Text from '~/components/Text';
 import Button from '~/components/Button';
 import colors from '~/theme/color';
@@ -13,11 +13,11 @@ const handleApprove = ({
   eventId,
   handleValidEventMember,
 }) => () => {
-  handleValidEventMember({eventId, userId});
+  handleValidEventMember({ eventId, userId });
   onClose();
 };
 
-const GoBackButton = ({show, onClose}) => {
+const GoBackButton = ({ show, onClose }) => {
   if (!show) return <Fragment />;
 
   return (
@@ -27,7 +27,7 @@ const GoBackButton = ({show, onClose}) => {
           title='返回'
           type='outline'
           onPress={onClose}
-          buttonStyle={{width: 200}}
+          buttonStyle={{ width: 200 }}
         />
       </View>
     </Fragment>
@@ -40,6 +40,7 @@ const VerifyButton = ({
   userId,
   onClose,
   handleValidEventMember,
+  handleRejectEventMember,
 }) => {
   if (!show) return <Fragment />;
 
@@ -52,18 +53,18 @@ const VerifyButton = ({
 
   return (
     <Fragment>
-      <Button title='同意' onPress={onApprove} buttonStyle={{width: 200}} />
+      <Button title='同意' onPress={onApprove} buttonStyle={{ width: 200 }} />
       <View style={styles.cancelZone}>
         <Button
           title='拒絕'
-          onPress={console.log}
-          buttonStyle={{backgroundColor: colors.error, width: 200}}
+          onPress={() => handleRejectEventMember(({ eventId, userId }))}
+          buttonStyle={{ backgroundColor: colors.error, width: 200 }}
         />
         <Button
           title='返回'
           type='outline'
           onPress={onClose}
-          buttonStyle={{width: 200}}
+          buttonStyle={{ width: 200 }}
         />
       </View>
     </Fragment>
@@ -76,11 +77,12 @@ const VerifyContent = ({
   isAdmin,
   member,
   handleValidEventMember,
+  handleRejectEventMember,
   onClose,
 }) => {
   if (!show) return <Fragment />;
 
-  const {info} = member;
+  const { info } = member;
   return (
     <View style={styles.content}>
       <Image source={confirmImage} style={styles.headerImg} />
@@ -97,36 +99,37 @@ const VerifyContent = ({
         onClose={onClose}
         member={member}
         handleValidEventMember={handleValidEventMember}
+        handleRejectEventMember={handleRejectEventMember}
       />
       <GoBackButton show={!isAdmin} onClose={onClose} />
     </View>
   );
 };
 
-const DetailContent = ({show, member, isAdmin, onClose}) => {
+const DetailContent = ({ show, member, isAdmin, onClose }) => {
   if (!show) return <Fragment />;
 
   return (
     <View style={styles.content}>
-      <Avatar rounded size='large' source={{uri: member.info.avatar}} />
+      <Avatar rounded size='large' source={{ uri: member.info.avatar }} />
       <Text h2>{member.info.name}</Text>
       <Button
         title='檢視個人資料'
         onPress={console.log}
-        buttonStyle={{width: 200}}
+        buttonStyle={{ width: 200 }}
       />
       <View style={styles.cancelZone}>
         <Button
           title='踢除成員'
           disabled={!isAdmin}
           onPress={console.log}
-          buttonStyle={{backgroundColor: colors.error, width: 200}}
+          buttonStyle={{ backgroundColor: colors.error, width: 200 }}
         />
         <Button
           title='返回'
           type='outline'
           onPress={onClose}
-          buttonStyle={{width: 200}}
+          buttonStyle={{ width: 200 }}
         />
       </View>
     </View>
@@ -141,14 +144,15 @@ const MemberModal = ({
   onClose,
   selectedId,
   handleValidEventMember,
+  handleRejectEventMember,
 }) => {
-  const [member, setMember] = useState({info: {}});
+  const [member, setMember] = useState({ info: {} });
   useEffect(() => {
     if (visible && !isEmpty(selectedId)) {
       const user = users.find((user) => user.id === selectedId);
       setMember(user);
     } else {
-      setMember({info: {}});
+      setMember({ info: {} });
     }
   }, [visible, selectedId]);
 
@@ -159,20 +163,23 @@ const MemberModal = ({
       overlayStyle={styles.overlay}
       isVisible={visible}
       onBackdropPress={onClose}>
-      <VerifyContent
-        member={member}
-        eventId={eventId}
-        isAdmin={isAdmin}
-        onClose={onClose}
-        show={shouldVerify}
-        handleValidEventMember={handleValidEventMember}
-      />
-      <DetailContent
-        member={member}
-        isAdmin={isAdmin}
-        show={!shouldVerify}
-        onClose={onClose}
-      />
+      <Fragment>
+        <VerifyContent
+          member={member}
+          eventId={eventId}
+          isAdmin={isAdmin}
+          onClose={onClose}
+          show={shouldVerify}
+          handleValidEventMember={handleValidEventMember}
+          handleRejectEventMember={handleRejectEventMember}
+        />
+        <DetailContent
+          member={member}
+          isAdmin={isAdmin}
+          show={!shouldVerify}
+          onClose={onClose}
+        />
+      </Fragment>
     </Overlay>
   );
 };

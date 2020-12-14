@@ -23,11 +23,13 @@ const basicAsyncActionTypes = [
   'REJECT_FRIEND_BY_WEBSOCKET',
   'APPROVE_FRIEND_BY_WEBSOCKET',
   'CREATE_EVENT_BY_WEBSOCKET',
+  'UPDATE_EVENT_BY_WEBSOCKET',
   'APPROVE_INVITE_FRIEND',
   'INVITE_FRIEND',
   'REJECT_INVITE_FRIEND',
   'INIT_USERNAME',
   'VALID_MEMBER',
+  'REJECT_MEMBER_BY_ADMIN',
 ];
 
 const asyncActionTypes = basicAsyncActionTypes.reduce((result, actionType) => {

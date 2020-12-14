@@ -3,7 +3,7 @@ import isNull from 'lodash/isNull';
 import Config from 'react-native-config';
 import { parseEventItems, parseFriendItems } from '~/utils/utils';
 import { inviteFriendAction, rejectFriendByWebsocketAction, approveFriendByWebsocketAction } from './actions/friendActions';
-import { createEventByWebsocketAction } from './actions/eventActions';
+import { createEventByWebsocketAction, updateEventByWebsocketAction } from './actions/eventActions';
 
 const DEFAULT_AUTO_RECONNECT_OPTIONS = {
   initialDelay: 10000, //milliseconds
@@ -76,17 +76,19 @@ class socketClusterHelperClass {
   }
 
   subscribe = (channelName, actionFunction) => {
-    const channel = this._socketClient.subscribe(channelName);
-    this._subscribes[channelName] = channel;
-    this.subscribeWatcher(channel, actionFunction);
+    if (this._socketClient) {
+      const channel = this._socketClient.subscribe(channelName);
+      this._subscribes[channelName] = channel;
+      this.subscribeWatcher(channel, actionFunction);
+    }
   };
 
   basicSubscribe = (userId) => {
     this.subscribe(`friend.approveFriend.${userId}`, (payload) => this._emit(approveFriendByWebsocketAction(payload)));
     this.subscribe(`friend.inviteFriend.${userId}`, (payload) => this._emit(inviteFriendAction(payload)));
     this.subscribe(`friend.rejectFriend.${userId}`, (payload) => this._emit(rejectFriendByWebsocketAction(payload)));
+    this.subscribe('event.updated', payload => this._emit(updateEventByWebsocketAction(payload)));
     this.subscribe(`event.created`, (payload) => {
-    console.log("socketClusterHelperClass -> payload", payload)
       this._emit(createEventByWebsocketAction(payload));
     });
   }
@@ -94,7 +96,7 @@ class socketClusterHelperClass {
   basicUnsubscribe = (userId) => {
     ['event.created', `friend.approveFriend.${userId}`, `friend.inviteFriend.${userId}`, `friend.rejectFriend.${userId}`].map(key => {
       const channel = this._subscribes[key];
-      if(channel) channel.kill();
+      if (channel) channel.kill();
       this._subscribes[key] = undefined;
     })
   }
@@ -203,7 +205,7 @@ class socketClusterHelperClass {
         const { friends, events } = await this._socketClient.invoke(
           'syncData',
           query
-          );
+        );
 
         if (friends.length !== 0) {
           const friendItems = parseFriendItems(friends);

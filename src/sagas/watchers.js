@@ -11,9 +11,11 @@ import {
 import {addMessageSaga, getMessagesSaga} from './messageSagas';
 import {addMessageByWebsocketSaga} from './messageByWebsocketSagas';
 import {
-  getUserByIdSaga,
   updateUserSaga,
+  getUserByIdSaga,
+  getMemberDetailSaga,
   getUserByAccountSaga,
+  updateUserProfileSaga,
 } from './userSagas';
 import {
   approveFriendByWebsocketSaga,
@@ -76,6 +78,10 @@ export function* watchInviteFriendSaga() {
   yield takeLatest(types.INVITE_FRIEND, inviteFriendSaga);
 }
 
+export function* watchUpdateProfileSaga() {
+  yield takeLatest(types.UPDATE_PROFILE, updateUserProfileSaga);
+}
+
 export function* watchRejectInviteFriendSaga() {
   yield takeLatest(types.REJECT_INVITE_FRIEND, rejectInviteFriendSaga);
 }
@@ -90,6 +96,10 @@ export function* watchGetUserByAccountSaga() {
 
 export function* watchValidEventMemberSaga() {
   yield takeLatest(types.VALID_MEMBER, validEventMemberSaga);
+}
+
+export function* watchGetMemberDetailSaga() {
+  yield takeLatest(types.GET_MEMBER_DETAIL, getMemberDetailSaga);
 }
 
 export function* watchRegisterWebsocketSaga() {

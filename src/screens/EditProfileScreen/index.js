@@ -1,14 +1,14 @@
 import { connect } from 'react-redux';
-import { updateUserAction } from '~/actions/authActions';
+import { updateProfileAction } from '~/actions/userActions';
 import EditProfileScreen from './view';
 
 const mapStateToProps = ({ auth }) => ({
-  auth,
+  auth
 });
 
 const mapDispatchToProps = dispatch => ({
   handleUpdateProfile: payload => {
-    dispatch(updateUserAction(payload));
+    dispatch(updateProfileAction(payload));
   }
 });
 

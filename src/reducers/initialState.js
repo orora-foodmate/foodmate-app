@@ -2,6 +2,7 @@ import { fromJS } from 'immutable';
 
 export const authState = fromJS({
   fcmToken: '',
+  description: '',
   isAuth: false,
   socket: null,
   account: '',
@@ -21,3 +22,7 @@ export const searchState = fromJS({
   user: {},
   hasSearch: false
 });
+
+export const memberState = fromJS({
+  user: {}
+})

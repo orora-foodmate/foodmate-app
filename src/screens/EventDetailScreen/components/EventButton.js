@@ -23,7 +23,7 @@ const EventButton = ({event, authUserId, onJoinClick, ...props}) => {
   const user = getEventUserIds(event, authUserId);
 
   if (!isEmpty(user)) {
-    user.info.status !== 1
+    return user.info.status !== 1
      ? <DisabledButton {...props} title='等待審核' />
      : <DisabledButton {...props} title='活動即將進行'/>;
   }

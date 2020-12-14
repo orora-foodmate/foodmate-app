@@ -18,6 +18,7 @@ import EventsScreen from '~/screens/EventsScreen';
 import EventDetailScreen from '~/screens/EventDetailScreen';
 import CreateEventScreen from '~/screens/CreateEventScreen';
 import EventMemberScreen from '~/screens/EventMemberScreen';
+import MemberDetailScreen from '~/screens/MemberDetailScreen';
 
 import TopBar from '~/components/TopBar';
 
@@ -44,6 +45,7 @@ Screens.set('CreateEvent', CreateEventScreen);
 Screens.set('FriendDetail', FriendDetailScreen);
 Screens.set('FriendSetting', FriendSettingScreen);
 Screens.set('FriendSetting', FriendSettingScreen);
+Screens.set('MemberDetail', MemberDetailScreen);
 
 
 Navigation.registerComponent('TopBar', () => TopBar);

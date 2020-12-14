@@ -5,11 +5,12 @@ const loginSuccess = (auth, payload) => auth.merge({...payload, isAuth: true});
 
 const logoutSuccess = (auth) => {
   const fcmToken = auth.get('fcmToken');
-  return authState.merge({ fcmToken });
-}  
+  return authState.merge({fcmToken});
+};
 
 export default function reducer(auth = authState, {type, payload}) {
   switch (type) {
+    case types.UPDATE_PROFILE_SUCCESS:
     case types.SET_LOGIN_USER:
       return auth.merge(payload);
     case types.LOGOUT_SUCCESS:
@@ -26,6 +27,8 @@ export default function reducer(auth = authState, {type, payload}) {
     case types.REGISTER_USER_SUCCESS:
     case types.INIT_USERNAME:
     case types.INIT_USERNAME_ERROR:
+    case types.UPDATE_PROFILE:
+    case types.UPDATE_PROFILE_ERROR:
     default:
       return auth;
   }

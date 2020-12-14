@@ -2,6 +2,7 @@ import { fromJS } from 'immutable';
 
 export const authState = fromJS({
   fcmToken: '',
+  description: '',
   isAuth: false,
   socket: null,
   account: '',

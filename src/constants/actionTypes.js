@@ -29,6 +29,7 @@ const basicAsyncActionTypes = [
   'INIT_USERNAME',
   'VALID_MEMBER',
   'GET_MEMBER_DETAIL',
+  'UPDATE_PROFILE',
 ];
 
 const asyncActionTypes = basicAsyncActionTypes.reduce((result, actionType) => {

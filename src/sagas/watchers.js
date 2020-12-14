@@ -15,6 +15,7 @@ import {
   getUserByIdSaga,
   getMemberDetailSaga,
   getUserByAccountSaga,
+  updateUserProfileSaga,
 } from './userSagas';
 import {
   approveFriendByWebsocketSaga,
@@ -70,6 +71,10 @@ export function* watchUpdateUserSaga() {
 
 export function* watchInviteFriendSaga() {
   yield takeLatest(types.INVITE_FRIEND, inviteFriendSaga);
+}
+
+export function* watchUpdateProfileSaga() {
+  yield takeLatest(types.UPDATE_PROFILE, updateUserProfileSaga);
 }
 
 export function* watchRejectInviteFriendSaga() {

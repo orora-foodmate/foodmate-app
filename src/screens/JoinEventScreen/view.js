@@ -1,11 +1,11 @@
-import React, { Fragment, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, {Fragment, useState} from 'react';
+import {View, StyleSheet} from 'react-native';
 import isEmpty from 'lodash/isEmpty';
-import { Image } from 'react-native-elements';
-import { useNavigation } from 'react-native-navigation-hooks';
+import {Image} from 'react-native-elements';
+import {useNavigation} from 'react-native-navigation-hooks';
 import Text from '~/components/Text';
 import confirmImage from '~/assets/images/image-take-part.png';
-import { useEventDetail } from '~/models';
+import {useEventDetail} from '~/models';
 import colors from '~/theme/color';
 import Button from '~/components/Button';
 import TextArea from '~/components/TextArea';
@@ -13,36 +13,36 @@ import SuccessDialog from './components/SuccessDialog';
 import ScrollContainer from '~/components/ScrollContainer';
 
 const handleOnChange = (setter) => (name) => (value) => {
-  setter((payload) => ({ ...payload, [name]: value }));
+  setter((payload) => ({...payload, [name]: value}));
 };
 
-const handleSubmit = ({ payload, event, setVisible, handleJoinEvent }) => () => {
+const handleSubmit = ({payload, event, setVisible, handleJoinEvent}) => () => {
   setVisible(true);
-  handleJoinEvent({ eventId: event.id, ...payload });
+  handleJoinEvent({eventId: event.id, ...payload});
 };
 
-const JoinEventScreen = ({ eventId, handleJoinEvent }) => {
+const JoinEventScreen = ({eventId, handleJoinEvent}) => {
   const [payload, setPayload] = useState({});
   const [visible, setVisible] = useState(false);
-  const { pop } = useNavigation();
+  const {pop} = useNavigation();
   const event = useEventDetail(eventId);
 
   const onChange = handleOnChange(setPayload);
-  const onSubmit = handleSubmit({ payload, event, setVisible, handleJoinEvent });
+  const onSubmit = handleSubmit({payload, event, setVisible, handleJoinEvent});
 
   if (isEmpty(event)) return <Fragment />;
 
   return (
     <ScrollContainer>
       <Fragment>
-        <SuccessDialog visible={visible} pop={pop} />
+        <SuccessDialog visible={visible} setVisible={setVisible} pop={pop} />
         <View style={styles.container}>
           <Image source={confirmImage} style={styles.headerImg} />
           <Text h5>參加活動</Text>
           <Text h2>{event.title}</Text>
           <Text h5 style={styles.introText}>
             介紹一下自己，讓主辦人好好認識你，也能提升自己審核通過的機會喔！
-        </Text>
+          </Text>
           <TextArea
             title='自我介紹'
             numberOfLines={4}

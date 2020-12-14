@@ -54,7 +54,7 @@ const SelectInput = ({
 SelectInput.propTypes = {
   placeholderText: propTypes.string,
   leftIcon: propTypes.node,
-  value: propTypes.oneOfType(propTypes.string, propTypes.oneOf([null])),
+  // value: propTypes.oneOfType(propTypes.string, propTypes.array, propTypes.oneOf([null, undefined])),
   items: propTypes.arrayOf(
     propTypes.shape({
       label: propTypes.string,

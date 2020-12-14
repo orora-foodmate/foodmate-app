@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import isEmpty from 'lodash/isEmpty';
 import {StyleSheet, View} from 'react-native';
-import {Overlay, Divider, Image, ListItem} from 'react-native-elements';
+import {Overlay, Avatar, Image} from 'react-native-elements';
 import Text from '~/components/Text';
 import Button from '~/components/Button';
 import colors from '~/theme/color';
@@ -41,6 +41,7 @@ const VerifyButton = ({
   userId,
   onClose,
   handleValidEventMember,
+  handleRejectEventMember,
 }) => {
   if (!show) return <Fragment />;
 
@@ -57,7 +58,7 @@ const VerifyButton = ({
       <View style={styles.cancelZone}>
         <Button
           title='拒絕'
-          onPress={console.log}
+          onPress={() => handleRejectEventMember({eventId, userId})}
           buttonStyle={{backgroundColor: colors.error, width: 200}}
         />
         <Button
@@ -77,6 +78,7 @@ const VerifyContent = ({
   isAdmin,
   member,
   handleValidEventMember,
+  handleRejectEventMember,
   onClose,
 }) => {
   if (!show) return <Fragment />;
@@ -98,6 +100,7 @@ const VerifyContent = ({
         onClose={onClose}
         member={member}
         handleValidEventMember={handleValidEventMember}
+        handleRejectEventMember={handleRejectEventMember}
       />
       <GoBackButton show={!isAdmin} onClose={onClose} />
     </View>
@@ -122,9 +125,9 @@ const DetailContent = ({push, show, member, isAdmin, onClose}) => {
 
   return (
     <View style={styles.content}>
-      <SelectItem
-        show
-        bottomBorder
+      <Avatar rounded size='large' source={{uri: member.info.avatar}} />
+      <Text h2>{member.info.name}</Text>
+      <Button
         title='檢視個人資料'
         onPress={() => {
           onClose();
@@ -138,6 +141,20 @@ const DetailContent = ({push, show, member, isAdmin, onClose}) => {
         onPress={console.log}
       />
       <SelectItem show title='取消' onPress={onClose} />
+      <View style={styles.cancelZone}>
+        <Button
+          title='踢除成員'
+          disabled={!isAdmin}
+          onPress={console.log}
+          buttonStyle={{backgroundColor: colors.error, width: 200}}
+        />
+        <Button
+          title='返回'
+          type='outline'
+          onPress={onClose}
+          buttonStyle={{width: 200}}
+        />
+      </View>
     </View>
   );
 };
@@ -151,6 +168,7 @@ const MemberModal = ({
   onClose,
   selectedId,
   handleValidEventMember,
+  handleRejectEventMember,
 }) => {
   const [member, setMember] = useState({info: {}});
   useEffect(() => {
@@ -169,21 +187,23 @@ const MemberModal = ({
       overlayStyle={styles.overlay}
       isVisible={visible}
       onBackdropPress={onClose}>
-      <VerifyContent
-        member={member}
-        eventId={eventId}
-        isAdmin={isAdmin}
-        onClose={onClose}
-        show={shouldVerify}
-        handleValidEventMember={handleValidEventMember}
-      />
-      <DetailContent
-        push={push}
-        member={member}
-        isAdmin={isAdmin}
-        onClose={onClose}
-        show={!shouldVerify}
-      />
+      <Fragment>
+        <VerifyContent
+          member={member}
+          eventId={eventId}
+          isAdmin={isAdmin}
+          onClose={onClose}
+          show={shouldVerify}
+          handleValidEventMember={handleValidEventMember}
+        />
+        <DetailContent
+          push={push}
+          member={member}
+          isAdmin={isAdmin}
+          onClose={onClose}
+          show={!shouldVerify}
+        />
+      </Fragment>
     </Overlay>
   );
 };

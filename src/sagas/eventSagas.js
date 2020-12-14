@@ -1,19 +1,20 @@
-import {put, call, select} from 'redux-saga/effects';
+import { put, call, select } from 'redux-saga/effects';
 import types from '~/constants/actionTypes';
 import isFunction from 'lodash/isFunction';
 import {
   joinEventResult,
   createEventResult,
   validEventMemberResult,
+  rejectMemberByAdminResult,
 } from '~/apis/api';
-import {parseEventItem} from '~/utils/utils';
+import { parseEventItem } from '~/utils/utils';
 
 const okCreate = (payload) => ({
   type: types.CREATE_EVENT_SUCCESS,
   payload,
 });
 
-const errCreate = ({message}) => {
+const errCreate = ({ message }) => {
   return {
     type: types.CREATE_EVENT_ERROR,
     payload: {
@@ -22,11 +23,11 @@ const errCreate = ({message}) => {
   };
 };
 
-export function* createEventSaga({payload = {}}) {
+export function* createEventSaga({ payload = {} }) {
   try {
-    const {push, onSuccess, ...createdPayload} = payload;
+    const { push, onSuccess, ...createdPayload } = payload;
 
-    const {auth, setting} = yield select(({auth, setting}) => ({
+    const { auth, setting } = yield select(({ auth, setting }) => ({
       auth,
       setting,
     }));
@@ -36,7 +37,7 @@ export function* createEventSaga({payload = {}}) {
       Authorization: `Bearer ${auth.get('token')}`,
     };
 
-    const {result} = yield call(
+    const { result } = yield call(
       createEventResult,
       customHeaders,
       createdPayload
@@ -46,29 +47,29 @@ export function* createEventSaga({payload = {}}) {
     yield put(okCreate());
     if (isFunction(onSuccess)) onSuccess();
   } catch (error) {
-    alert(error.message);
     const errorAction = errCreate(error);
     yield put(errorAction);
   }
 }
 
-const okJoin = (payload) => ({
-  type: types.JOIN_EVENT_SUCCESS,
+const okReject = (payload) => ({
+  type: types.REJECT_MEMBER_BY_ADMIN_SUCCESS,
   payload,
 });
 
-const errJoin = ({message}) => {
+const errReject = ({ message }) => {
   return {
-    type: types.JOIN_EVENT_ERROR,
+    type: types.REJECT_MEMBER_BY_ADMIN_ERROR,
     payload: {
       message,
     },
   };
 };
 
-export function* joinEventSaga({payload = {}}) {
+export function* rejectMemberByAdminSaga({ payload }) {
+  console.log('🚀 ~ file: eventSagas.js ~ line 69 ~ function*rejectMemberByAdminSaga ~ payload', payload)
   try {
-    const {auth, setting} = yield select(({auth, setting}) => ({
+    const { auth, setting } = yield select(({ auth, setting }) => ({
       auth,
       setting,
     }));
@@ -78,7 +79,52 @@ export function* joinEventSaga({payload = {}}) {
       Authorization: `Bearer ${auth.get('token')}`,
     };
 
-    const {result} = yield call(joinEventResult, customHeaders, payload);
+    const { result } = yield call(rejectMemberByAdminResult, customHeaders, payload);
+    const event = yield database.events
+      .findOne()
+      .where('id')
+      .eq(payload.eventId)
+      .exec();
+
+    yield event.atomicUpdate((item) => {
+      item.users =result.data.event.users;
+      return item; 
+    });
+    
+    return yield put(okReject());
+  } catch (error) {
+    const errorAction = errReject(error);
+    yield put(errorAction);
+  }
+}
+
+const okJoin = (payload) => ({
+  type: types.JOIN_EVENT_SUCCESS,
+  payload,
+});
+
+const errJoin = ({ message }) => {
+  return {
+    type: types.JOIN_EVENT_ERROR,
+    payload: {
+      message,
+    },
+  };
+};
+
+export function* joinEventSaga({ payload = {} }) {
+  try {
+    const { auth, setting } = yield select(({ auth, setting }) => ({
+      auth,
+      setting,
+    }));
+    const database = setting.get('database');
+
+    const customHeaders = {
+      Authorization: `Bearer ${auth.get('token')}`,
+    };
+
+    const { result } = yield call(joinEventResult, customHeaders, payload);
 
     const eventQuery = yield database.events
       .findOne()
@@ -102,16 +148,16 @@ const okValid = (payload) => ({
   payload,
 });
 
-const errValid = ({message}) => ({
+const errValid = ({ message }) => ({
   type: VALID_MEMBER_ERROR,
   payload: {
     message,
   },
 });
 
-export function* validEventMemberSaga({payload = {}}) {
+export function* validEventMemberSaga({ payload = {} }) {
   try {
-    const {auth, setting} = yield select(({auth, setting}) => ({
+    const { auth, setting } = yield select(({ auth, setting }) => ({
       auth,
       setting,
     }));
@@ -121,12 +167,12 @@ export function* validEventMemberSaga({payload = {}}) {
       Authorization: `Bearer ${auth.get('token')}`,
     };
 
-    const {result} = yield call(validEventMemberResult, customHeaders, payload);
+    const { result } = yield call(validEventMemberResult, customHeaders, payload);
 
     const eventQuery = yield database.events
-    .findOne()
-    .where('id')
-    .eq(payload.eventId);
+      .findOne()
+      .where('id')
+      .eq(payload.eventId);
 
     yield eventQuery.update({
       $set: {

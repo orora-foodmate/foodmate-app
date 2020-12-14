@@ -14,3 +14,8 @@ export const validEventMemberAction = payload => ({
   type: types.VALID_MEMBER,
   payload
 })
+
+export const rejectEventMemberByAdminAction = payload => ({
+  type: types.REJECT_MEMBER_BY_ADMIN,
+  payload,
+});

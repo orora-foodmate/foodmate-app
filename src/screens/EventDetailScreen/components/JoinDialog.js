@@ -41,7 +41,7 @@ const JoinDialog = ({visible, setVisible, push, event}) => {
             title='前往報名'
             onPress={() => {
               setVisible(false);
-              push('JoinEvent', {eventId: event.id});
+              push('JoinEvent', {eventId: event.id, event});
             }}
           />
           <Button

@@ -1,8 +1,8 @@
-import React, {Fragment, useState} from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import format from 'date-fns/format';
-import {View, StyleSheet, ScrollView} from 'react-native';
-import {Icon, Image} from 'react-native-elements';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import { Icon, Image } from 'react-native-elements';
 import colors from '~/theme/color';
 import Text from '~/components/Text';
 import Tags from '~/components/Tags';
@@ -10,39 +10,54 @@ import Button from '~/components/Button';
 import introIcon from '~/assets/icons/icon_intro.png';
 import locationIcon from '~/assets/icons/icon_location_primary.png';
 import EventPhotoBlock from '~/components/EventPhotoBlock';
-import {useEventDetail} from '~/models';
+import { useEventDetail } from '~/models';
 import WebView from 'react-native-webview';
-import {iconParticipantActive} from '~/assets/icons';
+import { iconParticipantActive } from '~/assets/icons';
 import EventButton from './components/EventButton';
 import JoinDialog from './components/JoinDialog';
-import {useNavigation} from 'react-native-navigation-hooks';
+import { useNavigation } from 'react-native-navigation-hooks';
 
 const handleGoMembers = (push, eventName, eventId) => () => {
-  push('EventMember', { title: `${eventName} 成員`,
-   eventId });
+  push('EventMember', {
+    title: `${eventName} 成員`,
+    eventId
+  });
 }
 
 const EventDetail = (props) => {
+  const { passProps, database } = props;
+  const { eventId } = passProps;
+  console.log('🚀 ~ file: view.js ~ line 27 ~ EventDetail ~ passProps', passProps)
   const [visible, setVisible] = useState(false);
   const { push } = useNavigation();
+  const [event, setEvent] = useState({});
+  console.log('🚀 ~ file: view.js ~ line 31 ~ EventDetail ~ event', event)
 
-  if (isEmpty(props.passProps)) return <Fragment />;
+  useEffect(() => {
+    if (database) {
+      console.log('🚀 ~ file: view.js ~ line 38 ~ useEffect ~ database.events', database.events)
+      const sub = database.events.findOne().where('id').eq(eventId).$.subscribe(item => {
+        setEvent(item.toJSON());
+      });
+      return () => sub.unsubscribe();
+    }
+  }, []);
 
-  const {eventId} = props.passProps;
-  const event = useEventDetail(eventId);
-
-  if (isEmpty(event)) return <Fragment />;
+  if (isEmpty(passProps) || isEmpty(event)) return <Fragment />;
 
   const onMemberDetailClick = handleGoMembers(push, event.title, eventId);
 
+  console.log('🚀 ~ file: view.js ~ line 53 ~ EventDetail ~ `${event.users.length}/${event.userCountMax}`', `${event.users.length}/${event.userCountMax}`)
   return (
     <Fragment>
-      <JoinDialog visible={visible} push={push} event={event} setVisible={setVisible}/>
+      <JoinDialog visible={visible} push={push} event={event} setVisible={setVisible} />
       <ScrollView contentContainerStyle={styles.scroll} >
         <EventPhotoBlock hideButton uri={event.logo} />
         <View style={styles.baseInfoContainer}>
           <Text h1 style={styles.title}>
-            {event.title}
+            {console.log('🚀 ~ file: view.js ~ line 53 ~ <Text h1 style={styles.title}> ~ `${event.users.length}/${event.userCountMax}`', `${event.users.length}/${event.userCountMax}`)}
+            {`${event.users.length}/${event.userCountMax}`}
+            {/* {event.title} */}
           </Text>
           <View>
             <Button
@@ -107,7 +122,7 @@ const EventDetail = (props) => {
         </View>
         <View style={styles.map}>
           <WebView
-            style={{width: '100%', height: 600}}
+            style={{ width: '100%', height: 600 }}
             source={{
               uri: `https://www.google.com/maps/search/?api=1&query=taiwan&query_place_id=${event.place.place_id}&map_action=map`,
             }}

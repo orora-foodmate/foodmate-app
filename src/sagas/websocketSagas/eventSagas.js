@@ -54,7 +54,6 @@ const errUpdate = ({ message }) => {
 };
 
 export function* updateEventByWebsocketSaga({ payload = {} }) {
-  console.log('🚀 ~ file: eventSagas.js ~ line 58 ~ function*updateEventByWebsocketSaga ~ payload', payload)
   try {
     const { setting } = yield select(({ setting }) => ({
       setting,
@@ -84,7 +83,6 @@ export function* updateEventByWebsocketSaga({ payload = {} }) {
 
     yield put(okUpdate());
   } catch (error) {
-    console.log('🚀 ~ file: eventSagas.js ~ line 86 ~ function*updateEventByWebsocketSaga ~ error', error)
     const errorAction = errUpdate(error);
     yield put(errorAction);
   }

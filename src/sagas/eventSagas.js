@@ -67,7 +67,6 @@ const errReject = ({ message }) => {
 };
 
 export function* rejectMemberByAdminSaga({ payload }) {
-  console.log('🚀 ~ file: eventSagas.js ~ line 69 ~ function*rejectMemberByAdminSaga ~ payload', payload)
   try {
     const { auth, setting } = yield select(({ auth, setting }) => ({
       auth,

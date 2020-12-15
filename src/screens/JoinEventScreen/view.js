@@ -21,16 +21,14 @@ const handleSubmit = ({payload, event, setVisible, handleJoinEvent}) => () => {
   handleJoinEvent({eventId: event.id, ...payload});
 };
 
-const JoinEventScreen = ({eventId, handleJoinEvent}) => {
+const JoinEventScreen = ({eventId, handleJoinEvent, event}) => {
   const [payload, setPayload] = useState({});
   const [visible, setVisible] = useState(false);
   const {pop} = useNavigation();
-  const event = useEventDetail(eventId);
 
   const onChange = handleOnChange(setPayload);
   const onSubmit = handleSubmit({payload, event, setVisible, handleJoinEvent});
 
-  if (isEmpty(event)) return <Fragment />;
 
   return (
     <ScrollContainer>

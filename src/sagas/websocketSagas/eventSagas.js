@@ -18,7 +18,6 @@ const errCreate = ({ message }) => {
 };
 
 export function* createEventByWebsocketSaga({ payload = {} }) {
-  console.log("function*createEventByWebsocketSaga -> createEventByWebsocketSaga")
   try {
     const { setting } = yield select(({ setting }) => ({
       setting,
@@ -55,7 +54,7 @@ const errUpdate = ({ message }) => {
 };
 
 export function* updateEventByWebsocketSaga({ payload = {} }) {
-  console.log('🚀 ~ file: eventSagas.js ~ line 58 ~ function*updateEventByWebsocketSaga ~ payload', JSON.stringify(payload))
+  console.log('🚀 ~ file: eventSagas.js ~ line 58 ~ function*updateEventByWebsocketSaga ~ payload', payload)
   try {
     const { setting } = yield select(({ setting }) => ({
       setting,
@@ -66,12 +65,26 @@ export function* updateEventByWebsocketSaga({ payload = {} }) {
       yield put(okUpdate());
       return;
     }
+    const event = yield database.events
+    .findOne()
+    .where('id')
+    .eq(payload.id)
+    .exec();
+
+    const newEventItem = parseEventItem(payload);
+    yield event.atomicUpdate(oldData => {
+      Object.keys(newEventItem).map(key => {
+        oldData[key] = newEventItem[key];
+      })
+      return oldData;
+    });
 
     // const eventItem  = parseEventItem(payload);
     // yield database.events.insert(eventItem);
 
     yield put(okUpdate());
   } catch (error) {
+    console.log('🚀 ~ file: eventSagas.js ~ line 86 ~ function*updateEventByWebsocketSaga ~ error', error)
     const errorAction = errUpdate(error);
     yield put(errorAction);
   }

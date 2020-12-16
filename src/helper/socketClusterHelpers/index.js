@@ -2,7 +2,7 @@ import socketClusterClient from 'socketcluster-client';
 import isNull from 'lodash/isNull';
 import Config from 'react-native-config';
 import { parseEventItems, parseFriendItems } from '~/utils/utils';
-import { inviteFriendAction, rejectFriendByWebsocketAction, approveFriendByWebsocketAction } from './actions/friendActions';
+import { inviteFriendByWebsocketAction, rejectFriendByWebsocketAction, approveFriendByWebsocketAction } from './actions/friendActions';
 import { createEventByWebsocketAction, updateEventByWebsocketAction } from './actions/eventActions';
 
 const DEFAULT_AUTO_RECONNECT_OPTIONS = {
@@ -85,7 +85,7 @@ class socketClusterHelperClass {
 
   basicSubscribe = (userId) => {
     this.subscribe(`friend.approveFriend.${userId}`, (payload) => this._emit(approveFriendByWebsocketAction(payload)));
-    this.subscribe(`friend.inviteFriend.${userId}`, (payload) => this._emit(inviteFriendAction(payload)));
+    this.subscribe(`friend.inviteFriend.${userId}`, (payload) => this._emit(inviteFriendByWebsocketAction(payload)));
     this.subscribe(`friend.rejectFriend.${userId}`, (payload) => this._emit(rejectFriendByWebsocketAction(payload)));
     this.subscribe('event.updated', payload => this._emit(updateEventByWebsocketAction(payload)));
     this.subscribe(`event.created`, (payload) => {

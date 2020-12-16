@@ -78,9 +78,6 @@ export function* updateEventByWebsocketSaga({ payload = {} }) {
       return oldData;
     });
 
-    // const eventItem  = parseEventItem(payload);
-    // yield database.events.insert(eventItem);
-
     yield put(okUpdate());
   } catch (error) {
     const errorAction = errUpdate(error);

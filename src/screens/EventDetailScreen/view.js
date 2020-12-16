@@ -23,15 +23,12 @@ const handleGoMembers = (push, eventName, eventId) => () => {
 }
 
 const EventDetail = (props) => {
+  const {eventId} = props.passProps;
   const [visible, setVisible] = useState(false);
   const { push } = useNavigation();
-
-  if (isEmpty(props.passProps)) return <Fragment />;
-
-  const {eventId} = props.passProps;
   const event = useEventDetail(eventId);
 
-  if (isEmpty(event)) return <Fragment />;
+  if (isEmpty(props.passProps) || isEmpty(event)) return <Fragment />;
 
   const onMemberDetailClick = handleGoMembers(push, event.title, eventId);
 
@@ -46,6 +43,7 @@ const EventDetail = (props) => {
           </Text>
           <View>
             <Button
+              key={`${event.users.length}/${event.userCountMax}`}
               title={`${event.users.length}/${event.userCountMax}`}
               buttonStyle={styles.buttonTagStyle}
               titleStyle={styles.buttonTagTitleStyle}

@@ -195,6 +195,7 @@ const MemberModal = ({
           onClose={onClose}
           show={shouldVerify}
           handleValidEventMember={handleValidEventMember}
+          handleRejectEventMember={handleRejectEventMember}
         />
         <DetailContent
           push={push}

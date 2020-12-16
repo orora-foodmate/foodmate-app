@@ -2,8 +2,9 @@ import { connect } from 'react-redux';
 import { joinEventAction } from '~/actions/eventActions';
 import EventDetail from './view';
 
-const mapStateToProps = ({ auth, search }) => ({
-  authUserId: auth.get('id')
+const mapStateToProps = ({ auth, setting }) => ({
+  authUserId: auth.get('id'),
+  database: setting.get('database')
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -42,14 +42,14 @@ const handleCloseModal = setVisible => () => {
   setVisible(false);
 }
 
-const EventMemberScreen = ({ database, authUserId, eventId, handleValidEventMember,handleRejectEventMember }) => {
+const EventMemberScreen = ({ authUserId, eventId, handleValidEventMember,handleRejectEventMember }) => {
   const [visible, setVisible] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
 
   if (isEmpty(eventId)) return <Fragment />;
 
   const {push} = useNavigation();
-  const event = useEventDetail(database, eventId);
+  const event = useEventDetail(eventId);
   if (isEmpty(event)) return <Fragment />;
 
   const data = getSectionData(event.users);

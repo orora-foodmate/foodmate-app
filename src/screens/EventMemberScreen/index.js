@@ -4,7 +4,6 @@ import { rejectEventMemberByAdminAction, validEventMemberAction } from '~/action
 
 const mapStateToProps = ({ auth, setting }) => ({
   authUserId: auth.get('id'),
-  database: setting.get('database')
 });
 
 const mapDispatchToProps = dispatch => ({

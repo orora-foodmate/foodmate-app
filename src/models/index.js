@@ -107,8 +107,8 @@ export const useEvents = (query, options) => {
   return useEventsHook(foodmateDB, query, options);
 };
 
-export const useEventDetail = (database, id) => {
-  return useEventDetailHook(database, id);
+export const useEventDetail = (id) => {
+  return useEventDetailHook(foodmateDB, id);
 };
 
 export const useFriendRooms = () => {

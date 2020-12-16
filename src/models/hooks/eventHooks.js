@@ -5,7 +5,8 @@ export const useEventsHook = function (database) {
   useEffect(() => {
     if(database) {
       const sub = database.events.find().$.subscribe(items => {
-        setEvents(items);
+        const eventItems = items.map(item => item.toJSON());
+        setEvents(eventItems);
       });
       return () => sub.unsubscribe();
     }   
@@ -16,15 +17,12 @@ export const useEventsHook = function (database) {
 export const useEventDetailHook = function (database, id) {
   const [event, setEvent] = useState({});
   useEffect(() => {
-    console.log('🚀 ~ file: eventHooks.js ~ line 19 ~ useEffect ~ useEffect', id)
     if(database) {
       const sub = database.events.findOne().where('id').eq(id).$.subscribe(item => {
-      console.log('🚀 ~ file: eventHooks.js ~ line 21 ~ sub ~ item', item)
-        setEvent(item);
+        setEvent(item.toJSON());
       });
       return () => sub.unsubscribe();
     }   
-  }, []);
-  console.log('🚀 ~ file: eventHooks.js ~ line 30 ~ useEventDetailHook ~ event', event)
+  }, [database, id]);
   return event;
 }

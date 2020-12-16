@@ -85,11 +85,14 @@ export function* rejectMemberByAdminSaga({ payload }) {
       .eq(payload.eventId)
       .exec();
 
-    yield event.atomicUpdate((item) => {
-      item.users =result.data.event.users;
-      return item; 
+    const newEventItem = parseEventItem(result.data);
+    yield event.atomicUpdate(oldData => {
+      Object.keys(newEventItem).map(key => {
+        oldData[key] = newEventItem[key];
+      })
+      return oldData;
     });
-    
+
     return yield put(okReject());
   } catch (error) {
     const errorAction = errReject(error);
@@ -143,12 +146,12 @@ export function* joinEventSaga({ payload = {} }) {
 }
 
 const okValid = (payload) => ({
-  type: VALID_MEMBER_SUCCESS,
+  type: types.VALID_MEMBER_SUCCESS,
   payload,
 });
 
 const errValid = ({ message }) => ({
-  type: VALID_MEMBER_ERROR,
+  type: types.VALID_MEMBER_ERROR,
   payload: {
     message,
   },

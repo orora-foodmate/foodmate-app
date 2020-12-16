@@ -29,7 +29,11 @@ target 'foodmate' do
       if target.name == "React-Core.common-AccessibilityResources"
         target.remove_from_project
       end
+      if target.name == "React-Core-AccessibilityResources"
+        target.remove_from_project
+      end
     end
     ###############################################################
   end
 end
+

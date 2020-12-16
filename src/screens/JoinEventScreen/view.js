@@ -1,11 +1,9 @@
 import React, {Fragment, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
-import isEmpty from 'lodash/isEmpty';
 import {Image} from 'react-native-elements';
 import {useNavigation} from 'react-native-navigation-hooks';
 import Text from '~/components/Text';
 import confirmImage from '~/assets/images/image-take-part.png';
-import {useEventDetail} from '~/models';
 import colors from '~/theme/color';
 import Button from '~/components/Button';
 import TextArea from '~/components/TextArea';

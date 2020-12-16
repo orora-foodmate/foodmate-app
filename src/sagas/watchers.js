@@ -6,6 +6,7 @@ import {
   approveInviteFriendSaga,
   getFriendsSaga,
   inviteFriendSaga,
+  deleteFriendSaga,
   rejectInviteFriendSaga,
 } from './friendSagas';
 import {addMessageSaga, getMessagesSaga} from './messageSagas';
@@ -48,6 +49,10 @@ export function* watchLoginSaga() {
 
 export function* watchLogoutSaga() {
   yield takeLatest(types.LOGOUT, logoutSaga);
+}
+
+export function* watchDeleteFriendSaga() {
+  yield takeLatest(types.DELETE_FRIEND, deleteFriendSaga);  
 }
 
 export function* watchCreateEventSaga() {

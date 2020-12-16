@@ -22,8 +22,9 @@ const EmptyFriendContent = (props) => {
 const FriendDetailScreen = ({friendId}) => {
   const {push} = useNavigation();
   const friend = useFriendDetail(friendId);
-
+  
   if (isEmpty(friend)) return <EmptyFriendContent />;
+  console.log('🚀 ~ file: view.js ~ line 26 ~ FriendDetailScreen ~ friend.toJSON()', friend.toJSON())
 
   return (
     <View style={styles.container}>
@@ -48,7 +49,7 @@ const FriendDetailScreen = ({friendId}) => {
       <Button
         title='設定'
         type='outline'
-        onPress={() => push('FriendSetting', {friendId: friend.get('id')})}
+        onPress={() => push('FriendSetting', {friendId: friend.get('friendId')})}
       />
     </View>
   );

@@ -44,7 +44,6 @@ Screens.set('EventDetail', EventDetailScreen);
 Screens.set('CreateEvent', CreateEventScreen);
 Screens.set('FriendDetail', FriendDetailScreen);
 Screens.set('FriendSetting', FriendSettingScreen);
-Screens.set('FriendSetting', FriendSettingScreen);
 Screens.set('MemberDetail', MemberDetailScreen);
 
 

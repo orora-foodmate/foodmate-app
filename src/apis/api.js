@@ -43,6 +43,9 @@ export const rejectInviteFriendResult = (customHeaders, {friendId}) =>
 export const approveInviteFriendResult = (customHeaders, {friendId}) =>
   fetchPostWithToken(getUrl(`friends/approve/${friendId}`), customHeaders);
 
+export const deleteFriendResult = (customHeaders, {friendId}) =>
+  fetchPostWithToken(getUrl(`friends/delete/${friendId}`), customHeaders);
+
 export const registerUserResult = (payload) =>
   fetchWithoutToken(getUrl('users'), 'POST', payload);
 

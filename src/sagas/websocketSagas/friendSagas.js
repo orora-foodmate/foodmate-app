@@ -2,7 +2,7 @@ import { put, select } from 'redux-saga/effects';
 import types from '~/constants/actionTypes';
 import isEmpty from 'lodash/isEmpty';
 import isNull from 'lodash/isNull';
-import { parseISOString } from '~/helper/dateHelper';
+import { parseFriendItem } from '~/utils/utils';
 
 const okApprove = (payload) => ({
   type: types.APPROVE_FRIEND_BY_WEBSOCKET_SUCCESS,
@@ -74,14 +74,12 @@ export function* inviteFriendByWebsocketSaga({ payload = {} }) {
       return;
     }
 
-    yield database.friends.insert({
-      ...payload,
-      createAt: parseISOString(payload.createAt),
-      updateAt: parseISOString(payload.updateAt),
-    });
+    console.log('🚀 ~ file: friendSagas.js ~ line 80 ~ function*inviteFriendByWebsocketSaga ~ payload', payload)
+    yield database.friends.insert(parseFriendItem(payload));
 
     yield put(okInvite());
   } catch (error) {
+    console.log('🚀 ~ file: friendSagas.js ~ line 100 ~ function*inviteFriendByWebsocketSaga ~ error', error)
     const errorAction = errInvite(error);
     yield put(errorAction);
   }

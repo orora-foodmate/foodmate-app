@@ -20,12 +20,12 @@ export const parseFriendItem = (friend) => {
     ...pick(friend, [
       'id',
       'avatar',
-      'creator',
       'status',
       'account',
       'name',
       'room',
       'friendId',
+      'friendCreator',
     ]),
     createAt,
     updateAt,

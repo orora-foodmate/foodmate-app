@@ -102,12 +102,6 @@ export function* inviteFriendSaga({ payload }) {
     };
     const { result } = yield call(inviteFriendResult, customHeaders, payload);
 
-    const friend = yield database.friends
-      .findOne()
-      .where('friendId')
-      .eq(payload.friendId)
-      .exec();
-
     yield database.friends.insert(parseFriendItem(result.data));
 
     yield put(okInvite(result.data));

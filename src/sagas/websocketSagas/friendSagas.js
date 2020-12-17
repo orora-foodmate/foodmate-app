@@ -74,12 +74,10 @@ export function* inviteFriendByWebsocketSaga({ payload = {} }) {
       return;
     }
 
-    console.log('🚀 ~ file: friendSagas.js ~ line 80 ~ function*inviteFriendByWebsocketSaga ~ payload', payload)
     yield database.friends.insert(parseFriendItem(payload));
 
     yield put(okInvite());
   } catch (error) {
-    console.log('🚀 ~ file: friendSagas.js ~ line 100 ~ function*inviteFriendByWebsocketSaga ~ error', error)
     const errorAction = errInvite(error);
     yield put(errorAction);
   }

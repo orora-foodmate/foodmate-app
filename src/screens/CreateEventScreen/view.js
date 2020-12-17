@@ -98,7 +98,7 @@ const CreateActivityScreen = (props) => {
   const [type, setType] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState(null);
   const [budget, setBudget] = useState('');
-  const [uploadedImage, setUploadedImage] = useState({url: ''});
+  const [uploadedImage, setUploadedImage] = useState({url: 'https://img.ltn.com.tw/Upload/ent/page/800/2017/07/08/phpP7hsAq.jpg'});
   const [title, setTitle] = useState('');
   const [userCountMax, setUserCountMax] = useState('');
   const [description, setDescription] = useState('');

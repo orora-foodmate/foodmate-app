@@ -6,9 +6,9 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import {useEvents} from '~/models';
-import {format} from '~/utils/timeUtil';
-import {Icon, Image} from 'react-native-elements';
+import { useEvents } from '~/models';
+import { format } from '~/utils/timeUtil';
+import { Icon, Image } from 'react-native-elements';
 import {
   useNavigation,
   useNavigationButtonPress,
@@ -19,15 +19,15 @@ import socketClusterHelper from '~/helper/socketClusterHelpers';
 
 const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
 
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
-const EventCard = ({event, push}) => {
+const EventCard = ({ event, push }) => {
   return (
     <TouchableOpacity
       style={styles.cardContainer}
-      onPress={() => push('EventDetail', {passProps: {eventId: event.id}})}>
+      onPress={() => push('EventDetail', { passProps: { eventId: event.id } })}>
       <View style={styles.card}>
-        <Image source={{uri: event.logo}} style={styles.cardImage} />
+        <Image source={{ uri: event.logo }} style={styles.cardImage} />
         <View style={styles.cardBody}>
           <View style={styles.datetime}>
             <Text style={styles.datetimeText}>
@@ -53,7 +53,7 @@ const EventCard = ({event, push}) => {
 
 const EventsScreen = (props) => {
   const events = useEvents();
-  const {push} = useNavigation();
+  const { push } = useNavigation();
 
   useEffect(() => {
     props.handleRegisterWebsocket();
@@ -62,7 +62,7 @@ const EventsScreen = (props) => {
       socketClusterHelper.basicUnsubscribe(props.userId);
     }
   }, []);
-  
+
   useNavigationButtonPress((e) => {
     if (
       props.componentId === e.componentId &&
@@ -72,6 +72,7 @@ const EventsScreen = (props) => {
     }
   });
 
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -79,7 +80,21 @@ const EventsScreen = (props) => {
         data={events}
         numColumns={2}
         contentContainerStyle={styles.list}
-        renderItem={({item}) => {
+        ListEmptyComponent={() => {
+          return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <Icon
+                size={52}
+                type='font-awesome'
+                name='folder-open'
+                style={styles.dotIcon}
+                color={colors.primary}
+              />
+              <Text>List is Empty</Text>
+            </View>
+          );
+        }}
+        renderItem={({ item }) => {
           return <EventCard event={item} push={push} />;
         }}
       />
@@ -93,7 +108,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
   },
   list: {
-    justifyContent: 'center',
+    flex: 1,
     flexDirection: 'column',
     margin: 5,
   },

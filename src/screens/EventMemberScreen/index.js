@@ -12,7 +12,7 @@ const mapDispatchToProps = dispatch => ({
   },
   handleRejectEventMember: payload => {
     dispatch(rejectEventMemberByAdminAction(payload));
-  }
+  },
 });
 
 export default connect(

@@ -4,7 +4,7 @@ import { useNavigation } from 'react-native-navigation-hooks';
 import { useFriendRooms } from '~/models';
 import RoomItem from './components/RoomItem';
 
-const MessageScreen = (props) => {
+const RoomsScreen = (props) => {
   const friendRooms = useFriendRooms();
   const { push } = useNavigation();
 
@@ -30,12 +30,12 @@ const MessageScreen = (props) => {
   );
 };
 
-MessageScreen.options = {
+RoomsScreen.options = {
   topBar: {
     title: {
-      text: 'Message',
+      text: '聊天室',
     },
   },
 };
 
-export default MessageScreen;
+export default RoomsScreen;

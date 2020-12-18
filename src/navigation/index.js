@@ -4,7 +4,7 @@ import MainScreen from '~/screens/MainScreen';
 import FriendScreen from '~/screens/FriendScreen';
 import FriendDetailScreen from '~/screens/FriendDetailScreen';
 import FriendSettingScreen from '~/screens/FriendSettingScreen';
-import MessageScreen from '~/screens/MessageScreen';
+import RoomsScreen from '~/screens/RoomsScreen';
 import SettingScreen from '~/screens/SettingScreen';
 import ProfileScreen from '~/screens/ProfileScreen';
 import JoinEventScreen from '~/screens/JoinEventScreen';
@@ -28,7 +28,7 @@ const Screens = new Map();
 
 Screens.set('Main', MainScreen);
 Screens.set('Login', LoginScreen);
-Screens.set('Message', MessageScreen);
+Screens.set('Rooms', RoomsScreen);
 Screens.set('Friend', FriendScreen);
 Screens.set('Setting', SettingScreen);
 Screens.set('Profile', ProfileScreen);

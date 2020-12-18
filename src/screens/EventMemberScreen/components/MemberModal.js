@@ -6,7 +6,6 @@ import Text from '~/components/Text';
 import Button from '~/components/Button';
 import colors from '~/theme/color';
 import confirmImage from '~/assets/images/image-join-request.png';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const handleApprove = ({
   userId,
@@ -18,12 +17,26 @@ const handleApprove = ({
   onClose();
 };
 
-const GoBackButton = ({ show, onClose }) => {
+const GoBackButton = ({
+  eventId,
+  userId,
+  show,
+  onClose,
+  handleLeaveEvent,
+}) => {
   if (!show) return <Fragment />;
 
   return (
     <Fragment>
       <View style={styles.cancelZone}>
+        <Button
+          title='離開'
+          onPress={() => handleLeaveEvent({
+            eventId,
+            onSuccess: onClose
+          })}
+          buttonStyle={{ backgroundColor: colors.error, width: 200 }}
+        />
         <Button
           title='返回'
           type='outline'
@@ -77,9 +90,10 @@ const VerifyContent = ({
   eventId,
   isAdmin,
   member,
+  onClose,
+  handleLeaveEvent,
   handleValidEventMember,
   handleRejectEventMember,
-  onClose,
 }) => {
   if (!show) return <Fragment />;
 
@@ -93,16 +107,29 @@ const VerifyContent = ({
       <View style={styles.note}>
         <Text h6>希望可以參加這個優質的好活動！</Text>
       </View>
-      <VerifyButton
-        show={isAdmin}
-        userId={member.info.id}
-        eventId={eventId}
-        onClose={onClose}
-        member={member}
-        handleValidEventMember={handleValidEventMember}
-        handleRejectEventMember={handleRejectEventMember}
-      />
-      <GoBackButton show={!isAdmin} onClose={onClose} />
+      {
+        isAdmin
+          ? (
+            <VerifyButton
+              show
+              userId={member.info.id}
+              eventId={eventId}
+              onClose={onClose}
+              member={member}
+              handleValidEventMember={handleValidEventMember}
+              handleRejectEventMember={handleRejectEventMember}
+            />
+          )
+          : (
+            <GoBackButton
+              show
+              onClose={onClose}
+              userId={member.info.id}
+              eventId={eventId}
+              handleLeaveEvent={handleLeaveEvent}
+            />
+          )
+      }
     </View>
   );
 };
@@ -150,6 +177,7 @@ const MemberModal = ({
   isAdmin,
   onClose,
   selectedId,
+  handleLeaveEvent,
   handleValidEventMember,
   handleRejectEventMember,
 }) => {
@@ -177,6 +205,7 @@ const MemberModal = ({
           isAdmin={isAdmin}
           onClose={onClose}
           show={shouldVerify}
+          handleLeaveEvent={handleLeaveEvent}
           handleValidEventMember={handleValidEventMember}
           handleRejectEventMember={handleRejectEventMember}
         />

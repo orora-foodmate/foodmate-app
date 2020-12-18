@@ -25,6 +25,7 @@ import {
 } from './websocketSagas/friendSagas';
 import {
   joinEventSaga,
+  leaveEventSaga,
   createEventSaga,
   validEventMemberSaga,
   rejectMemberByAdminSaga,
@@ -61,6 +62,10 @@ export function* watchCreateEventSaga() {
 
 export function* watchJoinEventSaga() {
   yield takeLatest(types.JOIN_EVENT, joinEventSaga);
+}
+
+export function* watchLeaveEventSaga() {
+  yield takeLatest(types.LEAVE_EVENT, leaveEventSaga);
 }
 
 export function* watchRejectMemberByAdminSaga() {

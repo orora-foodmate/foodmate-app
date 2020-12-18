@@ -10,6 +10,11 @@ export const joinEventAction = payload => ({
   payload,
 });
 
+export const leaveEventAction = payload => ({
+  type: types.LEAVE_EVENT,
+  payload,
+});
+
 export const validEventMemberAction = payload => ({
   type: types.VALID_MEMBER,
   payload

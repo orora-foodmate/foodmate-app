@@ -41,6 +41,7 @@ const EventDetail = (props) => {
   if (isEmpty(props.passProps) || isEmpty(event)) return <Fragment />;
 
   const onMemberDetailClick = handleGoMembers(push, event.title, eventId);
+  const validatedUserCount = getValidatedUserCount(event.users);
 
   return (
     <Fragment>
@@ -54,7 +55,7 @@ const EventDetail = (props) => {
           <View>
             <Button
               key={`${event.users.length}/${event.userCountMax}`}
-              title={`${getValidatedUserCount(event.users)}/${event.userCountMax}`}
+              title={`${validatedUserCount}/${event.userCountMax}`}
               buttonStyle={styles.buttonTagStyle}
               titleStyle={styles.buttonTagTitleStyle}
               onPress={onMemberDetailClick}
@@ -87,6 +88,7 @@ const EventDetail = (props) => {
           <View>
             <EventButton
               event={event}
+              validatedUserCount={validatedUserCount}
               authUserId={props.authUserId}
               buttonStyle={styles.buttonStyle}
               titleStyle={styles.buttonTitleStyle}

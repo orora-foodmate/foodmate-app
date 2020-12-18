@@ -13,7 +13,7 @@ async function asyncIteratorWatcher(channel, userId, handleAddMessageByWebsocket
   }
 }
 
-const RoomItem = ({ socket, userId, title, subTitle, avatar, roomId, push, handleAddMessageByWebsocket }) => {
+const RoomItem = ({ socket, userId, title, subTitle, avatar, roomId, type, push, handleAddMessageByWebsocket }) => {
   useEffect(() => {
     const channel = socket.subscribe(`room.newMessage.${roomId}`);
     asyncIteratorWatcher(channel, userId, handleAddMessageByWebsocket);
@@ -21,7 +21,7 @@ const RoomItem = ({ socket, userId, title, subTitle, avatar, roomId, push, handl
   }, []);
 
   return (
-    <ListItem bottomDivider onPress={() => push("Chat", { roomId })}>
+    <ListItem bottomDivider onPress={() => push("Chat", { roomId, type })}>
       <Avatar source={{ uri: avatar }} />
       <ListItem.Content>
         <ListItem.Title>{title}</ListItem.Title>

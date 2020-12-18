@@ -33,6 +33,7 @@ export const useEventRoomsHook = (database, authUserId) => {
     if(database) {
       const sub = database.events.find().where('creator.id').eq(authUserId).$.subscribe(items => {
         const roomItems = items.map(item => ({
+          type: 'event',
           title: item.title,
           subTitle: item.creator.name,
           roomId: item.room,

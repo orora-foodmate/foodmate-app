@@ -50,6 +50,7 @@ export const useFriendRoomsHook = (database) => {
     if(database) {
       const sub = database.friends.find().where('status').eq(2).$.subscribe(items => {
         const friendRooms = items.map(item => ({
+          type: 'friend',
           title: item.name,
           subTitle: item.account,
           roomId: item.room,

@@ -7,7 +7,7 @@ import RoomItem from './components/RoomItem';
 const RoomsScreen = (props) => {
   const friendRooms = useFriendRooms();
   const eventRooms = useEventRooms(props.authUserId);
-  console.log('🚀 ~ file: view.js ~ line 10 ~ RoomsScreen ~ eventRooms', eventRooms)
+
   const { push } = useNavigation();
 
   return (

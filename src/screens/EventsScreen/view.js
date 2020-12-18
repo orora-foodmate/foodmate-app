@@ -108,7 +108,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
   },
   list: {
-    flex: 1,
     flexDirection: 'column',
     margin: 5,
   },

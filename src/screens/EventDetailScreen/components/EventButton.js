@@ -16,7 +16,7 @@ const EventButton = ({ event, authUserId, onJoinClick, ...props }) => {
     return <DisabledButton {...props} title='主辦人' />;
   }
 
-  if (event.userCountMax >= event.users.length) {
+  if (event.userCountMax <= event.users.length) {
     return <DisabledButton {...props} title='已滿團' />;
   }
 

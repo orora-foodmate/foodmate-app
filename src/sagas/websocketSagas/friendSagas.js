@@ -42,7 +42,6 @@ export function* approveFriendByWebsocketSaga({ payload = {} }) {
 
     yield put(okApprove());
   } catch (error) {
-    console.log('🚀 ~ file: friendSagas.js ~ line 61 ~ function*approveFriendByWebsocketSaga ~ error', error)
     const errorAction = errApprove(error);
     yield put(errorAction);
   }

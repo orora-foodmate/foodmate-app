@@ -219,7 +219,6 @@ const errDelete = ({ message }) => {
 };
 
 export function* deleteFriendSaga({ payload: { onSuccess, ...payload } }) {
-  console.log('🚀 ~ file: friendSagas.js ~ line 227 ~ function*deleteFriendSaga ~ payload', payload)
   try {
     const { token, database } = yield select(({ auth, setting }) => ({
       token: auth.get('token'),
@@ -243,7 +242,6 @@ export function* deleteFriendSaga({ payload: { onSuccess, ...payload } }) {
     if(isFunction(onSuccess)) onSuccess();
     yield put(okDelete());
   } catch (error) {
-    console.log('🚀 ~ file: friendSagas.js ~ line 252 ~ function*deleteFriendSaga ~ error', error)
     const errorAction = errDelete(error);
     yield put(errorAction);
   }

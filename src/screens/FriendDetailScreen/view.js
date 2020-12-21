@@ -24,7 +24,6 @@ const FriendDetailScreen = ({friendId}) => {
   const friend = useFriendDetail(friendId);
   
   if (isEmpty(friend)) return <EmptyFriendContent />;
-  console.log('🚀 ~ file: view.js ~ line 26 ~ FriendDetailScreen ~ friend.toJSON()', friend.toJSON())
 
   return (
     <View style={styles.container}>

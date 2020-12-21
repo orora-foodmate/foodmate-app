@@ -97,7 +97,6 @@ const errGetAccount = ({message}) => ({
 });
 
 export function* getUserByAccountSaga({payload}) {
-  console.log('🚀 ~ file: userSagas.js ~ line 100 ~ function*getUserByAccountSaga ~ getUserByAccountSaga')
   try {
     const {auth, setting} = yield select(({auth, setting}) => ({
       auth,

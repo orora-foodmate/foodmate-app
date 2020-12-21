@@ -17,9 +17,8 @@ const handleApprove = ({
   onClose();
 };
 
-const GoBackButton = ({
+const NotAdminButton = ({
   eventId,
-  userId,
   show,
   onClose,
   handleLeaveEvent,
@@ -48,7 +47,7 @@ const GoBackButton = ({
   );
 };
 
-const VerifyButton = ({
+const adminButton = ({
   show,
   eventId,
   userId,
@@ -85,6 +84,37 @@ const VerifyButton = ({
   );
 };
 
+const VerifyButton = ({
+  isAdmin,
+  member,
+  eventId,
+  onClose,
+  handleLeaveEvent,
+  handleValidEventMember,
+  handleRejectEventMember,  
+}) => {
+  if (isAdmin) return (
+    <adminButton
+      show
+      userId={member.info.id}
+      eventId={eventId}
+      member={member}
+      onClose={onClose}
+      handleValidEventMember={handleValidEventMember}
+      handleRejectEventMember={handleRejectEventMember}
+    />
+  );
+
+  return (
+    <NotAdminButton
+      show
+      onClose={onClose}
+      eventId={eventId}
+      handleLeaveEvent={handleLeaveEvent}
+    />
+  );
+}
+
 const VerifyContent = ({
   show,
   eventId,
@@ -107,29 +137,15 @@ const VerifyContent = ({
       <View style={styles.note}>
         <Text h6>希望可以參加這個優質的好活動！</Text>
       </View>
-      {
-        isAdmin
-          ? (
-            <VerifyButton
-              show
-              userId={member.info.id}
-              eventId={eventId}
-              onClose={onClose}
-              member={member}
-              handleValidEventMember={handleValidEventMember}
-              handleRejectEventMember={handleRejectEventMember}
-            />
-          )
-          : (
-            <GoBackButton
-              show
-              onClose={onClose}
-              userId={member.info.id}
-              eventId={eventId}
-              handleLeaveEvent={handleLeaveEvent}
-            />
-          )
-      }
+      <VerifyButton
+        isAdmin={isAdmin}
+        member={member}
+        eventId={eventId}
+        onClose={onClose}
+        handleLeaveEvent={handleLeaveEvent}
+        handleValidEventMember={handleValidEventMember}
+        handleRejectEventMember={handleRejectEventMember}
+      />
     </View>
   );
 };

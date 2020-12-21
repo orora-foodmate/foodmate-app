@@ -1,13 +1,13 @@
-import React, {useState, useEffect, useCallback} from 'react';
-import {View} from 'react-native';
-import {GiftedChat} from 'react-native-gifted-chat';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View } from 'react-native';
+import { GiftedChat } from 'react-native-gifted-chat';
 import { useMessages } from '~/models';
 
-const ChatScreen = ({userId, roomId, handleAddMessage, handleGetMessages}) => {
+const ChatScreen = ({ userId, roomId, handleAddMessage, handleGetMessages }) => {
   const messages = useMessages();
 
   useEffect(() => {
-    handleGetMessages({roomId});
+    handleGetMessages({ roomId });
   }, []);
 
   const onSend = useCallback((messages = []) => {
@@ -20,9 +20,9 @@ const ChatScreen = ({userId, roomId, handleAddMessage, handleGetMessages}) => {
   }, []);
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <GiftedChat
-        style={{flex: 1}}
+        style={{ flex: 1 }}
         messages={messages}
         onQuickReply={(value) => console.log(`onQuickReply:`, value)}
         onSend={(messages) => onSend(messages)}

@@ -1,26 +1,25 @@
 import React from 'react';
 import { FlatList } from 'react-native';
 import { useNavigation } from 'react-native-navigation-hooks';
-import { useFriendRooms } from '~/models';
+import { useEventRooms, useFriendRooms } from '~/models';
 import RoomItem from './components/RoomItem';
 
-const MessageScreen = (props) => {
+const RoomsScreen = (props) => {
   const friendRooms = useFriendRooms();
+  const eventRooms = useEventRooms(props.authUserId);
+
   const { push } = useNavigation();
 
   return (
       <FlatList
-        keyExtractor={item => item.id}
-        data={friendRooms}
+        keyExtractor={item => item.roomId}
+        data={[...friendRooms, ...eventRooms]}
         renderItem={({ item }) => {
           return (
             <RoomItem
+              {...item}
               push={push}
               socket={props.socket}
-              name={item.name}
-              account={item.account}
-              avatar={item.avatar}
-              roomId={item.room}
               userId={props.userId}
               handleAddMessageByWebsocket={props.handleAddMessageByWebsocket}
             />
@@ -30,12 +29,12 @@ const MessageScreen = (props) => {
   );
 };
 
-MessageScreen.options = {
+RoomsScreen.options = {
   topBar: {
     title: {
-      text: 'Message',
+      text: '聊天室',
     },
   },
 };
 
-export default MessageScreen;
+export default RoomsScreen;

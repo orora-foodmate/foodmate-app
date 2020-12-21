@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 
 export const useEventsHook = function (database) {
   const [events, setEvents] = useState([]);
-  useEffect(() => {
+  useMemo(() => {
     if(database) {
       const sub = database.events.find().$.subscribe(items => {
         const eventItems = items.map(item => item.toJSON());
@@ -16,7 +16,7 @@ export const useEventsHook = function (database) {
 
 export const useEventDetailHook = function (database, id) {
   const [event, setEvent] = useState({});
-  useEffect(() => {
+  useMemo(() => {
     if(database) {
       const sub = database.events.findOne().where('id').eq(id).$.subscribe(item => {
         setEvent(item.toJSON());
@@ -25,4 +25,25 @@ export const useEventDetailHook = function (database, id) {
     }   
   }, [database, id]);
   return event;
+}
+
+export const useEventRoomsHook = (database, authUserId) => {
+  const [rooms, setRooms] = useState([]);
+  useMemo(() => {
+    if(database) {
+      const sub = database.events.find().where('creator.id').eq(authUserId).$.subscribe(items => {
+        const roomItems = items.map(item => ({
+          type: 'event',
+          title: item.title,
+          subTitle: item.creator.name,
+          roomId: item.room,
+          avatar: item.logo,
+          updateAt: item.updateAt,
+        }));
+        setRooms(roomItems);
+      });
+      return () => sub.unsubscribe();
+    }   
+  }, [database]);
+  return rooms;
 }

@@ -1,12 +1,11 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import isEmpty from 'lodash/isEmpty';
-import {StyleSheet, View} from 'react-native';
-import {Overlay, Avatar, Image} from 'react-native-elements';
+import { StyleSheet, View } from 'react-native';
+import { Overlay, Avatar, Image } from 'react-native-elements';
 import Text from '~/components/Text';
 import Button from '~/components/Button';
 import colors from '~/theme/color';
 import confirmImage from '~/assets/images/image-join-request.png';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const handleApprove = ({
   userId,
@@ -14,28 +13,41 @@ const handleApprove = ({
   eventId,
   handleValidEventMember,
 }) => () => {
-  handleValidEventMember({eventId, userId});
+  handleValidEventMember({ eventId, userId });
   onClose();
 };
 
-const GoBackButton = ({show, onClose}) => {
+const NotAdminButton = ({
+  eventId,
+  show,
+  onClose,
+  handleLeaveEvent,
+}) => {
   if (!show) return <Fragment />;
 
   return (
     <Fragment>
       <View style={styles.cancelZone}>
         <Button
+          title='離開'
+          onPress={() => handleLeaveEvent({
+            eventId,
+            onSuccess: onClose
+          })}
+          buttonStyle={{ backgroundColor: colors.error, width: 200 }}
+        />
+        <Button
           title='返回'
           type='outline'
           onPress={onClose}
-          buttonStyle={{width: 200}}
+          buttonStyle={{ width: 200 }}
         />
       </View>
     </Fragment>
   );
 };
 
-const VerifyButton = ({
+const adminButton = ({
   show,
   eventId,
   userId,
@@ -54,36 +66,68 @@ const VerifyButton = ({
 
   return (
     <Fragment>
-      <Button title='同意' onPress={onApprove} buttonStyle={{width: 200}} />
+      <Button title='同意' onPress={onApprove} buttonStyle={{ width: 200 }} />
       <View style={styles.cancelZone}>
         <Button
           title='拒絕'
-          onPress={() => handleRejectEventMember({eventId, userId})}
-          buttonStyle={{backgroundColor: colors.error, width: 200}}
+          onPress={() => handleRejectEventMember({ eventId, userId })}
+          buttonStyle={{ backgroundColor: colors.error, width: 200 }}
         />
         <Button
           title='返回'
           type='outline'
           onPress={onClose}
-          buttonStyle={{width: 200}}
+          buttonStyle={{ width: 200 }}
         />
       </View>
     </Fragment>
   );
 };
 
+const VerifyButton = ({
+  isAdmin,
+  member,
+  eventId,
+  onClose,
+  handleLeaveEvent,
+  handleValidEventMember,
+  handleRejectEventMember,  
+}) => {
+  if (isAdmin) return (
+    <adminButton
+      show
+      userId={member.info.id}
+      eventId={eventId}
+      member={member}
+      onClose={onClose}
+      handleValidEventMember={handleValidEventMember}
+      handleRejectEventMember={handleRejectEventMember}
+    />
+  );
+
+  return (
+    <NotAdminButton
+      show
+      onClose={onClose}
+      eventId={eventId}
+      handleLeaveEvent={handleLeaveEvent}
+    />
+  );
+}
+
 const VerifyContent = ({
   show,
   eventId,
   isAdmin,
   member,
+  onClose,
+  handleLeaveEvent,
   handleValidEventMember,
   handleRejectEventMember,
-  onClose,
 }) => {
   if (!show) return <Fragment />;
 
-  const {info} = member;
+  const { info } = member;
   return (
     <View style={styles.content}>
       <Image source={confirmImage} style={styles.headerImg} />
@@ -94,65 +138,47 @@ const VerifyContent = ({
         <Text h6>希望可以參加這個優質的好活動！</Text>
       </View>
       <VerifyButton
-        show={isAdmin}
-        userId={member.info.id}
+        isAdmin={isAdmin}
+        member={member}
         eventId={eventId}
         onClose={onClose}
-        member={member}
+        handleLeaveEvent={handleLeaveEvent}
         handleValidEventMember={handleValidEventMember}
         handleRejectEventMember={handleRejectEventMember}
       />
-      <GoBackButton show={!isAdmin} onClose={onClose} />
     </View>
   );
 };
 
-const SelectItem = ({title, show, onPress, bottomBorder}) => {
-  if (!show) return <Fragment />;
-
-  const borderBottomStyle = bottomBorder ? styles.borderBottom : {};
-  return (
-    <TouchableOpacity onPress={onPress}>
-      <View style={[styles.selectContainer, borderBottomStyle]}>
-        <Text style={{textAlign: 'center'}}>{title}</Text>
-      </View>
-    </TouchableOpacity>
-  );
-};
-
-const DetailContent = ({push, show, member, isAdmin, onClose}) => {
+const DetailContent = ({ push, show, member, eventId, isAdmin, onClose, handleRejectEventMember }) => {
   if (!show) return <Fragment />;
 
   return (
     <View style={styles.content}>
-      <Avatar rounded size='large' source={{uri: member.info.avatar}} />
+      <Avatar rounded size='large' source={{ uri: member.info.avatar }} />
       <Text h2>{member.info.name}</Text>
       <Button
         title='檢視個人資料'
         onPress={() => {
           onClose();
-          push('MemberDetail', {userId: member.info.id});
+          push('MemberDetail', { userId: member.info.id });
         }}
       />
-      <SelectItem
-        show={isAdmin}
-        bottomBorder
-        title='踢除成員'
-        onPress={console.log}
-      />
-      <SelectItem show title='取消' onPress={onClose} />
       <View style={styles.cancelZone}>
         <Button
           title='踢除成員'
           disabled={!isAdmin}
-          onPress={console.log}
-          buttonStyle={{backgroundColor: colors.error, width: 200}}
+          onPress={() => {
+            handleRejectEventMember({ eventId, userId: member.info.id });
+            onClose();
+          }}
+          buttonStyle={{ backgroundColor: colors.error, width: 200 }}
         />
         <Button
           title='返回'
           type='outline'
           onPress={onClose}
-          buttonStyle={{width: 200}}
+          buttonStyle={{ width: 200 }}
         />
       </View>
     </View>
@@ -167,16 +193,17 @@ const MemberModal = ({
   isAdmin,
   onClose,
   selectedId,
+  handleLeaveEvent,
   handleValidEventMember,
   handleRejectEventMember,
 }) => {
-  const [member, setMember] = useState({info: {}});
+  const [member, setMember] = useState({ info: {} });
   useEffect(() => {
     if (visible && !isEmpty(selectedId)) {
       const user = users.find((user) => user.id === selectedId);
       setMember(user);
     } else {
-      setMember({info: {}});
+      setMember({ info: {} });
     }
   }, [visible, selectedId]);
 
@@ -194,15 +221,19 @@ const MemberModal = ({
           isAdmin={isAdmin}
           onClose={onClose}
           show={shouldVerify}
+          handleLeaveEvent={handleLeaveEvent}
           handleValidEventMember={handleValidEventMember}
           handleRejectEventMember={handleRejectEventMember}
         />
         <DetailContent
           push={push}
+          show={!isAdmin}
           member={member}
+          eventId={eventId}
           isAdmin={isAdmin}
           onClose={onClose}
           show={!shouldVerify}
+          handleRejectEventMember={handleRejectEventMember}
         />
       </Fragment>
     </Overlay>

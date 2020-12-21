@@ -14,7 +14,7 @@ const ImagePlaceholder = (props) => {
 
 const SelectedImage = ({uri, height, width}) => {
   if (isEmpty(uri)) return <ImagePlaceholder />;
-  return <Image source={{uri}} style={[styles.image, {height, width}]} />;
+  return <Image source={{uri}} style={[styles.image, { height, width }]} />;
 };
 
 const EventPhoto = ({uri, onEditClick, hideButton, btnText}) => {

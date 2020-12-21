@@ -32,4 +32,9 @@ export const approveInviteFriendAction = payload => ({
 
 export const clearFriendSearchResultAction = () => ({
   type: types.CLEAR_SEARCH_FRIEND_RESULT,
-})
+});
+
+export const deleteFriendAction = (payload) => ({
+  type: types.DELETE_FRIEND,
+  payload,
+});

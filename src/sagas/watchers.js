@@ -6,6 +6,7 @@ import {
   approveInviteFriendSaga,
   getFriendsSaga,
   inviteFriendSaga,
+  deleteFriendSaga,
   rejectInviteFriendSaga,
 } from './friendSagas';
 import {addMessageSaga, getMessagesSaga} from './messageSagas';
@@ -24,6 +25,7 @@ import {
 } from './websocketSagas/friendSagas';
 import {
   joinEventSaga,
+  leaveEventSaga,
   createEventSaga,
   validEventMemberSaga,
   rejectMemberByAdminSaga,
@@ -50,12 +52,20 @@ export function* watchLogoutSaga() {
   yield takeLatest(types.LOGOUT, logoutSaga);
 }
 
+export function* watchDeleteFriendSaga() {
+  yield takeLatest(types.DELETE_FRIEND, deleteFriendSaga);  
+}
+
 export function* watchCreateEventSaga() {
   yield takeLatest(types.CREATE_EVENT, createEventSaga);
 }
 
 export function* watchJoinEventSaga() {
   yield takeLatest(types.JOIN_EVENT, joinEventSaga);
+}
+
+export function* watchLeaveEventSaga() {
+  yield takeLatest(types.LEAVE_EVENT, leaveEventSaga);
 }
 
 export function* watchRejectMemberByAdminSaga() {

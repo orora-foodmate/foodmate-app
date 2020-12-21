@@ -49,7 +49,15 @@ export const useFriendRoomsHook = (database) => {
   useMemo(() => {
     if(database) {
       const sub = database.friends.find().where('status').eq(2).$.subscribe(items => {
-        setRooms(items);
+        const friendRooms = items.map(item => ({
+          type: 'friend',
+          title: item.name,
+          subTitle: item.account,
+          roomId: item.room,
+          avatar: item.avatar,
+          updateAt: item.updateAt,
+        }));
+        setRooms(friendRooms);
       });
       return () => sub.unsubscribe();
     }   

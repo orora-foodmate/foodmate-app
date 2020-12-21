@@ -20,7 +20,17 @@ import {useNavigation} from 'react-native-navigation-hooks';
 const handleGoMembers = (push, eventName, eventId) => () => {
   push('EventMember', { title: `${eventName} 成員`,
    eventId });
-}
+};
+
+const getValidatedUserCount = (users) => {
+  let count = 0;
+  users.map(user => {
+    if(user.status === 1) {
+      count++;
+    }
+  });
+  return count;
+};
 
 const EventDetail = (props) => {
   const {eventId} = props.passProps;
@@ -31,6 +41,7 @@ const EventDetail = (props) => {
   if (isEmpty(props.passProps) || isEmpty(event)) return <Fragment />;
 
   const onMemberDetailClick = handleGoMembers(push, event.title, eventId);
+  const validatedUserCount = getValidatedUserCount(event.users);
 
   return (
     <Fragment>
@@ -44,7 +55,7 @@ const EventDetail = (props) => {
           <View>
             <Button
               key={`${event.users.length}/${event.userCountMax}`}
-              title={`${event.users.length}/${event.userCountMax}`}
+              title={`${validatedUserCount}/${event.userCountMax}`}
               buttonStyle={styles.buttonTagStyle}
               titleStyle={styles.buttonTagTitleStyle}
               onPress={onMemberDetailClick}
@@ -77,6 +88,7 @@ const EventDetail = (props) => {
           <View>
             <EventButton
               event={event}
+              validatedUserCount={validatedUserCount}
               authUserId={props.authUserId}
               buttonStyle={styles.buttonStyle}
               titleStyle={styles.buttonTitleStyle}

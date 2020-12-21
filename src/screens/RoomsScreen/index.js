@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { addMessageByWebsocketAction } from '~/actions/messageActions';
-import MessageScreen from './view';
+import RoomsScreen from './view';
 
 
 const mapStateToProps = ({ auth, setting }) => {
@@ -19,4 +19,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MessageScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(RoomsScreen);

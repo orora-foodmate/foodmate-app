@@ -1,11 +1,16 @@
-import {decode, encode} from 'base-64';
-import {addRxPlugin, createRxDatabase} from 'rxdb';
+import { decode, encode } from 'base-64';
+import { addRxPlugin, createRxDatabase } from 'rxdb';
 import {
   useFriendsHook,
   useMessagesHook,
   useFriendRoomsHook,
   useFriendDetailHook,
 } from './hooks/friendHooks';
+import {
+  useEventsHook,
+  useEventRoomsHook,
+  useEventDetailHook,
+} from './hooks/eventHooks';
 import isEmpty from 'lodash/isEmpty';
 import SQLite from 'react-native-sqlite-2';
 import SQLiteAdapterFactory from 'pouchdb-adapter-react-native-sqlite';
@@ -13,7 +18,7 @@ import userSchema from './userSchema';
 import friendSchema from './friendSchema';
 import messageSchema from './messageSchema';
 import eventSchema from './eventSchema';
-import {useEventsHook, useEventDetailHook} from './hooks/eventHooks';
+
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -63,9 +68,9 @@ export const initialCollections = async (database) => {
       },
       statics: {
         findAndUpdateStatus: async function (friend, status) {
-          const doc = await this.findOne({id: friend.id});
+          const doc = await this.findOne({ id: friend.id });
           if (isEmpty(doc)) {
-            await this.create({...friend, status});
+            await this.create({ ...friend, status });
           } else {
             doc.status = status;
             await doc.save();
@@ -113,6 +118,10 @@ export const useEventDetail = (id) => {
 
 export const useFriendRooms = () => {
   return useFriendRoomsHook(foodmateDB);
+};
+
+export const useEventRooms = (authUserId) => {
+  return useEventRoomsHook(foodmateDB, authUserId);
 };
 
 export const useMessages = () => {

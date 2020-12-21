@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import EventMember from './view';
-import { rejectEventMemberByAdminAction, validEventMemberAction } from '~/actions/eventActions';
+import { leaveEventAction, rejectEventMemberByAdminAction, validEventMemberAction } from '~/actions/eventActions';
 
-const mapStateToProps = ({ auth, setting }) => ({
+const mapStateToProps = ({ auth }) => ({
   authUserId: auth.get('id'),
 });
 
@@ -12,7 +12,10 @@ const mapDispatchToProps = dispatch => ({
   },
   handleRejectEventMember: payload => {
     dispatch(rejectEventMemberByAdminAction(payload));
-  }
+  },
+  handleLeaveEvent: payload => {
+    dispatch(leaveEventAction(payload));
+  },
 });
 
 export default connect(

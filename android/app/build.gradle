@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply from: '../../node_modules/react-native-vector-icons/fonts.gradle'
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 import com.android.build.OutputFile
 
@@ -138,6 +139,7 @@ android {
         versionName '1.0'
         multiDexEnabled true
         missingDimensionStrategy 'react-native-camera', 'general'
+        // resValue "string", "build_config_package", "com.foodmate_ANDROIDMANIFEST.XML"
     }
     splits {
         abi {
@@ -184,6 +186,9 @@ android {
 }
 
 dependencies {
+    implementation project(':appcenter-crashes')
+    implementation project(':appcenter-analytics')
+    implementation project(':appcenter')
     implementation platform('com.google.firebase:firebase-bom:26.0.0')
 
     implementation 'com.google.firebase:firebase-messaging'

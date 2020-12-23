@@ -66,3 +66,4 @@ envConfig.js
 *.zip
 vendor
 *.hprof
+appcenter-config.json

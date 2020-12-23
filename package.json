@@ -20,6 +20,7 @@
     "babel-polyfill": "^6.26.0",
     "base-64": "^0.1.0",
     "date-fns": "^2.16.1",
+    "ethers": "^5.0.24",
     "events": "^3.1.0",
     "flux-constants": "0.2.2",
     "immutable": "4.0.0-rc.12",

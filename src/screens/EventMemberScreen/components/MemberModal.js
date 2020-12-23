@@ -47,7 +47,7 @@ const NotAdminButton = ({
   );
 };
 
-const adminButton = ({
+const AdminButton = ({
   show,
   eventId,
   userId,
@@ -94,7 +94,7 @@ const VerifyButton = ({
   handleRejectEventMember,  
 }) => {
   if (isAdmin) return (
-    <adminButton
+    <AdminButton
       show
       userId={member.info.id}
       eventId={eventId}

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import Text from '~/components/Text';
 import Button from '~/components/Button';
 import colors from '~/theme/color';
@@ -11,7 +11,7 @@ const SettingScreen = ({handleLogout}) => {
   const [visible, setVisible] = useState(false);
 
   return (
-    <View style={styles.from}>
+    <ScrollView style={styles.from}>
       <View style={styles.title}>
         <Text h2>設定</Text>
       </View>
@@ -28,7 +28,7 @@ const SettingScreen = ({handleLogout}) => {
         <Button title='資助我們' onPress={() => setVisible(true)} />
         <SponsorDialog visible={visible} setVisible={setVisible}/>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

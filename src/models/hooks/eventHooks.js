@@ -8,7 +8,9 @@ export const useEventsHook = function (database) {
         const eventItems = items.map(item => item.toJSON());
         setEvents(eventItems);
       });
-      return () => sub.unsubscribe();
+      return () => {
+        sub.unsubscribe();
+      }
     }   
   }, [database]);
   return events;
@@ -31,7 +33,12 @@ export const useEventRoomsHook = (database, authUserId) => {
   const [rooms, setRooms] = useState([]);
   useMemo(() => {
     if(database) {
-      const sub = database.events.find().where('creator.id').eq(authUserId).$.subscribe(items => {
+        const sub = database.events.find({
+          selector: {
+            "creator.id": {$eq: authUserId}
+          }
+      }).$.subscribe(items => {
+        console.log("🚀 ~ file: eventHooks.js ~ line 46 ~ useMemo ~ items", items)
         const roomItems = items.map(item => ({
           type: 'event',
           title: item.title,
@@ -42,8 +49,11 @@ export const useEventRoomsHook = (database, authUserId) => {
         }));
         setRooms(roomItems);
       });
-      return () => sub.unsubscribe();
+      return () => {
+        sub.unsubscribe();
+      }
+
     }   
-  }, [database]);
+  }, []);
   return rooms;
 }

@@ -1,9 +1,19 @@
 import socketClusterClient from 'socketcluster-client';
 import isNull from 'lodash/isNull';
 import Config from 'react-native-config';
-import { parseEventItems, parseFriendItems } from '~/utils/utils';
-import { inviteFriendByWebsocketAction, rejectFriendByWebsocketAction, approveFriendByWebsocketAction } from './actions/friendActions';
-import { createEventByWebsocketAction, updateEventByWebsocketAction } from './actions/eventActions';
+import {
+  parseEventItem,
+  parseFriendItem,
+} from '~/utils/utils';
+import {
+  inviteFriendByWebsocketAction,
+  rejectFriendByWebsocketAction,
+  approveFriendByWebsocketAction,
+} from './actions/friendActions';
+import {
+  createEventByWebsocketAction,
+  updateEventByWebsocketAction,
+} from './actions/eventActions';
 
 const DEFAULT_AUTO_RECONNECT_OPTIONS = {
   initialDelay: 10000, //milliseconds
@@ -32,7 +42,7 @@ const DEFAULT_AUTH_ENGINE = {
   },
 };
 
-async function lissenEvent(socket, eventName, cb) {
+const listenEvent = async (socket, eventName, cb) => {
   const listener = socket.listener(eventName);
   let asyncIterator = listener.createConsumer();
 
@@ -41,7 +51,61 @@ async function lissenEvent(socket, eventName, cb) {
     if (packet.done) break;
     cb(packet.value);
   }
-}
+};
+
+const getSyncDateQuery = async (database) => {
+  const [maxCreataAtEvent = null] = await database.events
+    .find()
+    .sort({createAt: -1})
+    .limit(1)
+    .exec();
+  const [maxUpdateAtEvent = null] = await database.events
+    .find()
+    .sort({updateAt: -1})
+    .limit(1)
+    .exec();
+  const [maxCreateAtFriend = null] = await database.friends
+    .find()
+    .sort({createAt: -1})
+    .limit(1)
+    .exec();
+  const [maxUpdateAtFriend = null] = await database.friends
+    .find()
+    .sort({updateAt: -1})
+    .limit(1)
+    .exec();
+
+  const syncData = {};
+  if (maxCreataAtEvent) syncData.eventMaxCreateAt = maxCreataAtEvent.createAt;
+  if (maxUpdateAtEvent) syncData.eventMaxUpdateAt = maxUpdateAtEvent.updateAt;
+  if (maxCreateAtFriend)
+    syncData.friendMaxCreateAt = maxCreateAtFriend.createAt;
+  if (maxUpdateAtFriend)
+    syncData.friendMaxUpdateAt = maxUpdateAtFriend.updateAt;
+  return syncData;
+};
+
+const handleConnectEvent = async (database, socketClient) => {
+  const query = await getSyncDateQuery(database);
+  const {friends, events} = await socketClient.invoke('syncData', query);
+
+  const friendPromises =
+    friends.length === 0
+      ? []
+      : friends.map((friend) =>
+          database.friends.upsert(parseFriendItem(friend))
+        );
+  const eventPromises =
+    events.length === 0
+      ? []
+      : events.map((event) => database.events.upsert(parseEventItem(event)));
+
+  console.log(
+    '🚀 ~ file: index.js ~ line 97 ~ handleConnectEvent ~ eventPromises',
+    eventPromises
+  );
+  return await Promise.all([...friendPromises, ...eventPromises]);
+};
 
 class socketClusterHelperClass {
   constructor(options) {
@@ -73,7 +137,7 @@ class socketClusterHelperClass {
 
   setEmit = (emit = null) => {
     this._emit = emit;
-  }
+  };
 
   subscribe = (channelName, actionFunction) => {
     if (this._socketClient) {
@@ -84,22 +148,35 @@ class socketClusterHelperClass {
   };
 
   basicSubscribe = (userId) => {
-    this.subscribe(`friend.approveFriend.${userId}`, (payload) => this._emit(approveFriendByWebsocketAction(payload)));
-    this.subscribe(`friend.inviteFriend.${userId}`, (payload) => this._emit(inviteFriendByWebsocketAction(payload)));
-    this.subscribe(`friend.rejectFriend.${userId}`, (payload) => this._emit(rejectFriendByWebsocketAction(payload)));
-    this.subscribe('event.updated', payload => this._emit(updateEventByWebsocketAction(payload)));
+    this.subscribe(`friend.approveFriend.${userId}`, (payload) =>
+      this._emit(approveFriendByWebsocketAction(payload))
+    );
+    this.subscribe(`friend.inviteFriend.${userId}`, (payload) =>
+      this._emit(inviteFriendByWebsocketAction(payload))
+    );
+    this.subscribe(`friend.rejectFriend.${userId}`, (payload) =>
+      this._emit(rejectFriendByWebsocketAction(payload))
+    );
+    this.subscribe('event.updated', (payload) =>
+      this._emit(updateEventByWebsocketAction(payload))
+    );
     this.subscribe(`event.created`, (payload) => {
       this._emit(createEventByWebsocketAction(payload));
     });
-  }
+  };
 
   basicUnsubscribe = (userId) => {
-    ['event.created', `friend.approveFriend.${userId}`, `friend.inviteFriend.${userId}`, `friend.rejectFriend.${userId}`].map(key => {
+    [
+      'event.created',
+      `friend.approveFriend.${userId}`,
+      `friend.inviteFriend.${userId}`,
+      `friend.rejectFriend.${userId}`,
+    ].map((key) => {
       const channel = this._subscribes[key];
       if (channel) channel.kill();
       this._subscribes[key] = undefined;
-    })
-  }
+    });
+  };
 
   subscribeWatcher = async (channel, actionFunction) => {
     let asyncIterator = channel.createConsumer();
@@ -108,7 +185,7 @@ class socketClusterHelperClass {
       if (packet.done) break;
       actionFunction(packet.value);
     }
-  }
+  };
 
   close = () => {
     if (this._socketClient) {
@@ -166,57 +243,9 @@ class socketClusterHelperClass {
         },
       });
 
-      const getSyncDateQuery = async (database) => {
-        const [maxCreataAtEvent = null] = await database.events
-          .find()
-          .sort({ createAt: -1 })
-          .limit(1)
-          .exec();
-        const [maxUpdateAtEvent = null] = await database.events
-          .find()
-          .sort({ updateAt: -1 })
-          .limit(1)
-          .exec();
-        const [maxCreateAtFriend = null] = await database.friends
-          .find()
-          .sort({ createAt: -1 })
-          .limit(1)
-          .exec();
-        const [maxUpdateAtFriend = null] = await database.friends
-          .find()
-          .sort({ updateAt: -1 })
-          .limit(1)
-          .exec();
-
-        const syncData = {};
-        if (maxCreataAtEvent)
-          syncData.eventMaxCreateAt = maxCreataAtEvent.createAt;
-        if (maxUpdateAtEvent)
-          syncData.eventMaxUpdateAt = maxUpdateAtEvent.updateAt;
-        if (maxCreateAtFriend)
-          syncData.friendMaxCreateAt = maxCreateAtFriend.createAt;
-        if (maxUpdateAtFriend)
-          syncData.friendMaxUpdateAt = maxUpdateAtFriend.updateAt;
-        return syncData;
-      };
-
-      lissenEvent(this._socketClient, 'connect', async () => {
-        const query = await getSyncDateQuery(database);
-        const { friends, events } = await this._socketClient.invoke(
-          'syncData',
-          query
-        );
-
-        if (friends.length !== 0) {
-          const friendItems = parseFriendItems(friends);
-          await database.friends.bulkInsert(friendItems);
-        }
-
-        if (events.length !== 0) {
-          const eventItems = parseEventItems(events);
-          await database.events.bulkInsert(eventItems);
-        }
-      });
+      listenEvent(this._socketClient, 'connect', () =>
+        handleConnectEvent(database, this._socketClient)
+      );
 
       return this._socketClient;
     } catch (error) {

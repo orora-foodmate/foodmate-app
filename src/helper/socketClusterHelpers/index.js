@@ -100,10 +100,6 @@ const handleConnectEvent = async (database, socketClient) => {
       ? []
       : events.map((event) => database.events.upsert(parseEventItem(event)));
 
-  console.log(
-    '🚀 ~ file: index.js ~ line 97 ~ handleConnectEvent ~ eventPromises',
-    eventPromises
-  );
   return await Promise.all([...friendPromises, ...eventPromises]);
 };
 

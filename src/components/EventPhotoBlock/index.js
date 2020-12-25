@@ -1,42 +1,27 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import propTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import {Button} from 'react-native-elements';
 import {StyleSheet, View, Dimensions, Image} from 'react-native';
 import colors from '~/theme/color';
-import {getFullScreenSize} from '~/utils/imgUtil';
 
 const {width: screenWidth} = Dimensions.get('window');
 
-const ImagePlaceholder = (props) => {
+const ImagePlaceholder = () => {
   return <View style={styles.imagePlaceHolder}></View>;
 };
 
-const SelectedImage = ({uri, height, width}) => {
+const SelectedImage = ({uri}) => {
   if (isEmpty(uri)) return <ImagePlaceholder />;
-  return <Image source={{uri}} style={[styles.image, { height, width }]} />;
+  return <Image source={{uri}} style={[styles.image, { resizeMode: 'stretch', }]} />;
 };
 
 const EventPhoto = ({uri, onEditClick, hideButton, btnText}) => {
-  const [height, setHeight] = useState(200);
-  const [width, setWidth] = useState(screenWidth);
 
-  useEffect(() => {
-    if (!isEmpty(uri)) {
-      Image.getSize(uri, (width, height) => {
-        const {width: newWidth, height: newHeight} = getFullScreenSize({
-          width,
-          height,
-        });
-        setWidth(newWidth);
-        setHeight(newHeight);
-      });
-    }
-  }, [uri]);
 
   return (
     <View style={styles.imageContainer}>
-      <SelectedImage uri={uri} height={height} width={width} />
+      <SelectedImage uri={uri} />
       {!hideButton && (
         <Button
           title={btnText}

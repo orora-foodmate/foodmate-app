@@ -7,8 +7,8 @@ const mapStateToProps = ({ auth, setting }) => {
   const userId = auth.get('id');
   const socket = auth.get('socket');
   return {
-    userId,
     socket,
+    authUserId: userId,
     isAuth: auth.get('isAuth'),
   };
 };

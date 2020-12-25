@@ -20,7 +20,7 @@ const RoomsScreen = (props) => {
               {...item}
               push={push}
               socket={props.socket}
-              userId={props.userId}
+              userId={props.authUserId}
               handleAddMessageByWebsocket={props.handleAddMessageByWebsocket}
             />
           );

@@ -1,13 +1,13 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 import propTypes from 'prop-types';
 import isNull from 'lodash/isNull';
 import isEmpty from 'lodash/isEmpty';
 import RNPickerSelect from 'react-native-picker-select';
-import {View, StyleSheet} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import colors from '~/theme/color';
 import ErrorMessage from './ErrorMessage';
 
-const LeftIcon = ({leftIcon}) => {
+const LeftIcon = ({ leftIcon }) => {
   if (isEmpty(leftIcon)) return <Fragment />;
   return <View style={styles.icon}>{leftIcon}</View>;
 };
@@ -22,7 +22,6 @@ const SelectInput = ({
   placeholderText,
   ...props
 }) => {
-  console.log("value", value)
   const isError = !isEmpty(errorMessage);
   const [errorStyle, errorFormStyle] = isError
     ? [styles.errorStyle, { height: 70 }]
@@ -33,20 +32,25 @@ const SelectInput = ({
       <View style={[styles.container, containerStyle, errorStyle]}>
         <LeftIcon leftIcon={leftIcon} />
         <RNPickerSelect
+          useNativeAndroidPickerStyle={false}
           placeholder={{
             label: placeholderText,
             value: null,
           }}
           value={value}
           items={items}
+          Icon={() => null}
           onValueChange={onValueChange}
           textInputProps={{
-            style: [styles.select, isNull(value) ? styles.placeholder : {}],
+            style: [
+              styles.select,
+              isNull(value) ? styles.placeholder : {}
+            ],
           }}
           {...props}
         />
       </View>
-      <ErrorMessage errorMessage={errorMessage}/>
+      <ErrorMessage errorMessage={errorMessage} />
     </View>
   );
 };
@@ -77,19 +81,11 @@ const styles = StyleSheet.create({
   formBox: {
     width: '100%',
     display: 'flex',
-    position: 'relative',
-    alignItems: 'center',
   },
   container: {
-    padding: 15,
-    paddingLeft: 0,
-    paddingTop: 0,
-    paddingBottom: 8,
     borderBottomWidth: 2,
-    paddingTop: 10,
     width: '100%',
     display: 'flex',
-    alignItems: 'center',
     flexDirection: 'row',
     borderColor: colors.greyLightest,
   },
@@ -101,10 +97,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
   },
   select: {
-    height: 28,
     fontSize: 16,
-    width: '100%',
-    display: 'flex',
   },
   placeholder: {
     color: colors.greyLight,

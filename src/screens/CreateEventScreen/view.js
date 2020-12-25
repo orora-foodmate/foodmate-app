@@ -94,13 +94,13 @@ const handleConfirmPlace = (setPlace) => (place) => {
 
 const CreateActivityScreen = (props) => {
   const [dialogVisible, setDialogVisible] = useState(false);
-  const [type, setType] = useState(null);
-  const [paymentMethod, setPaymentMethod] = useState(null);
-  const [budget, setBudget] = useState('');
-  const [uploadedImage, setUploadedImage] = useState({url: ''});
-  const [title, setTitle] = useState('');
-  const [userCountMax, setUserCountMax] = useState('');
-  const [description, setDescription] = useState('');
+  const [type, setType] = useState(0);
+  const [paymentMethod, setPaymentMethod] = useState(0);
+  const [budget, setBudget] = useState('100');
+  const [uploadedImage, setUploadedImage] = useState({url: 'https://www.bomb01.com/upload/news/original/9a8c43cd1bef6b3a0d66bd88c8cb2ee9.jpg'});
+  const [title, setTitle] = useState('test003');
+  const [userCountMax, setUserCountMax] = useState('2');
+  const [description, setDescription] = useState('teskldfjasdlkfj');
   const [place, setPlace] = useState({});
   const [datingAt, setDatingAt] = useState(new Date());
   const [finalReviewAt, setFinalReviewAt] = useState(new Date());

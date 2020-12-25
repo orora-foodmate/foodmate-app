@@ -64,10 +64,12 @@ const SponsorDialog = ({visible, setVisible}) => {
               const weiValue = ethers.utils
                 .parseEther(amount, 'ether')
                 .toString();
+              const transferValue = amountValue.toExponential().replace('+', '');
+              console.log('🚀 ~ file: SponsorDialog.js ~ line 68 ~ SponsorDialog ~ transferValue', transferValue)
               const uri =
                 type === 'eth'
                   ? `https://metamask.app.link/send/${Config.TARGET_ADDRESS}?value=${weiValue}`
-                  : `https://metamask.app.link/send/${Config.TARGET_ADDRESS}/transfer?address=0x22d3692fEf8486Fd483838A5b9E9825d1F1Df54F&uint256=${weiValue}`;
+                  : `https://metamask.app.link/send/${Config.TARGET_ADDRESS}/transfer?address=0xFb1D709cb959aC0EA14cAD0927EABC7832e65058&uint256=${transferValue}`;
               Linking.openURL(uri);
               setVisible(false);
             }}

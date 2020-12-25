@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import isEmpty from 'lodash/isEmpty';
 
 export const useEventsHook = function (database) {
   const [events, setEvents] = useState([]);
@@ -33,21 +34,34 @@ export const useEventRoomsHook = (database, authUserId) => {
   const [rooms, setRooms] = useState([]);
   useMemo(() => {
     if(database) {
-        const sub = database.events.find({
-          selector: {
-            "creator.id": {$eq: authUserId}
+        const sub = database.events.find().$.subscribe(items => {
+        let nextItems = [];
+        for(let index = 0; index < items.length; index++){
+          const item = items[index];
+          if(item.creator.id === authUserId) {
+            nextItems.push({
+              type: 'event',
+              title: item.title,
+              subTitle: item.creator.name,
+              roomId: item.room,
+              avatar: item.logo,
+              updateAt: item.updateAt,
+            });
+          } else {
+            const user = item.users.find(u => u.status === 1 && u.info.id === authUserId);
+            if(!isEmpty(user)) {
+              nextItems.push({
+                type: 'event',
+                title: item.title,
+                subTitle: item.creator.name,
+                roomId: item.room,
+                avatar: item.logo,
+                updateAt: item.updateAt,
+              });
+            }
           }
-      }).$.subscribe(items => {
-        console.log("🚀 ~ file: eventHooks.js ~ line 46 ~ useMemo ~ items", items)
-        const roomItems = items.map(item => ({
-          type: 'event',
-          title: item.title,
-          subTitle: item.creator.name,
-          roomId: item.room,
-          avatar: item.logo,
-          updateAt: item.updateAt,
-        }));
-        setRooms(roomItems);
+        }
+        setRooms(nextItems);
       });
       return () => {
         sub.unsubscribe();

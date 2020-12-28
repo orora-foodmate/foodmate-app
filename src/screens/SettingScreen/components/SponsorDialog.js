@@ -17,6 +17,30 @@ export const ICON_TYPES = [
   {label: 'ETH', value: 'eth'},
 ];
 
+const handleOpenDeepLink = (type, amount, setVisible) => () => {
+  if(isEmpty(amount)) {
+    return;
+  };
+  const amountValue = parseFloat(amount, 10);
+  if(isNaN(amountValue) || amountValue < 0) {
+    return;
+  }
+
+  if(type === 'eth') {
+    const weiBN = ethers.utils.parseEther(amount, 'ether');
+    const weiValue = weiBN.toString();
+    return Linking.openURL(`https://metamask.app.link/send/${Config.TARGET_ADDRESS}?value=${weiValue}`);
+  }
+
+
+  const [value, decimal] = amountValue.toExponential().split('e');
+  const uint256 = `${value}e${Number(decimal)+18}`
+  const uri = `https://metamask.app.link/send/pay-${Config.USDT_CONTRACT_ADDRESS}/transfer?address=${Config.TARGET_ADDRESS}&uint256=${uint256}`
+
+  Linking.openURL(uri);
+  setVisible(false);
+};
+
 const SponsorDialog = ({visible, setVisible}) => {
   const [amount, setAmount] = useState('0');
   const [type, setType] = useState('eth');
@@ -52,27 +76,7 @@ const SponsorDialog = ({visible, setVisible}) => {
         <View style={styles.buttonZone}>
           <Button
             title='確認資助'
-            onPress={() => {
-              if(isEmpty(amount)) {
-                return;
-              };
-              const amountValue = parseFloat(amount, 10);
-              if(isNaN(amountValue) || amountValue < 0) {
-                return;
-              }
-
-              const weiValue = ethers.utils
-                .parseEther(amount, 'ether')
-                .toString();
-              const transferValue = amountValue.toExponential().replace('+', '');
-              console.log('🚀 ~ file: SponsorDialog.js ~ line 68 ~ SponsorDialog ~ transferValue', transferValue)
-              const uri =
-                type === 'eth'
-                  ? `https://metamask.app.link/send/${Config.TARGET_ADDRESS}?value=${weiValue}`
-                  : `https://metamask.app.link/send/${Config.TARGET_ADDRESS}/transfer?address=0xFb1D709cb959aC0EA14cAD0927EABC7832e65058&uint256=${transferValue}`;
-              Linking.openURL(uri);
-              setVisible(false);
-            }}
+            onPress={handleOpenDeepLink(type, amount, setVisible)}
           />
           <Button
             title='下次好了'

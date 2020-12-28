@@ -67,3 +67,5 @@ envConfig.js
 vendor
 *.hprof
 appcenter-config.json
+screenshots
+fastlaneEnv

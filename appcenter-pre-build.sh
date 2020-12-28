@@ -5,5 +5,5 @@ if [ ! -z "$GOOGLE_SERVICES_JSON" ]; then
 fi
 
 if [ ! -z "$GOOGLE_SERVICES_PLIST" ]; then
-  echo $GOOGLE_SERVICES_PLIST | base64 --decode > "$APPCENTER_SOURCE_DIRECTORY/ios/react-native-starter/GoogleService-Info.plist"
+  echo $GOOGLE_SERVICES_PLIST | base64 --decode > "$APPCENTER_SOURCE_DIRECTORY/ios/foodmate/GoogleService-Info.plist"
 fi

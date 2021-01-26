@@ -2,8 +2,9 @@ import React from 'react';
 import propTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import {Button} from 'react-native-elements';
-import {StyleSheet, View, Dimensions, Image} from 'react-native';
+import {StyleSheet, View, Dimensions} from 'react-native';
 import colors from '~/theme/color';
+import Image from '~/components/Image';
 
 const {width: screenWidth} = Dimensions.get('window');
 
@@ -13,7 +14,7 @@ const ImagePlaceholder = () => {
 
 const SelectedImage = ({uri}) => {
   if (isEmpty(uri)) return <ImagePlaceholder />;
-  return <Image source={{uri}} style={[styles.image, { resizeMode: 'stretch', }]} />;
+  return <Image source={{uri}} style={styles.image} />;
 };
 
 const EventPhoto = ({uri, onEditClick, hideButton, btnText}) => {
@@ -52,9 +53,8 @@ EventPhoto.defaultProps = {
 const styles = StyleSheet.create({
   image: {
     width: screenWidth,
-    resizeMode: 'contain',
-    minHeight: 200,
-    backgroundColor: '#eee',
+    resizeMode: 'stretch',
+    height: 200,
   },
   imagePlaceHolder: {
     backgroundColor: '#eee',

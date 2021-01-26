@@ -7,6 +7,7 @@ import {useNavigation} from 'react-native-navigation-hooks/dist';
 import shadow from '../../theme/shadow';
 import colors from '../../theme/color';
 import Button from '~/components/Button';
+import Avatar from '~/components/Avatar';
 import TextArea from '~/components/TextArea';
 import InputImage from '~/components/Inputs/InputImage';
 import ScrollContainer from '~/components/ScrollContainer';
@@ -14,7 +15,7 @@ import TextInputField from '~/components/Inputs/TextInputField';
 import {nameSchema} from '~/constants/yupSchemas';
 import {inputDonut, inputDonutError} from '~/assets/icons';
 import {handleYupSchema, handleYupErrors} from '~/helper/yupHelper';
-import {Avatar, Button as NativeButton} from 'react-native-elements';
+import { Button as NativeButton} from 'react-native-elements';
 
 const DEFAULT_PAYLOAD = {};
 

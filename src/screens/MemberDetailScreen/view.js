@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Avatar } from 'react-native-elements';
 import Text from '~/components/Text';
 import colors from '../../theme/color';
 import shadow from '../../theme/shadow';
+import Avatar from '~/components/Avatar';
 
 const MemberDetailScreen = ({ userId, member, handleGetMemberDetail }) => {
 

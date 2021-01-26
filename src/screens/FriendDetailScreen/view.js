@@ -1,5 +1,4 @@
 import React, {Fragment} from 'react';
-import {Avatar} from 'react-native-elements';
 import {View, StyleSheet, Image} from 'react-native';
 import isEmpty from 'lodash/isEmpty';
 import {useFriendDetail} from '~/models';
@@ -7,6 +6,7 @@ import Button from '~/components/Button';
 import colors from '../../theme/color';
 import shadow from '../../theme/shadow';
 import Text from '~/components/Text';
+import Avatar from '~/components/Avatar';
 import {useNavigation} from 'react-native-navigation-hooks';
 import image from '~/assets/images/actor-ghost-donut.png';
 

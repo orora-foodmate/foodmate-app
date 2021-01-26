@@ -16,16 +16,17 @@ import {iconParticipantActive} from '~/assets/icons';
 import EventButton from './components/EventButton';
 import JoinDialog from './components/JoinDialog';
 import {useNavigation} from 'react-native-navigation-hooks';
+import {TouchableOpacity} from 'react-native';
+import { onMapOpen } from '~/helper/googleMapHelper';
 
 const handleGoMembers = (push, eventName, eventId) => () => {
-  push('EventMember', { title: `${eventName} 成員`,
-   eventId });
+  push('EventMember', {title: `${eventName} 成員`, eventId});
 };
 
 const getValidatedUserCount = (users) => {
   let count = 0;
-  users.map(user => {
-    if(user.status === 1) {
+  users.map((user) => {
+    if (user.status === 1) {
       count++;
     }
   });
@@ -35,7 +36,7 @@ const getValidatedUserCount = (users) => {
 const EventDetail = (props) => {
   const {eventId} = props.passProps;
   const [visible, setVisible] = useState(false);
-  const { push } = useNavigation();
+  const {push} = useNavigation();
   const event = useEventDetail(eventId);
 
   if (isEmpty(props.passProps) || isEmpty(event)) return <Fragment />;
@@ -43,10 +44,17 @@ const EventDetail = (props) => {
   const onMemberDetailClick = handleGoMembers(push, event.title, eventId);
   const validatedUserCount = getValidatedUserCount(event.users);
 
+  console.log("TCL ~ file: view.js ~ line 138 ~ EventDetail ~ event.place", event.place)
+
   return (
     <Fragment>
-      <JoinDialog visible={visible} push={push} event={event} setVisible={setVisible}/>
-      <ScrollView contentContainerStyle={styles.scroll} >
+      <JoinDialog
+        visible={visible}
+        push={push}
+        event={event}
+        setVisible={setVisible}
+      />
+      <ScrollView contentContainerStyle={styles.scroll}>
         <EventPhotoBlock hideButton uri={event.logo} />
         <View style={styles.baseInfoContainer}>
           <Text h1 style={styles.title}>
@@ -107,22 +115,16 @@ const EventDetail = (props) => {
           <Image source={locationIcon} style={styles.introIcon} />
           <Text h3>地點</Text>
         </View>
-        <View style={styles.place}>
-          <Text h4 style={styles.mainPlace}>
-            {event.place.structured_formatting.main_text}
-          </Text>
-          <Text h6 style={styles.subPlace}>
-            {event.place.structured_formatting.secondary_text}
-          </Text>
-        </View>
-        <View style={styles.map}>
-          <WebView
-            style={{width: '100%', height: 600}}
-            source={{
-              uri: `https://www.google.com/maps/search/?api=1&query=taiwan&query_place_id=${event.place.place_id}&map_action=map`,
-            }}
-          />
-        </View>
+        <TouchableOpacity onPress={onMapOpen(event.place)} style={styles.place}>
+          <View >
+            <Text h4 style={styles.mainPlace}>
+              {event.place.structured_formatting.main_text}
+            </Text>
+            <Text h6 style={styles.subPlace}>
+              {event.place.structured_formatting.secondary_text}
+            </Text>
+          </View>
+        </TouchableOpacity>
       </ScrollView>
     </Fragment>
   );

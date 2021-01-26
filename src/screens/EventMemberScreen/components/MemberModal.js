@@ -1,10 +1,12 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import { StyleSheet, View } from 'react-native';
-import { Overlay, Avatar, Image } from 'react-native-elements';
+import { Overlay } from 'react-native-elements';
 import Text from '~/components/Text';
-import Button from '~/components/Button';
 import colors from '~/theme/color';
+import Image from '~/components/Image';
+import Button from '~/components/Button';
+import Avatar from '~/components/Avatar';
 import confirmImage from '~/assets/images/image-join-request.png';
 
 const handleApprove = ({

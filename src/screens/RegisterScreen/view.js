@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import * as yup from 'yup';
 import isEmpty from 'lodash/isEmpty';
-import {View, Image, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {useNavigation} from 'react-native-navigation-hooks/dist';
 import Button from '~/components/Button';
+import Image from '~/components/Image';
 import logo from '~/assets/images/logo_register.png';
 import InputImage from '~/components/Inputs/InputImage';
 import bottomLogo from '~/assets/images/actor-register-donut.png';

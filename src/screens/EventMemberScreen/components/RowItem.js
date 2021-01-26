@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { ListItem, Avatar } from 'react-native-elements';
+import { ListItem } from 'react-native-elements';
+import Avatar from '~/components/Avatar';
 
 const RowItem = ({ item, onPress }) => (
   <ListItem bottomDivider>

@@ -2,10 +2,11 @@ import React, {Fragment, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useNavigation} from 'react-native-navigation-hooks/dist';
 import {useNavigationButtonPress} from 'react-native-navigation-hooks';
-import {Avatar, Button as NativeButton} from 'react-native-elements';
+import { Button as NativeButton} from 'react-native-elements';
 import colors from '../../theme/color';
 import shadow from '../../theme/shadow';
 import Text from '~/components/Text';
+import Avatar from '~/components/Avatar';
 import QRCodeModal from './components/QRCodeModal';
 
 const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';

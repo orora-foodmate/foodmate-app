@@ -8,10 +8,10 @@ import {
   Dimensions,
 } from 'react-native';
 import {useNavigationButtonPress} from 'react-native-navigation-hooks';
-import {Avatar} from 'react-native-elements';
 import colors from '~/theme/color';
 import Text from '~/components/Text';
 import Button from '~/components/Button';
+import Avatar from '~/components/Avatar';
 import SearchBar from '~/components/SearchBar';
 import QRCodeScannerModal from '~/components/QRCodeScannerModal';
 

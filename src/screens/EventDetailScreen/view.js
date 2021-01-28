@@ -45,8 +45,6 @@ const EventDetail = (props) => {
   const onMemberDetailClick = handleGoMembers(push, event.title, eventId);
   const validatedUserCount = getValidatedUserCount(event.users);
 
-  console.log("TCL ~ file: view.js ~ line 138 ~ EventDetail ~ event.place", event.place)
-
   return (
     <Fragment>
       <JoinDialog

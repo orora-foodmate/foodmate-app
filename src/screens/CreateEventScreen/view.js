@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import * as yup from 'yup';
-import { Icon } from 'react-native-elements';
 import { View, ScrollView, StyleSheet } from 'react-native';
 import isEmpty from 'lodash/isEmpty';
 import Button from '~/components/Button';
@@ -9,7 +8,6 @@ import TextInputField from '~/components/Inputs/TextInputField';
 import DatetimeModal from './components/DatetimeModal';
 import SelectInput from '~/components/Inputs/SelectInput';
 import InputIcon from '~/components/Inputs/InputIcon';
-import InputImage from '~/components/Inputs/InputImage';
 import ConfirmDialog from './components/ConfirmDialog';
 import PickPlaceModal from './components/PickPlaceModal';
 import EventPhotoBlock from '~/components/EventPhotoBlock';
@@ -24,6 +22,14 @@ import {
   dateSchema,
 } from '~/constants/yupSchemas';
 import colors from '~/theme/color';
+import { getResolution, RESOLUTION } from '~/helper/imageResolutionHelper';
+
+const DEFAULT_EVENT_IMAGE = {
+  id: '9a8c43cd1bef6b3a0d66bd88c8cb2ee9',
+  type: 'image/jpg',
+  url: 'https://www.bomb01.com/upload/news/original/9a8c43cd1bef6b3a0d66bd88c8cb2ee9.jpg',
+  deletehash: '',
+};
 
 const schema = yup.object().shape({
   logo: urlSchema('錯誤的圖片連結', '請上傳活動照片'),
@@ -82,7 +88,7 @@ const CreateActivityScreen = (props) => {
   const [type, setType] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState(0);
   const [budget, setBudget] = useState('100');
-  const [uploadedImage, setUploadedImage] = useState({ url: 'https://www.bomb01.com/upload/news/original/9a8c43cd1bef6b3a0d66bd88c8cb2ee9.jpg' });
+  const [uploadedImage, setUploadedImage] = useState(DEFAULT_EVENT_IMAGE);
   const [title, setTitle] = useState('test003');
   const [userCountMax, setUserCountMax] = useState('2');
   const [description, setDescription] = useState('teskldfjasdlkfj');
@@ -91,10 +97,10 @@ const CreateActivityScreen = (props) => {
   const [finalReviewAt, setFinalReviewAt] = useState(new Date());
   const [errors, setErrors] = useState({});
 
-  const { push } = useNavigation();
+  const {push} = useNavigation();
 
   const payload = {
-    logo: uploadedImage.url,
+    logo: { ...uploadedImage },
     publicationPlace: '台北',
     type,
     paymentMethod,
@@ -126,7 +132,7 @@ const CreateActivityScreen = (props) => {
       contentContainerStyle={styles.scroll}
       keyboardShouldPersistTaps='always'>
       <EventPhotoBlock
-        uri={uploadedImage.url}
+        uri={getResolution(uploadedImage.url, RESOLUTION.MEDIUM)}
         onEditClick={onUploadImage(setUploadedImage)}
       />
       <ConfirmDialog

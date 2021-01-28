@@ -41,7 +41,16 @@ export const handleUploadImage = (
       const Authorization = `Client-ID ${Config.IMG_URL_CLIENT_ID}`;
       const result = await uploadImgUrlResult({ Authorization },formData);
 
-      onSuccess(result.data.link);
+      const { id, type, link, deletehash } = result.data;
+
+      const imageInfo = {
+        id,
+        type,
+        url: link,
+        deletehash,
+      };
+
+      onSuccess({ ...imageInfo });
     } catch (error) {
       onError(error);
     }

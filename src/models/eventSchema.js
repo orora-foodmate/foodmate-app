@@ -109,7 +109,18 @@ const eventSchema = {
       type: 'string',
     },
     logo: {
-      type: 'string',
+      id : {
+        type: 'string',
+      },
+      type : {
+        type: 'string',
+      },
+      deletehash: {
+        type: 'string',
+      },
+      url: {
+        type: 'string',
+      },
     },
     publicationPlace: {
       type: 'string',
@@ -154,6 +165,9 @@ const eventSchema = {
     budget: {
       type: 'number',
     },
+    // tags: {
+    //   type: 'array',
+    // },
   },
   indexes: ['id', 'updateAt', 'createAt'],
   required: [],

@@ -6,8 +6,8 @@ import {uploadImgUrlResult} from '~/apis/api';
 const DEFAULT_OPTIONS = {
   mediaType: 'photo',
   includeBase64: false,
-  maxHeight: 200,
-  maxWidth: 200,
+  maxHeight: 960,
+  maxWidth: 960,
 };
 
 const getImageByPlatform = (photo) => {

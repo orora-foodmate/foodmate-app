@@ -16,6 +16,7 @@ import {
 import colors from '~/theme/color';
 import Text from '~/components/Text';
 import socketClusterHelper from '~/helper/socketClusterHelpers';
+import { getResolution, RESOLUTION } from '~/helper/imageResolutionHelper';
 
 const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
 
@@ -27,7 +28,7 @@ const EventCard = ({ event, push }) => {
       style={styles.cardContainer}
       onPress={() => push('EventDetail', { passProps: { eventId: event.id } })}>
       <View style={styles.card}>
-        <Image source={{ uri: event.logo }} style={styles.cardImage} />
+        <Image source={{ uri: getResolution(event.logo, RESOLUTION.LARGE) }} style={styles.cardImage} />
         <View style={styles.cardBody}>
           <View style={styles.datetime}>
             <Text style={styles.datetimeText}>

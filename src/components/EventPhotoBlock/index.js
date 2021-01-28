@@ -53,8 +53,8 @@ EventPhoto.defaultProps = {
 const styles = StyleSheet.create({
   image: {
     width: screenWidth,
-    resizeMode: 'stretch',
-    height: 200,
+    resizeMode: 'cover',
+    height: 250,
   },
   imagePlaceHolder: {
     backgroundColor: '#eee',
@@ -65,6 +65,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    borderTopWidth: 4,
+    borderBottomWidth: 4,
+    borderTopColor: colors.primary,
+    borderBottomColor: colors.greyLightest,
   },
   buttonContainer: {
     margin: 5,

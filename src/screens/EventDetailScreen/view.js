@@ -1,8 +1,8 @@
-import React, {Fragment, useState} from 'react';
+import React, { Fragment, useState } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import format from 'date-fns/format';
-import {View, StyleSheet, ScrollView} from 'react-native';
-import {Icon} from 'react-native-elements';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import { Icon } from 'react-native-elements';
 import colors from '~/theme/color';
 import Text from '~/components/Text';
 import Tags from '~/components/Tags';
@@ -10,18 +10,19 @@ import Button from '~/components/Button';
 import introIcon from '~/assets/icons/icon_intro.png';
 import locationIcon from '~/assets/icons/icon_location_primary.png';
 import EventPhotoBlock from '~/components/EventPhotoBlock';
-import {useEventDetail} from '~/models';
-import WebView from 'react-native-webview';
+import { useEventDetail } from '~/models';
 import Image from '~/components/Image';
-import {iconParticipantActive} from '~/assets/icons';
+import { iconParticipantActive } from '~/assets/icons';
 import EventButton from './components/EventButton';
 import JoinDialog from './components/JoinDialog';
-import {useNavigation} from 'react-native-navigation-hooks';
-import {TouchableOpacity} from 'react-native';
+import { useNavigation, useNavigationButtonPress } from 'react-native-navigation-hooks';
+import { TouchableOpacity } from 'react-native';
 import { onMapOpen } from '~/helper/googleMapHelper';
 
+const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
+
 const handleGoMembers = (push, eventName, eventId) => () => {
-  push('EventMember', {title: `${eventName} 成員`, eventId});
+  push('EventMember', { title: `${eventName} 成員`, eventId });
 };
 
 const getValidatedUserCount = (users) => {
@@ -35,10 +36,22 @@ const getValidatedUserCount = (users) => {
 };
 
 const EventDetail = (props) => {
-  const {eventId} = props.passProps;
+  const { eventId } = props.passProps;
   const [visible, setVisible] = useState(false);
-  const {push} = useNavigation();
+  const { push, setStackRoot } = useNavigation();
   const event = useEventDetail(eventId);
+
+
+  useNavigationButtonPress((e) => {
+    console.log("TCL ~ file: view.js ~ line 55 ~ useNavigationButtonPress ~ e.buttonId", e.buttonId)
+    if (
+      props.componentId === e.componentId &&
+      e.buttonId === TOP_BAR_RIGHT_BUTTON_ID
+    ) {
+      setStackRoot('Events');
+    }
+  });
+
 
   if (isEmpty(props.passProps) || isEmpty(event)) return <Fragment />;
 
@@ -127,6 +140,18 @@ const EventDetail = (props) => {
       </ScrollView>
     </Fragment>
   );
+};
+
+EventDetail.options = {
+  topBar: {
+    leftButtons: [
+      {
+        id: TOP_BAR_RIGHT_BUTTON_ID,
+        icon: require('assets/images/ic-arrow-ios.png'),
+        color: colors.grey,
+      },
+    ],
+  },
 };
 
 const styles = StyleSheet.create({

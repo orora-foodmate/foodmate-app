@@ -44,9 +44,14 @@ export function* createEventSaga({ payload = {} }) {
       createdPayload
     );
 
+    if (isFunction(onSuccess)) onSuccess();
+
+    push('EventDetail', { passProps: { eventId: result.data.id } });
+
     yield database.events.insert(parseEventItem(result.data));
     yield put(okCreate());
-    if (isFunction(onSuccess)) onSuccess();
+
+
   } catch (error) {
     const errorAction = errCreate(error);
     yield put(errorAction);

@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#FFF'
   },
   panel: {
     width: 230,

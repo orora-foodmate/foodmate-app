@@ -7,6 +7,7 @@ import colors from '../../theme/color';
 import shadow from '../../theme/shadow';
 import Text from '~/components/Text';
 import Avatar from '~/components/Avatar';
+import ViewContainer from '~/components/ViewContainer';
 import QRCodeModal from './components/QRCodeModal';
 
 const TOP_BAR_RIGHT_BUTTON_ID = '#$%_right_button';
@@ -30,7 +31,7 @@ const ProfileScreen = ({componentId, auth}) => {
   });
 
   return (
-    <Fragment>
+    <ViewContainer>
       <QRCodeModal
         value={auth.get('account')}
         isVisible={showModal}
@@ -67,7 +68,7 @@ const ProfileScreen = ({componentId, auth}) => {
           onPress={onGoToPath('Setting')}
         />
       </View>
-    </Fragment>
+    </ViewContainer>
   );
 };
 

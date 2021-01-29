@@ -1,7 +1,7 @@
 import ImagePicker from 'react-native-image-picker';
 import {Platform} from 'react-native';
 import Config from 'react-native-config';
-import {uploadImgUrlResult} from '~/apis/api';
+import { uploadImgUrlResult, deleteImglResult } from '~/apis/api';
 
 const DEFAULT_OPTIONS = {
   mediaType: 'photo',
@@ -55,4 +55,13 @@ export const handleUploadImage = (
       onError(error);
     }
   });
+};
+
+export const handleDeleteImage = (deletehash) => {
+  try{
+    const Authorization = `Client-ID ${Config.IMG_URL_CLIENT_ID}`;
+    deleteImglResult({ Authorization }, deletehash);
+  } catch (error) {
+    console.log("Delete Image Error", error);
+  }
 };

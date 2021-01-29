@@ -11,7 +11,6 @@ import introIcon from '~/assets/icons/icon_intro.png';
 import locationIcon from '~/assets/icons/icon_location_primary.png';
 import EventPhotoBlock from '~/components/EventPhotoBlock';
 import {useEventDetail} from '~/models';
-import WebView from 'react-native-webview';
 import Image from '~/components/Image';
 import {iconParticipantActive} from '~/assets/icons';
 import EventButton from './components/EventButton';
@@ -54,7 +53,7 @@ const EventDetail = (props) => {
         setVisible={setVisible}
       />
       <ScrollView contentContainerStyle={styles.scroll}>
-        <EventPhotoBlock hideButton uri={event.logo} />
+        <EventPhotoBlock hideButton uri={event.logo.url} />
         <View style={styles.baseInfoContainer}>
           <Text h1 style={styles.title}>
             {event.title}

@@ -11,7 +11,7 @@ import InputIcon from '~/components/Inputs/InputIcon';
 import ConfirmDialog from './components/ConfirmDialog';
 import PickPlaceModal from './components/PickPlaceModal';
 import EventPhotoBlock from '~/components/EventPhotoBlock';
-import { handleUploadImage } from '~/helper/imageUploadHelper';
+import { handleUploadImage, handleDeleteImage } from '~/helper/imageUploadHelper';
 import { PAYMENT_METHOD, EVENT_TYPES } from '~/constants/selectItems';
 import { useNavigation } from 'react-native-navigation-hooks';
 import { handleYupSchema, handleYupErrors } from '~/helper/yupHelper';
@@ -44,8 +44,8 @@ const schema = yup.object().shape({
   place: yup.object().required('請選擇活動地點'),
 });
 
-const onUploadSuccess = (setter) => (link) => {
-  setter({ url: link });
+const onUploadSuccess = (setter) => (data) => {
+  setter(data);
 };
 
 const onUploadError = (error) => {
@@ -65,7 +65,10 @@ const validateData = async (payload, setErrors) => {
   }
 };
 
-const onUploadImage = (setUploadedImage) => () => {
+const onUploadImage = (deleteHash, setUploadedImage) => () => {
+ if(!isEmpty(deleteHash))
+    handleDeleteImage(deleteHash);
+
   handleUploadImage(onUploadSuccess(setUploadedImage), onUploadError);
 };
 
@@ -133,7 +136,7 @@ const CreateActivityScreen = (props) => {
       keyboardShouldPersistTaps='always'>
       <EventPhotoBlock
         uri={getResolution(uploadedImage.url, RESOLUTION.MEDIUM)}
-        onEditClick={onUploadImage(setUploadedImage)}
+        onEditClick={onUploadImage(uploadedImage.deletehash, setUploadedImage)}
       />
       <ConfirmDialog
         payload={payload}

@@ -16,7 +16,7 @@ import Image from '~/components/Image';
 import { iconParticipantActive } from '~/assets/icons';
 import EventButton from './components/EventButton';
 import JoinDialog from './components/JoinDialog';
-import { useNavigation, useNavigationButtonPress, useNavigationScreenPop } from 'react-native-navigation-hooks';
+import { useNavigation, useNavigationButtonPress } from 'react-native-navigation-hooks';
 import { TouchableOpacity } from 'react-native';
 import { onMapOpen } from '~/helper/googleMapHelper';
 
@@ -150,12 +150,14 @@ const EventDetail = (props) => {
 
 EventDetail.options = {
   topBar: {
-    backButton: 
+    leftButtons: [ 
       {
         id: TOP_BAR_RIGHT_BUTTON_ID,
-        icon: require('assets/images/ic-arrow-ios.png'),
+        icon: require('assets/icons/chevron_left.png'),
+        iconInsets: { left: 50},
         color: colors.grey,
       },
+    ]
   },
 };
 

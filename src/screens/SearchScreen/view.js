@@ -145,7 +145,7 @@ const SearchScreen = ({
         onRead={({data}) => {
           setValue(data);
           setShowModal(false);
-          handleGetUserByAccount({account: value});
+          handleGetUserByAccount({account: data});
         }}
       />
       <SearchBar

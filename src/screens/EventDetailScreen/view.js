@@ -15,7 +15,7 @@ import Image from '~/components/Image';
 import { iconParticipantActive } from '~/assets/icons';
 import EventButton from './components/EventButton';
 import JoinDialog from './components/JoinDialog';
-import { useNavigation, useNavigationButtonPress } from 'react-native-navigation-hooks';
+import { useNavigation, useNavigationButtonPress, useNavigationScreenPop } from 'react-native-navigation-hooks';
 import { TouchableOpacity } from 'react-native';
 import { onMapOpen } from '~/helper/googleMapHelper';
 
@@ -51,6 +51,11 @@ const EventDetail = (props) => {
       setStackRoot('Events');
     }
   });
+
+  // useNavigationScreenPop((e) => {
+  //   console.log("TCL ~ file: view.js ~ line 55 ~ useNavigationScreenPop ~ e.buttonId", e.componentId)
+  //   setStackRoot('Events');
+  // })
 
 
   if (isEmpty(props.passProps) || isEmpty(event)) return <Fragment />;
@@ -144,13 +149,12 @@ const EventDetail = (props) => {
 
 EventDetail.options = {
   topBar: {
-    leftButtons: [
+    backButton: 
       {
         id: TOP_BAR_RIGHT_BUTTON_ID,
         icon: require('assets/images/ic-arrow-ios.png'),
         color: colors.grey,
       },
-    ],
   },
 };
 
@@ -158,6 +162,7 @@ const styles = StyleSheet.create({
   scroll: {
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#FFF',
   },
   baseInfoContainer: {
     padding: 10,

@@ -6,6 +6,7 @@ import {useNavigation} from 'react-native-navigation-hooks/dist';
 import Button from '~/components/Button';
 import Image from '~/components/Image';
 import logo from '~/assets/images/logo_register.png';
+import ViewContainer from '~/components/ViewContainer';
 import InputImage from '~/components/Inputs/InputImage';
 import bottomLogo from '~/assets/images/actor-register-donut.png';
 import TextInputField from '~/components/Inputs/TextInputField';
@@ -83,7 +84,7 @@ const RegisterScreen = ({handleRegisterUser}) => {
   const onBlur = handleOnBlur(errors, payload, setErrors);
 
   return (
-    <View style={styles.container}>
+    <ViewContainer>
       <View style={styles.section}>
         <Image
           source={logo}
@@ -178,7 +179,7 @@ const RegisterScreen = ({handleRegisterUser}) => {
       <View style={styles.sectionImage}>
         <Image source={bottomLogo} style={styles.bottomImage} />
       </View>
-    </View>
+    </ViewContainer>
   );
 };
 
@@ -189,10 +190,6 @@ RegisterScreen.options = {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    height: '100%',
-  },
   section: {
     flex: 1,
     maxHeight: 220,

@@ -24,6 +24,7 @@ import {
   dateSchema,
 } from '~/constants/yupSchemas';
 import colors from '~/theme/color';
+import ViewContainer from '~/components/ViewContainer';
 
 const schema = yup.object().shape({
   logo: urlSchema('錯誤的圖片連結', '請上傳活動照片'),
@@ -122,6 +123,7 @@ const CreateActivityScreen = (props) => {
   const confirmPlace = handleConfirmPlace(setPlace);
 
   return (
+    <ViewContainer>
     <ScrollView
       contentContainerStyle={styles.scroll}
       keyboardShouldPersistTaps='always'>
@@ -284,6 +286,7 @@ const CreateActivityScreen = (props) => {
         <Button title='確認' onPress={onSubmit} />
       </View>
     </ScrollView>
+    </ViewContainer>
   );
 };
 

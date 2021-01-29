@@ -8,9 +8,10 @@ import Text from '~/components/Text';
 import Tags from '~/components/Tags';
 import Button from '~/components/Button';
 import introIcon from '~/assets/icons/icon_intro.png';
-import locationIcon from '~/assets/icons/icon_location_primary.png';
+import ViewContainer from '~/components/ViewContainer';
 import EventPhotoBlock from '~/components/EventPhotoBlock';
-import { useEventDetail } from '~/models';
+import locationIcon from '~/assets/icons/icon_location_primary.png';
+import {useEventDetail} from '~/models';
 import Image from '~/components/Image';
 import { iconParticipantActive } from '~/assets/icons';
 import EventButton from './components/EventButton';
@@ -64,7 +65,7 @@ const EventDetail = (props) => {
   const validatedUserCount = getValidatedUserCount(event.users);
 
   return (
-    <Fragment>
+    <ViewContainer>
       <JoinDialog
         visible={visible}
         push={push}
@@ -143,7 +144,7 @@ const EventDetail = (props) => {
           </View>
         </TouchableOpacity>
       </ScrollView>
-    </Fragment>
+    </ViewContainer>
   );
 };
 
@@ -159,6 +160,11 @@ EventDetail.options = {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flex: 1,
+    backgroundColor: '#FFF'
+  },
   scroll: {
     justifyContent: 'center',
     alignItems: 'center',

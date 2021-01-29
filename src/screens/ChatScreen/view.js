@@ -5,6 +5,8 @@ import { GiftedChat, Bubble, Send } from 'react-native-gifted-chat';
 import { Icon } from 'react-native-elements';
 import { useMessages } from '~/models';
 import colors from '~/theme/color';
+import ViewContainer from '~/components/ViewContainer';
+
 
 const renderBubble = (props) => {
   return (
@@ -60,7 +62,7 @@ const ChatScreen = ({ userId, roomId, handleAddMessage, handleGetMessages }) => 
   }, []);
 
   return (
-    <View style={{ flex: 1 }}>
+    <ViewContainer>
       <GiftedChat
         style={{ flex: 1 }}
         messages={messages}
@@ -73,7 +75,7 @@ const ChatScreen = ({ userId, roomId, handleAddMessage, handleGetMessages }) => 
           _id: userId,
         }}
       />
-    </View>
+    </ViewContainer>
   );
 };
 

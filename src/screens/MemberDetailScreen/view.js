@@ -4,6 +4,7 @@ import Text from '~/components/Text';
 import colors from '../../theme/color';
 import shadow from '../../theme/shadow';
 import Avatar from '~/components/Avatar';
+import ViewContainer from '~/components/ViewContainer';
 
 const MemberDetailScreen = ({ userId, member, handleGetMemberDetail }) => {
 
@@ -12,7 +13,7 @@ const MemberDetailScreen = ({ userId, member, handleGetMemberDetail }) => {
   }, []);
 
   return (
-    <View>
+    <ViewContainer>
       <View style={styles.infoBox}>
         <Avatar
           rounded
@@ -24,7 +25,7 @@ const MemberDetailScreen = ({ userId, member, handleGetMemberDetail }) => {
           <Text h4>初級食伴</Text>
         </View>
       </View>
-    </View>
+    </ViewContainer>
   )
 }
 

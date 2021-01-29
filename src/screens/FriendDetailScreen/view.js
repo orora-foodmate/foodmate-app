@@ -7,6 +7,7 @@ import colors from '../../theme/color';
 import shadow from '../../theme/shadow';
 import Text from '~/components/Text';
 import Avatar from '~/components/Avatar';
+import ViewContainer from '~/components/ViewContainer';
 import {useNavigation} from 'react-native-navigation-hooks';
 import image from '~/assets/images/actor-ghost-donut.png';
 
@@ -26,7 +27,7 @@ const FriendDetailScreen = ({friendId}) => {
   if (isEmpty(friend)) return <EmptyFriendContent />;
 
   return (
-    <View style={styles.container}>
+    <ViewContainer style={styles.container}>
       <View style={styles.infoBox}>
         <Avatar
           rounded
@@ -50,7 +51,7 @@ const FriendDetailScreen = ({friendId}) => {
         type='outline'
         onPress={() => push('FriendSetting', {friendId: friend.get('friendId')})}
       />
-    </View>
+    </ViewContainer>
   );
 };
 

@@ -13,6 +13,7 @@ import Text from '~/components/Text';
 import Button from '~/components/Button';
 import Avatar from '~/components/Avatar';
 import SearchBar from '~/components/SearchBar';
+import ViewContainer from '~/components/ViewContainer';
 import QRCodeScannerModal from '~/components/QRCodeScannerModal';
 
 const {width} = Dimensions.get('window');
@@ -138,7 +139,7 @@ const SearchScreen = ({
   }, [friendAccount]);
 
   return (
-    <View style={{flex: 1}}>
+    <ViewContainer>
       <QRCodeScannerModal
         visible={showModal}
         onClose={() => setShowModal(false)}
@@ -166,7 +167,7 @@ const SearchScreen = ({
         handleRejectInviteFriend={handleRejectInviteFriend}
         handleApproveInviteFriend={handleApproveInviteFriend}
       />
-    </View>
+    </ViewContainer>
   );
 };
 

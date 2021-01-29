@@ -2,7 +2,8 @@ import React from 'react';
 import propTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import { Button } from 'react-native-elements';
-import { StyleSheet, View, Image, Dimensions } from 'react-native';
+import { StyleSheet, View, Dimensions } from 'react-native';
+import Image from '~/components/Image';
 import colors from '~/theme/color';
 
 const { width: screenWidth } = Dimensions.get('window');

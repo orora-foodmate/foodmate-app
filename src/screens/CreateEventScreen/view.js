@@ -30,6 +30,7 @@ const DEFAULT_EVENT_IMAGE = {
   url: 'https://www.bomb01.com/upload/news/original/9a8c43cd1bef6b3a0d66bd88c8cb2ee9.jpg',
   deletehash: '',
 };
+import ViewContainer from '~/components/ViewContainer';
 
 const schema = yup.object().shape({
   logo: urlSchema('錯誤的圖片連結', '請上傳活動照片'),
@@ -131,6 +132,7 @@ const CreateActivityScreen = (props) => {
   const confirmPlace = handleConfirmPlace(setPlace);
 
   return (
+    <ViewContainer>
     <ScrollView
       contentContainerStyle={styles.scroll}
       keyboardShouldPersistTaps='always'>
@@ -293,6 +295,7 @@ const CreateActivityScreen = (props) => {
         <Button title='確認' onPress={onSubmit} />
       </View>
     </ScrollView>
+    </ViewContainer>
   );
 };
 

@@ -29,7 +29,7 @@ const EventCard = ({ event, push }) => {
       style={styles.cardContainer}
       onPress={() => push('EventDetail', { passProps: { eventId: event.id } })}>
       <View style={styles.card}>
-        <Image source={{ uri: getResolution(event.logo, RESOLUTION.LARGE) }} style={styles.cardImage} />
+        <Image source={{ uri: getResolution(event.logo.url, RESOLUTION.LARGE) }} style={styles.cardImage} />
         <View style={styles.cardBody}>
           <View style={styles.datetime}>
             <Text style={styles.datetimeText}>

@@ -54,7 +54,7 @@ const EventDetail = (props) => {
         setVisible={setVisible}
       />
       <ScrollView contentContainerStyle={styles.scroll}>
-        <EventPhotoBlock hideButton uri={event.logo} />
+        <EventPhotoBlock hideButton uri={event.logo.url} />
         <View style={styles.baseInfoContainer}>
           <Text h1 style={styles.title}>
             {event.title}

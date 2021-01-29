@@ -44,6 +44,7 @@ Navigation.setDefaultOptions({
     },
     backButton: {
       color: colors.grey,
+      icon: require('assets/icons/back_button.png'),
     },
   },
   bottomTab: {

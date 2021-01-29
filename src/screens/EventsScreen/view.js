@@ -15,6 +15,7 @@ import {
 } from 'react-native-navigation-hooks';
 import colors from '~/theme/color';
 import Text from '~/components/Text';
+import ViewContainer from '~/components/ViewContainer';
 import socketClusterHelper from '~/helper/socketClusterHelpers';
 import { getResolution, RESOLUTION } from '~/helper/imageResolutionHelper';
 
@@ -75,7 +76,7 @@ const EventsScreen = (props) => {
 
 
   return (
-    <View style={styles.container}>
+    <ViewContainer>
       <FlatList
         keyExtractor={(item) => item.id}
         data={events}
@@ -99,15 +100,11 @@ const EventsScreen = (props) => {
           return <EventCard event={item} push={push} />;
         }}
       />
-    </View>
+    </ViewContainer>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
-  },
   list: {
     flexDirection: 'column',
     margin: 5,

@@ -70,7 +70,6 @@ console.log("TCL ~ file: view.js ~ line 57 ~ validateData ~ payload", payload)
   } catch (error) {
     const errors = handleYupErrors(error);
     setErrors(errors);
-    alert(JSON.stringify(errors))
     return false;
   }
 };
@@ -87,8 +86,6 @@ const submit = (payload, setErrors, setDialogVisible) => async () => {
     setDialogVisible(true);
     return;
   }
-
-  alert('error')
 };
 
 const handleOnBlur = (errors, editPayload, setErrors) => async () => {

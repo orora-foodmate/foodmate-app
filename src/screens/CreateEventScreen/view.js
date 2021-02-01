@@ -32,8 +32,15 @@ const DEFAULT_EVENT_IMAGE = {
 };
 import ViewContainer from '~/components/ViewContainer';
 
+const logoSchema = yup.object().shape({
+  deletehash: yup.string(),
+  id: yup.string(),
+  type: yup.string(),
+  url:  urlSchema('錯誤的圖片連結', '請上傳活動照片'),
+});
+
 const schema = yup.object().shape({
-  logo: urlSchema('錯誤的圖片連結', '請上傳活動照片'),
+  logo: logoSchema,
   type: enumSchema([0, 1, 2], '錯誤的活動類型', '請選擇活動類型'),
   paymentMethod: enumSchema([0, 1, 2, 3], '錯誤的分攤方式', '請選擇分攤方式'),
   budget: yup.number().typeError('請輸入數字金額').required('請輸入預算'),
@@ -54,6 +61,7 @@ const onUploadError = (error) => {
 };
 
 const validateData = async (payload, setErrors) => {
+console.log("TCL ~ file: view.js ~ line 57 ~ validateData ~ payload", payload)
   try {
     await handleYupSchema(schema, payload);
 
@@ -62,6 +70,7 @@ const validateData = async (payload, setErrors) => {
   } catch (error) {
     const errors = handleYupErrors(error);
     setErrors(errors);
+    alert(JSON.stringify(errors))
     return false;
   }
 };
@@ -76,7 +85,10 @@ const onUploadImage = (deleteHash, setUploadedImage) => () => {
 const submit = (payload, setErrors, setDialogVisible) => async () => {
   if (await validateData(payload, setErrors)) {
     setDialogVisible(true);
+    return;
   }
+
+  alert('error')
 };
 
 const handleOnBlur = (errors, editPayload, setErrors) => async () => {

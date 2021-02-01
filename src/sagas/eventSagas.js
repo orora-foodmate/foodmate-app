@@ -43,7 +43,7 @@ export function* createEventSaga({ payload = {} }) {
       customHeaders,
       createdPayload
     );
-    
+
     if (isFunction(onSuccess)) onSuccess();
 
     push('EventDetail', { passProps: { eventId: result.data.id } });

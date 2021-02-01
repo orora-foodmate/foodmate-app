@@ -61,7 +61,6 @@ const onUploadError = (error) => {
 };
 
 const validateData = async (payload, setErrors) => {
-console.log("TCL ~ file: view.js ~ line 57 ~ validateData ~ payload", payload)
   try {
     await handleYupSchema(schema, payload);
 

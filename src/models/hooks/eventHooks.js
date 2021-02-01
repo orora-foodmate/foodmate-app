@@ -5,7 +5,7 @@ export const useEventsHook = function (database) {
   const [events, setEvents] = useState([]);
   useMemo(() => {
     if(database) {
-      const sub = database.events.find().$.subscribe(items => {
+      const sub = database.events.find().sort({ createAt: 'desc'}).$.subscribe(items => {
         const eventItems = items.map(item => item.toJSON());
         setEvents(eventItems);
       });

@@ -37,8 +37,8 @@ const eventSchema = {
         structured_formatting: {
           type: 'object',
           properties: {
-            main_text: {type: 'string'},
-            secondary_text: {type: 'string'},
+            main_text: { type: 'string' },
+            secondary_text: { type: 'string' },
           }
         }
       }
@@ -109,17 +109,20 @@ const eventSchema = {
       type: 'string',
     },
     logo: {
-      id : {
-        type: 'string',
-      },
-      type : {
-        type: 'string',
-      },
-      deletehash: {
-        type: 'string',
-      },
-      url: {
-        type: 'string',
+      type: 'object',
+      properties: {
+        id: {
+          type: 'string',
+        },
+        type: {
+          type: 'string',
+        },
+        deletehash: {
+          type: 'string',
+        },
+        url: {
+          type: 'string',
+        },
       },
     },
     publicationPlace: {

@@ -16,6 +16,10 @@ const messageSchema = {
       type: 'string',
       default: '',
     },
+    room: {
+      type: 'string',
+      default: '',
+    },
     attachment: {
       type: 'string',
       default: '',

@@ -65,11 +65,11 @@ export const useFriendRoomsHook = (database) => {
   return rooms;
 }
 
-export const useMessagesHook = (database) => {
+export const useMessagesHook = (database, roomId = '') => {
   const [messages, setMessages] = useState([]);
   useMemo(() => {
     if(database) {
-      const sub = database.messages.find().sort( {createAt: -1}).$.subscribe(items => {
+      const sub = database.messages.find().where('room').eq(roomId).sort( {createAt: -1}).$.subscribe(items => {
         const result = items.map(msg => {
 
           const item = msg.toJSON();
@@ -86,6 +86,6 @@ export const useMessagesHook = (database) => {
       });
       return () => sub.unsubscribe();
     }   
-  }, [database]);
+  }, [database, roomId]);
   return messages;
 }

@@ -44,7 +44,7 @@ export const useEventRoomsHook = (database, authUserId) => {
               title: item.title,
               subTitle: item.creator.name,
               roomId: item.room,
-              avatar: item.logo,
+              avatar: item.logo.url,
               updateAt: item.updateAt,
             });
           } else {
@@ -55,7 +55,7 @@ export const useEventRoomsHook = (database, authUserId) => {
                 title: item.title,
                 subTitle: item.creator.name,
                 roomId: item.room,
-                avatar: item.logo,
+                avatar: item.logo.url,
                 updateAt: item.updateAt,
               });
             }

@@ -51,7 +51,6 @@ export function* createEventSaga({ payload = {} }) {
     yield database.events.insert(parseEventItem(result.data));
     yield put(okCreate());
 
-
   } catch (error) {
     const errorAction = errCreate(error);
     yield put(errorAction);

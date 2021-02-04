@@ -44,7 +44,6 @@ const EventDetail = (props) => {
 
 
   useNavigationButtonPress((e) => {
-    console.log("TCL ~ file: view.js ~ line 55 ~ useNavigationButtonPress ~ e.buttonId", e.buttonId)
     if (
       props.componentId === e.componentId &&
       e.buttonId === TOP_BAR_RIGHT_BUTTON_ID

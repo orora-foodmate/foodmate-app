@@ -79,6 +79,12 @@ const ChatScreen = ({ userId, roomId, handleAddMessage, handleGetMessages }) => 
   );
 };
 
+ChatScreen.options = {
+  bottomTabs: {
+    visible: false
+  }
+}
+
 const styles = StyleSheet.create({
   messageBubbleLeft: {
     backgroundColor: 'white',

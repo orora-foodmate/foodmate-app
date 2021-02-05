@@ -32,7 +32,7 @@ const FriendDetailScreen = ({friendId}) => {
         <Avatar
           rounded
           style={styles.avatar}
-          source={{uri: friend.get('avatar')}}
+          source={{uri: friend.get(['avatar', 'url'])}}
         />
         <View>
           <Text style={styles.nickname}>{friend.get('name')}</Text>

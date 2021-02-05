@@ -52,12 +52,6 @@ const EventDetail = (props) => {
     }
   });
 
-  // useNavigationScreenPop((e) => {
-  //   console.log("TCL ~ file: view.js ~ line 55 ~ useNavigationScreenPop ~ e.buttonId", e.componentId)
-  //   setStackRoot('Events');
-  // })
-
-
   if (isEmpty(props.passProps) || isEmpty(event)) return <Fragment />;
 
   const onMemberDetailClick = handleGoMembers(push, event.title, eventId);

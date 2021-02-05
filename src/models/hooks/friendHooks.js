@@ -54,7 +54,7 @@ export const useFriendRoomsHook = (database) => {
           title: item.name,
           subTitle: item.account,
           roomId: item.room,
-          avatar: item.avatar,
+          avatar: item.avatar.url,
           updateAt: item.updateAt,
         }));
         setRooms(friendRooms);
@@ -78,6 +78,7 @@ export const useMessagesHook = (database, roomId = '') => {
             _id: msg.id,
             user: {
               ...item.user,
+              avatar: item.user.avatar.url,
               _id: item.user.id
             }
           };

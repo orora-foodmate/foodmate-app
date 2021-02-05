@@ -14,18 +14,40 @@ import ScrollContainer from '~/components/ScrollContainer';
 import TextInputField from '~/components/Inputs/TextInputField';
 import { nameSchema } from '~/constants/yupSchemas';
 import { inputDonut, inputDonutError } from '~/assets/icons';
-import { handleYupSchema, handleYupErrors } from '~/helper/yupHelper';
+import { handleUploadImage } from '~/helper/imageUploadHelper';
 import { Button as NativeButton } from 'react-native-elements';
+import { handleYupSchema, handleYupErrors } from '~/helper/yupHelper';
 
-const DEFAULT_PAYLOAD = {};
+const DEFAULT_PAYLOAD = {
+  name: '',
+  avatar: {},
+  description: '',
+};
+
+const avatarSchema = yup.object().shape({
+  deletehash: yup.string(),
+  id: yup.string(),
+  type: yup.string(),
+  url:  yup.string().url().typeError('錯誤的圖片連結'),
+});
 
 const schema = yup.object().shape({
+  avatar: avatarSchema,
   name: nameSchema('請輸入暱稱'),
   description: yup.string().required('請輸入自我介紹'),
 });
 
+const onUploadSuccess = (setter) => (link) => {
+  if(isEmpty(link.url)) return;
+  setter(state => ({ ...state, avatar: link }));
+};
+
 const handleOnChange = (setter) => (name) => (value) => {
   setter((payload) => ({ ...payload, [name]: value }));
+};
+
+const onUploadError = (error) => {
+  alert(error.message);
 };
 
 const validateData = async (payload, setErrors) => {
@@ -42,6 +64,10 @@ const validateData = async (payload, setErrors) => {
 
 const handleOnBlur = (errors, payload, setErrors) => async () => {
   if (!isEmpty(errors)) await validateData(payload, setErrors);
+};
+
+const onUploadImage = (setUploadedImage) => () => {
+  handleUploadImage(onUploadSuccess(setUploadedImage), onUploadError);
 };
 
 const submit = ({
@@ -65,8 +91,8 @@ const EditProfileScreen = ({ auth, handleUpdateProfile, passProps }) => {
 
   useEffect(() => {
     if (!isEmpty(passProps)) {
-      const { username, description } = passProps;
-      setPayload(cloneDeep({ name: username, description }));
+      const { username, description, avatar } = passProps;
+      setPayload(cloneDeep({ name: username, description, avatar }));
     }
   }, [passProps]);
 
@@ -88,13 +114,15 @@ const EditProfileScreen = ({ auth, handleUpdateProfile, passProps }) => {
         <View style={styles.panel}>
           <Avatar
             rounded
-            style={styles.avatar}
-            source={{ uri: auth.get('avatar') }}
+            avatarStyle={styles.avatar}
+            containerStyle={styles.avatarContainer}
+            source={{ uri: payload.avatar.url }}
           />
           <NativeButton
             title='編輯大頭照'
             buttonStyle={styles.button}
             titleStyle={styles.buttonTitle}
+            onPress={onUploadImage(setPayload)}
             containerStyle={styles.buttonContainer}
           />
           <TextInputField
@@ -157,11 +185,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   avatar: {
+    borderRadius: 80,
+    overflow: 'hidden'
+  },
+  avatarContainer: {
     width: 100,
     height: 100,
     borderWidth: 5,
-    marginBottom: 20,
     borderRadius: 80,
+    marginBottom: 20,
     borderColor: '#fff',
     backgroundColor: '#fff',
     ...shadow.black,

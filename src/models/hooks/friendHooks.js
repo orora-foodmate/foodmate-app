@@ -78,6 +78,7 @@ export const useMessagesHook = (database, roomId = '') => {
             _id: msg.id,
             user: {
               ...item.user,
+              avatar: item.user.avatar.url,
               _id: item.user.id
             }
           };

@@ -90,7 +90,7 @@ const Content = ({
 
   return (
     <View style={styles.resultMask}>
-      <Avatar rounded size='xlarge' source={{uri: user.get('avatar')}} />
+      <Avatar rounded size='xlarge' source={{uri: user.getIn(['avatar', 'url'])}} />
       <Text h3 style={styles.resultTitle}>
         {user.get('name')}
       </Text>

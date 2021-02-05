@@ -63,9 +63,7 @@ const eventSchema = {
         account: {
           type: 'string',
         },
-        avatar: {
-          type: 'string',
-        },
+        avatar: imageSchema,
       },
     },
     users: {
@@ -99,9 +97,7 @@ const eventSchema = {
               account: {
                 type: 'string',
               },
-              avatar: {
-                type: 'string',
-              },
+              avatar: imageSchema,
             },
           },
         },

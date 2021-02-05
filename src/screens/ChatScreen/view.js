@@ -46,7 +46,7 @@ const SendButton = (props) => {
 };
 
 const ChatScreen = ({ userId, roomId, handleAddMessage, handleGetMessages }) => {
-  const messages = useMessages();
+  const messages = useMessages(roomId);
 
   useEffect(() => {
     handleGetMessages({ roomId });

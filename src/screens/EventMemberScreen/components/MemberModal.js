@@ -157,7 +157,7 @@ const DetailContent = ({ push, show, member, eventId, isAdmin, onClose, handleRe
 
   return (
     <View style={styles.content}>
-      <Avatar rounded size='large' source={{ uri: member.info.avatar }} />
+      <Avatar rounded size='large' source={{ uri: member.info.avatar.url }} />
       <Text h2>{member.info.name}</Text>
       <Button
         title='檢視個人資料'

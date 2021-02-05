@@ -1,3 +1,5 @@
+import imageSchema from './imageSchema';
+
 const eventSchema = {
   title: 'events',
   version: 0,
@@ -108,23 +110,7 @@ const eventSchema = {
     title: {
       type: 'string',
     },
-    logo: {
-      type: 'object',
-      properties: {
-        id: {
-          type: 'string',
-        },
-        type: {
-          type: 'string',
-        },
-        deletehash: {
-          type: 'string',
-        },
-        url: {
-          type: 'string',
-        },
-      },
-    },
+    logo: imageSchema,
     publicationPlace: {
       type: 'string',
     },

@@ -168,6 +168,7 @@ export function* updateUserProfileSaga({payload}) {
     };
 
     const {result} = yield call(updateUserResult, customHeaders, payload);
+    console.log("TCL ~ file: userSagas.js ~ line 171 ~ function*updateUserProfileSaga ~ result", result)
 
     yield put(okUpdateProfile({ ...result.data, ...payload }));
   } catch (error) {

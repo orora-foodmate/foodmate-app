@@ -41,8 +41,9 @@ const ProfileScreen = ({componentId, auth}) => {
       <View style={styles.infoBox}>
         <Avatar
           rounded
-          style={styles.avatar}
-          source={{uri: auth.get('avatar')}}
+          avatarStyle={styles.avatar}
+          containerStyle={styles.avatarContainer}
+          source={{uri: auth.getIn(['avatar', 'url'])}}
         />
         <View>
           <Text style={styles.nickname}>{auth.get('name')}</Text>
@@ -58,7 +59,7 @@ const ProfileScreen = ({componentId, auth}) => {
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
           containerStyle={styles.buttonContainer}
-          onPress={onGoToPath('EditProfile', { username: auth.get('name'), description: auth.get('description') })}
+          onPress={onGoToPath('EditProfile', { username: auth.get('name'), description: auth.get('description'), avatar: auth.get('avatar') })}
         />
         <NativeButton
           title='設定'
@@ -105,6 +106,21 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
     backgroundColor: '#fff',
   },
+
+  avatar: {
+    borderRadius: 80,
+    overflow: 'hidden'
+  },
+  avatarContainer: {
+    width: 80,
+    height: 80,
+    borderWidth: 5,
+    borderRadius: 80,
+    marginRight: 20,
+    borderColor: '#fff',
+    backgroundColor: '#fff',
+    ...shadow.black,
+  },
   introZone: {
     paddingTop: 20,
     paddingLeft: 30,
@@ -118,16 +134,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  avatar: {
-    width: 80,
-    height: 80,
-    borderWidth: 5,
-    marginRight: 15,
-    borderRadius: 80,
-    borderColor: '#fff',
-    backgroundColor: '#fff',
-    ...shadow.black,
-  },
+ 
   buttonTitle: {
     fontSize: 12,
     lineHeight: 10,

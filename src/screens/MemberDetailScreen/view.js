@@ -18,7 +18,7 @@ const MemberDetailScreen = ({ userId, member, handleGetMemberDetail }) => {
         <Avatar
           rounded
           style={styles.avatar}
-          source={{uri: member.get('avatar')}}
+          source={{uri: member.getIn(['avatar', 'url'])}}
         />
         <View>
           <Text style={styles.nickname}>{member.get('name')}</Text>

@@ -47,7 +47,6 @@ const SendButton = (props) => {
 
 const ChatScreen = ({ userId, roomId, handleAddMessage, handleGetMessages }) => {
   const messages = useMessages(roomId);
-  console.log("TCL ~ file: view.js ~ line 50 ~ ChatScreen ~ messages", messages)
 
   useEffect(() => {
     handleGetMessages({ roomId });
@@ -79,6 +78,12 @@ const ChatScreen = ({ userId, roomId, handleAddMessage, handleGetMessages }) => 
     </ViewContainer>
   );
 };
+
+ChatScreen.options = {
+  bottomTabs: {
+    visible: false
+  }
+}
 
 const styles = StyleSheet.create({
   messageBubbleLeft: {

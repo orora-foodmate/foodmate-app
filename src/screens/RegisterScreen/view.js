@@ -64,11 +64,11 @@ const handleOnBlur = ( errors, editPayload, setErrors ) => async () => {
 const RegisterScreen = ({handleRegisterUser}) => {
   const {pop, push} = useNavigation();
   const [errors, setErrors] = useState({});
-  const [account, setAccount] = useState('edmond5f5');
-  const [email, setEmail] = useState('sss@ddd.jj');
-  const [phone, setPhone] = useState('08555541111');
-  const [password, setPassword] = useState('aa123123');
-  const [confirmPassword, setConfirmPassword] = useState('aa123123');
+  const [account, setAccount] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   
   const payload = {

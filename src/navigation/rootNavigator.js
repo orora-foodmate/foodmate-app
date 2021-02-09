@@ -23,13 +23,11 @@ const rootNavigator = () => {
         },
         topBar: {
           title: {
-            color: 'white',
-          },
-          backButton: {
-            color: 'white',
-          },
-          background: {
-            color: colors.primary,
+            component: {
+              name: 'TopBar',
+              color: colors.grey,
+              aligment: 'center',
+            },
           },
         },
         bottomTab: {

@@ -1,6 +1,6 @@
 import colors from '~/theme/color';
 
-export const stack = (name, text, icon, inactiveIcon ) => (
+export const stack = (name, text, icon) => (
   {
     stack: {
       children: [{
@@ -17,11 +17,8 @@ export const stack = (name, text, icon, inactiveIcon ) => (
       options: {
         bottomTab: {
           text,
-          fontSize: 12,
-          icon: inactiveIcon,
-          selectedIcon: icon,
-          textColor: colors.greyLight,
-          selectedTextColor: colors.primary,
+          icon,
+
           IconInsets: {
             top: 100,
           } 

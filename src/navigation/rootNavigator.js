@@ -9,57 +9,50 @@ const rootNavigator = () => {
     MaterialIcons.getImageSource('forum', 25),
     MaterialIcons.getImageSource('person-pin', 25),
     MaterialIcons.getImageSource('settings', 25),
-  ]).then(
-    ([
-      createIcon,
-      chatIcon,
-      usersIcon,
-      settingIcon,
-    ]) => {
+  ]).then(([createIcon, chatIcon, usersIcon, settingIcon]) => {
+    Navigation.setDefaultOptions({
+      statusBar: {
+        backgroundColor: colors.primary,
+      },
+      topBar: {
+        title: {
+          component: {
+            name: 'TopBar',
+            color: colors.grey,
+            aligment: 'center',
+          },
+        },
+        backButton: {
+          color: colors.grey,
+          icon: require('assets/icons/back_button.png'),
+        },
+      },
+      bottomTab: {
+        fontSize: 12,
+        iconColor: colors.greyLight,
+        textColor: colors.greyLight,
+        selectedIconColor: colors.primary,
+        selectedTextColor: colors.primary,
+      },
+    });
 
-      Navigation.setDefaultOptions({
-        statusBar: {
-          backgroundColor: colors.primary,
-        },
-        topBar: {
-          title: {
-            color: 'white',
-          },
-          backButton: {
-            color: 'white',
-          },
-          background: {
-            color: colors.primary,
-          },
-        },
-        bottomTab: {
-          fontSize: 12,
-          iconColor: colors.greyLight,
-          textColor: colors.greyLight,
-          selectedIconColor: colors.primary,
-          selectedTextColor: colors.primary,
-        },
-      });
-      
-
-      Navigation.setRoot({
-        root: {
-          sideMenu: {
-            center: {
-              bottomTabs: {
-                children: [
-                  stack('Events', '活動列表', createIcon),
-                  stack('Friend', '朋友圈', usersIcon),
-                  stack('Rooms', '聊天', chatIcon),
-                  stack('Profile', '設置', settingIcon),
-                ],
-              },
+    Navigation.setRoot({
+      root: {
+        sideMenu: {
+          center: {
+            bottomTabs: {
+              children: [
+                stack('Events', '活動列表', createIcon),
+                stack('Friend', '朋友圈', usersIcon),
+                stack('Rooms', '聊天', chatIcon),
+                stack('Profile', '設置', settingIcon),
+              ],
             },
           },
         },
-      });
-    }
-  );
+      },
+    });
+  });
 };
 
 export default rootNavigator;

@@ -99,11 +99,11 @@ const CreateActivityScreen = (props) => {
   const [dialogVisible, setDialogVisible] = useState(false);
   const [type, setType] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState(0);
-  const [budget, setBudget] = useState('100');
-  const [uploadedImage, setUploadedImage] = useState(DEFAULT_EVENT_IMAGE);
-  const [title, setTitle] = useState('test003');
+  const [budget, setBudget] = useState('500');
+  const [uploadedImage, setUploadedImage] = useState('');
+  const [title, setTitle] = useState();
   const [userCountMax, setUserCountMax] = useState('2');
-  const [description, setDescription] = useState('teskldfjasdlkfj');
+  const [description, setDescription] = useState('');
   const [place, setPlace] = useState({});
   const [datingAt, setDatingAt] = useState(new Date());
   const [finalReviewAt, setFinalReviewAt] = useState(new Date());

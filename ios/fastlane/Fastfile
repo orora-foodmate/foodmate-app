@@ -38,6 +38,7 @@ platform :ios do
       })
       firebase_app_distribution(
         app: ENV['FIREBASE_APP_ID'],
+        firebase_cli_token: ENV["FIREBASE_TOKEN"],
         groups: ENV['FIREBASE_GROUPS'],
         ipa_path: ENV['IPA_PATH']
       )

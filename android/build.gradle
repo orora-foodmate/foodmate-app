@@ -8,6 +8,7 @@ buildscript {
         targetSdkVersion = 29
         kotlinVersion = '1.3.61' // Or any version above 1.3.x
         RNNKotlinVersion = kotlinVersion
+        multiDexEnabled = true
     }
     repositories {
         google()
@@ -42,3 +43,11 @@ allprojects {
         maven { url 'https://jitpack.io' }
     }
 }
+
+project.ext.envConfigFiles = [
+    debug: ".env.development",
+    release: ".env.production",
+    anothercustombuild: ".env",
+]
+
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"

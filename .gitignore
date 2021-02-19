@@ -61,6 +61,8 @@ buck-out/
 /android/**/google-services.json
 
 .env
+.env.development
+.env.production
 envConfig.js
 *.ipa
 *.zip
